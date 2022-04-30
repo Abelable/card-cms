@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import { Button, Card, Divider } from "antd";
@@ -35,10 +35,6 @@ export const UnauthenticatedApp = () => {
     </Container>
   );
 };
-
-export const LongButton = styled(Button)`
-  width: 100%;
-`;
 
 const Title = styled.h2`
   margin-bottom: 2.4rem;

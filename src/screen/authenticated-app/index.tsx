@@ -13,7 +13,6 @@ import {
   MenuFoldOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
-import logo from "assets/logo.jpeg";
 import { NavigationBar } from "components/navigation-bar";
 
 export const AuthenticatedApp = () => {
@@ -51,8 +50,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
       <Link to={"/"}>
         <Logo collapsed={collapsed}>
-          <LogoImg src={logo} />
-          <div>浙江省网商协会</div>
+          <div>久梦号卡系统后台</div>
         </Logo>
       </Link>
       <Menu theme="dark" mode="inline" selectedKeys={[routeType]}>
@@ -91,9 +89,7 @@ const User = () => {
           </Menu.Item>
         </Menu>
       }
-    >
-      <LogoImg size={3.6} src={logo} />
-    </Dropdown>
+    ></Dropdown>
   );
 };
 
@@ -116,12 +112,12 @@ const Logo = styled.div<{ collapsed: boolean }>`
   }
 `;
 
-const LogoImg = styled.img<{ size?: number }>`
-  width: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
-  height: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
-  border-radius: 50%;
-  cursor: pointer;
-`;
+// const LogoImg = styled.img<{ size?: number }>`
+//   width: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
+//   height: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
+//   border-radius: 50%;
+//   cursor: pointer;
+// `;
 
 const Header = styled(Layout.Header)`
   display: flex;

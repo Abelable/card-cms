@@ -1,32 +1,15 @@
-import React from "react";
-import { useAuth } from "context/auth-context";
+// import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
-import { LongButton } from "unauthenticated-app/index";
-import { useAsync } from "utils/use-async";
-
-// interface Base {
-//   id: number
-// }
-//
-// interface Advance extends Base {
-//   name: string
-// }
-//
-// const test = (p: Base) => {
-// }
-//
-// // 鸭子类型(duck typing)：面向接口编程 而不是 面向对象编程
-// const a = {id: 1, name: 'jack'}
-// test(a)
-// const apiUrl = process.env.REACT_APP_API_URL;
+// import { useAsync } from "utils/use-async";
+// import { LongButton } from "components/lib";
 
 export const RegisterScreen = ({
   onError,
 }: {
   onError: (error: Error) => void;
 }) => {
-  const { register } = useAuth();
-  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  // const { register } = useAuth();
+  // const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   // HTMLFormElement extends Element
   const handleSubmit = async ({
@@ -42,7 +25,7 @@ export const RegisterScreen = ({
       return;
     }
     try {
-      await run(register(values));
+      // await run(register(values));
     } catch (e: any) {
       onError(e);
     }
@@ -69,9 +52,9 @@ export const RegisterScreen = ({
         <Input placeholder={"确认密码"} type="password" id={"cpassword"} />
       </Form.Item>
       <Form.Item>
-        <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>
+        {/* <LongButton loading={isLoading} htmlType={"submit"} type={"primary"}>
           注册
-        </LongButton>
+        </LongButton> */}
       </Form.Item>
     </Form>
   );

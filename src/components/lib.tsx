@@ -5,6 +5,10 @@ export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
 
+export const LongButton = styled(Button)`
+  width: 100%;
+`;
+
 // 类型守卫
 const isError = (value: any): value is Error => value?.message;
 export const ErrorBox = ({ error }: { error: unknown }) => {
