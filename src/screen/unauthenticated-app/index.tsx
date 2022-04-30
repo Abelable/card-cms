@@ -3,9 +3,9 @@ import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import { Button, Card, Divider } from "antd";
 import styled from "@emotion/styled";
-import logo from "assets/logo.svg";
-import left from "assets/left.svg";
-import right from "assets/right.svg";
+import logo from "assets/images/logo.svg";
+import left from "assets/images/left.svg";
+import right from "assets/images/right.svg";
 import { useDocumentTitle } from "utils";
 import { ErrorBox } from "components/lib";
 

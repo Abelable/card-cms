@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
-import { Button, Dropdown, Layout, Menu } from "antd";
+import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
 import { Users } from "./users";
 
 import {
@@ -46,6 +46,14 @@ export const AuthenticatedApp = () => {
 const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   const routeType = useRouteType();
 
+  const items: MenuProps["items"] = [
+    {
+      label: <Link to={"users"}>用户数据</Link>,
+      key: "users",
+      icon: <TeamOutlined />,
+    },
+  ];
+
   return (
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
       <Link to={"/"}>
@@ -53,11 +61,12 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           <div>久梦号卡系统后台</div>
         </Logo>
       </Link>
-      <Menu theme="dark" mode="inline" selectedKeys={[routeType]}>
-        <Menu.Item key="users" icon={<TeamOutlined />}>
-          <Link to={"users"}>用户数据</Link>
-        </Menu.Item>
-      </Menu>
+      <Menu
+        theme="dark"
+        mode="inline"
+        selectedKeys={[routeType]}
+        items={items}
+      />
     </Layout.Sider>
   );
 };
@@ -89,7 +98,9 @@ const User = () => {
           </Menu.Item>
         </Menu>
       }
-    ></Dropdown>
+    >
+      <span>你好</span>
+    </Dropdown>
   );
 };
 
