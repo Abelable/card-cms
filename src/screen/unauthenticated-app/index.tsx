@@ -6,15 +6,12 @@ import { Card } from "antd";
 import styled from "@emotion/styled";
 import left from "assets/images/left.svg";
 import right from "assets/images/right.svg";
-import { useDocumentTitle } from "utils";
 import { ErrorBox } from "components/lib";
 
 export const UnauthenticatedApp = () => {
   // const [isRegister, setIsRegister] = useState(false);
   const [isRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-
-  useDocumentTitle("请登录注册以继续");
 
   return (
     <Container>
@@ -58,9 +55,9 @@ const Background = styled.div`
 
 const Header = styled.header`
   padding: 5rem 0;
-  font-size: 3rem;
+  font-size: 2.8rem;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 const ShadowCard = styled(Card)`
