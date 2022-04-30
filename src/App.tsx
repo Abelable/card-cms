@@ -1,5 +1,5 @@
 import { useAuth } from "context/auth-context";
-import { LoginScreen } from "screen/login";
+import { UnauthenticatedApp } from "./screen/unauthenticated-app/index";
 import { AuthenticatedApp } from "./screen/authenticated-app/index";
 import "./App.css";
 import { FullPageErrorFallback } from "components/lib";
@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div className="App">
       <ErrorBoundary fallbackRender={FullPageErrorFallback}>
-        {token ? <AuthenticatedApp /> : <LoginScreen />}
+        {token ? <AuthenticatedApp /> : <UnauthenticatedApp />}
       </ErrorBoundary>
     </div>
   );
