@@ -1,23 +1,24 @@
 import { useState } from "react";
 import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
-import { Button, Card, Divider } from "antd";
+// import { Button, Card, Divider } from "antd";
+import { Card } from "antd";
 import styled from "@emotion/styled";
-import logo from "assets/images/logo.svg";
 import left from "assets/images/left.svg";
 import right from "assets/images/right.svg";
 import { useDocumentTitle } from "utils";
 import { ErrorBox } from "components/lib";
 
 export const UnauthenticatedApp = () => {
-  const [isRegister, setIsRegister] = useState(false);
+  // const [isRegister, setIsRegister] = useState(false);
+  const [isRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useDocumentTitle("请登录注册以继续");
 
   return (
     <Container>
-      <Header />
+      <Header>久梦号卡系统后台</Header>
       <Background />
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
@@ -27,18 +28,20 @@ export const UnauthenticatedApp = () => {
         ) : (
           <LoginScreen onError={setError} />
         )}
-        <Divider />
+        {/* <Divider />
         <Button type={"link"} onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "已经有账号了？直接登录" : "没有账号？注册新账号"}
-        </Button>
+        </Button> */}
       </ShadowCard>
     </Container>
   );
 };
 
-const Title = styled.h2`
-  margin-bottom: 2.4rem;
-  color: rgb(94, 108, 132);
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 `;
 
 const Background = styled.div`
@@ -54,10 +57,10 @@ const Background = styled.div`
 `;
 
 const Header = styled.header`
-  background: url(${logo}) no-repeat center;
   padding: 5rem 0;
-  background-size: 8rem;
-  width: 100%;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 600;
 `;
 
 const ShadowCard = styled(Card)`
@@ -70,9 +73,7 @@ const ShadowCard = styled(Card)`
   text-align: center;
 `;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+const Title = styled.h2`
+  margin-bottom: 2.4rem;
+  color: rgb(94, 108, 132);
 `;
