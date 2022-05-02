@@ -6,7 +6,7 @@ const localStorageKey = "__auth_provider_token__";
 export const getToken = () => window.localStorage.getItem(localStorageKey);
 
 export const login = async (form: AuthForm) => {
-  const { token } = await http("/api/admin/site/admin-login", {
+  const { token } = await http("/api/v1/admin/auth/login", {
     method: "POST",
     data: form,
   });
