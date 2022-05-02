@@ -10,6 +10,50 @@ interface Config extends RequestInit {
   token?: string;
 }
 
+export const http = async (
+  endpoint: string,
+  { data, token, headers, ...customConfig }: Config = {}
+) => {
+  const config = {
+    method: "GET",
+    headers: {
+      timestamp: initTimestamp(),
+      nonce: initNonce(),
+      "Content-Type": data ? "application/x-www-form-urlencoded" : "",
+      Authorization: token ? `Bearer ${token}` : "",
+      ...headers,
+    },
+    ...customConfig,
+  };
+
+  if (config.method.toUpperCase() === "GET") {
+    endpoint += `?${qs.stringify(data)}`;
+  } else {
+    config.body = JSON.stringify(data || {});
+  }
+  return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
+    if (response.ok) {
+      const result = await response.json();
+      if (result.code === "420") {
+        await auth.logout();
+        window.location.reload();
+        return Promise.reject({ message: "请重新登录" });
+      }
+      if (["200", "201", "204"].includes(result.code)) return result.data;
+      else return Promise.reject(result);
+    } else return Promise.reject({ message: response.statusText });
+  });
+};
+
+export const useHttp = () => {
+  const { token } = useAuth();
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, { ...config, token }),
+    [token]
+  );
+};
+
 const initTimestamp = () => Math.round(new Date().getTime() / 1000).toString();
 
 const initNonce = () => {
@@ -83,48 +127,4 @@ const initNonce = () => {
     nonce += chars[id];
   }
   return nonce;
-};
-
-export const http = async (
-  endpoint: string,
-  { data, token, headers, ...customConfig }: Config = {}
-) => {
-  const config = {
-    method: "GET",
-    headers: {
-      timestamp: initTimestamp(),
-      nonce: initNonce(),
-      "Content-Type": data ? "application/x-www-form-urlencoded" : "",
-      Authorization: token ? `Bearer ${token}` : "",
-      ...headers,
-    },
-    ...customConfig,
-  };
-
-  if (config.method.toUpperCase() === "GET") {
-    endpoint += `?${qs.stringify(data)}`;
-  } else {
-    config.body = JSON.stringify(data || {});
-  }
-  return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
-    if (response.ok) {
-      const result = await response.json();
-      if (result.code === "420") {
-        await auth.logout();
-        window.location.reload();
-        return Promise.reject({ message: "请重新登录" });
-      }
-      if (["200", "201", "204"].includes(result.code)) return result.data;
-      else return Promise.reject(result);
-    } else return Promise.reject({ message: response.statusText });
-  });
-};
-
-export const useHttp = () => {
-  const { token } = useAuth();
-  return useCallback(
-    (...[endpoint, config]: Parameters<typeof http>) =>
-      http(endpoint, { ...config, token }),
-    [token]
-  );
 };
