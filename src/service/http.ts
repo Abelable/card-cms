@@ -17,10 +17,10 @@ export const http = async (
   const config = {
     method: "GET",
     headers: {
+      "Content-Type": data ? "application/json" : "",
+      Authorization: token ? `Bearer ${token}` : "",
       timestamp: initTimestamp(),
       nonce: initNonce(),
-      "Content-Type": data ? "application/x-www-form-urlencoded" : "",
-      Authorization: token ? `Bearer ${token}` : "",
       ...headers,
     },
     ...customConfig,
@@ -34,12 +34,12 @@ export const http = async (
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
       const result = await response.json();
-      if (result.code === "420") {
-        await auth.logout();
-        window.location.reload();
-        return Promise.reject({ message: "请重新登录" });
-      }
-      if (["200", "201", "204"].includes(result.code)) return result.data;
+      // if (result.code === "420") {
+      //   await auth.logout();
+      //   window.location.reload();
+      //   return Promise.reject({ message: "请重新登录" });
+      // }
+      if ([200, 201, 204].includes(result.code)) return result.data;
       else return Promise.reject(result);
     } else return Promise.reject({ message: response.statusText });
   });

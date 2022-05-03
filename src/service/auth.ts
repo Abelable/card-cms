@@ -6,12 +6,12 @@ const localStorageKey = "__auth_provider_token__";
 export const getToken = () => window.localStorage.getItem(localStorageKey);
 
 export const login = async (form: AuthForm) => {
-  const { token } = await http("/api/v1/admin/auth/login", {
+  const { access_token } = await http("/api/v1/admin/auth/login", {
     method: "POST",
     data: form,
   });
-  window.localStorage.setItem(localStorageKey, token);
-  return token;
+  window.localStorage.setItem(localStorageKey, access_token);
+  return access_token;
 };
 
 export const logout = async () =>
