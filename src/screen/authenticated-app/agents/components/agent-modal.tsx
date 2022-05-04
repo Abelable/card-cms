@@ -10,7 +10,8 @@ import { useAgentsQueryKey, useAgentModal } from "../util";
 export const AgentModal = ({ agents }: { agents: Agent[] }) => {
   const [form] = useForm();
   const { agentModalOpen, editingAgentId, close } = useAgentModal();
-  const agent = agents?.find((item) => item.id === editingAgentId) || undefined;
+  const agent =
+    agents?.find((item) => item.id === Number(editingAgentId)) || undefined;
   const useMutationAgent = editingAgentId ? useEditAgent : useAddAgent;
   const { mutateAsync, isLoading, error } = useMutationAgent(
     useAgentsQueryKey()

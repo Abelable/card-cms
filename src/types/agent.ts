@@ -6,10 +6,17 @@ export interface AgentsSearchParams {
 }
 
 export interface Agent {
-  id: string;
-  name: string;
+  id: number;
+  store: string;
+  channel_id: string;
+  company: string;
+  contact: string;
   phone: string;
+  email: string;
+  activation_days: number | undefined;
+  recharge_days: number | undefined;
   created_at: string;
+  updated_at: string;
 }
 
 export interface AgentsResult {
