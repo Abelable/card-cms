@@ -27,6 +27,8 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           {
             title: "编号",
             dataIndex: "id",
+            width: "8rem",
+            sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
             title: "产品名称",
