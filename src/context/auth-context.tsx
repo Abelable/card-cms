@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useQueryClient } from "react-query";
 import * as auth from "service/auth";
-import { AuthForm } from "types/authForm";
+import { AuthForm } from "types/auth";
 
 const AuthContext = createContext<
   | {

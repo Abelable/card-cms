@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
-import { AuthForm } from "types/authForm";
-import { UserInfo } from "types/user";
+import { AuthForm, UserInfo } from "types/auth";
 import { http, useHttp } from "./http";
 
 const localStorageKey = "__auth_provider_token__";
