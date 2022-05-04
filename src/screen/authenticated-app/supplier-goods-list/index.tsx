@@ -6,7 +6,7 @@ import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
 
-export const GoodsList = () => {
+export const SupplierGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
   const { data, isLoading, error } = useGoodsList(params);
 
