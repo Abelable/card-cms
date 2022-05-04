@@ -1,3 +1,8 @@
+export interface UserInfo {
+  id: number;
+  username: string;
+  avatar: string | null;
+}
 export interface UsersSearchParams {
   page: number;
   page_size: number;

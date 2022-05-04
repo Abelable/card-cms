@@ -1,5 +1,7 @@
+import { useQuery } from "react-query";
 import { AuthForm } from "types/authForm";
-import { http } from "./http";
+import { UserInfo } from "types/user";
+import { http, useHttp } from "./http";
 
 const localStorageKey = "__auth_provider_token__";
 
@@ -16,3 +18,8 @@ export const login = async (form: AuthForm) => {
 
 export const logout = async () =>
   window.localStorage.removeItem(localStorageKey);
+
+export const useUserInfo = () => {
+  const client = useHttp();
+  return useQuery<UserInfo>(["useInfo"], () => client("/api/v1/admin/auth/me"));
+};

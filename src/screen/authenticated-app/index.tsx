@@ -2,18 +2,22 @@ import { useState } from "react";
 import { useRouteType } from "utils/url";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
+import { useUserInfo } from "service/auth";
 
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
+import { NavigationBar } from "components/navigation-bar";
+import { Home } from "./home";
 import { Users } from "./users";
 
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   TeamOutlined,
+  CaretDownOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
-import { NavigationBar } from "components/navigation-bar";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -30,10 +34,11 @@ export const AuthenticatedApp = () => {
           <NavigationBar />
           <Content>
             <Routes>
+              <Route path="home" element={<Home />} />
               <Route path="users" element={<Users />} />
               <Route
                 path={"*"}
-                element={<Navigate to={"users"} replace={true} />}
+                element={<Navigate to={"home"} replace={true} />}
               />
             </Routes>
           </Content>
@@ -47,6 +52,11 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   const routeType = useRouteType();
 
   const items: MenuProps["items"] = [
+    {
+      label: <Link to={"home"}>首页</Link>,
+      key: "home",
+      icon: <HomeOutlined />,
+    },
     {
       label: <Link to={"users"}>用户数据</Link>,
       key: "users",
@@ -85,6 +95,7 @@ const Trigger = ({ collapsed, setCollapsed }: Collapsed) => {
 };
 
 const User = () => {
+  const { data: userInfo } = useUserInfo();
   const { logout } = useAuth();
 
   return (
@@ -99,10 +110,21 @@ const User = () => {
         </Menu>
       }
     >
-      <span>你好</span>
+      <UserInner>
+        <div style={{ lineHeight: 1.5, marginRight: "1rem" }}>
+          <div>欢迎您！</div>
+          <div>{userInfo?.username}</div>
+        </div>
+        <CaretDownOutlined style={{ fontSize: "1.2rem" }} />
+      </UserInner>
     </Dropdown>
   );
 };
+
+const UserInner = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const Logo = styled.div<{ collapsed: boolean }>`
   display: flex;

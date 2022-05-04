@@ -3,6 +3,7 @@ import { Breadcrumb } from "antd";
 import { Link, useLocation } from "react-router-dom";
 
 const breadcrumbNameMap: { [key: string]: string } = {
+  "/home": "首页",
   "/users": "用户数据",
   "/banners": "头图管理",
   "/course": "网商课堂",
@@ -31,12 +32,15 @@ export const NavigationBar = () => {
   });
   return (
     <Wrap>
+      <div>当前位置：</div>
       <Breadcrumb>{extraBreadcrumbItems}</Breadcrumb>
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
+  display: flex;
+  align-items: center;
   padding: 2.4rem;
   background: #fff;
 `;
