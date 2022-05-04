@@ -19,7 +19,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 
   return (
     <Container>
-      <Title>用户列表</Title>
+      <Title>商品列表</Title>
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
@@ -42,16 +42,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "注册时间",
-            render: (value, user) => (
-              <span>
-                {user.created_at
-                  ? dayjs(Number(user.created_at) * 1000).format(
-                      "YYYY-MM-DD HH:mm"
-                    )
-                  : "无"}
-              </span>
-            ),
-            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
+            dataIndex: "created_at",
+            sorter: (a, b) =>
+              dayjs(a.created_at).valueOf() - dayjs(b.created_at).valueOf(),
           },
         ]}
         onChange={setPagination}

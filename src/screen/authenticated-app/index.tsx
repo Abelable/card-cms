@@ -10,6 +10,7 @@ import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
 import { NavigationBar } from "components/navigation-bar";
 import { Home } from "./home";
 import { Suppliers } from "./suppliers";
+import { GoodsList } from "./goods-list";
 
 import {
   MenuUnfoldOutlined,
@@ -36,6 +37,7 @@ export const AuthenticatedApp = () => {
             <Routes>
               <Route path="home" element={<Home />} />
               <Route path="suppliers" element={<Suppliers />} />
+              <Route path="suppliers/goods_list" element={<GoodsList />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}

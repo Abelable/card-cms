@@ -5,18 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 const breadcrumbNameMap: { [key: string]: string } = {
   "/home": "首页",
   "/suppliers": "我的供应商",
-  "/banners": "头图管理",
-  "/course": "网商课堂",
-  "/course/author": "作者管理",
-  "/course/list": "课堂列表",
-  "/legal": "法律汇编",
-  "/legal/categories": "分类管理",
-  "/legal/legal_list": "文章列表",
-  "/wisdoms": "网商智库",
-  "/applications": "入会申请",
-  "/talents": "人才管理",
-  "/custom_signups": "自定义活动报名",
-  "/custom_signups/enlist": "报名列表",
+  "/suppliers/goods_list": "查看供应商商品",
 };
 
 export const NavigationBar = () => {
