@@ -1,6 +1,8 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import {
+  GoodsListResult,
+  GoodsListSearchParams,
   Supplier,
   SuppliersResult,
   SuppliersSearchParams,
@@ -37,5 +39,14 @@ export const useEditSupplier = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<GoodsListResult>(["goods_list", params], () =>
+    client("/api/v1/admin/supplier/index", {
+      data: params,
+    })
   );
 };
