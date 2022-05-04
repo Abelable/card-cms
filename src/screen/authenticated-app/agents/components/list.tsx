@@ -41,10 +41,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
             dataIndex: "id",
+            fixed: "left",
             width: "8rem",
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
@@ -59,26 +61,32 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 />
               </Edit>
             ),
+            width: "28rem",
           },
           {
             title: "渠道id",
             dataIndex: "channel_id",
+            width: "14rem",
           },
           {
             title: "公司名称",
             dataIndex: "company",
+            width: "28rem",
           },
           {
             title: "店铺负责人",
             dataIndex: "contact",
+            width: "13rem",
           },
           {
             title: "联系电话",
             dataIndex: "phone",
+            width: "18rem",
           },
           {
             title: "邮箱",
             dataIndex: "email",
+            width: "24rem",
           },
           {
             title: "激活状态回传的有效天数（订单创建时起）",
@@ -91,6 +99,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 />
               </Edit>
             ),
+            width: "18rem",
           },
           {
             title: "充值金额回传的有效天数（订单创建时起）",
@@ -103,6 +112,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 />
               </Edit>
             ),
+            width: "18rem",
           },
           {
             title: "操作",
