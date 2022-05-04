@@ -4,6 +4,7 @@ import { ErrorBox } from "components/lib";
 import { useAddSupplier, useEditSupplier } from "service/supplier";
 import { Supplier } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import { cleanObject } from "utils";
 import { useSuppliersQueryKey, useSupplierModal } from "../util";
 
 export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
@@ -24,10 +25,12 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      await mutateAsync({
-        id: editingSupplierId || "",
-        ...form.getFieldsValue(),
-      });
+      await mutateAsync(
+        cleanObject({
+          id: editingSupplierId || "",
+          ...form.getFieldsValue(),
+        })
+      );
       closeModal();
     });
   };

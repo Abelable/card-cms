@@ -21,16 +21,16 @@ export const useConfig = (
 export const useAddConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
-    list: [
-      { id: old.list[0] ? `${Number(old.list[0].id) + 1}` : "1", ...target },
-      ...old.list,
+    data: [
+      { id: old.data[0] ? `${Number(old.data[0].id) + 1}` : "1", ...target },
+      ...old.data,
     ],
   }));
 
 export const useEditConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
-    list: old.list.map((item: any) =>
+    data: old.data.map((item: any) =>
       item.id === target.id ? { ...item, ...target } : item
     ),
   }));
@@ -38,5 +38,5 @@ export const useEditConfig = (queryKey: QueryKey) =>
 export const useDeleteConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({
     ...old,
-    list: old.list.filter((item: any) => item.id !== target) || [],
+    data: old.data.filter((item: any) => item.id !== target) || [],
   }));

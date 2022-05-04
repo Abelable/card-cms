@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useSuppliers } from "service/supplier";
 import { toNumber } from "utils";
 import { List } from "./components/list";
+import { SupplierModal } from "./components/supplier-modal";
 import { useSuppliersSearchParams } from "./util";
 
 export const Suppliers = () => {
@@ -23,6 +24,7 @@ export const Suppliers = () => {
             total: toNumber(data?.meta.pagination.total),
           }}
         />
+        <SupplierModal suppliers={data?.data || []} />
       </Main>
     </Container>
   );

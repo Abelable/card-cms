@@ -20,7 +20,7 @@ export const useAddSupplier = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<Supplier>) =>
-      client("/api/admin/class-room/author-save", {
+      client("/api/v1/admin/supplier/store", {
         data: params,
         method: "POST",
       }),
@@ -31,8 +31,8 @@ export const useAddSupplier = (queryKey: QueryKey) => {
 export const useEditSupplier = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<Supplier>) =>
-      client("/api/admin/class-room/author-save", {
+    ({ id, ...params }: Partial<Supplier>) =>
+      client(`/api/v1/admin/supplier/update/${id}`, {
         data: params,
         method: "POST",
       }),
