@@ -9,12 +9,10 @@ import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
 import { NavigationBar } from "components/navigation-bar";
 import { Home } from "./home";
-import { Users } from "./users";
 
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  TeamOutlined,
   CaretDownOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
@@ -35,7 +33,6 @@ export const AuthenticatedApp = () => {
           <Content>
             <Routes>
               <Route path="home" element={<Home />} />
-              <Route path="users" element={<Users />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}
@@ -56,11 +53,6 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       label: <Link to={"home"}>首页</Link>,
       key: "home",
       icon: <HomeOutlined />,
-    },
-    {
-      label: <Link to={"users"}>用户数据</Link>,
-      key: "users",
-      icon: <TeamOutlined />,
     },
   ];
 
