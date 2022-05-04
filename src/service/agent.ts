@@ -7,7 +7,11 @@ import {
   AgentsResult,
   AgentsSearchParams,
 } from "types/agent";
-import { useAddConfig, useEditConfig } from "./use-optimistic-options";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "./use-optimistic-options";
 
 export const useAgents = (params: Partial<AgentsSearchParams>) => {
   const client = useHttp();
@@ -39,6 +43,17 @@ export const useEditAgent = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteAgent = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: string) =>
+      client(`/api/v1/admin/agent/destroy/${id}`, {
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
   );
 };
 

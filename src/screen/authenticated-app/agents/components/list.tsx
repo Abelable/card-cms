@@ -1,10 +1,19 @@
 import styled from "@emotion/styled";
-import { Button, Table, TablePaginationConfig, TableProps } from "antd";
-import { ErrorBox, Row } from "components/lib";
+import {
+  Button,
+  Dropdown,
+  Menu,
+  Modal,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+} from "antd";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { Agent, AgentsSearchParams } from "types/agent";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { useAgentModal } from "../util";
+import { useAgentModal, useAgentsQueryKey } from "../util";
+import { useDeleteAgent } from "service/agent";
 
 interface ListProps extends TableProps<Agent> {
   error: Error | unknown;
@@ -13,7 +22,6 @@ interface ListProps extends TableProps<Agent> {
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const navigate = useNavigate();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -21,8 +29,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
   const { open } = useAgentModal();
-
-  const link = (id: number) => navigate(`/agents/goods_list?id=${id}`);
 
   return (
     <Container>
@@ -100,12 +106,11 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "操作",
-            render: (value, agent) => (
-              <Button type="link" onClick={() => link(agent.id)}>
-                查看产品
-              </Button>
-            ),
-            width: "20rem",
+            render(value, agent) {
+              return <More agent={agent} />;
+            },
+            fixed: "right",
+            width: "8rem",
           },
         ]}
         onChange={setPagination}
@@ -127,3 +132,40 @@ const Header = styled(Row)`
 const Edit = styled(Row)`
   cursor: pointer;
 `;
+
+const More = ({ agent }: { agent: Agent }) => {
+  const navigate = useNavigate();
+  const link = (id: number) => navigate(`/agents/goods_list?id=${id}`);
+
+  const { mutate: deleteAgent } = useDeleteAgent(useAgentsQueryKey());
+
+  const confirmDeleteAgent = (id: number) => {
+    Modal.confirm({
+      title: "确定删除该代理商吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => deleteAgent(String(id)),
+    });
+  };
+
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item onClick={() => link(agent.id)} key={"link"}>
+            查看分销商品
+          </Menu.Item>
+          <Menu.Item
+            onClick={() => confirmDeleteAgent(agent.id)}
+            key={"delete"}
+          >
+            删除代理商
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+    </Dropdown>
+  );
+};
