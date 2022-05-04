@@ -11,6 +11,7 @@ import { NavigationBar } from "components/navigation-bar";
 import { Home } from "./home";
 import { Suppliers } from "./suppliers";
 import { SupplierGoodsList } from "./supplier-goods-list";
+import { Agents } from "./agents";
 
 import {
   MenuUnfoldOutlined,
@@ -18,6 +19,7 @@ import {
   CaretDownOutlined,
   HomeOutlined,
   ShopOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 
 export const AuthenticatedApp = () => {
@@ -41,6 +43,7 @@ export const AuthenticatedApp = () => {
                 path="suppliers/goods_list"
                 element={<SupplierGoodsList />}
               />
+              <Route path="agents" element={<Agents />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}
@@ -66,6 +69,11 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       label: <Link to={"suppliers"}>我的供应商</Link>,
       key: "suppliers",
       icon: <ShopOutlined />,
+    },
+    {
+      label: <Link to={"agents"}>我的代理商</Link>,
+      key: "agents",
+      icon: <ShoppingOutlined />,
     },
   ];
 
