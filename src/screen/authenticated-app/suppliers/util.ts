@@ -1,5 +1,5 @@
-import { useUrlQueryParams } from "utils/url";
-import { useMemo } from "react";
+import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
+import { useCallback, useMemo } from "react";
 
 export const useSuppliersSearchParams = () => {
   const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
@@ -17,5 +17,36 @@ export const useSuppliersSearchParams = () => {
 
 export const useSuppliersQueryKey = () => {
   const [params] = useSuppliersSearchParams();
-  return ["articleSuppliers", params];
+  return ["suppliers", params];
+};
+
+export const useSupplierModal = () => {
+  const [{ supplierCreate }, setSuppliersModalOpen] = useUrlQueryParams([
+    "supplierCreate",
+  ]);
+  const [{ editingSupplierId }, setEditingSupplierId] = useUrlQueryParams([
+    "editingSupplierId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    () => setSuppliersModalOpen({ supplierCreate: true }),
+    [setSuppliersModalOpen]
+  );
+  const startEdit = useCallback(
+    (id: string) => setEditingSupplierId({ editingSupplierId: id }),
+    [setEditingSupplierId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ supplierCreate: "", editingSupplierId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    supplierModalOpen: supplierCreate === "true" || !!editingSupplierId,
+    editingSupplierId,
+    open,
+    startEdit,
+    close,
+  };
 };
