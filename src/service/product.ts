@@ -16,6 +16,15 @@ export const useChannels = (params: Partial<ChannelsSearchParams>) => {
   );
 };
 
+export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
+  const client = useHttp();
+  return useQuery<ChannelsResult>(["downed_channels", params], () =>
+    client("/api/v1/admin/downed_channel/index", {
+      data: params,
+    })
+  );
+};
+
 export const useAddChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
@@ -40,7 +49,7 @@ export const useEditChannel = (queryKey: QueryKey) => {
   );
 };
 
-export const useDeleteChannel = (queryKey: QueryKey) => {
+export const useDownChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>

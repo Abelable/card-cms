@@ -1,9 +1,20 @@
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import { Table, TablePaginationConfig, TableProps } from "antd";
+import {
+  Dropdown,
+  Menu,
+  MenuProps,
+  Modal,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+} from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
-import { ErrorBox, Row } from "components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
+import { useNavigate } from "react-router";
+import { useChannelModal, useChannelsQueryKey } from "../util";
+import { useDownChannel } from "service/product";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
   modeOptions: modeOption[];
@@ -67,11 +78,56 @@ export const DownedList = ({
             sorter: (a, b) =>
               dayjs(a.created_at).valueOf() - dayjs(b.created_at).valueOf(),
           },
+          {
+            title: "操作",
+            render(value, channel) {
+              return <More channel={channel} />;
+            },
+            width: "8rem",
+          },
         ]}
         onChange={setPagination}
         {...restProps}
       />
     </Container>
+  );
+};
+
+const More = ({ channel }: { channel: Channel }) => {
+  const navigate = useNavigate();
+  const link = (id: number) => navigate(`/channels/goods_list?id=${id}`);
+  const { startEdit } = useChannelModal();
+  const { mutate: downChannel } = useDownChannel(useChannelsQueryKey());
+
+  const confirmDownChannel = (id: number) => {
+    Modal.confirm({
+      title: "确定下架该产品吗？",
+      content: "点击确定下架",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => downChannel(String(id)),
+    });
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      label: <span onClick={() => startEdit(String(channel.id))}>编辑</span>,
+      key: "edit",
+    },
+    {
+      label: <span onClick={() => confirmDownChannel(channel.id)}>下架</span>,
+      key: "delete",
+    },
+    {
+      label: <span onClick={() => link(channel.id)}>查看分销商品</span>,
+      key: "link",
+    },
+  ];
+
+  return (
+    <Dropdown overlay={<Menu items={items} />}>
+      <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+    </Dropdown>
   );
 };
 
