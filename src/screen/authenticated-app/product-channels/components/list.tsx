@@ -2,12 +2,12 @@ import styled from "@emotion/styled";
 import dayjs from "dayjs";
 import { Button, Table, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
-import { Home } from "types/home";
+import { Channel } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { useChannelModal } from "../util";
 
-interface ListProps extends TableProps<Home>, SearchPanelProps {
+interface ListProps extends TableProps<Channel>, SearchPanelProps {
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }
@@ -40,7 +40,25 @@ export const List = ({
         }}
         columns={[
           {
-            title: "日期",
+            title: "编号",
+            dataIndex: "id",
+            width: "8rem",
+            sorter: (a, b) => Number(a.id) - Number(b.id),
+          },
+          {
+            title: "产品名称",
+            dataIndex: "goods_name",
+          },
+          {
+            title: "产品编码",
+            dataIndex: "goods_code",
+          },
+          {
+            title: "运营商",
+            dataIndex: "supplier",
+          },
+          {
+            title: "创建时间",
             render: (value, data) => (
               <span>
                 {data.created_at
@@ -49,56 +67,6 @@ export const List = ({
               </span>
             ),
             sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
-          },
-          {
-            title: "代理商",
-            render: (value, data) => <span>{data.shop_name || "*"}</span>,
-          },
-          {
-            title: "商品名称",
-            render: (value, data) => <span>{data.goods_name || "*"}</span>,
-          },
-          {
-            title: "订单数",
-            dataIndex: "order_num",
-            sorter: (a, b) => Number(a.order_num) - Number(b.order_num),
-          },
-          {
-            title: "发货数",
-            dataIndex: "deliver_num",
-            sorter: (a, b) => Number(a.deliver_num) - Number(b.deliver_num),
-          },
-          {
-            title: "激活数",
-            dataIndex: "activation_num",
-            sorter: (a, b) =>
-              Number(a.activation_num) - Number(b.activation_num),
-          },
-          {
-            title: "发货率",
-            dataIndex: "deliver_rate",
-            sorter: (a, b) => Number(a.deliver_rate) - Number(b.deliver_rate),
-          },
-          {
-            title: "激活率",
-            dataIndex: "activation_rate",
-            sorter: (a, b) =>
-              Number(a.activation_rate) - Number(b.activation_rate),
-          },
-          {
-            title: "充值数",
-            dataIndex: "recharge_num",
-            sorter: (a, b) => Number(a.recharge_num) - Number(b.recharge_num),
-          },
-          {
-            title: "充值率",
-            dataIndex: "recharge_rate",
-            sorter: (a, b) => Number(a.recharge_rate) - Number(b.recharge_rate),
-          },
-          {
-            title: "中转率",
-            dataIndex: "transfer_rate",
-            sorter: (a, b) => Number(a.transfer_rate) - Number(b.transfer_rate),
           },
         ]}
         {...restProps}

@@ -10,16 +10,11 @@ export interface ChannelsSearchParams {
 
 export interface Channel {
   id: number;
-  store: string;
-  channel_id: string;
-  company: string;
-  contact: string;
-  phone: string;
-  email: string;
-  activation_days: number | undefined;
-  recharge_days: number | undefined;
+  goods_name: string;
+  goods_code: string;
+  supplier: string;
+  mode: number;
   created_at: string;
-  updated_at: string;
 }
 
 export interface ChannelsResult {
