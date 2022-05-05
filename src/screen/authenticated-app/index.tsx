@@ -21,6 +21,13 @@ import {
   HomeOutlined,
   ShopOutlined,
   ShoppingOutlined,
+  UserSwitchOutlined,
+  GoldOutlined,
+  NodeIndexOutlined,
+  SnippetsOutlined,
+  ToolOutlined,
+  SettingOutlined,
+  ImportOutlined,
 } from "@ant-design/icons";
 
 export const AuthenticatedApp = () => {
@@ -75,7 +82,46 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
     {
       label: <Link to={"agents"}>我的代理商</Link>,
       key: "agents",
-      icon: <ShoppingOutlined />,
+      icon: <UserSwitchOutlined />,
+    },
+    {
+      label: "产品管理中心",
+      key: "product",
+      icon: <GoldOutlined />,
+      children: [
+        {
+          label: <Link to={"product/channels"}>产品渠道管理</Link>,
+          key: "channels",
+          icon: <NodeIndexOutlined />,
+        },
+        {
+          label: <Link to={"product/channels"}>在售商品管理</Link>,
+          key: "channels",
+          icon: <ShoppingOutlined />,
+        },
+      ],
+    },
+    {
+      label: "订单管理中心",
+      key: "order",
+      icon: <SnippetsOutlined />,
+      children: [
+        {
+          label: <Link to={"order/deliver"}>生产发货</Link>,
+          key: "deliver",
+          icon: <ToolOutlined />,
+        },
+        {
+          label: <Link to={"order/configure"}>自动生产配置</Link>,
+          key: "configure",
+          icon: <SettingOutlined />,
+        },
+        {
+          label: <Link to={"order/import"}>批量导入</Link>,
+          key: "import",
+          icon: <ImportOutlined />,
+        },
+      ],
     },
   ];
 
