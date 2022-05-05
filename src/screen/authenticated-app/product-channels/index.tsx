@@ -10,6 +10,7 @@ import { Button, Drawer, Menu, MenuProps } from "antd";
 import { Row } from "components/lib";
 import { DownedList } from "./components/downed-list";
 import { DownedSearchPanel } from "./components/downed-search-panel";
+import { ChannelModal } from "./components/channel-modal";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -90,6 +91,7 @@ export const ProductChannels = () => {
           </>
         )}
       </Main>
+      <ChannelModal channels={data?.data || []} />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}
