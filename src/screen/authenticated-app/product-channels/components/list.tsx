@@ -13,6 +13,11 @@ interface ListProps extends TableProps<Channel>, SearchPanelProps {
   error: Error | unknown;
 }
 
+const modeOptions = [
+  { id: 1, name: "手动生产" },
+  { id: 2, name: "自动生产" },
+];
+
 export const List = ({
   error,
   params,
@@ -66,10 +71,7 @@ export const List = ({
                 trigger={["click"]}
                 overlay={
                   <Menu
-                    items={[
-                      { id: 1, name: "手动生产" },
-                      { id: 2, name: "自动生产" },
-                    ].map((item) => ({
+                    items={modeOptions.map((item) => ({
                       label: (
                         <span
                           onClick={() =>
@@ -89,7 +91,8 @@ export const List = ({
                   type={"link"}
                   onClick={(e) => e.preventDefault()}
                 >
-                  {channel.mode || "选择等级名称"}
+                  {modeOptions.find((item) => item.id === channel.mode)?.name ||
+                    "选择等级名称"}
                   <DownOutlined />
                 </ButtonNoPadding>
               </Dropdown>
