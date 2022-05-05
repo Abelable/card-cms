@@ -47,7 +47,7 @@ export const AgentShopModal = ({ agents }: { agents: Agent[] }) => {
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
+      <Form form={form}>
         <Form.Item name="store" label="代理商店铺名称">
           <Input placeholder="请输入店铺名称" />
         </Form.Item>

@@ -1,7 +1,7 @@
 import { Form, InputNumber, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddAgent, useEditAgent } from "service/agent";
+import { useEditAgent } from "service/agent";
 import { Agent } from "types/agent";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
@@ -14,23 +14,19 @@ export const AgentRechargeModal = ({ agents }: { agents: Agent[] }) => {
   const agent =
     agents?.find((item) => item.id === Number(agentIdOfEditingRecharge)) ||
     undefined;
-  const useMutationAgent = agentIdOfEditingRecharge
-    ? useEditAgent
-    : useAddAgent;
-  const { mutateAsync, isLoading, error } = useMutationAgent(
-    useAgentsQueryKey()
-  );
+  const { mutateAsync, isLoading, error } = useEditAgent(useAgentsQueryKey());
 
   useDeepCompareEffect(() => {
-    if (agent) form.setFieldsValue(agent);
+    if (agent) form.setFieldsValue({ recharge_days: agent.recharge_days });
   }, [agent, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
+      const { recharge_days } = form.getFieldsValue();
       await mutateAsync(
         cleanObject({
           id: agentIdOfEditingRecharge || "",
-          ...form.getFieldsValue(),
+          recharge_days,
         })
       );
       closeModal();
@@ -51,13 +47,9 @@ export const AgentRechargeModal = ({ agents }: { agents: Agent[] }) => {
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
-        <Form.Item
-          name="recharge_days"
-          label="有效天数"
-          rules={[{ required: true, message: "请输入有效天数" }]}
-        >
-          <InputNumber placeholder="请输入有效天数" />
+      <Form form={form}>
+        <Form.Item name="recharge_days" label="有效天数">
+          <InputNumber style={{ width: "100%" }} placeholder="请输入有效天数" />
         </Form.Item>
       </Form>
     </Modal>
