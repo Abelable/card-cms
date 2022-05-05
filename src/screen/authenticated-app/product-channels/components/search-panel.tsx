@@ -1,47 +1,23 @@
 import { useState } from "react";
-import { Button, DatePicker, Input } from "antd";
+import { Button, Input } from "antd";
 import { Row } from "components/lib";
-import { HomeSearchParams } from "types/home";
-import moment from "moment";
+import { ChannelsSearchParams } from "types/product";
 import styled from "@emotion/styled";
 
 export interface SearchPanelProps {
-  params: Partial<HomeSearchParams>;
-  setParams: (params: Partial<HomeSearchParams>) => void;
+  params: Partial<ChannelsSearchParams>;
+  setParams: (params: Partial<ChannelsSearchParams>) => void;
 }
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
-    s_time: "",
-    e_time: "",
-    nickname: "",
-  } as Partial<HomeSearchParams>;
+    goods_name: "",
+    goods_code: "",
+    supplier: "",
+  } as Partial<ChannelsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<HomeSearchParams>>(params);
-
-  const setDates = (dates: any, formatString: [string, string]) =>
-    setTemporaryParams({
-      ...temporaryParams,
-      s_time: formatString[0],
-      e_time: formatString[1],
-    });
-
-  const setShopName = (evt: any) => {
-    // onInputClear
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        shop_name: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      shop_name: evt.target.value,
-    });
-  };
+    useState<Partial<ChannelsSearchParams>>(params);
 
   const setGoodsName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
@@ -58,6 +34,37 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
+  const setGoodsCode = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        goods_code: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      goods_code: evt.target.value,
+    });
+  };
+
+  const setSupplier = (evt: any) => {
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        supplier: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      supplier: evt.target.value,
+    });
+  };
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -67,36 +74,32 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
-          <div>注册时间：</div>
-          <DatePicker.RangePicker
-            value={
-              temporaryParams.s_time
-                ? [
-                    moment(temporaryParams.s_time),
-                    moment(temporaryParams.e_time),
-                  ]
-                : undefined
-            }
-            onChange={setDates}
-          />
-        </Row>
-        <Row>
-          <div>代理商店铺名称：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.shop_name}
-            onChange={setShopName}
-            placeholder="请输入代理商店铺名称"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>商品名称：</div>
+          <div>产品名称：</div>
           <Input
             style={{ width: "20rem" }}
             value={temporaryParams.goods_name}
             onChange={setGoodsName}
-            placeholder="请输入商品名称"
+            placeholder="请输入产品名称"
+            allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>产品编码：</div>
+          <Input
+            style={{ width: "20rem" }}
+            value={temporaryParams.goods_code}
+            onChange={setGoodsCode}
+            placeholder="请输入产品编码"
+            allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>供应商：</div>
+          <Input
+            style={{ width: "20rem" }}
+            value={temporaryParams.supplier}
+            onChange={setSupplier}
+            placeholder="请输入供应商名称"
             allowClear={true}
           />
         </Row>

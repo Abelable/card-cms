@@ -1,6 +1,9 @@
 import { Pagination } from "./common";
 
 export interface ChannelsSearchParams {
+  goods_name: string;
+  goods_code: string;
+  supplier: string;
   per_page: number;
   page: number;
 }
