@@ -8,6 +8,8 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/suppliers/goods_list": "查看供应商商品",
   "/agents": "我的代理商",
   "/agents/goods_list": "查看代理商商品",
+  "/product": "产品管理中心",
+  "/product/channels": "产品渠道管理",
 };
 
 export const NavigationBar = () => {

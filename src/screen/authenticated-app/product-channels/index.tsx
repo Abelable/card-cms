@@ -124,8 +124,6 @@ const Container = styled.div`
 `;
 
 const TypeMenu = styled.div`
-  padding: 2.4rem;
-  padding-bottom: 0;
   background: #fff;
 `;
 
