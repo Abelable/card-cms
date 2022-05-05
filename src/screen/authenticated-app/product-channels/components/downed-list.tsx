@@ -1,20 +1,11 @@
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import {
-  Dropdown,
-  Menu,
-  MenuProps,
-  Modal,
-  Table,
-  TablePaginationConfig,
-  TableProps,
-} from "antd";
+import { Modal, Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useNavigate } from "react-router";
-import { useChannelModal, useChannelsQueryKey } from "../util";
-import { useDownChannel } from "service/product";
+import { ErrorBox, Row } from "components/lib";
+import { useChannelsQueryKey } from "../util";
+import { useUpChannel } from "service/product";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
   modeOptions: modeOption[];
@@ -28,6 +19,16 @@ export const DownedList = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const { mutate: upChannel } = useUpChannel(useChannelsQueryKey());
+  const confirmUpChannel = (id: number) => {
+    Modal.confirm({
+      title: "确定上架该产品吗？",
+      content: "点击确定上架",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => upChannel(String(id)),
+    });
+  };
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -78,9 +79,9 @@ export const DownedList = ({
           },
           {
             title: "操作",
-            render(value, channel) {
-              return <More channel={channel} />;
-            },
+            render: (value, channel) => (
+              <span onClick={() => confirmUpChannel(channel.id)}>上架</span>
+            ),
             width: "8rem",
           },
         ]}
@@ -88,44 +89,6 @@ export const DownedList = ({
         {...restProps}
       />
     </Container>
-  );
-};
-
-const More = ({ channel }: { channel: Channel }) => {
-  const navigate = useNavigate();
-  const link = (id: number) => navigate(`/channels/goods_list?id=${id}`);
-  const { startEdit } = useChannelModal();
-  const { mutate: downChannel } = useDownChannel(useChannelsQueryKey());
-
-  const confirmDownChannel = (id: number) => {
-    Modal.confirm({
-      title: "确定下架该产品吗？",
-      content: "点击确定下架",
-      okText: "确定",
-      cancelText: "取消",
-      onOk: () => downChannel(String(id)),
-    });
-  };
-
-  const items: MenuProps["items"] = [
-    {
-      label: <span onClick={() => startEdit(String(channel.id))}>编辑</span>,
-      key: "edit",
-    },
-    {
-      label: <span onClick={() => confirmDownChannel(channel.id)}>下架</span>,
-      key: "delete",
-    },
-    {
-      label: <span onClick={() => link(channel.id)}>查看分销商品</span>,
-      key: "link",
-    },
-  ];
-
-  return (
-    <Dropdown overlay={<Menu items={items} />}>
-      <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
-    </Dropdown>
   );
 };
 

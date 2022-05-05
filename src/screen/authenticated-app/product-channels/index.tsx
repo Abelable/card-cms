@@ -6,7 +6,7 @@ import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { Button, Drawer } from "antd";
+import { Button, Drawer, Menu, MenuProps } from "antd";
 import { Row } from "components/lib";
 import { DownedList } from "./components/downed-list";
 
@@ -32,8 +32,22 @@ export const ProductChannels = () => {
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
   };
 
+  const items: MenuProps["items"] = [
+    {
+      label: <span onClick={() => setType(0)}>产品渠道中心</span>,
+      key: 0,
+    },
+    {
+      label: <span onClick={() => setType(1)}>已下架的产品</span>,
+      key: 1,
+    },
+  ];
+
   return (
     <Container>
+      <TypeMenu>
+        <Menu mode="horizontal" items={items} />
+      </TypeMenu>
       <Main>
         <SearchPanel params={params} setParams={setParams} />
         {type === 0 ? (
@@ -98,6 +112,12 @@ export const ProductChannels = () => {
 const Container = styled.div`
   position: relative;
   height: 100%;
+`;
+
+const TypeMenu = styled.div`
+  padding: 2.4rem;
+  padding-bottom: 0;
+  background: #fff;
 `;
 
 const Main = styled.div`

@@ -59,3 +59,14 @@ export const useDownChannel = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useUpChannel = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: string) =>
+      client(`/api/v1/admin/channel/destroy/${id}`, {
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
