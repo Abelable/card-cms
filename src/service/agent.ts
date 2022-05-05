@@ -59,7 +59,7 @@ export const useDeleteAgent = (queryKey: QueryKey) => {
 
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(["goods_list", params], () =>
+  return useQuery<GoodsListResult>(["agent_goods_list", params], () =>
     client("/api/v1/admin/agent/index", {
       data: params,
     })

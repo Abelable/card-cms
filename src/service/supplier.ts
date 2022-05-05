@@ -44,7 +44,7 @@ export const useEditSupplier = (queryKey: QueryKey) => {
 
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(["goods_list", params], () =>
+  return useQuery<GoodsListResult>(["supplier_goods_list", params], () =>
     client("/api/v1/admin/supplier/index", {
       data: params,
     })
