@@ -1,12 +1,11 @@
 import {
   Button,
   Col,
-  DatePicker,
   Drawer,
   Form,
   Input,
+  InputNumber,
   Row,
-  Select,
   Space,
 } from "antd";
 import { useAgentModal, useAgentsQueryKey } from "../util";
@@ -71,47 +70,84 @@ export const AgentModal = ({ agents }: { agents: Agent[] }) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="title"
-              label="头图标题"
-              rules={[{ required: true, message: "请输入头图标题" }]}
+              name="company"
+              label="代理商公司名称"
+              rules={[{ required: true, message: "请输入公司名称" }]}
             >
-              <Input placeholder="请输入头图标题" />
+              <Input placeholder="请输入公司名称" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="sort" label="头图排序">
-              <Input placeholder="请输入头图序号" />
+            <Form.Item
+              name="store"
+              label="店铺名备注"
+              rules={[{ required: true, message: "请输入店铺名备注" }]}
+            >
+              <Input placeholder="请输入店铺名备注" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="dateRange"
-              label="投放时间"
-              rules={[{ required: true, message: "请选择投放时间" }]}
+              name="channel_id"
+              label="渠道id"
+              rules={[{ required: true, message: "请输入渠道id" }]}
             >
-              <DatePicker.RangePicker style={{ width: "100%" }} />
+              <Input placeholder="请输入渠道id" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="contact"
+              label="联系人姓名"
+              rules={[{ required: true, message: "请输入联系人姓名" }]}
+            >
+              <Input placeholder="请输入联系人姓名" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="is_show"
-              label="是否展示"
-              rules={[{ required: true, message: "请选择展示或隐藏" }]}
+              name="phone"
+              label="联系电话"
+              rules={[{ required: true, message: "请输入联系电话" }]}
             >
-              <Select placeholder="请选择展示或隐藏">
-                {[
-                  { name: "展示", value: "1" },
-                  { name: "隐藏", value: "0" },
-                ].map((item, index) => (
-                  <Select.Option key={index} value={item.value}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
+              <Input placeholder="请输入联系电话" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="email"
+              label="邮箱"
+              rules={[{ required: true, message: "请输入邮箱" }]}
+            >
+              <Input placeholder="请输入邮箱" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="activation_days"
+              label="激活状态回传的有效天数（自订单创建时起）"
+            >
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入有效天数"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="recharge_days"
+              label="充值金额回传的有效天数（自订单创建时起）"
+            >
+              <InputNumber
+                style={{ width: "100%" }}
+                placeholder="请输入有效天数"
+              />
             </Form.Item>
           </Col>
         </Row>
