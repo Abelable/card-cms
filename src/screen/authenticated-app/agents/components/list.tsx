@@ -7,6 +7,7 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
+  MenuProps,
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { Agent, AgentsSearchParams } from "types/agent";
@@ -159,22 +160,21 @@ const More = ({ agent }: { agent: Agent }) => {
     });
   };
 
+  const items: MenuProps["items"] = [
+    {
+      label: <span onClick={() => link(agent.id)}>查看分销商品</span>,
+      key: "link",
+    },
+    {
+      label: (
+        <span onClick={() => confirmDeleteAgent(agent.id)}>删除代理商</span>
+      ),
+      key: "delete",
+    },
+  ];
+
   return (
-    <Dropdown
-      overlay={
-        <Menu>
-          <Menu.Item onClick={() => link(agent.id)} key={"link"}>
-            查看分销商品
-          </Menu.Item>
-          <Menu.Item
-            onClick={() => confirmDeleteAgent(agent.id)}
-            key={"delete"}
-          >
-            删除代理商
-          </Menu.Item>
-        </Menu>
-      }
-    >
+    <Dropdown overlay={<Menu items={items} />}>
       <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
     </Dropdown>
   );
