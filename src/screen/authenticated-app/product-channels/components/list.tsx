@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import { Table, TableProps } from "antd";
+import { Button, Table, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Home } from "types/home";
-import { ErrorBox } from "components/lib";
+import { ErrorBox, Row } from "components/lib";
+import { PlusOutlined } from "@ant-design/icons";
+import { useChannelModal } from "../util";
 
 interface ListProps extends TableProps<Home>, SearchPanelProps {
   setSelectedRowKeys: (selectedRowKeys: []) => void;
@@ -17,9 +19,16 @@ export const List = ({
   setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
+  const { open } = useChannelModal();
+
   return (
     <Container>
-      <Title>数据列表</Title>
+      <Header between={true}>
+        <h3>代理商列表</h3>
+        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
+          新增
+        </Button>
+      </Header>
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
@@ -103,6 +112,6 @@ const Container = styled.div`
   background: #fff;
 `;
 
-const Title = styled.h3`
+const Header = styled(Row)`
   margin-bottom: 2.4rem;
 `;

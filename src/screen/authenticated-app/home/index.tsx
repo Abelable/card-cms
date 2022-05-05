@@ -27,13 +27,13 @@ export const Home = () => {
           error={error}
           params={params}
           setParams={setParams}
-          dataSource={data?.list}
+          dataSource={data?.data}
           setSelectedRowKeys={setSelectedRowKeys}
           loading={isLoading}
           pagination={{
-            current: toNumber(data?.page),
-            pageSize: toNumber(data?.page_size),
-            total: toNumber(data?.total),
+            current: toNumber(data?.meta.pagination.current_page),
+            pageSize: toNumber(data?.meta.pagination.per_page),
+            total: toNumber(data?.meta.pagination.total),
           }}
         />
       </Main>

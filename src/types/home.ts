@@ -1,3 +1,5 @@
+import { Pagination } from "./common";
+
 export interface HomeSearchParams {
   shop_name: string;
   goods_name: string;
@@ -21,8 +23,6 @@ export interface Home {
 }
 
 export interface HomeResult {
-  list: Home[];
-  page: string;
-  page_size: string;
-  total: string;
+  data: Home[];
+  meta: { pagination: Pagination };
 }

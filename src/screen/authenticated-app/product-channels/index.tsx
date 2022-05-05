@@ -1,6 +1,6 @@
 import { toNumber } from "utils";
-import { useHome } from "service/home";
-import { useHomeSearchParams } from "./util";
+import { useChannels } from "service/product";
+import { useChannelsSearchParams } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -9,10 +9,10 @@ import { useState } from "react";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 
-export const ProductChannel = () => {
-  const [params, setParams] = useHomeSearchParams();
+export const ProductChannels = () => {
+  const [params, setParams] = useChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const { data, isLoading, error } = useHome(params);
+  const { data, isLoading, error } = useChannels(params);
   const exportApplications = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
@@ -27,13 +27,13 @@ export const ProductChannel = () => {
           error={error}
           params={params}
           setParams={setParams}
-          dataSource={data?.list}
+          dataSource={data?.data}
           setSelectedRowKeys={setSelectedRowKeys}
           loading={isLoading}
           pagination={{
-            current: toNumber(data?.page),
-            pageSize: toNumber(data?.page_size),
-            total: toNumber(data?.total),
+            current: toNumber(data?.meta.pagination.current_page),
+            pageSize: toNumber(data?.meta.pagination.per_page),
+            total: toNumber(data?.meta.pagination.total),
           }}
         />
       </Main>
