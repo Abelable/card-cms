@@ -1,19 +1,9 @@
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import {
-  Button,
-  Dropdown,
-  Menu,
-  Table,
-  TablePaginationConfig,
-  TableProps,
-} from "antd";
+import { Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined, DownOutlined } from "@ant-design/icons";
-import { useEditChannel } from "service/product";
-import { useChannelModal, useChannelsQueryKey } from "../util";
+import { ErrorBox, Row } from "components/lib";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
   modeOptions: modeOption[];
@@ -21,7 +11,7 @@ interface ListProps extends TableProps<Channel>, SearchPanelProps {
   error: Error | unknown;
 }
 
-export const List = ({
+export const DownedList = ({
   error,
   modeOptions,
   params,
@@ -29,8 +19,6 @@ export const List = ({
   setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
-  const { open } = useChannelModal();
-  const { mutate: editChannel } = useEditChannel(useChannelsQueryKey());
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -42,18 +30,10 @@ export const List = ({
     <Container>
       <Header between={true}>
         <h3>产品列表</h3>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
-        </Button>
       </Header>
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        rowSelection={{
-          type: "checkbox",
-          onChange: (selectedRowKeys) =>
-            setSelectedRowKeys(selectedRowKeys as []),
-        }}
         columns={[
           {
             title: "编号",
@@ -76,35 +56,9 @@ export const List = ({
           {
             title: "生产方式",
             render: (value, channel) => (
-              <Dropdown
-                trigger={["click"]}
-                overlay={
-                  <Menu
-                    items={modeOptions.map((item) => ({
-                      label: (
-                        <span
-                          onClick={() =>
-                            editChannel({ id: channel.id, mode: item.id })
-                          }
-                        >
-                          {item.name}
-                        </span>
-                      ),
-                      key: item.id,
-                    }))}
-                  />
-                }
-              >
-                <ButtonNoPadding
-                  style={{ color: channel.mode ? "#1890ff" : "#999" }}
-                  type={"link"}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {modeOptions.find((item) => item.id === channel.mode)?.name ||
-                    "选择等级名称"}
-                  <DownOutlined />
-                </ButtonNoPadding>
-              </Dropdown>
+              <span>
+                {modeOptions.find((item) => item.id === channel.mode)?.name}
+              </span>
             ),
           },
           {

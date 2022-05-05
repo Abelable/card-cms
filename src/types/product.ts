@@ -1,5 +1,9 @@
 import { Pagination } from "./common";
 
+export interface modeOption {
+  id: number;
+  name: string;
+}
 export interface ChannelsSearchParams {
   goods_name: string;
   goods_code: string;

@@ -9,6 +9,11 @@ import { useState } from "react";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 
+const modeOptions = [
+  { id: 1, name: "手动生产" },
+  { id: 2, name: "自动生产" },
+];
+
 export const ProductChannels = () => {
   const [params, setParams] = useChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -25,6 +30,7 @@ export const ProductChannels = () => {
         <SearchPanel params={params} setParams={setParams} />
         <List
           error={error}
+          modeOptions={modeOptions}
           params={params}
           setParams={setParams}
           dataSource={data?.data}
