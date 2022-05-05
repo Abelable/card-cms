@@ -20,6 +20,11 @@ export const useChannelsSearchParams = () => {
   ] as const;
 };
 
+export const useChannelsQueryKey = () => {
+  const [params] = useChannelsSearchParams();
+  return ["channels", params];
+};
+
 export const useChannelModal = () => {
   const [{ channelCreate }, setChannelsModalOpen] = useUrlQueryParams([
     "channelCreate",

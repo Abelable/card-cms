@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import { Button, Table, TableProps } from "antd";
+import { Button, Dropdown, Menu, Table, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel } from "types/product";
-import { ErrorBox, Row } from "components/lib";
-import { PlusOutlined } from "@ant-design/icons";
-import { useChannelModal } from "../util";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
+import { PlusOutlined, DownOutlined } from "@ant-design/icons";
+import { useEditChannel } from "service/product";
+import { useChannelModal, useChannelsQueryKey } from "../util";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
   setSelectedRowKeys: (selectedRowKeys: []) => void;
@@ -20,6 +21,7 @@ export const List = ({
   ...restProps
 }: ListProps) => {
   const { open } = useChannelModal();
+  const { mutate: editChannel } = useEditChannel(useChannelsQueryKey());
 
   return (
     <Container>
@@ -56,6 +58,43 @@ export const List = ({
           {
             title: "运营商",
             dataIndex: "supplier",
+          },
+          {
+            title: "生产方式",
+            render: (value, channel) => (
+              <Dropdown
+                trigger={["click"]}
+                overlay={
+                  <Menu
+                    items={[
+                      { id: 1, name: "手动生产" },
+                      { id: 2, name: "自动生产" },
+                    ].map((item) => ({
+                      label: (
+                        <span
+                          onClick={() =>
+                            editChannel({ id: channel.id, mode: item.id })
+                          }
+                        >
+                          {item.name}
+                        </span>
+                      ),
+                      key: item.id,
+                    }))}
+                  />
+                }
+              >
+                <ButtonNoPadding
+                  style={{ color: channel.mode ? "#1890ff" : "#999" }}
+                  type={"link"}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {channel.mode || "选择等级名称"}
+                  <DownOutlined />
+                </ButtonNoPadding>
+              </Dropdown>
+            ),
+            width: "18rem",
           },
           {
             title: "创建时间",
