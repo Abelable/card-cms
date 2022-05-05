@@ -50,3 +50,69 @@ export const useAgentModal = () => {
     close,
   };
 };
+
+export const useAgentShopModal = () => {
+  const [{ agentIdOfEditingShop }, setEditingAgentId] = useUrlQueryParams([
+    "agentIdOfEditingShop",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+  const startEdit = useCallback(
+    (id: string) => setEditingAgentId({ agentIdOfEditingShop: id }),
+    [setEditingAgentId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ agentIdOfEditingShop: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    agentShopModalOpen: !!agentIdOfEditingShop,
+    agentIdOfEditingShop,
+    startEdit,
+    close,
+  };
+};
+
+export const useAgentActivationModal = () => {
+  const [{ agentIdOfEditingActivation }, setEditingAgentId] = useUrlQueryParams(
+    ["agentIdOfEditingActivation"]
+  );
+  const setUrlParams = useSetUrlSearchParams();
+  const startEdit = useCallback(
+    (id: string) => setEditingAgentId({ agentIdOfEditingActivation: id }),
+    [setEditingAgentId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ agentIdOfEditingActivation: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    agentActivationModalOpen: !!agentIdOfEditingActivation,
+    agentIdOfEditingActivation,
+    startEdit,
+    close,
+  };
+};
+
+export const useAgentRechargeModal = () => {
+  const [{ agentIdOfEditingRecharge }, setEditingAgentId] = useUrlQueryParams([
+    "agentIdOfEditingRecharge",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+  const startEdit = useCallback(
+    (id: string) => setEditingAgentId({ agentIdOfEditingRecharge: id }),
+    [setEditingAgentId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ agentIdOfEditingRecharge: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    agentRechargeModalOpen: !!agentIdOfEditingRecharge,
+    agentIdOfEditingRecharge,
+    startEdit,
+    close,
+  };
+};

@@ -13,7 +13,13 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { Agent, AgentsSearchParams } from "types/agent";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { useAgentModal, useAgentsQueryKey } from "../util";
+import {
+  useAgentModal,
+  useAgentShopModal,
+  useAgentsQueryKey,
+  useAgentRechargeModal,
+  useAgentActivationModal,
+} from "../util";
 import { useDeleteAgent } from "service/agent";
 
 interface ListProps extends TableProps<Agent> {
@@ -30,6 +36,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
   const { open } = useAgentModal();
+  const { startEdit: startEditShop } = useAgentShopModal();
+  const { startEdit: startEditingActivation } = useAgentActivationModal();
+  const { startEdit: startEditingRecharge } = useAgentRechargeModal();
 
   return (
     <Container>
@@ -55,7 +64,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             title: "代理商店铺名",
             dataIndex: "store",
             render: (value, agent) => (
-              <Edit>
+              <Edit onClick={() => startEditShop(String(agent.id))}>
                 <span>{value}</span>
                 <EditOutlined
                   style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -93,7 +102,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             title: "激活状态回传的有效天数（订单创建时起）",
             dataIndex: "activation_days",
             render: (value, agent) => (
-              <Edit>
+              <Edit onClick={() => startEditingActivation(String(agent.id))}>
                 <span>{value || 0}天</span>
                 <EditOutlined
                   style={{ marginLeft: ".4rem", color: "#1890ff" }}
@@ -104,9 +113,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "充值金额回传的有效天数（订单创建时起）",
-            dataIndex: "activation_days",
+            dataIndex: "recharge_days",
             render: (value, agent) => (
-              <Edit>
+              <Edit onClick={() => startEditingRecharge(String(agent.id))}>
                 <span>{value || 0}天</span>
                 <EditOutlined
                   style={{ marginLeft: ".4rem", color: "#1890ff" }}

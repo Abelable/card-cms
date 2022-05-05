@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import { useAgents } from "service/agent";
 import { toNumber } from "utils";
+import { useAgentsSearchParams } from "./util";
 import { List } from "./components/list";
 import { AgentModal } from "./components/agent-modal";
-import { useAgentsSearchParams } from "./util";
+import { AgentShopModal } from "./components/agent-shop-modal";
+import { AgentRechargeModal } from "./components/agent-recharge-modal";
+import { AgentActivationModal } from "./components/agent-activation-modal";
 
 export const Agents = () => {
   const [params, setParams] = useAgentsSearchParams();
@@ -25,6 +28,9 @@ export const Agents = () => {
           }}
         />
         <AgentModal agents={data?.data || []} />
+        <AgentShopModal agents={data?.data || []} />
+        <AgentRechargeModal agents={data?.data || []} />
+        <AgentActivationModal agents={data?.data || []} />
       </Main>
     </Container>
   );
