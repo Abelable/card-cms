@@ -23,23 +23,3 @@ export interface ChannelsResult {
   data: Channel[];
   meta: { pagination: Pagination };
 }
-
-export interface GoodsListSearchParams {
-  per_page: number;
-  page: number;
-}
-
-export interface Goods {
-  id: string;
-  name: string;
-  img: string;
-  tags: string[];
-  code: string;
-  channel: string;
-  created_at: string;
-}
-
-export interface GoodsListResult {
-  data: Goods[];
-  meta: { pagination: Pagination };
-}
