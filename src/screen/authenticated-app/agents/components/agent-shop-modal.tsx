@@ -1,7 +1,7 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddAgent, useEditAgent } from "service/agent";
+import { useEditAgent } from "service/agent";
 import { Agent } from "types/agent";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
@@ -14,21 +14,19 @@ export const AgentShopModal = ({ agents }: { agents: Agent[] }) => {
   const agent =
     agents?.find((item) => item.id === Number(agentIdOfEditingShop)) ||
     undefined;
-  const useMutationAgent = agentIdOfEditingShop ? useEditAgent : useAddAgent;
-  const { mutateAsync, isLoading, error } = useMutationAgent(
-    useAgentsQueryKey()
-  );
+  const { mutateAsync, isLoading, error } = useEditAgent(useAgentsQueryKey());
 
   useDeepCompareEffect(() => {
-    if (agent) form.setFieldsValue(agent);
+    if (agent) form.setFieldsValue({ store: agent.store });
   }, [agent, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
+      const { store } = form.getFieldsValue();
       await mutateAsync(
         cleanObject({
-          id: agentIdOfEditingShop || "",
-          ...form.getFieldsValue(),
+          id: agentIdOfEditingShop,
+          store,
         })
       );
       closeModal();
@@ -50,11 +48,7 @@ export const AgentShopModal = ({ agents }: { agents: Agent[] }) => {
     >
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
-        <Form.Item
-          name="store"
-          label="代理商店铺名称"
-          rules={[{ required: true, message: "请输入店铺名称" }]}
-        >
+        <Form.Item name="store" label="代理商店铺名称">
           <Input placeholder="请输入店铺名称" />
         </Form.Item>
       </Form>
