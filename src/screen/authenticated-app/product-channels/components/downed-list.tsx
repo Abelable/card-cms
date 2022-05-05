@@ -18,7 +18,6 @@ import { useDownChannel } from "service/product";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
   modeOptions: modeOption[];
-  setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }
 
@@ -27,7 +26,6 @@ export const DownedList = ({
   modeOptions,
   params,
   setParams,
-  setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
   const setPagination = (pagination: TablePaginationConfig) =>

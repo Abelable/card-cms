@@ -1,6 +1,6 @@
 import { toNumber } from "utils";
-import { useChannels } from "service/product";
-import { useChannelsSearchParams } from "./util";
+import { useChannels, useDownedChannels } from "service/product";
+import { useChannelsSearchParams, useDownedChannelsSearchParams } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -8,6 +8,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
+import { DownedList } from "./components/downed-list";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -15,9 +16,16 @@ const modeOptions = [
 ];
 
 export const ProductChannels = () => {
+  const [type, setType] = useState(0);
   const [params, setParams] = useChannelsSearchParams();
+  const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const { data, isLoading, error } = useChannels(params);
+  const {
+    data: downedData,
+    isLoading: downedLoading,
+    error: downedError,
+  } = useDownedChannels(downedParams);
   const exportApplications = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
@@ -28,20 +36,36 @@ export const ProductChannels = () => {
     <Container>
       <Main>
         <SearchPanel params={params} setParams={setParams} />
-        <List
-          error={error}
-          modeOptions={modeOptions}
-          params={params}
-          setParams={setParams}
-          dataSource={data?.data}
-          setSelectedRowKeys={setSelectedRowKeys}
-          loading={isLoading}
-          pagination={{
-            current: toNumber(data?.meta.pagination.current_page),
-            pageSize: toNumber(data?.meta.pagination.per_page),
-            total: toNumber(data?.meta.pagination.total),
-          }}
-        />
+        {type === 0 ? (
+          <List
+            error={error}
+            modeOptions={modeOptions}
+            params={params}
+            setParams={setParams}
+            dataSource={data?.data}
+            setSelectedRowKeys={setSelectedRowKeys}
+            loading={isLoading}
+            pagination={{
+              current: toNumber(data?.meta.pagination.current_page),
+              pageSize: toNumber(data?.meta.pagination.per_page),
+              total: toNumber(data?.meta.pagination.total),
+            }}
+          />
+        ) : (
+          <DownedList
+            error={downedError}
+            modeOptions={modeOptions}
+            params={downedParams}
+            setParams={setDownedParams}
+            dataSource={downedData?.data}
+            loading={downedLoading}
+            pagination={{
+              current: toNumber(data?.meta.pagination.current_page),
+              pageSize: toNumber(data?.meta.pagination.per_page),
+              total: toNumber(data?.meta.pagination.total),
+            }}
+          />
+        )}
       </Main>
       <Drawer
         visible={!!selectedRowKeys.length}

@@ -20,6 +20,25 @@ export const useChannelsSearchParams = () => {
   ] as const;
 };
 
+export const useDownedChannelsSearchParams = () => {
+  const [params, setParams] = useUrlQueryParams([
+    "goods_name",
+    "goods_code",
+    "supplier",
+    "page",
+    "per_page",
+  ]);
+  return [
+    useMemo(
+      () => ({
+        ...params,
+      }),
+      [params]
+    ),
+    setParams,
+  ] as const;
+};
+
 export const useChannelsQueryKey = () => {
   const [params] = useChannelsSearchParams();
   return ["channels", params];
