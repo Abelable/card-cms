@@ -60,9 +60,9 @@ export const ProductChannels = () => {
             dataSource={downedData?.data}
             loading={downedLoading}
             pagination={{
-              current: toNumber(data?.meta.pagination.current_page),
-              pageSize: toNumber(data?.meta.pagination.per_page),
-              total: toNumber(data?.meta.pagination.total),
+              current: toNumber(downedData?.meta.pagination.current_page),
+              pageSize: toNumber(downedData?.meta.pagination.per_page),
+              total: toNumber(downedData?.meta.pagination.total),
             }}
           />
         )}
