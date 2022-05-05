@@ -12,6 +12,7 @@ import { Home } from "./home";
 import { Suppliers } from "./suppliers";
 import { SupplierGoodsList } from "./supplier-goods-list";
 import { Agents } from "./agents";
+import { AgentGoodsList } from "./agent-goods-list";
 
 import {
   MenuUnfoldOutlined,
@@ -44,6 +45,7 @@ export const AuthenticatedApp = () => {
                 element={<SupplierGoodsList />}
               />
               <Route path="agents" element={<Agents />} />
+              <Route path="agents/goods_list" element={<AgentGoodsList />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}

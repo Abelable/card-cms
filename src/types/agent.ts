@@ -25,8 +25,6 @@ export interface AgentsResult {
 }
 
 export interface GoodsListSearchParams {
-  goods_name: string;
-  supplier_name: string;
   per_page: number;
   page: number;
 }
@@ -34,8 +32,10 @@ export interface GoodsListSearchParams {
 export interface Goods {
   id: string;
   name: string;
+  img: string;
+  tags: string[];
   code: string;
-  supplier_name: string;
+  channel: string;
   created_at: string;
 }
 
