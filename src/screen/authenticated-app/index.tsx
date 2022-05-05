@@ -90,13 +90,13 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       icon: <GoldOutlined />,
       children: [
         {
-          label: <Link to={"product/channels"}>产品渠道管理</Link>,
-          key: "channels",
+          label: <Link to={"product/channel"}>产品渠道管理</Link>,
+          key: "channel",
           icon: <NodeIndexOutlined />,
         },
         {
-          label: <Link to={"product/channels"}>在售商品管理</Link>,
-          key: "channels",
+          label: <Link to={"product/sale"}>在售商品管理</Link>,
+          key: "sale",
           icon: <ShoppingOutlined />,
         },
       ],
