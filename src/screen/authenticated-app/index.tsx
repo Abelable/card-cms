@@ -13,6 +13,7 @@ import { Suppliers } from "./suppliers";
 import { SupplierGoodsList } from "./supplier-goods-list";
 import { Agents } from "./agents";
 import { AgentGoodsList } from "./agent-goods-list";
+import { ProductChannels } from "./product-channels";
 
 import {
   MenuUnfoldOutlined,
@@ -53,6 +54,7 @@ export const AuthenticatedApp = () => {
               />
               <Route path="agents" element={<Agents />} />
               <Route path="agents/goods_list" element={<AgentGoodsList />} />
+              <Route path="product/channels" element={<ProductChannels />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}
@@ -90,13 +92,13 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       icon: <GoldOutlined />,
       children: [
         {
-          label: <Link to={"product/channel"}>产品渠道管理</Link>,
-          key: "channel",
+          label: <Link to={"product/channels"}>产品渠道管理</Link>,
+          key: "channels",
           icon: <NodeIndexOutlined />,
         },
         {
-          label: <Link to={"product/sale"}>在售商品管理</Link>,
-          key: "sale",
+          label: <Link to={"product/sales"}>在售商品管理</Link>,
+          key: "sales",
           icon: <ShoppingOutlined />,
         },
       ],

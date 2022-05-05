@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Button, Drawer, Menu, MenuProps } from "antd";
 import { Row } from "components/lib";
 import { DownedList } from "./components/downed-list";
+import { DownedSearchPanel } from "./components/downed-search-panel";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -16,7 +17,7 @@ const modeOptions = [
 ];
 
 export const ProductChannels = () => {
-  const [type, setType] = useState(0);
+  const [type, setType] = useState("0");
   const [params, setParams] = useChannelsSearchParams();
   const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -34,51 +35,59 @@ export const ProductChannels = () => {
 
   const items: MenuProps["items"] = [
     {
-      label: <span onClick={() => setType(0)}>产品渠道中心</span>,
-      key: 0,
+      label: <span onClick={() => setType("0")}>产品渠道中心</span>,
+      key: "0",
     },
     {
-      label: <span onClick={() => setType(1)}>已下架的产品</span>,
-      key: 1,
+      label: <span onClick={() => setType("1")}>已下架的产品</span>,
+      key: "1",
     },
   ];
 
   return (
     <Container>
       <TypeMenu>
-        <Menu mode="horizontal" items={items} />
+        <Menu mode="horizontal" selectedKeys={[type]} items={items} />
       </TypeMenu>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
-        {type === 0 ? (
-          <List
-            error={error}
-            modeOptions={modeOptions}
-            params={params}
-            setParams={setParams}
-            dataSource={data?.data}
-            setSelectedRowKeys={setSelectedRowKeys}
-            loading={isLoading}
-            pagination={{
-              current: toNumber(data?.meta.pagination.current_page),
-              pageSize: toNumber(data?.meta.pagination.per_page),
-              total: toNumber(data?.meta.pagination.total),
-            }}
-          />
+        {type === "0" ? (
+          <>
+            <SearchPanel params={params} setParams={setParams} />
+            <List
+              error={error}
+              modeOptions={modeOptions}
+              params={params}
+              setParams={setParams}
+              dataSource={data?.data}
+              setSelectedRowKeys={setSelectedRowKeys}
+              loading={isLoading}
+              pagination={{
+                current: toNumber(data?.meta.pagination.current_page),
+                pageSize: toNumber(data?.meta.pagination.per_page),
+                total: toNumber(data?.meta.pagination.total),
+              }}
+            />
+          </>
         ) : (
-          <DownedList
-            error={downedError}
-            modeOptions={modeOptions}
-            params={downedParams}
-            setParams={setDownedParams}
-            dataSource={downedData?.data}
-            loading={downedLoading}
-            pagination={{
-              current: toNumber(downedData?.meta.pagination.current_page),
-              pageSize: toNumber(downedData?.meta.pagination.per_page),
-              total: toNumber(downedData?.meta.pagination.total),
-            }}
-          />
+          <>
+            <DownedSearchPanel
+              params={downedParams}
+              setParams={setDownedParams}
+            />
+            <DownedList
+              error={downedError}
+              modeOptions={modeOptions}
+              params={downedParams}
+              setParams={setDownedParams}
+              dataSource={downedData?.data}
+              loading={downedLoading}
+              pagination={{
+                current: toNumber(downedData?.meta.pagination.current_page),
+                pageSize: toNumber(downedData?.meta.pagination.per_page),
+                total: toNumber(downedData?.meta.pagination.total),
+              }}
+            />
+          </>
         )}
       </Main>
       <Drawer
