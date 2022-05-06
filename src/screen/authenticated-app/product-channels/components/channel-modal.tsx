@@ -5,6 +5,7 @@ import {
   Drawer,
   Form,
   Input,
+  InputNumber,
   Menu,
   Radio,
   Row,
@@ -318,7 +319,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               <CustomFormItem width={30}>
                 <span style={{ marginRight: "2rem" }}>检测周期：</span>
                 <Form.Item
-                  name="card_number_limit"
+                  name="card_test_cycle"
                   style={{ marginBottom: 0, width: "100%" }}
                 >
                   <Select placeholder="不限制">
@@ -341,16 +342,51 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                 selectedKeys={[String(type)]}
                 items={[
                   {
-                    label: <span onClick={() => setType(1)}>产品渠道中心</span>,
+                    label: (
+                      <span onClick={() => setType(1)}>使用全局默认方案</span>
+                    ),
                     key: 1,
                   },
                   {
-                    label: <span onClick={() => setType(2)}>已下架的产品</span>,
+                    label: (
+                      <span onClick={() => setType(2)}>使用自定义方案</span>
+                    ),
                     key: 2,
                   },
                 ]}
               />
             </TypeMenu>
+            <div style={{ padding: "2.4rem" }}>
+              <CustomRow gap>
+                <CustomFormItem width={30}>
+                  <span style={{ marginRight: "2rem" }}>联系电话重复：</span>
+                  <Form.Item
+                    name="phone_repeat_limit"
+                    style={{ marginBottom: 0, width: "100%" }}
+                  >
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      placeholder="不限制"
+                    />
+                  </Form.Item>
+                </CustomFormItem>
+                <CustomFormItem width={30}>
+                  <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                  <Form.Item
+                    name="phone_test_cycle"
+                    style={{ marginBottom: 0, width: "100%" }}
+                  >
+                    <Select placeholder="不限制">
+                      {cycleOptions.map((item) => (
+                        <Select.Option key={item} value={item}>
+                          {item}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </CustomFormItem>
+              </CustomRow>
+            </div>
           </Wrap>
         </Form.Item>
       </Form>
