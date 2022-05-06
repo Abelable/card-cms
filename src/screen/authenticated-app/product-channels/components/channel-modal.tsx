@@ -212,7 +212,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               <Radio.Group>
                 <Space direction="vertical">
                   <Radio value={1}>
-                    <AddressWrap>
+                    <CustomFormItem>
                       <span style={{ marginRight: "2rem" }}>不发货地址：</span>
                       <Form.Item
                         name="deliver_area"
@@ -227,10 +227,10 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                           onClick={(e) => e.preventDefault()}
                         />
                       </Form.Item>
-                    </AddressWrap>
+                    </CustomFormItem>
                   </Radio>
                   <Radio value={2}>
-                    <AddressWrap>
+                    <CustomFormItem>
                       <span style={{ marginRight: "2rem" }}>只发货地址：</span>
                       <Form.Item
                         name="only_deliver_area"
@@ -244,12 +244,12 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                           onClick={(e) => e.preventDefault()}
                         />
                       </Form.Item>
-                    </AddressWrap>
+                    </CustomFormItem>
                   </Radio>
                 </Space>
               </Radio.Group>
             </Form.Item>
-            <AgeLimit>
+            <CustomFormItem>
               <span style={{ marginRight: "2rem" }}>年龄限制（周岁）：</span>
               <Input.Group compact>
                 <Form.Item name="min_age" style={{ marginBottom: 0 }}>
@@ -280,7 +280,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                   />
                 </Form.Item>
               </Input.Group>
-            </AgeLimit>
+            </CustomFormItem>
           </Wrap>
         </Form.Item>
       </Form>
@@ -294,14 +294,9 @@ const Wrap = styled.div`
   border-radius: 0.5rem;
 `;
 
-const AddressWrap = styled.div`
+const CustomFormItem = styled.div`
   display: flex;
   align-items: center;
   width: 50rem;
   white-space: nowrap;
-`;
-
-const AgeLimit = styled.div`
-  display: flex;
-  align-items: center;
 `;
