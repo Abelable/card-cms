@@ -357,35 +357,144 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               />
             </TypeMenu>
             <div style={{ padding: "2.4rem" }}>
-              <CustomRow gap>
-                <CustomFormItem width={30}>
-                  <span style={{ marginRight: "2rem" }}>联系电话重复：</span>
-                  <Form.Item
-                    name="phone_repeat_limit"
-                    style={{ marginBottom: 0, width: "100%" }}
-                  >
-                    <InputNumber
-                      style={{ width: "100%" }}
-                      placeholder="不限制"
-                    />
-                  </Form.Item>
-                </CustomFormItem>
-                <CustomFormItem width={30}>
-                  <span style={{ marginRight: "2rem" }}>检测周期：</span>
-                  <Form.Item
-                    name="phone_test_cycle"
-                    style={{ marginBottom: 0, width: "100%" }}
-                  >
-                    <Select placeholder="不限制">
-                      {cycleOptions.map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                </CustomFormItem>
-              </CustomRow>
+              {type === 1 ? (
+                <>
+                  <CustomRow gap marginBottom={2.4}>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>
+                        联系电话重复：
+                      </span>
+                      <Form.Item
+                        name="phone_repeat_limit"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="不限制"
+                        />
+                      </Form.Item>
+                    </CustomFormItem>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                      <Form.Item
+                        name="phone_test_cycle"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <Select placeholder="不限制">
+                          {cycleOptions.map((item) => (
+                            <Select.Option key={item} value={item}>
+                              {item}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </CustomFormItem>
+                  </CustomRow>
+                  <CustomRow gap marginBottom={2.4}>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>
+                        收货地址重复：
+                      </span>
+                      <Form.Item
+                        name="address_repeat_limit"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="不限制"
+                        />
+                      </Form.Item>
+                    </CustomFormItem>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                      <Form.Item
+                        name="address_test_cycle"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <Select placeholder="不限制">
+                          {cycleOptions.map((item) => (
+                            <Select.Option key={item} value={item}>
+                              {item}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </CustomFormItem>
+                  </CustomRow>
+                  <CustomRow gap>
+                    <Button type={"primary"}>修改默认方案</Button>
+                    <div style={{ color: "red" }}>
+                      注：修改默认方案会导致使用默认方案的所有基础产品风控规则变更
+                    </div>
+                  </CustomRow>
+                </>
+              ) : (
+                <>
+                  <CustomRow gap marginBottom={2.4}>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>
+                        联系电话重复：
+                      </span>
+                      <Form.Item
+                        name="phone_repeat_limit"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="不限制"
+                        />
+                      </Form.Item>
+                    </CustomFormItem>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                      <Form.Item
+                        name="phone_test_cycle"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <Select placeholder="不限制">
+                          {cycleOptions.map((item) => (
+                            <Select.Option key={item} value={item}>
+                              {item}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </CustomFormItem>
+                  </CustomRow>
+                  <CustomRow gap marginBottom={2.4}>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>
+                        收货地址重复：
+                      </span>
+                      <Form.Item
+                        name="address_repeat_limit"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="不限制"
+                        />
+                      </Form.Item>
+                    </CustomFormItem>
+                    <CustomFormItem width={30}>
+                      <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                      <Form.Item
+                        name="address_test_cycle"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
+                        <Select placeholder="不限制">
+                          {cycleOptions.map((item) => (
+                            <Select.Option key={item} value={item}>
+                              {item}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </CustomFormItem>
+                  </CustomRow>
+                  <Button type={"primary"}>保存自定义</Button>
+                </>
+              )}
             </div>
           </Wrap>
         </Form.Item>
