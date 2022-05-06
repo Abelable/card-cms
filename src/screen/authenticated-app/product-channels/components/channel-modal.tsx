@@ -42,6 +42,10 @@ const regionOptions = [
             value: "1",
             label: "西湖区",
           },
+          {
+            value: "2",
+            label: "上城区",
+          },
         ],
       },
     ],
@@ -81,15 +85,16 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
     close();
   };
   const submit = () => {
-    form.validateFields().then(async () => {
-      await mutateAsync(
-        cleanObject({
-          id: editingChannelId || "",
-          ...form.getFieldsValue(),
-        })
-      );
-      closeModal();
-    });
+    console.log(form.getFieldsValue());
+    // form.validateFields().then(async () => {
+    //   await mutateAsync(
+    //     cleanObject({
+    //       id: editingChannelId || "",
+    //       ...form.getFieldsValue(),
+    //     })
+    //   );
+    //   closeModal();
+    // });
   };
 
   useDeepCompareEffect(() => {
@@ -180,20 +185,24 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
         </Row>
         <Form.Item label="生产定义" required>
           <Wrap>
-            <Form.Item name="need_id_number" style={{ marginBottom: "1rem" }}>
+            <Row style={{ alignItems: "center" }}>
               <span style={{ marginRight: "2rem" }}>是否需要身份证号码：</span>
-              <Radio.Group defaultValue={0}>
-                <Radio value={0}>不需要</Radio>
-                <Radio value={1}>需要</Radio>
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item name="need_id_card_pic" style={{ marginBottom: 0 }}>
+              <Form.Item name="need_id_number" style={{ marginBottom: 0 }}>
+                <Radio.Group>
+                  <Radio value={false}>不需要</Radio>
+                  <Radio value={true}>需要</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Row>
+            <Row style={{ alignItems: "center" }}>
               <span style={{ marginRight: "2rem" }}>是否需要身份证照片：</span>
-              <Radio.Group defaultValue={0}>
-                <Radio value={0}>不需要</Radio>
-                <Radio value={1}>需要</Radio>
-              </Radio.Group>
-            </Form.Item>
+              <Form.Item name="need_id_card_pic" style={{ marginBottom: 0 }}>
+                <Radio.Group>
+                  <Radio value={false}>不需要</Radio>
+                  <Radio value={true}>需要</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Row>
           </Wrap>
         </Form.Item>
         <Form.Item label="限制条件">
@@ -202,7 +211,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               name="deliver_area_type"
               style={{ marginBottom: "1rem" }}
             >
-              <Radio.Group defaultValue={1}>
+              <Radio.Group>
                 <Space direction="vertical">
                   <Radio value={1}>
                     <Form.Item
@@ -215,7 +224,10 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                         </span>
                         <Cascader
                           options={regionOptions}
+                          multiple
+                          maxTagCount="responsive"
                           placeholder="请选择地址"
+                          onClick={(e) => e.preventDefault()}
                         />
                       </AddressWrap>
                     </Form.Item>
@@ -228,7 +240,10 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                         </span>
                         <Cascader
                           options={regionOptions}
+                          multiple
+                          maxTagCount="responsive"
                           placeholder="请选择地址"
+                          onClick={(e) => e.preventDefault()}
                         />
                       </AddressWrap>
                     </Form.Item>
@@ -248,6 +263,7 @@ const Wrap = styled.div`
   background: #f9f9f9;
   border-radius: 0.5rem;
 `;
+
 const AddressWrap = styled.div`
   display: flex;
   align-items: center;

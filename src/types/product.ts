@@ -32,8 +32,8 @@ export interface ChannelForm {
   goods_name: string;
   goods_code: string;
   ownership: string[];
-  need_id_number: number;
-  need_id_card_pic: number;
+  need_id_number: boolean;
+  need_id_card_pic: boolean;
   deliver_area_type: number;
   deliver_area: string[][];
   age_limit: number[];
