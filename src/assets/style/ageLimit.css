@@ -1,0 +1,7 @@
+.max-age {
+  border-left-width: 0;
+}
+.max-age:hover,
+.max-age:focus {
+  border-left-width: 1px;
+}

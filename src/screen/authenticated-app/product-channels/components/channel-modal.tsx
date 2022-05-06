@@ -18,6 +18,7 @@ import { useAddChannel, useEditChannel } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import styled from "@emotion/styled";
+import "assets/style/ageLimit.css";
 
 const operatorOptions = [
   { id: 1, name: "移动" },
@@ -250,32 +251,35 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
             </Form.Item>
             <AgeLimit>
               <span style={{ marginRight: "2rem" }}>年龄限制（周岁）：</span>
-              <Form.Item name="age_limit" style={{ marginBottom: 0 }}>
-                <Input.Group compact>
+              <Input.Group compact>
+                <Form.Item name="min_age" style={{ marginBottom: 0 }}>
                   <Input
                     style={{ width: 100, textAlign: "center" }}
                     placeholder="最小年龄"
                   />
+                </Form.Item>
+                <Input
+                  style={{
+                    width: 30,
+                    borderLeft: 0,
+                    borderRight: 0,
+                    pointerEvents: "none",
+                    background: "#fff",
+                  }}
+                  placeholder="~"
+                  disabled
+                />
+                <Form.Item name="max_age" style={{ marginBottom: 0 }}>
                   <Input
-                    style={{
-                      width: 30,
-                      borderLeft: 0,
-                      borderRight: 0,
-                      pointerEvents: "none",
-                      background: "#fff",
-                    }}
-                    placeholder="~"
-                    disabled
-                  />
-                  <Input
+                    className="max-age"
                     style={{
                       width: 100,
                       textAlign: "center",
                     }}
                     placeholder="最大年龄"
                   />
-                </Input.Group>
-              </Form.Item>
+                </Form.Item>
+              </Input.Group>
             </AgeLimit>
           </Wrap>
         </Form.Item>
