@@ -30,6 +30,8 @@ import {
   ToolOutlined,
   SettingOutlined,
   ImportOutlined,
+  RobotOutlined,
+  UserDeleteOutlined,
 } from "@ant-design/icons";
 
 export const AuthenticatedApp = () => {
@@ -121,12 +123,24 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         {
           label: <Link to={"order/configure"}>自动生产配置</Link>,
           key: "configure",
-          icon: <SettingOutlined />,
+          icon: <RobotOutlined />,
         },
         {
           label: <Link to={"order/import"}>批量导入</Link>,
           key: "import",
           icon: <ImportOutlined />,
+        },
+      ],
+    },
+    {
+      label: "系统管理",
+      key: "system",
+      icon: <SettingOutlined />,
+      children: [
+        {
+          label: <Link to={"blacklist"}>黑名单配置</Link>,
+          key: "blacklist",
+          icon: <UserDeleteOutlined />,
         },
       ],
     },
