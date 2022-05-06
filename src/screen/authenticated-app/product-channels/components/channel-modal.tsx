@@ -6,6 +6,7 @@ import {
   Input,
   InputNumber,
   Row,
+  Select,
   Space,
 } from "antd";
 import { useChannelModal, useChannelsQueryKey } from "../util";
@@ -15,6 +16,18 @@ import { Channel } from "types/product";
 import { useAddChannel, useEditChannel } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
+
+const operatorOptions = [
+  { id: 1, name: "移动" },
+  { id: 2, name: "联通" },
+  { id: 3, name: "电信" },
+];
+
+const supplierOptions = [
+  { id: 1, name: "移动" },
+  { id: 2, name: "联通" },
+  { id: 3, name: "电信" },
+];
 
 export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
   const [form] = useForm();
@@ -70,40 +83,52 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="company"
-              label="代理商公司名称"
-              rules={[{ required: true, message: "请输入公司名称" }]}
+              name="operator_id"
+              label="运营商"
+              rules={[{ required: true, message: "请选择运营商" }]}
             >
-              <Input placeholder="请输入公司名称" />
+              <Select placeholder="请选择运营商">
+                {operatorOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="store"
-              label="店铺名备注"
-              rules={[{ required: true, message: "请输入店铺名备注" }]}
+              name="supplier_id"
+              label="供应商"
+              rules={[{ required: true, message: "请选择供应商" }]}
             >
-              <Input placeholder="请输入店铺名备注" />
+              <Select placeholder="请选择供应商">
+                {supplierOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="channel_id"
-              label="渠道id"
-              rules={[{ required: true, message: "请输入渠道id" }]}
+              name="goods_name"
+              label="产品名称"
+              rules={[{ required: true, message: "请输入产品名称" }]}
             >
-              <Input placeholder="请输入渠道id" />
+              <Input placeholder="请输入产品名称" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="contact"
-              label="联系人姓名"
-              rules={[{ required: true, message: "请输入联系人姓名" }]}
+              name="goods_code"
+              label="产品编码"
+              rules={[{ required: true, message: "请输入产品编码" }]}
             >
-              <Input placeholder="请输入联系人姓名" />
+              <Input placeholder="请输入产品编码" />
             </Form.Item>
           </Col>
         </Row>
