@@ -1,5 +1,6 @@
 import {
   Button,
+  Cascader,
   Col,
   Drawer,
   Form,
@@ -22,11 +23,44 @@ const operatorOptions = [
   { id: 2, name: "联通" },
   { id: 3, name: "电信" },
 ];
-
 const supplierOptions = [
   { id: 1, name: "移动" },
   { id: 2, name: "联通" },
   { id: 3, name: "电信" },
+];
+const regionOptions = [
+  {
+    value: "1",
+    label: "浙江省",
+    children: [
+      {
+        value: "1",
+        label: "杭州市",
+        children: [
+          {
+            value: "1",
+            label: "西湖区",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: "2",
+    label: "江苏省",
+    children: [
+      {
+        value: "1",
+        label: "南京市",
+        children: [
+          {
+            value: "1",
+            label: "中华门",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
@@ -135,20 +169,11 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="phone"
-              label="联系电话"
-              rules={[{ required: true, message: "请输入联系电话" }]}
+              name="ownership"
+              label="归属地"
+              rules={[{ required: true, message: "请选择归属地" }]}
             >
-              <Input placeholder="请输入联系电话" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="email"
-              label="邮箱"
-              rules={[{ required: true, message: "请输入邮箱" }]}
-            >
-              <Input placeholder="请输入邮箱" />
+              <Cascader options={regionOptions} placeholder="请选择归属地" />
             </Form.Item>
           </Col>
         </Row>
