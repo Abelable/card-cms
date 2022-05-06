@@ -365,7 +365,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                         联系电话重复：
                       </span>
                       <Form.Item
-                        name="phone_repeat_limit"
+                        name="default_phone_repeat_limit"
                         style={{ marginBottom: 0, width: "100%" }}
                       >
                         <InputNumber
@@ -377,7 +377,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                     <CustomFormItem width={30}>
                       <span style={{ marginRight: "2rem" }}>检测周期：</span>
                       <Form.Item
-                        name="phone_test_cycle"
+                        name="default_phone_test_cycle"
                         style={{ marginBottom: 0, width: "100%" }}
                       >
                         <Select placeholder="不限制">
@@ -396,7 +396,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                         收货地址重复：
                       </span>
                       <Form.Item
-                        name="address_repeat_limit"
+                        name="default_address_repeat_limit"
                         style={{ marginBottom: 0, width: "100%" }}
                       >
                         <InputNumber
@@ -408,7 +408,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                     <CustomFormItem width={30}>
                       <span style={{ marginRight: "2rem" }}>检测周期：</span>
                       <Form.Item
-                        name="address_test_cycle"
+                        name="default_address_test_cycle"
                         style={{ marginBottom: 0, width: "100%" }}
                       >
                         <Select placeholder="不限制">

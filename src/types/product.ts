@@ -41,6 +41,10 @@ export interface ChannelForm {
   card_number_limit: number;
   card_test_cycle: number;
   risk_warning_type: number;
+  default_phone_repeat_limit: number;
+  default_phone_test_cycle: number;
+  default_address_repeat_limit: number;
+  default_address_test_cycle: number;
   phone_repeat_limit: number;
   phone_test_cycle: number;
   address_repeat_limit: number;
