@@ -102,15 +102,15 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
   };
   const submit = () => {
     console.log(form.getFieldsValue());
-    // form.validateFields().then(async () => {
-    //   await mutateAsync(
-    //     cleanObject({
-    //       id: editingChannelId || "",
-    //       ...form.getFieldsValue(),
-    //     })
-    //   );
-    //   closeModal();
-    // });
+    form.validateFields().then(async () => {
+      await mutateAsync(
+        cleanObject({
+          id: editingChannelId || "",
+          ...form.getFieldsValue(),
+        })
+      );
+      closeModal();
+    });
   };
 
   useDeepCompareEffect(() => {
