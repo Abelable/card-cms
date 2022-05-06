@@ -19,6 +19,7 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import styled from "@emotion/styled";
 import "assets/style/ageLimit.css";
+import { Row as CustomRow } from "components/lib";
 
 const operatorOptions = [
   { id: 1, name: "移动" },
@@ -67,6 +68,20 @@ const regionOptions = [
       },
     ],
   },
+];
+const cycleOptions = [
+  "1个月",
+  "2个月",
+  "3个月",
+  "4个月",
+  "5个月",
+  "6个月",
+  "7个月",
+  "8个月",
+  "9个月",
+  "10个月",
+  "11个月",
+  "12个月",
 ];
 
 export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
@@ -212,7 +227,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               <Radio.Group>
                 <Space direction="vertical">
                   <Radio value={1}>
-                    <CustomFormItem width={50} marginBottom={1}>
+                    <CustomFormItem width={50} marginBottom={0}>
                       <span style={{ marginRight: "2rem" }}>不发货地址：</span>
                       <Form.Item
                         name="deliver_area"
@@ -230,7 +245,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                     </CustomFormItem>
                   </Radio>
                   <Radio value={2}>
-                    <CustomFormItem width={50}>
+                    <CustomFormItem width={50} marginBottom={0}>
                       <span style={{ marginRight: "2rem" }}>只发货地址：</span>
                       <Form.Item
                         name="only_deliver_area"
@@ -281,18 +296,38 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                 </Form.Item>
               </Input.Group>
             </CustomFormItem>
-            <CustomFormItem>
-              <span style={{ marginRight: "2rem" }}>单人开卡数量限制：</span>
-              <Form.Item name="card_number_limit" style={{ marginBottom: 0 }}>
-                <Select placeholder="不限制">
-                  {[1, 2, 3, 4, 5].map((item) => (
-                    <Select.Option key={item} value={item}>
-                      {item}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </CustomFormItem>
+            <CustomRow gap>
+              <CustomFormItem width={30}>
+                <span style={{ marginRight: "2rem" }}>单人开卡数量限制：</span>
+                <Form.Item
+                  name="card_number_limit"
+                  style={{ marginBottom: 0, width: "100%" }}
+                >
+                  <Select placeholder="不限制">
+                    {[1, 2, 3, 4, 5].map((item) => (
+                      <Select.Option key={item} value={item}>
+                        {item}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </CustomFormItem>
+              <CustomFormItem width={30}>
+                <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                <Form.Item
+                  name="card_number_limit"
+                  style={{ marginBottom: 0, width: "100%" }}
+                >
+                  <Select placeholder="不限制">
+                    {cycleOptions.map((item) => (
+                      <Select.Option key={item} value={item}>
+                        {item}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </CustomFormItem>
+            </CustomRow>
           </Wrap>
         </Form.Item>
       </Form>
@@ -313,7 +348,7 @@ const CustomFormItem = styled.div<{
   display: flex;
   align-items: center;
   margin-bottom: ${(props) =>
-    props.marginBottom ? `${props.marginBottom}rem` : "2.4rem"};
+    props.marginBottom !== undefined ? `${props.marginBottom}rem` : "2.4rem"};
   width: ${(props) => props.width + "rem"};
   white-space: nowrap;
 `;
