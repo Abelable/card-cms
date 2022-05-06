@@ -5,6 +5,7 @@ import {
   Drawer,
   Form,
   Input,
+  Menu,
   Radio,
   Row,
   Select,
@@ -20,6 +21,7 @@ import { cleanObject } from "utils";
 import styled from "@emotion/styled";
 import "assets/style/ageLimit.css";
 import { Row as CustomRow } from "components/lib";
+import { useState } from "react";
 
 const operatorOptions = [
   { id: 1, name: "移动" },
@@ -86,6 +88,7 @@ const cycleOptions = [
 
 export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
   const [form] = useForm();
+  const [type, setType] = useState("0");
 
   const { channelModalOpen, editingChannelId, close } = useChannelModal();
   const channel =
@@ -222,7 +225,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
           </Wrap>
         </Form.Item>
         <Form.Item label="限制条件">
-          <Wrap>
+          <Wrap padding={2.4}>
             <Form.Item name="deliver_area_type">
               <Radio.Group>
                 <Space direction="vertical">
@@ -330,13 +333,39 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
             </CustomRow>
           </Wrap>
         </Form.Item>
+        <Form.Item label="风险预警设置">
+          <Wrap>
+            <TypeMenu>
+              <Menu
+                mode="horizontal"
+                selectedKeys={[type]}
+                items={[
+                  {
+                    label: (
+                      <span onClick={() => setType("0")}>产品渠道中心</span>
+                    ),
+                    key: "0",
+                  },
+                  {
+                    label: (
+                      <span onClick={() => setType("1")}>已下架的产品</span>
+                    ),
+                    key: "1",
+                  },
+                ]}
+              />
+            </TypeMenu>
+          </Wrap>
+        </Form.Item>
       </Form>
     </Drawer>
   );
 };
 
-const Wrap = styled.div`
-  padding: 2.4rem;
+const Wrap = styled.div<{
+  padding?: number;
+}>`
+  padding: ${(props) => props.padding + "rem"};
   background: #f9f9f9;
   border-radius: 0.5rem;
 `;
@@ -351,4 +380,8 @@ const CustomFormItem = styled.div<{
     props.marginBottom !== undefined ? `${props.marginBottom}rem` : "2.4rem"};
   width: ${(props) => props.width + "rem"};
   white-space: nowrap;
+`;
+
+const TypeMenu = styled.div`
+  background: #fff;
 `;
