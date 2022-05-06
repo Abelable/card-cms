@@ -5,7 +5,7 @@ import {
   Drawer,
   Form,
   Input,
-  InputNumber,
+  Radio,
   Row,
   Select,
   Space,
@@ -17,6 +17,7 @@ import { Channel } from "types/product";
 import { useAddChannel, useEditChannel } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
+import styled from "@emotion/styled";
 
 const operatorOptions = [
   { id: 1, name: "移动" },
@@ -177,31 +178,79 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
             </Form.Item>
           </Col>
         </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="activation_days"
-              label="激活状态回传的有效天数（自订单创建时起）"
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                placeholder="请输入有效天数"
-              />
+        <Form.Item label="生产定义" required>
+          <Wrap>
+            <Form.Item name="need_id_number" style={{ marginBottom: "1rem" }}>
+              <span style={{ marginRight: "2rem" }}>是否需要身份证号码：</span>
+              <Radio.Group defaultValue={0}>
+                <Radio value={0}>不需要</Radio>
+                <Radio value={1}>需要</Radio>
+              </Radio.Group>
             </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="recharge_days"
-              label="充值金额回传的有效天数（自订单创建时起）"
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                placeholder="请输入有效天数"
-              />
+            <Form.Item name="need_id_card_pic" style={{ marginBottom: 0 }}>
+              <span style={{ marginRight: "2rem" }}>是否需要身份证照片：</span>
+              <Radio.Group defaultValue={0}>
+                <Radio value={0}>不需要</Radio>
+                <Radio value={1}>需要</Radio>
+              </Radio.Group>
             </Form.Item>
-          </Col>
-        </Row>
+          </Wrap>
+        </Form.Item>
+        <Form.Item label="限制条件">
+          <Wrap>
+            <Form.Item
+              name="deliver_area_type"
+              style={{ marginBottom: "1rem" }}
+            >
+              <Radio.Group defaultValue={1}>
+                <Space direction="vertical">
+                  <Radio value={1}>
+                    <Form.Item
+                      name="deliver_area"
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <AddressWrap>
+                        <span style={{ marginRight: "2rem" }}>
+                          不发货地址：
+                        </span>
+                        <Cascader
+                          options={regionOptions}
+                          placeholder="请选择地址"
+                        />
+                      </AddressWrap>
+                    </Form.Item>
+                  </Radio>
+                  <Radio value={2}>
+                    <Form.Item name="deliver_area">
+                      <AddressWrap>
+                        <span style={{ marginRight: "2rem" }}>
+                          只发货地址：
+                        </span>
+                        <Cascader
+                          options={regionOptions}
+                          placeholder="请选择地址"
+                        />
+                      </AddressWrap>
+                    </Form.Item>
+                  </Radio>
+                </Space>
+              </Radio.Group>
+            </Form.Item>
+          </Wrap>
+        </Form.Item>
       </Form>
     </Drawer>
   );
 };
+
+const Wrap = styled.div`
+  padding: 2.4rem;
+  background: #f9f9f9;
+  border-radius: 0.5rem;
+`;
+const AddressWrap = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50rem;
+  white-space: nowrap;
+`;
