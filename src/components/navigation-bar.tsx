@@ -10,6 +10,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/agents/goods_list": "查看代理商商品",
   "/product": "产品管理中心",
   "/product/channels": "产品渠道管理",
+  "/product/channels/goods_list": "关联商品",
 };
 
 export const NavigationBar = () => {

@@ -1,6 +1,12 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
-import { Channel, ChannelsResult, ChannelsSearchParams } from "types/product";
+import {
+  Channel,
+  ChannelsResult,
+  ChannelsSearchParams,
+  GoodsListResult,
+  GoodsListSearchParams,
+} from "types/product";
 import {
   useAddConfig,
   useDeleteConfig,
@@ -68,5 +74,14 @@ export const useUpChannel = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useDeleteConfig(queryKey)
+  );
+};
+
+export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<GoodsListResult>(["product_channel_goods_list", params], () =>
+    client("/api/v1/admin/agent/index", {
+      data: params,
+    })
   );
 };

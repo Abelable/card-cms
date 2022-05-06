@@ -51,3 +51,19 @@ export interface ChannelForm {
   address_test_cycle: number;
   enable_automatic_blacklist_filtering: boolean;
 }
+
+export interface GoodsListSearchParams {
+  per_page: number;
+  page: number;
+}
+
+export interface Goods {
+  id: string;
+  name: string;
+  status: number;
+}
+
+export interface GoodsListResult {
+  data: Goods[];
+  meta: { pagination: Pagination };
+}
