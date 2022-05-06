@@ -88,7 +88,7 @@ const cycleOptions = [
 
 export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
   const [form] = useForm();
-  const [type, setType] = useState("0");
+  const [type, setType] = useState(1);
 
   const { channelModalOpen, editingChannelId, close } = useChannelModal();
   const channel =
@@ -338,19 +338,15 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
             <TypeMenu>
               <Menu
                 mode="horizontal"
-                selectedKeys={[type]}
+                selectedKeys={[String(type)]}
                 items={[
                   {
-                    label: (
-                      <span onClick={() => setType("0")}>产品渠道中心</span>
-                    ),
-                    key: "0",
+                    label: <span onClick={() => setType(1)}>产品渠道中心</span>,
+                    key: 1,
                   },
                   {
-                    label: (
-                      <span onClick={() => setType("1")}>已下架的产品</span>
-                    ),
-                    key: "1",
+                    label: <span onClick={() => setType(2)}>已下架的产品</span>,
+                    key: 2,
                   },
                 ]}
               />
@@ -368,6 +364,8 @@ const Wrap = styled.div<{
   padding: ${(props) => props.padding + "rem"};
   background: #f9f9f9;
   border-radius: 0.5rem;
+  border: 1px solid #f9f9f9;
+  overflow: hidden;
 `;
 
 const CustomFormItem = styled.div<{
