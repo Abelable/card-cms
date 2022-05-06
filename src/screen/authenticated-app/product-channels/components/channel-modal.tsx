@@ -212,7 +212,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               <Radio.Group>
                 <Space direction="vertical">
                   <Radio value={1}>
-                    <CustomFormItem>
+                    <CustomFormItem width={50} marginBottom={1}>
                       <span style={{ marginRight: "2rem" }}>不发货地址：</span>
                       <Form.Item
                         name="deliver_area"
@@ -230,7 +230,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                     </CustomFormItem>
                   </Radio>
                   <Radio value={2}>
-                    <CustomFormItem>
+                    <CustomFormItem width={50}>
                       <span style={{ marginRight: "2rem" }}>只发货地址：</span>
                       <Form.Item
                         name="only_deliver_area"
@@ -281,6 +281,18 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                 </Form.Item>
               </Input.Group>
             </CustomFormItem>
+            <CustomFormItem>
+              <span style={{ marginRight: "2rem" }}>单人开卡数量限制：</span>
+              <Form.Item name="card_number_limit" style={{ marginBottom: 0 }}>
+                <Select placeholder="不限制">
+                  {[1, 2, 3, 4, 5].map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </CustomFormItem>
           </Wrap>
         </Form.Item>
       </Form>
@@ -294,9 +306,14 @@ const Wrap = styled.div`
   border-radius: 0.5rem;
 `;
 
-const CustomFormItem = styled.div`
+const CustomFormItem = styled.div<{
+  width?: number;
+  marginBottom?: number;
+}>`
   display: flex;
   align-items: center;
-  width: 50rem;
+  margin-bottom: ${(props) =>
+    props.marginBottom ? `${props.marginBottom}rem` : "2.4rem"};
+  width: ${(props) => props.width + "rem"};
   white-space: nowrap;
 `;
