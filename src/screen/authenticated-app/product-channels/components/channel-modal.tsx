@@ -1,6 +1,7 @@
 import {
   Button,
   Cascader,
+  Checkbox,
   Col,
   Drawer,
   Form,
@@ -204,7 +205,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
           </Col>
         </Row>
         <Form.Item label="生产定义" required>
-          <Wrap>
+          <Wrap padding={2.4}>
             <Row style={{ alignItems: "center" }}>
               <span style={{ marginRight: "2rem" }}>是否需要身份证号码：</span>
               <Form.Item name="need_id_number" style={{ marginBottom: 0 }}>
@@ -497,6 +498,9 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               )}
             </div>
           </Wrap>
+        </Form.Item>
+        <Form.Item label="黑名单" name="enable_automatic_blacklist_filtering">
+          <Checkbox>电信诈骗黑名单用户自动过滤</Checkbox>
         </Form.Item>
       </Form>
     </Drawer>
