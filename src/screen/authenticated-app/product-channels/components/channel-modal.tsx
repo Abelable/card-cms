@@ -248,32 +248,35 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                 </Space>
               </Radio.Group>
             </Form.Item>
-            <Form.Item name="age_limit" label="年龄限制（周岁）">
-              <Input.Group compact>
-                <Input
-                  style={{ width: 100, textAlign: "center" }}
-                  placeholder="Minimum"
-                />
-                <Input
-                  style={{
-                    width: 30,
-                    borderLeft: 0,
-                    borderRight: 0,
-                    pointerEvents: "none",
-                    background: "#fff",
-                  }}
-                  placeholder="~"
-                  disabled
-                />
-                <Input
-                  style={{
-                    width: 100,
-                    textAlign: "center",
-                  }}
-                  placeholder="Maximum"
-                />
-              </Input.Group>
-            </Form.Item>
+            <AgeLimit>
+              <span style={{ marginRight: "2rem" }}>年龄限制（周岁）：</span>
+              <Form.Item name="age_limit" style={{ marginBottom: 0 }}>
+                <Input.Group compact>
+                  <Input
+                    style={{ width: 100, textAlign: "center" }}
+                    placeholder="最小年龄"
+                  />
+                  <Input
+                    style={{
+                      width: 30,
+                      borderLeft: 0,
+                      borderRight: 0,
+                      pointerEvents: "none",
+                      background: "#fff",
+                    }}
+                    placeholder="~"
+                    disabled
+                  />
+                  <Input
+                    style={{
+                      width: 100,
+                      textAlign: "center",
+                    }}
+                    placeholder="最大年龄"
+                  />
+                </Input.Group>
+              </Form.Item>
+            </AgeLimit>
           </Wrap>
         </Form.Item>
       </Form>
@@ -292,4 +295,9 @@ const AddressWrap = styled.div`
   align-items: center;
   width: 50rem;
   white-space: nowrap;
+`;
+
+const AgeLimit = styled.div`
+  display: flex;
+  align-items: center;
 `;
