@@ -214,30 +214,27 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
               <Radio.Group>
                 <Space direction="vertical">
                   <Radio value={1}>
-                    <Form.Item
-                      name="deliver_area"
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      <AddressWrap>
-                        <span style={{ marginRight: "2rem" }}>
-                          不发货地址：
-                        </span>
+                    <AddressWrap>
+                      <span style={{ marginRight: "2rem" }}>不发货地址：</span>
+                      <Form.Item
+                        name="deliver_area"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
                         <Cascader
+                          style={{ width: "100%" }}
                           options={regionOptions}
                           multiple
                           maxTagCount="responsive"
                           placeholder="请选择地址"
                           onClick={(e) => e.preventDefault()}
                         />
-                      </AddressWrap>
-                    </Form.Item>
+                      </Form.Item>
+                    </AddressWrap>
                   </Radio>
                   <Radio value={2}>
-                    <Form.Item name="deliver_area">
-                      <AddressWrap>
-                        <span style={{ marginRight: "2rem" }}>
-                          只发货地址：
-                        </span>
+                    <AddressWrap>
+                      <span style={{ marginRight: "2rem" }}>只发货地址：</span>
+                      <Form.Item name="deliver_area">
                         <Cascader
                           options={regionOptions}
                           multiple
@@ -245,8 +242,8 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                           placeholder="请选择地址"
                           onClick={(e) => e.preventDefault()}
                         />
-                      </AddressWrap>
-                    </Form.Item>
+                      </Form.Item>
+                    </AddressWrap>
                   </Radio>
                 </Space>
               </Radio.Group>
