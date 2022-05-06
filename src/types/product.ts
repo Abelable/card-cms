@@ -36,6 +36,7 @@ export interface ChannelForm {
   need_id_card_pic: boolean;
   deliver_area_type: number;
   deliver_area: string[][];
+  only_deliver_area: string[][];
   age_limit: number[];
   card_number_limit: number;
   card_test_cycle: number;

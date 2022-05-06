@@ -207,10 +207,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
         </Form.Item>
         <Form.Item label="限制条件">
           <Wrap>
-            <Form.Item
-              name="deliver_area_type"
-              style={{ marginBottom: "1rem" }}
-            >
+            <Form.Item name="deliver_area_type">
               <Radio.Group>
                 <Space direction="vertical">
                   <Radio value={1}>
@@ -234,7 +231,10 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                   <Radio value={2}>
                     <AddressWrap>
                       <span style={{ marginRight: "2rem" }}>只发货地址：</span>
-                      <Form.Item name="deliver_area">
+                      <Form.Item
+                        name="only_deliver_area"
+                        style={{ marginBottom: 0, width: "100%" }}
+                      >
                         <Cascader
                           options={regionOptions}
                           multiple
@@ -247,6 +247,32 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                   </Radio>
                 </Space>
               </Radio.Group>
+            </Form.Item>
+            <Form.Item name="age_limit" label="年龄限制（周岁）">
+              <Input.Group compact>
+                <Input
+                  style={{ width: 100, textAlign: "center" }}
+                  placeholder="Minimum"
+                />
+                <Input
+                  style={{
+                    width: 30,
+                    borderLeft: 0,
+                    borderRight: 0,
+                    pointerEvents: "none",
+                    background: "#fff",
+                  }}
+                  placeholder="~"
+                  disabled
+                />
+                <Input
+                  style={{
+                    width: 100,
+                    textAlign: "center",
+                  }}
+                  placeholder="Maximum"
+                />
+              </Input.Group>
             </Form.Item>
           </Wrap>
         </Form.Item>
