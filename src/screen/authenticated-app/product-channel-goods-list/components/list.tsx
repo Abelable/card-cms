@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { Table, TablePaginationConfig, TableProps } from "antd";
-import { Goods, GoodsListSearchParams } from "types/product";
+import { ChannelGoods, GoodsListSearchParams } from "types/product";
 import { ErrorBox } from "components/lib";
 
-interface ListProps extends TableProps<Goods> {
+interface ListProps extends TableProps<ChannelGoods> {
   params: Partial<GoodsListSearchParams>;
   setParams: (params: Partial<GoodsListSearchParams>) => void;
   error: Error | unknown;
