@@ -38,6 +38,22 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
+  const setProductCode = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        goods_code: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      goods_code: evt.target.value,
+    });
+  };
+
   const setGoodsCode = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
@@ -101,9 +117,19 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
           <div>产品编码：</div>
           <Input
             style={{ width: "20rem" }}
+            value={temporaryParams.product_code}
+            onChange={setProductCode}
+            placeholder="请输入产品编码"
+            allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>商品编码：</div>
+          <Input
+            style={{ width: "20rem" }}
             value={temporaryParams.goods_code}
             onChange={setGoodsCode}
-            placeholder="请输入产品编码"
+            placeholder="请输入商品编码"
             allowClear={true}
           />
         </Row>
