@@ -1,6 +1,8 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import {
+  AgentsResult,
+  AgentsSearchParams,
   Channel,
   ChannelGoodsListResult,
   ChannelsResult,
@@ -144,5 +146,14 @@ export const useEditGoodsAgent = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useGoodsAgents = (params: Partial<AgentsSearchParams>) => {
+  const client = useHttp();
+  return useQuery<AgentsResult>(["product_goods_agents", params], () =>
+    client("/api/v1/admin/agent/index", {
+      data: params,
+    })
   );
 };

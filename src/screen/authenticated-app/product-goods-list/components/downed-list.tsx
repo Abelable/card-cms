@@ -26,8 +26,10 @@ export const DownedList = ({
   ...restProps
 }: ListProps) => {
   const navigate = useNavigate();
-  const link = (id: number) =>
+  const linkToChannels = (id: number) =>
     navigate(`/product/channels?editingChannelId=${id}`);
+  const linkToAgents = (id: number) =>
+    navigate(`/product/sales/agents?goodsId=${id}`);
   const { startEdit } = useGoodsModal();
   const { startEdit: editAgent } = useAgentModal();
 
@@ -97,7 +99,9 @@ export const DownedList = ({
                   </Button>
                 </div>
                 <div>
-                  <Button type={"link"}>查看代理商</Button>
+                  <Button type={"link"} onClick={() => linkToAgents(goods.id)}>
+                    查看代理商
+                  </Button>
                 </div>
               </>
             ),
@@ -107,7 +111,10 @@ export const DownedList = ({
             render: (value, goods) => (
               <>
                 <div>
-                  <Button type={"link"} onClick={() => link(goods.product_id)}>
+                  <Button
+                    type={"link"}
+                    onClick={() => linkToChannels(goods.product_id)}
+                  >
                     修改产品信息
                   </Button>
                 </div>
