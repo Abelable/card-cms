@@ -10,7 +10,6 @@ import {
 import { SearchPanelProps } from "./search-panel";
 import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
-import { PlusOutlined } from "@ant-design/icons";
 import { useGoodsModal } from "../util";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
@@ -37,9 +36,14 @@ export const List = ({
     <Container>
       <Header between={true}>
         <h3>商品列表</h3>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
-        </Button>
+        <Row gap>
+          <Button onClick={open} type={"default"}>
+            发布全新套餐
+          </Button>
+          <Button onClick={open} type={"primary"}>
+            基于已有产品渠道发布商品
+          </Button>
+        </Row>
       </Header>
       <ErrorBox error={error} />
       <Table
