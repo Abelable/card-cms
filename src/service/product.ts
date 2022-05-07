@@ -5,6 +5,7 @@ import {
   ChannelGoodsListResult,
   ChannelsResult,
   ChannelsSearchParams,
+  Goods,
   GoodsListResult,
   GoodsListSearchParams,
 } from "types/product";
@@ -104,5 +105,29 @@ export const useDownedGoodsList = (params: Partial<GoodsListSearchParams>) => {
     client("/api/v1/admin/agent/index", {
       data: params,
     })
+  );
+};
+
+export const useAddGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<Goods>) =>
+      client("/api/v1/admin/channel/store", {
+        data: params,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
+  );
+};
+
+export const useEditGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, ...params }: Partial<Goods>) =>
+      client(`/api/v1/admin/channel/update/${id}`, {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
   );
 };

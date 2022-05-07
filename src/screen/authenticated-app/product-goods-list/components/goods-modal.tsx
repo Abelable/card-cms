@@ -13,7 +13,7 @@ import {
   Select,
   Space,
 } from "antd";
-import { useGoodsModal, useGoodssQueryKey } from "../util";
+import { useGoodsModal, useGoodsListQueryKey } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { Goods } from "types/product";
@@ -92,13 +92,13 @@ export const GoodsModal = ({ goodsList }: { goodsList: Goods[] }) => {
   const [form] = useForm();
   const [type, setType] = useState(1);
 
-  const { goodsListModalOpen, editingGoodsId, close } = useGoodsModal();
+  const { goodsModalOpen, editingGoodsId, close } = useGoodsModal();
   const goods =
     goodsList?.find((item) => item.id === Number(editingGoodsId)) || undefined;
 
   const useMutationGoods = editingGoodsId ? useEditGoods : useAddGoods;
   const { mutateAsync, error, isLoading } = useMutationGoods(
-    useGoodssQueryKey()
+    useGoodsListQueryKey()
   );
 
   const closeModal = () => {
@@ -119,8 +119,8 @@ export const GoodsModal = ({ goodsList }: { goodsList: Goods[] }) => {
   };
 
   useDeepCompareEffect(() => {
-    goodsList && form.setFieldsValue(goodsList);
-  }, [form, goodsList]);
+    goods && form.setFieldsValue(goods);
+  }, [form, goods]);
 
   return (
     <Drawer
@@ -128,7 +128,7 @@ export const GoodsModal = ({ goodsList }: { goodsList: Goods[] }) => {
       size={"large"}
       forceRender={true}
       onClose={closeModal}
-      visible={goodsListModalOpen}
+      visible={goodsModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>

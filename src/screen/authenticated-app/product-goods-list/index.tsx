@@ -1,6 +1,9 @@
 import { toNumber } from "utils";
-import { useGoods, useDownedGoods } from "service/product";
-import { useGoodsSearchParams, useDownedGoodsSearchParams } from "./util";
+import { useGoodsList, useDownedGoodsList } from "service/product";
+import {
+  useGoodsListSearchParams,
+  useDownedGoodsListSearchParams,
+} from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -18,14 +21,14 @@ const modeOptions = [
 
 export const ProductGoods = () => {
   const [type, setType] = useState("0");
-  const [params, setParams] = useGoodsSearchParams();
-  const [downedParams, setDownedParams] = useDownedGoodsSearchParams();
-  const { data, isLoading, error } = useGoods(params);
+  const [params, setParams] = useGoodsListSearchParams();
+  const [downedParams, setDownedParams] = useDownedGoodsListSearchParams();
+  const { data, isLoading, error } = useGoodsList(params);
   const {
     data: downedData,
     isLoading: downedLoading,
     error: downedError,
-  } = useDownedGoods(downedParams);
+  } = useDownedGoodsList(downedParams);
 
   const items: MenuProps["items"] = [
     {

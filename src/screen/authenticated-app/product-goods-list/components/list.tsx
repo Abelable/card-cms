@@ -11,8 +11,7 @@ import { SearchPanelProps } from "./search-panel";
 import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import { useEditChannel } from "service/product";
-import { useChannelModal, useChannelsQueryKey } from "../util";
+import { useGoodsModal } from "../util";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   modeOptions: modeOption[];
@@ -26,8 +25,7 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const { open } = useChannelModal();
-  const { mutate: editChannel } = useEditChannel(useChannelsQueryKey());
+  const { open } = useGoodsModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,

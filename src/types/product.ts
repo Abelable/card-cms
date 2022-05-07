@@ -81,7 +81,7 @@ export interface GoodsListSearchParams {
 }
 
 export interface Goods {
-  id: string;
+  id: number;
   name: string;
   img: string;
   tags: string[];

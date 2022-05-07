@@ -1,7 +1,7 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useChannelsSearchParams = () => {
+export const useGoodsListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "goods_name",
     "goods_code",
@@ -20,7 +20,7 @@ export const useChannelsSearchParams = () => {
   ] as const;
 };
 
-export const useDownedChannelsSearchParams = () => {
+export const useDownedGoodsListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "goods_name",
     "goods_code",
@@ -39,36 +39,36 @@ export const useDownedChannelsSearchParams = () => {
   ] as const;
 };
 
-export const useChannelsQueryKey = () => {
-  const [params] = useChannelsSearchParams();
-  return ["channels", params];
+export const useGoodsListQueryKey = () => {
+  const [params] = useGoodsListSearchParams();
+  return ["goodss", params];
 };
 
-export const useChannelModal = () => {
-  const [{ channelCreate }, setChannelsModalOpen] = useUrlQueryParams([
-    "channelCreate",
+export const useGoodsModal = () => {
+  const [{ goodsCreate }, setGoodsListModalOpen] = useUrlQueryParams([
+    "goodsCreate",
   ]);
-  const [{ editingChannelId }, setEditingChannelId] = useUrlQueryParams([
-    "editingChannelId",
+  const [{ editingGoodsId }, setEditingGoodsId] = useUrlQueryParams([
+    "editingGoodsId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setChannelsModalOpen({ channelCreate: true }),
-    [setChannelsModalOpen]
+    () => setGoodsListModalOpen({ goodsCreate: true }),
+    [setGoodsListModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingChannelId({ editingChannelId: id }),
-    [setEditingChannelId]
+    (id: string) => setEditingGoodsId({ editingGoodsId: id }),
+    [setEditingGoodsId]
   );
   const close = useCallback(
-    () => setUrlParams({ channelCreate: "", editingChannelId: "" }),
+    () => setUrlParams({ goodsCreate: "", editingGoodsId: "" }),
     [setUrlParams]
   );
 
   return {
-    channelModalOpen: channelCreate === "true" || !!editingChannelId,
-    editingChannelId,
+    goodsModalOpen: goodsCreate === "true" || !!editingGoodsId,
+    editingGoodsId,
     open,
     startEdit,
     close,
