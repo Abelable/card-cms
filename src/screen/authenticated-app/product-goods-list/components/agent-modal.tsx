@@ -1,4 +1,4 @@
-import { Form, Modal, Radio, Select } from "antd";
+import { Form, Modal, Radio, Select, Space } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditGoodsAgent } from "service/product";
@@ -60,10 +60,12 @@ export const AgentModal = ({ goodsList }: { goodsList: Goods[] }) => {
           rules={[{ required: true, message: "请选择代理商可见设置" }]}
         >
           <Radio.Group>
-            <Radio value={1}>仅自己可见</Radio>
-            <Radio value={2}>全部代理商可见</Radio>
-            <Radio value={3}>选择代理商可见</Radio>
-            <Radio value={4}>选择代理商不可见</Radio>
+            <Space direction={"vertical"}>
+              <Radio value={1}>仅自己可见</Radio>
+              <Radio value={2}>全部代理商可见</Radio>
+              <Radio value={3}>选择代理商可见</Radio>
+              <Radio value={4}>选择代理商不可见</Radio>
+            </Space>
           </Radio.Group>
         </Form.Item>
         <Form.Item name="agent_id" label="选择代理商">
