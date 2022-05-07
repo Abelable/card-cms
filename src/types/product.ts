@@ -69,6 +69,13 @@ export interface ChannelGoodsListResult {
 }
 
 export interface GoodsListSearchParams {
+  goods_name: string;
+  supplier: string;
+  product_code: string;
+  goods_code: string;
+  agent_id: number;
+  deliver_address: string;
+  ownership: number[];
   per_page: number;
   page: number;
 }
@@ -76,7 +83,12 @@ export interface GoodsListSearchParams {
 export interface Goods {
   id: string;
   name: string;
-  status: number;
+  img: string;
+  tags: string[];
+  code: string;
+  supplier_name: string;
+  product_name: string;
+  created_at: string;
 }
 
 export interface GoodsListResult {
@@ -84,17 +96,9 @@ export interface GoodsListResult {
   meta: { pagination: Pagination };
 }
 
-export interface DownedGoodsListSearchParams {
-  per_page: number;
-  page: number;
-}
+export interface DownedGoodsListSearchParams extends GoodsListSearchParams {}
 
-export interface DownedGoods {
-  id: string;
-  name: string;
-  status: number;
-}
-
+export interface DownedGoods extends Goods {}
 export interface DownedGoodsListResult {
   data: DownedGoods[];
   meta: { pagination: Pagination };
