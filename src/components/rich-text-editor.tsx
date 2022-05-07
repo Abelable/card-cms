@@ -23,7 +23,7 @@ export const RichTextEditor = ({
           [{ color: [] }, { background: [] }],
           [{ list: "ordered" }, { list: "bullet" }],
           [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
-          ["link", "image"],
+          // ["link", "image"],
         ],
         handlers: {
           image: () => {
