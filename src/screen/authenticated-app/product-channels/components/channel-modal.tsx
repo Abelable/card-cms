@@ -499,7 +499,11 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
             </div>
           </Wrap>
         </Form.Item>
-        <Form.Item label="黑名单" name="enable_automatic_blacklist_filtering">
+        <Form.Item
+          label="黑名单"
+          name="enable_automatic_blacklist_filtering"
+          valuePropName="checked"
+        >
           <Checkbox>电信诈骗黑名单用户自动过滤</Checkbox>
         </Form.Item>
       </Form>
