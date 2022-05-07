@@ -1,5 +1,5 @@
 import { toNumber } from "utils";
-import { useGoodsList } from "service/product";
+import { useChannelGoodsList } from "service/product";
 import { useGoodsListSearchParams } from "./util";
 
 import { List } from "./components/list";
@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 
 export const ProductChannelGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
-  const { data, isLoading, error } = useGoodsList(params);
+  const { data, isLoading, error } = useChannelGoodsList(params);
 
   return (
     <Container>

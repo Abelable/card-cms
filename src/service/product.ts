@@ -2,6 +2,7 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import {
   Channel,
+  ChannelGoodsListResult,
   ChannelsResult,
   ChannelsSearchParams,
   GoodsListResult,
@@ -77,9 +78,29 @@ export const useUpChannel = (queryKey: QueryKey) => {
   );
 };
 
+export const useChannelGoodsList = (params: Partial<GoodsListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<ChannelGoodsListResult>(
+    ["product_channel_goods_list", params],
+    () =>
+      client("/api/v1/admin/agent/index", {
+        data: params,
+      })
+  );
+};
+
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(["product_channel_goods_list", params], () =>
+  return useQuery<GoodsListResult>(["product_goods_list", params], () =>
+    client("/api/v1/admin/agent/index", {
+      data: params,
+    })
+  );
+};
+
+export const useDownedGoodsList = (params: Partial<GoodsListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<GoodsListResult>(["downed_product_goods_list", params], () =>
     client("/api/v1/admin/agent/index", {
       data: params,
     })

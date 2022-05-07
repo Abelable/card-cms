@@ -52,6 +52,22 @@ export interface ChannelForm {
   enable_automatic_blacklist_filtering: boolean;
 }
 
+export interface ChannelGoodsListSearchParams {
+  per_page: number;
+  page: number;
+}
+
+export interface ChannelGoods {
+  id: string;
+  name: string;
+  status: number;
+}
+
+export interface ChannelGoodsListResult {
+  data: ChannelGoods[];
+  meta: { pagination: Pagination };
+}
+
 export interface GoodsListSearchParams {
   per_page: number;
   page: number;
@@ -65,5 +81,21 @@ export interface Goods {
 
 export interface GoodsListResult {
   data: Goods[];
+  meta: { pagination: Pagination };
+}
+
+export interface DownedGoodsListSearchParams {
+  per_page: number;
+  page: number;
+}
+
+export interface DownedGoods {
+  id: string;
+  name: string;
+  status: number;
+}
+
+export interface DownedGoodsListResult {
+  data: DownedGoods[];
   meta: { pagination: Pagination };
 }
