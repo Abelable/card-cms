@@ -73,7 +73,7 @@ export interface GoodsListSearchParams {
   supplier: string;
   product_code: string;
   goods_code: string;
-  agent_id: number;
+  operator_id: number;
   deliver_address: string;
   ownership: number[];
   per_page: number;

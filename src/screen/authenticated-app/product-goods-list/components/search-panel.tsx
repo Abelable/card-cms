@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { GoodsListSearchParams } from "types/product";
 import styled from "@emotion/styled";
@@ -8,6 +8,12 @@ export interface SearchPanelProps {
   params: Partial<GoodsListSearchParams>;
   setParams: (params: Partial<GoodsListSearchParams>) => void;
 }
+
+const operatorOptions = [
+  { id: 1, name: "移动" },
+  { id: 2, name: "联通" },
+  { id: 3, name: "电信" },
+];
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
@@ -85,6 +91,26 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
+  const setOperator = (operator_id: number) =>
+    setTemporaryParams({ ...temporaryParams, operator_id });
+  const clearOperator = () =>
+    setTemporaryParams({ ...temporaryParams, operator_id: undefined });
+
+  const setAddress = (evt: any) => {
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        deliver_address: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      deliver_address: evt.target.value,
+    });
+  };
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -129,6 +155,32 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             style={{ width: "20rem" }}
             value={temporaryParams.goods_code}
             onChange={setGoodsCode}
+            placeholder="请输入商品编码"
+            allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>运营商：</div>
+          <Select
+            value={temporaryParams.operator_id}
+            allowClear={true}
+            onSelect={setOperator}
+            onClear={clearOperator}
+            placeholder="请选择运营商"
+          >
+            {operatorOptions.map(({ id, name }) => (
+              <Select.Option key={id} value={id}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Row>
+        <Row>
+          <div>发货地址：</div>
+          <Input
+            style={{ width: "20rem" }}
+            value={temporaryParams.deliver_address}
+            onChange={setAddress}
             placeholder="请输入商品编码"
             allowClear={true}
           />
