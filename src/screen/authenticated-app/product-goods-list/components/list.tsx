@@ -9,6 +9,7 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
+  Image,
 } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
@@ -58,8 +59,22 @@ export const List = ({
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
-            title: "产品名称",
-            dataIndex: "goods_name",
+            title: "商品名称",
+            render: (value, goods) => (
+              <div style={{ display: "flex" }}>
+                <Image width={80} height={80} src={goods.img} />
+                <GoodsInfoWrap>
+                  <div style={{ marginBottom: "1rem" }}>{goods.name}</div>
+                  {goods.tags ? (
+                    goods.tags.map((item, index) => (
+                      <Tag key={index}>{item}</Tag>
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                </GoodsInfoWrap>
+              </div>
+            ),
           },
           {
             title: "产品编码",
@@ -169,4 +184,10 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const GoodsInfoWrap = styled.div`
+  margin-left: 2rem;
+  flex: 1;
+  height: 80px;
 `;

@@ -102,8 +102,3 @@ const Main = styled.div`
   height: 100%;
   overflow: scroll;
 `;
-
-const SelectedCount = styled.span`
-  color: #1890ff;
-  font-weight: 600;
-`;
