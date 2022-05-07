@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { Button, Input } from "antd";
 import { Row } from "components/lib";
-import { ChannelsSearchParams } from "types/product";
+import { GoodsListSearchParams } from "types/product";
 import styled from "@emotion/styled";
 
 export interface SearchPanelProps {
-  params: Partial<ChannelsSearchParams>;
-  setParams: (params: Partial<ChannelsSearchParams>) => void;
+  params: Partial<GoodsListSearchParams>;
+  setParams: (params: Partial<GoodsListSearchParams>) => void;
 }
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
     goods_name: "",
-    goods_code: "",
     supplier: "",
-  } as Partial<ChannelsSearchParams>;
+    product_code: "",
+    goods_code: "",
+    agent_id: undefined,
+    deliver_address: "",
+    ownership: undefined,
+  } as Partial<GoodsListSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<ChannelsSearchParams>>(params);
+    useState<Partial<GoodsListSearchParams>>(params);
 
   const setGoodsName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
@@ -74,22 +78,12 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
-          <div>产品名称：</div>
+          <div>商品名称：</div>
           <Input
             style={{ width: "20rem" }}
             value={temporaryParams.goods_name}
             onChange={setGoodsName}
-            placeholder="请输入产品名称"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>产品编码：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.goods_code}
-            onChange={setGoodsCode}
-            placeholder="请输入产品编码"
+            placeholder="请输入商品名称"
             allowClear={true}
           />
         </Row>
@@ -100,6 +94,16 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             value={temporaryParams.supplier}
             onChange={setSupplier}
             placeholder="请输入供应商名称"
+            allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>产品编码：</div>
+          <Input
+            style={{ width: "20rem" }}
+            value={temporaryParams.goods_code}
+            onChange={setGoodsCode}
+            placeholder="请输入产品编码"
             allowClear={true}
           />
         </Row>
