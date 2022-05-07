@@ -87,6 +87,7 @@ export interface Goods {
   tags: string[];
   code: string;
   supplier_name: string;
+  product_id: number;
   product_name: string;
   created_at: string;
 }

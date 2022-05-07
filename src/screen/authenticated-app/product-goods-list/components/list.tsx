@@ -11,6 +11,7 @@ import { SearchPanelProps } from "./search-panel";
 import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import { useGoodsModal } from "../util";
+import { useNavigate } from "react-router";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   modeOptions: modeOption[];
@@ -24,6 +25,9 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const navigate = useNavigate();
+  const link = (id: number) =>
+    navigate(`/product/channels?editingChannelId=${id}`);
   const { startEdit } = useGoodsModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -102,7 +106,9 @@ export const List = ({
             render: (value, goods) => (
               <>
                 <div>
-                  <Button type={"link"}>修改产品信息</Button>
+                  <Button type={"link"} onClick={() => link(goods.product_id)}>
+                    修改产品信息
+                  </Button>
                 </div>
                 <div>
                   <Button
