@@ -1,25 +1,20 @@
 import styled from "@emotion/styled";
-import dayjs from "dayjs";
 import {
   Button,
-  Dropdown,
-  Menu,
-  MenuProps,
-  Modal,
   Table,
   TablePaginationConfig,
   TableProps,
   Image,
+  Tag,
 } from "antd";
 import { SearchPanelProps } from "./search-panel";
-import { Channel, modeOption } from "types/product";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { PlusOutlined, DownOutlined } from "@ant-design/icons";
-import { useDownChannel, useEditChannel } from "service/product";
+import { Goods, modeOption } from "types/product";
+import { ErrorBox, Row } from "components/lib";
+import { PlusOutlined } from "@ant-design/icons";
+import { useEditChannel } from "service/product";
 import { useChannelModal, useChannelsQueryKey } from "../util";
-import { useNavigate } from "react-router";
 
-interface ListProps extends TableProps<Channel>, SearchPanelProps {
+interface ListProps extends TableProps<Goods>, SearchPanelProps {
   modeOptions: modeOption[];
   error: Error | unknown;
 }
@@ -72,108 +67,51 @@ export const List = ({
                   ) : (
                     <></>
                   )}
+                  <div style={{ color: "#999" }}>商品编码：{goods.code}</div>
+                  <div style={{ color: "#999" }}>
+                    发布时间：{goods.created_at}
+                  </div>
                 </GoodsInfoWrap>
               </div>
             ),
           },
           {
-            title: "产品编码",
-            dataIndex: "goods_code",
-          },
-          {
-            title: "运营商",
-            dataIndex: "supplier",
-          },
-          {
-            title: "生产方式",
-            render: (value, channel) => (
-              <Dropdown
-                trigger={["click"]}
-                overlay={
-                  <Menu
-                    items={modeOptions.map((item) => ({
-                      label: (
-                        <span
-                          onClick={() =>
-                            editChannel({ id: channel.id, mode: item.id })
-                          }
-                        >
-                          {item.name}
-                        </span>
-                      ),
-                      key: item.id,
-                    }))}
-                  />
-                }
-              >
-                <ButtonNoPadding
-                  style={{ color: channel.mode ? "#1890ff" : "#999" }}
-                  type={"link"}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {modeOptions.find((item) => item.id === channel.mode)?.name ||
-                    "选择等级名称"}
-                  <DownOutlined />
-                </ButtonNoPadding>
-              </Dropdown>
+            title: "供应商&产品",
+            render: (value, goods) => (
+              <>
+                <div>{goods.supplier_name}</div>
+                <div>{goods.product_name}</div>
+              </>
             ),
           },
           {
-            title: "创建时间",
-            dataIndex: "created_at",
-            sorter: (a, b) =>
-              dayjs(a.created_at).valueOf() - dayjs(b.created_at).valueOf(),
+            title: "代理商",
+            render: (value, goods) => (
+              <>
+                <Button type={"link"}>设置代理商可见</Button>
+                <Button type={"link"}>查看代理商</Button>
+              </>
+            ),
+          },
+          {
+            title: "编辑商品",
+            render: (value, goods) => (
+              <>
+                <Button type={"link"}>修改产品信息</Button>
+                <Button type={"link"}>修改商品信息</Button>
+                <Button type={"link"}>下架</Button>
+              </>
+            ),
           },
           {
             title: "操作",
-            render(value, channel) {
-              return <More channel={channel} />;
-            },
-            width: "8rem",
+            render: (value, goods) => <Button type={"link"}>推广链接</Button>,
           },
         ]}
         onChange={setPagination}
         {...restProps}
       />
     </Container>
-  );
-};
-
-const More = ({ channel }: { channel: Channel }) => {
-  const navigate = useNavigate();
-  const link = (id: number) => navigate(`/channels/goods_list?id=${id}`);
-  const { startEdit } = useChannelModal();
-  const { mutate: downChannel } = useDownChannel(useChannelsQueryKey());
-
-  const confirmDownChannel = (id: number) => {
-    Modal.confirm({
-      title: "确定下架该产品吗？",
-      content: "点击确定下架",
-      okText: "确定",
-      cancelText: "取消",
-      onOk: () => downChannel(String(id)),
-    });
-  };
-
-  const items: MenuProps["items"] = [
-    {
-      label: <span onClick={() => startEdit(String(channel.id))}>编辑</span>,
-      key: "edit",
-    },
-    {
-      label: <span onClick={() => confirmDownChannel(channel.id)}>下架</span>,
-      key: "delete",
-    },
-    {
-      label: <span onClick={() => link(channel.id)}>查看分销商品</span>,
-      key: "link",
-    },
-  ];
-
-  return (
-    <Dropdown overlay={<Menu items={items} />}>
-      <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
-    </Dropdown>
   );
 };
 

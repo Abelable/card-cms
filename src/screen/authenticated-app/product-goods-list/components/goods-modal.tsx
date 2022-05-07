@@ -13,11 +13,11 @@ import {
   Select,
   Space,
 } from "antd";
-import { useChannelModal, useChannelsQueryKey } from "../util";
+import { useGoodsModal, useGoodssQueryKey } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { Channel } from "types/product";
-import { useAddChannel, useEditChannel } from "service/product";
+import { Goods } from "types/product";
+import { useAddGoods, useEditGoods } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import styled from "@emotion/styled";
@@ -88,17 +88,17 @@ const cycleOptions = [
   "12个月",
 ];
 
-export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
+export const GoodsModal = ({ goodsList }: { goodsList: Goods[] }) => {
   const [form] = useForm();
   const [type, setType] = useState(1);
 
-  const { channelModalOpen, editingChannelId, close } = useChannelModal();
-  const channel =
-    channels?.find((item) => item.id === Number(editingChannelId)) || undefined;
+  const { goodsListModalOpen, editingGoodsId, close } = useGoodsModal();
+  const goods =
+    goodsList?.find((item) => item.id === Number(editingGoodsId)) || undefined;
 
-  const useMutationChannel = editingChannelId ? useEditChannel : useAddChannel;
-  const { mutateAsync, error, isLoading } = useMutationChannel(
-    useChannelsQueryKey()
+  const useMutationGoods = editingGoodsId ? useEditGoods : useAddGoods;
+  const { mutateAsync, error, isLoading } = useMutationGoods(
+    useGoodssQueryKey()
   );
 
   const closeModal = () => {
@@ -110,7 +110,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
     form.validateFields().then(async () => {
       await mutateAsync(
         cleanObject({
-          id: editingChannelId || "",
+          id: editingGoodsId || "",
           ...form.getFieldsValue(),
         })
       );
@@ -119,16 +119,16 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
   };
 
   useDeepCompareEffect(() => {
-    channel && form.setFieldsValue(channel);
-  }, [form, channel]);
+    goodsList && form.setFieldsValue(goodsList);
+  }, [form, goodsList]);
 
   return (
     <Drawer
-      title={editingChannelId ? "修改基础产品信息" : "定义基础产品信息"}
+      title={editingGoodsId ? "修改基础产品信息" : "定义基础产品信息"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
-      visible={channelModalOpen}
+      visible={goodsListModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         <Space>
@@ -176,7 +176,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="goods_name"
+              name="goodsList_name"
               label="产品名称"
               rules={[{ required: true, message: "请输入产品名称" }]}
             >
@@ -185,7 +185,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
           </Col>
           <Col span={12}>
             <Form.Item
-              name="goods_code"
+              name="goodsList_code"
               label="产品编码"
               rules={[{ required: true, message: "请输入产品编码" }]}
             >

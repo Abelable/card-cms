@@ -1,6 +1,6 @@
 import { toNumber } from "utils";
-import { useChannels, useDownedChannels } from "service/product";
-import { useChannelsSearchParams, useDownedChannelsSearchParams } from "./util";
+import { useGoods, useDownedGoods } from "service/product";
+import { useGoodsSearchParams, useDownedGoodsSearchParams } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -9,23 +9,23 @@ import { useState } from "react";
 import { Menu, MenuProps } from "antd";
 import { DownedList } from "./components/downed-list";
 import { DownedSearchPanel } from "./components/downed-search-panel";
-import { ChannelModal } from "./components/channel-modal";
+import { GoodsModal } from "./components/goods-modal";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
   { id: 2, name: "自动生产" },
 ];
 
-export const ProductChannels = () => {
+export const ProductGoods = () => {
   const [type, setType] = useState("0");
-  const [params, setParams] = useChannelsSearchParams();
-  const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
-  const { data, isLoading, error } = useChannels(params);
+  const [params, setParams] = useGoodsSearchParams();
+  const [downedParams, setDownedParams] = useDownedGoodsSearchParams();
+  const { data, isLoading, error } = useGoods(params);
   const {
     data: downedData,
     isLoading: downedLoading,
     error: downedError,
-  } = useDownedChannels(downedParams);
+  } = useDownedGoods(downedParams);
 
   const items: MenuProps["items"] = [
     {
@@ -83,7 +83,7 @@ export const ProductChannels = () => {
           </>
         )}
       </Main>
-      <ChannelModal channels={data?.data || []} />
+      <GoodsModal goodsList={data?.data || []} />
     </Container>
   );
 };
