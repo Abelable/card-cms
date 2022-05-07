@@ -14,6 +14,7 @@ import { DownedList } from "./components/downed-list";
 import { DownedSearchPanel } from "./components/downed-search-panel";
 import { GoodsModal } from "./components/goods-modal";
 import { AgentModal } from "./components/agent-modal";
+import { LinkModal } from "./components/link-modal";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -89,6 +90,7 @@ export const ProductGoodsList = () => {
       </Main>
       <GoodsModal goodsList={data?.data || []} />
       <AgentModal goodsList={data?.data || []} />
+      <LinkModal goodsList={data?.data || []} />
     </Container>
   );
 };

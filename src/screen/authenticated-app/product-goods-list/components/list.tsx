@@ -10,7 +10,7 @@ import {
 import { SearchPanelProps } from "./search-panel";
 import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
-import { useAgentModal, useGoodsModal } from "../util";
+import { useAgentModal, useGoodsModal, useLinkModal } from "../util";
 import { useNavigate } from "react-router";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
@@ -32,6 +32,7 @@ export const List = ({
     navigate(`/product/sales/agents?goodsId=${id}`);
   const { startEdit } = useGoodsModal();
   const { startEdit: editAgent } = useAgentModal();
+  const { startEdit: checkLink } = useLinkModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -139,7 +140,11 @@ export const List = ({
           },
           {
             title: "操作",
-            render: (value, goods) => <Button type={"link"}>推广链接</Button>,
+            render: (value, goods) => (
+              <Button type={"link"} onClick={() => checkLink(String(goods.id))}>
+                推广链接
+              </Button>
+            ),
           },
         ]}
         onChange={setPagination}

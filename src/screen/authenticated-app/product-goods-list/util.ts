@@ -97,3 +97,26 @@ export const useAgentModal = () => {
     close,
   };
 };
+
+export const useLinkModal = () => {
+  const [{ goodsIdOfLink }, setGoodsIdOfLink] = useUrlQueryParams([
+    "goodsIdOfLink",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const startEdit = useCallback(
+    (id: string) => setGoodsIdOfLink({ goodsIdOfLink: id }),
+    [setGoodsIdOfLink]
+  );
+  const close = useCallback(
+    () => setUrlParams({ goodsIdOfLink: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    linkModalOpen: !!goodsIdOfLink,
+    goodsIdOfLink,
+    startEdit,
+    close,
+  };
+};
