@@ -1,4 +1,4 @@
-import { Form, Modal, Radio, Select, Space } from "antd";
+import { Form, Modal, Radio, Select, Space, Button } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditGoodsAgent } from "service/product";
@@ -39,6 +39,16 @@ export const AgentModal = ({ goodsList }: { goodsList: Goods[] }) => {
     });
   };
 
+  const confirmAndUp = () => {
+    form.validateFields().then(async () => {
+      await mutateAsync({
+        id: goodsIdOfEditingAgent || "",
+        ...form.getFieldsValue(),
+      });
+      closeModal();
+    });
+  };
+
   const closeModal = () => {
     form.resetFields();
     close();
@@ -49,8 +59,14 @@ export const AgentModal = ({ goodsList }: { goodsList: Goods[] }) => {
       title={"修改代理商可见"}
       visible={agentModalOpen}
       confirmLoading={isLoading}
-      onOk={confirm}
-      onCancel={closeModal}
+      footer={
+        <>
+          <Button onClick={() => confirm()}>保存</Button>
+          <Button type={"primary"} onClick={() => confirmAndUp()}>
+            保存并上架
+          </Button>
+        </>
+      }
     >
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
