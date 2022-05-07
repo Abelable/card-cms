@@ -80,8 +80,12 @@ export const DownedList = ({
             title: "代理商",
             render: (value, goods) => (
               <>
-                <Button type={"link"}>设置代理商可见</Button>
-                <Button type={"link"}>查看代理商</Button>
+                <div>
+                  <Button type={"link"}>设置代理商可见</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>查看代理商</Button>
+                </div>
               </>
             ),
           },
@@ -89,10 +93,18 @@ export const DownedList = ({
             title: "编辑商品",
             render: (value, goods) => (
               <>
-                <Button type={"link"}>修改产品信息</Button>
-                <Button type={"link"}>修改商品信息</Button>
-                <Button type={"link"}>上架</Button>
-                <Button type={"link"}>删除</Button>
+                <div>
+                  <Button type={"link"}>修改产品信息</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>修改商品信息</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>上架</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>删除</Button>
+                </div>
               </>
             ),
           },

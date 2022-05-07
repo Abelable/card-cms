@@ -90,8 +90,12 @@ export const List = ({
             title: "代理商",
             render: (value, goods) => (
               <>
-                <Button type={"link"}>设置代理商可见</Button>
-                <Button type={"link"}>查看代理商</Button>
+                <div>
+                  <Button type={"link"}>设置代理商可见</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>查看代理商</Button>
+                </div>
               </>
             ),
           },
@@ -99,9 +103,15 @@ export const List = ({
             title: "编辑商品",
             render: (value, goods) => (
               <>
-                <Button type={"link"}>修改产品信息</Button>
-                <Button type={"link"}>修改商品信息</Button>
-                <Button type={"link"}>下架</Button>
+                <div>
+                  <Button type={"link"}>修改产品信息</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>修改商品信息</Button>
+                </div>
+                <div>
+                  <Button type={"link"}>下架</Button>
+                </div>
               </>
             ),
           },
