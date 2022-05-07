@@ -131,3 +131,18 @@ export const useEditGoods = (queryKey: QueryKey) => {
     useEditConfig(queryKey)
   );
 };
+
+interface EditGoodsAgentParams extends Partial<Goods> {
+  id: number;
+}
+export const useEditGoodsAgent = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, ...params }: EditGoodsAgentParams) =>
+      client(`/api/v1/admin/channel/update/${id}`, {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};

@@ -80,18 +80,6 @@ export interface GoodsListSearchParams {
   page: number;
 }
 
-export interface Goods {
-  id: number;
-  name: string;
-  img: string;
-  tags: string[];
-  code: string;
-  supplier_name: string;
-  product_id: number;
-  product_name: string;
-  created_at: string;
-}
-
 export interface GoodsForm {
   product_id: number;
   name: string;
@@ -103,6 +91,19 @@ export interface GoodsForm {
   remarks: string;
   isForce: boolean;
 }
+export interface Goods {
+  id: number;
+  name: string;
+  img: string;
+  tags: string[];
+  code: string;
+  supplier_name: string;
+  product_id: number;
+  product_name: string;
+  visible_type: number;
+  agent_id: number;
+  created_at: string;
+}
 
 export interface GoodsListResult {
   data: Goods[];
@@ -112,6 +113,7 @@ export interface GoodsListResult {
 export interface DownedGoodsListSearchParams extends GoodsListSearchParams {}
 
 export interface DownedGoods extends Goods {}
+
 export interface DownedGoodsListResult {
   data: DownedGoods[];
   meta: { pagination: Pagination };

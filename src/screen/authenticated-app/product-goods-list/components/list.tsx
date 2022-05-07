@@ -10,7 +10,7 @@ import {
 import { SearchPanelProps } from "./search-panel";
 import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
-import { useGoodsModal } from "../util";
+import { useAgentModal, useGoodsModal } from "../util";
 import { useNavigate } from "react-router";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
@@ -29,6 +29,7 @@ export const List = ({
   const link = (id: number) =>
     navigate(`/product/channels?editingChannelId=${id}`);
   const { startEdit } = useGoodsModal();
+  const { startEdit: editAgent } = useAgentModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -93,7 +94,12 @@ export const List = ({
             render: (value, goods) => (
               <>
                 <div>
-                  <Button type={"link"}>设置代理商可见</Button>
+                  <Button
+                    type={"link"}
+                    onClick={() => editAgent(String(goods.id))}
+                  >
+                    设置代理商可见
+                  </Button>
                 </div>
                 <div>
                   <Button type={"link"}>查看代理商</Button>

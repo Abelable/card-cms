@@ -41,7 +41,7 @@ export const useDownedGoodsListSearchParams = () => {
 
 export const useGoodsListQueryKey = () => {
   const [params] = useGoodsListSearchParams();
-  return ["goodss", params];
+  return ["product_goods_list", params];
 };
 
 export const useGoodsModal = () => {
@@ -70,6 +70,29 @@ export const useGoodsModal = () => {
     goodsModalOpen: goodsCreate === "true" || !!editingGoodsId,
     editingGoodsId,
     open,
+    startEdit,
+    close,
+  };
+};
+
+export const useAgentModal = () => {
+  const [{ goodsIdOfEditingAgent }, setEditingGoodsId] = useUrlQueryParams([
+    "goodsIdOfEditingAgent",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const startEdit = useCallback(
+    (id: string) => setEditingGoodsId({ goodsIdOfEditingAgent: id }),
+    [setEditingGoodsId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ goodsIdOfEditingAgent: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    agentModalOpen: !!goodsIdOfEditingAgent,
+    goodsIdOfEditingAgent,
     startEdit,
     close,
   };
