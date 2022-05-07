@@ -19,7 +19,7 @@ const modeOptions = [
   { id: 2, name: "自动生产" },
 ];
 
-export const ProductGoods = () => {
+export const ProductGoodsList = () => {
   const [type, setType] = useState("0");
   const [params, setParams] = useGoodsListSearchParams();
   const [downedParams, setDownedParams] = useDownedGoodsListSearchParams();

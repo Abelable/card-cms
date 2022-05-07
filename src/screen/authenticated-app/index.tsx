@@ -15,6 +15,7 @@ import { Agents } from "./agents";
 import { AgentGoodsList } from "./agent-goods-list";
 import { ProductChannels } from "./product-channels";
 import { ProductChannelGoodsList } from "./product-channel-goods-list";
+import { ProductGoodsList } from "./product-goods-list";
 
 import {
   MenuUnfoldOutlined,
@@ -62,6 +63,7 @@ export const AuthenticatedApp = () => {
                 path="product/channels/goods_list"
                 element={<ProductChannelGoodsList />}
               />
+              <Route path="product/sales" element={<ProductGoodsList />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}
