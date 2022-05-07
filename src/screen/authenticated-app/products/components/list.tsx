@@ -20,7 +20,6 @@ import { useNavigate } from "react-router";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
   modeOptions: modeOption[];
-  setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }
 
@@ -29,7 +28,6 @@ export const List = ({
   modeOptions,
   params,
   setParams,
-  setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
   const { open } = useChannelModal();
@@ -44,7 +42,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>产品列表</h3>
+        <h3>商品列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -52,11 +50,6 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        rowSelection={{
-          type: "checkbox",
-          onChange: (selectedRowKeys) =>
-            setSelectedRowKeys(selectedRowKeys as []),
-        }}
         columns={[
           {
             title: "编号",
