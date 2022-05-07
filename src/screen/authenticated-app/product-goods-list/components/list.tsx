@@ -40,7 +40,7 @@ export const List = ({
           <Button onClick={open} type={"default"}>
             发布全新套餐
           </Button>
-          <Button onClick={open} type={"primary"}>
+          <Button style={{ marginRight: 0 }} onClick={open} type={"primary"}>
             基于已有产品渠道发布商品
           </Button>
         </Row>
