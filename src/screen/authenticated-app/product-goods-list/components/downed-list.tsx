@@ -1,13 +1,17 @@
 import styled from "@emotion/styled";
-import dayjs from "dayjs";
-import { Modal, Table, TablePaginationConfig, TableProps } from "antd";
+import {
+  Button,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+  Image,
+  Tag,
+} from "antd";
 import { SearchPanelProps } from "./search-panel";
-import { Channel, modeOption } from "types/product";
+import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
-import { useChannelsQueryKey } from "../util";
-import { useUpChannel } from "service/product";
 
-interface ListProps extends TableProps<Channel>, SearchPanelProps {
+interface ListProps extends TableProps<Goods>, SearchPanelProps {
   modeOptions: modeOption[];
   error: Error | unknown;
 }
@@ -19,16 +23,6 @@ export const DownedList = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const { mutate: upChannel } = useUpChannel(useChannelsQueryKey());
-  const confirmUpChannel = (id: number) => {
-    Modal.confirm({
-      title: "确定上架该产品吗？",
-      content: "点击确定上架",
-      okText: "确定",
-      cancelText: "取消",
-      onOk: () => upChannel(String(id)),
-    });
-  };
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -39,7 +33,7 @@ export const DownedList = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>产品列表</h3>
+        <h3>商品列表</h3>
       </Header>
       <ErrorBox error={error} />
       <Table
@@ -52,37 +46,55 @@ export const DownedList = ({
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
-            title: "产品名称",
-            dataIndex: "goods_name",
-          },
-          {
-            title: "产品编码",
-            dataIndex: "goods_code",
-          },
-          {
-            title: "运营商",
-            dataIndex: "supplier",
-          },
-          {
-            title: "生产方式",
-            render: (value, channel) => (
-              <span>
-                {modeOptions.find((item) => item.id === channel.mode)?.name}
-              </span>
+            title: "商品名称",
+            render: (value, goods) => (
+              <div style={{ display: "flex" }}>
+                <Image width={80} height={80} src={goods.img} />
+                <GoodsInfoWrap>
+                  <div style={{ marginBottom: "1rem" }}>{goods.name}</div>
+                  {goods.tags ? (
+                    goods.tags.map((item, index) => (
+                      <Tag key={index}>{item}</Tag>
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                  <div style={{ color: "#999" }}>商品编码：{goods.code}</div>
+                  <div style={{ color: "#999" }}>
+                    发布时间：{goods.created_at}
+                  </div>
+                </GoodsInfoWrap>
+              </div>
             ),
           },
           {
-            title: "创建时间",
-            dataIndex: "created_at",
-            sorter: (a, b) =>
-              dayjs(a.created_at).valueOf() - dayjs(b.created_at).valueOf(),
+            title: "供应商&产品",
+            render: (value, goods) => (
+              <>
+                <div>{goods.supplier_name}</div>
+                <div>{goods.product_name}</div>
+              </>
+            ),
           },
           {
-            title: "操作",
-            render: (value, channel) => (
-              <span onClick={() => confirmUpChannel(channel.id)}>上架</span>
+            title: "代理商",
+            render: (value, goods) => (
+              <>
+                <Button type={"link"}>设置代理商可见</Button>
+                <Button type={"link"}>查看代理商</Button>
+              </>
             ),
-            width: "8rem",
+          },
+          {
+            title: "编辑商品",
+            render: (value, goods) => (
+              <>
+                <Button type={"link"}>修改产品信息</Button>
+                <Button type={"link"}>修改商品信息</Button>
+                <Button type={"link"}>上架</Button>
+                <Button type={"link"}>删除</Button>
+              </>
+            ),
           },
         ]}
         onChange={setPagination}
@@ -99,4 +111,10 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const GoodsInfoWrap = styled.div`
+  margin-left: 2rem;
+  flex: 1;
+  height: 80px;
 `;
