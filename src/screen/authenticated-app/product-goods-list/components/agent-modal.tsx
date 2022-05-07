@@ -57,6 +57,7 @@ export const AgentModal = ({ goodsList }: { goodsList: Goods[] }) => {
   return (
     <Modal
       title={"修改代理商可见"}
+      onCancel={closeModal}
       visible={agentModalOpen}
       confirmLoading={isLoading}
       footer={
