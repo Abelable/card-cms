@@ -24,7 +24,7 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const { open } = useGoodsModal();
+  const { startEdit } = useGoodsModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -37,10 +37,8 @@ export const List = ({
       <Header between={true}>
         <h3>商品列表</h3>
         <Row gap>
-          <Button onClick={open} type={"default"}>
-            发布全新套餐
-          </Button>
-          <Button style={{ marginRight: 0 }} onClick={open} type={"primary"}>
+          <Button type={"default"}>发布全新套餐</Button>
+          <Button style={{ marginRight: 0 }} type={"primary"}>
             基于已有产品渠道发布商品
           </Button>
         </Row>
@@ -107,7 +105,12 @@ export const List = ({
                   <Button type={"link"}>修改产品信息</Button>
                 </div>
                 <div>
-                  <Button type={"link"}>修改商品信息</Button>
+                  <Button
+                    type={"link"}
+                    onClick={() => startEdit(String(goods.id))}
+                  >
+                    修改商品信息
+                  </Button>
                 </div>
                 <div>
                   <Button type={"link"}>下架</Button>

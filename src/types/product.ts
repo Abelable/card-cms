@@ -91,6 +91,18 @@ export interface Goods {
   created_at: string;
 }
 
+export interface GoodsForm {
+  product_id: number;
+  name: string;
+  code: string;
+  tags: string[];
+  needImg: boolean;
+  img: string;
+  detail: string;
+  remarks: string;
+  isForce: boolean;
+}
+
 export interface GoodsListResult {
   data: Goods[];
   meta: { pagination: Pagination };
