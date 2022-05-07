@@ -159,85 +159,85 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   };
 
   return (
-    <Container marginBottom={1.6} between={true}>
-      <Row gap={true}>
-        <Row>
-          <div>商品名称：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.goods_name}
-            onChange={setGoodsName}
-            placeholder="请输入商品名称"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>供应商：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.supplier}
-            onChange={setSupplier}
-            placeholder="请输入供应商名称"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>产品编码：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.product_code}
-            onChange={setProductCode}
-            placeholder="请输入产品编码"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>商品编码：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.goods_code}
-            onChange={setGoodsCode}
-            placeholder="请输入商品编码"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>运营商：</div>
-          <Select
-            value={temporaryParams.operator_id}
-            allowClear={true}
-            onSelect={setOperator}
-            onClear={clearOperator}
-            placeholder="请选择运营商"
-          >
-            {operatorOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
-        <Row>
-          <div>发货地址：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.deliver_address}
-            onChange={setAddress}
-            placeholder="请输入商品编码"
-            allowClear={true}
-          />
-        </Row>
-        <Row>
-          <div>归属地：</div>
-          <Cascader
-            options={regionOptions}
-            value={temporaryParams.ownership}
-            onChange={setOwnership}
-            placeholder="请选择归属地"
-          />
-        </Row>
-      </Row>
-      <Row gap={true}>
+    <Container>
+      <Item>
+        <div>商品名称：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.goods_name}
+          onChange={setGoodsName}
+          placeholder="请输入商品名称"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>供应商：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.supplier}
+          onChange={setSupplier}
+          placeholder="请输入供应商名称"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>产品编码：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.product_code}
+          onChange={setProductCode}
+          placeholder="请输入产品编码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>商品编码：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.goods_code}
+          onChange={setGoodsCode}
+          placeholder="请输入商品编码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>运营商：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.operator_id}
+          allowClear={true}
+          onSelect={setOperator}
+          onClear={clearOperator}
+          placeholder="请选择运营商"
+        >
+          {operatorOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>发货地址：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.deliver_address}
+          onChange={setAddress}
+          placeholder="请输入商品编码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>归属地：</div>
+        <Cascader
+          style={{ width: "20rem" }}
+          options={regionOptions}
+          value={temporaryParams.ownership}
+          onChange={setOwnership}
+          placeholder="请选择归属地"
+        />
+      </Item>
+      <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
           style={{ marginRight: 0 }}
@@ -246,12 +246,27 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
         >
           查询
         </Button>
-      </Row>
+      </ButtonWrap>
     </Container>
   );
 };
 
-const Container = styled(Row)`
-  padding: 2.4rem;
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+  padding: 2.4rem 16.8rem 0 2.4rem;
   background: #fff;
+`;
+
+const Item = styled(Row)`
+  margin-right: 2rem;
+  padding-bottom: 2.4rem;
+`;
+
+const ButtonWrap = styled(Row)`
+  position: absolute;
+  right: 2.4rem;
+  bottom: 2.4rem;
 `;
