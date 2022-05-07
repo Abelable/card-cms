@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input, Select } from "antd";
+import { Button, Cascader, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { GoodsListSearchParams } from "types/product";
 import styled from "@emotion/styled";
@@ -13,6 +13,45 @@ const operatorOptions = [
   { id: 1, name: "移动" },
   { id: 2, name: "联通" },
   { id: 3, name: "电信" },
+];
+
+const regionOptions = [
+  {
+    value: "1",
+    label: "浙江省",
+    children: [
+      {
+        value: "1",
+        label: "杭州市",
+        children: [
+          {
+            value: "1",
+            label: "西湖区",
+          },
+          {
+            value: "2",
+            label: "上城区",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: "2",
+    label: "江苏省",
+    children: [
+      {
+        value: "1",
+        label: "南京市",
+        children: [
+          {
+            value: "1",
+            label: "中华门",
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
@@ -111,6 +150,9 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
+  const setOwnership = (ownership: any) =>
+    setTemporaryParams({ ...temporaryParams, ownership });
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -183,6 +225,15 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             onChange={setAddress}
             placeholder="请输入商品编码"
             allowClear={true}
+          />
+        </Row>
+        <Row>
+          <div>归属地：</div>
+          <Cascader
+            options={regionOptions}
+            value={temporaryParams.ownership}
+            onChange={setOwnership}
+            placeholder="请选择归属地"
           />
         </Row>
       </Row>
