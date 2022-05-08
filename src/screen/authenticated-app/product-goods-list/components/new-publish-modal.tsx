@@ -117,15 +117,15 @@ export const NewPublishModal = () => {
 
   const submit = () => {
     form.validateFields().then(async () => {
-      await mutateAsync(cleanObject(form.getFieldsValue()));
-      setStep(2);
+      // await mutateAsync(cleanObject(form.getFieldsValue()));
+      setStep(3);
     });
   };
 
   return (
     <Drawer
       title={"发布商品"}
-      width={"100rem"}
+      width={"120rem"}
       forceRender={true}
       onClose={closeModal}
       visible={newPublishModalOpen}
@@ -611,10 +611,8 @@ export const NewPublishModal = () => {
                   label="商品卖点"
                   rules={[
                     {
-                      required: true,
                       type: "array",
                       max: 3,
-                      message: "请输入商品卖点",
                     },
                   ]}
                   tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"

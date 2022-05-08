@@ -137,10 +137,8 @@ export const PublishModal = () => {
                   label="商品卖点"
                   rules={[
                     {
-                      required: true,
                       type: "array",
                       max: 3,
-                      message: "请输入商品卖点",
                     },
                   ]}
                   tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
