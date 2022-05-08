@@ -72,86 +72,250 @@ export const PublishModal = () => {
         <Steps.Step title="确认发布" description="上线销售发展用户" />
       </Steps>
       <Divider />
-      <Wrap>
-        <Form form={form} layout="vertical">
-          <ErrorBox error={error} />
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="product_id"
-                label="选择基础产品"
-                rules={[{ required: true, message: "请选择基础产品" }]}
-              >
-                <Select placeholder="请选择基础产品">
-                  {operatorOptions.map(({ id, name }) => (
-                    <Select.Option key={id} value={id}>
-                      {name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="name"
-                label="商品名称"
-                rules={[{ required: true, message: "请输入商品名称" }]}
-                tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
-              >
-                <Input placeholder="请输入商品名称" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="code"
-                label="商品编码"
-                rules={[{ required: true, message: "请输入商品编码" }]}
-              >
-                <Input placeholder="请输入商品编码" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="tags"
-                label="商品卖点"
-                rules={[
-                  {
-                    required: true,
-                    type: "array",
-                    max: 3,
-                    message: "请输入商品卖点",
-                  },
-                ]}
-                tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
-              >
-                <Select mode="tags" placeholder="输入后回车生产商品卖点" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item name="needImg" label="销售页上传照片">
-            <Radio.Group>
-              <Radio value={false}>无需上传</Radio>
-              <Radio value={true}>需要上传</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item
-            name="img"
-            label="商品主图"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-          >
-            <OssUpload />
-          </Form.Item>
-          <Form.Item label="商品详情" required>
-            <RichTextEditor content={detail} setContent={setDetail} />
-          </Form.Item>
-          <Form.Item label="其他备注">
-            <RichTextEditor content={remark} setContent={setRemark} />
-          </Form.Item>
-        </Form>
-      </Wrap>
+      {step === 0 ? (
+        <Wrap>
+          <Form form={form} layout="vertical">
+            <ErrorBox error={error} />
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="product_id"
+                  label="选择基础产品"
+                  rules={[{ required: true, message: "请选择基础产品" }]}
+                >
+                  <Select placeholder="请选择基础产品">
+                    {operatorOptions.map(({ id, name }) => (
+                      <Select.Option key={id} value={id}>
+                        {name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="name"
+                  label="商品名称"
+                  rules={[{ required: true, message: "请输入商品名称" }]}
+                  tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
+                >
+                  <Input placeholder="请输入商品名称" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="code"
+                  label="商品编码"
+                  rules={[{ required: true, message: "请输入商品编码" }]}
+                >
+                  <Input placeholder="请输入商品编码" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="tags"
+                  label="商品卖点"
+                  rules={[
+                    {
+                      required: true,
+                      type: "array",
+                      max: 3,
+                      message: "请输入商品卖点",
+                    },
+                  ]}
+                  tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
+                >
+                  <Select mode="tags" placeholder="输入后回车生产商品卖点" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item name="needImg" label="销售页上传照片">
+              <Radio.Group>
+                <Radio value={false}>无需上传</Radio>
+                <Radio value={true}>需要上传</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              name="img"
+              label="商品主图"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <OssUpload />
+            </Form.Item>
+            <Form.Item label="商品详情" required>
+              <RichTextEditor content={detail} setContent={setDetail} />
+            </Form.Item>
+            <Form.Item label="其他备注">
+              <RichTextEditor content={remark} setContent={setRemark} />
+            </Form.Item>
+          </Form>
+        </Wrap>
+      ) : step === 1 ? (
+        <Wrap>
+          <Form form={form} layout="vertical">
+            <ErrorBox error={error} />
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="product_id"
+                  label="选择基础产品"
+                  rules={[{ required: true, message: "请选择基础产品" }]}
+                >
+                  <Select placeholder="请选择基础产品">
+                    {operatorOptions.map(({ id, name }) => (
+                      <Select.Option key={id} value={id}>
+                        {name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="name"
+                  label="商品名称"
+                  rules={[{ required: true, message: "请输入商品名称" }]}
+                  tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
+                >
+                  <Input placeholder="请输入商品名称" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="code"
+                  label="商品编码"
+                  rules={[{ required: true, message: "请输入商品编码" }]}
+                >
+                  <Input placeholder="请输入商品编码" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="tags"
+                  label="商品卖点"
+                  rules={[
+                    {
+                      required: true,
+                      type: "array",
+                      max: 3,
+                      message: "请输入商品卖点",
+                    },
+                  ]}
+                  tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
+                >
+                  <Select mode="tags" placeholder="输入后回车生产商品卖点" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item name="needImg" label="销售页上传照片">
+              <Radio.Group>
+                <Radio value={false}>无需上传</Radio>
+                <Radio value={true}>需要上传</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              name="img"
+              label="商品主图"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <OssUpload />
+            </Form.Item>
+            <Form.Item label="商品详情" required>
+              <RichTextEditor content={detail} setContent={setDetail} />
+            </Form.Item>
+            <Form.Item label="其他备注">
+              <RichTextEditor content={remark} setContent={setRemark} />
+            </Form.Item>
+          </Form>
+        </Wrap>
+      ) : (
+        <Wrap>
+          <Form form={form} layout="vertical">
+            <ErrorBox error={error} />
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="product_id"
+                  label="选择基础产品"
+                  rules={[{ required: true, message: "请选择基础产品" }]}
+                >
+                  <Select placeholder="请选择基础产品">
+                    {operatorOptions.map(({ id, name }) => (
+                      <Select.Option key={id} value={id}>
+                        {name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="name"
+                  label="商品名称"
+                  rules={[{ required: true, message: "请输入商品名称" }]}
+                  tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
+                >
+                  <Input placeholder="请输入商品名称" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="code"
+                  label="商品编码"
+                  rules={[{ required: true, message: "请输入商品编码" }]}
+                >
+                  <Input placeholder="请输入商品编码" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="tags"
+                  label="商品卖点"
+                  rules={[
+                    {
+                      required: true,
+                      type: "array",
+                      max: 3,
+                      message: "请输入商品卖点",
+                    },
+                  ]}
+                  tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
+                >
+                  <Select mode="tags" placeholder="输入后回车生产商品卖点" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item name="needImg" label="销售页上传照片">
+              <Radio.Group>
+                <Radio value={false}>无需上传</Radio>
+                <Radio value={true}>需要上传</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              name="img"
+              label="商品主图"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+            >
+              <OssUpload />
+            </Form.Item>
+            <Form.Item label="商品详情" required>
+              <RichTextEditor content={detail} setContent={setDetail} />
+            </Form.Item>
+            <Form.Item label="其他备注">
+              <RichTextEditor content={remark} setContent={setRemark} />
+            </Form.Item>
+          </Form>
+        </Wrap>
+      )}
     </Drawer>
   );
 };
