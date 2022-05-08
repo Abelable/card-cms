@@ -28,12 +28,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         rowKey={"id"}
         columns={[
           {
-            title: "编号",
-            dataIndex: "id",
-            width: "8rem",
-            sorter: (a, b) => Number(a.id) - Number(b.id),
-          },
-          {
             title: "导入日期",
             dataIndex: "created_at",
             sorter: (a, b) =>

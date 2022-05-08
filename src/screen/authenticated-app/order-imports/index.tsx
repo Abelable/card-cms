@@ -4,7 +4,7 @@ import { toNumber } from "utils";
 import { List } from "./components/list";
 import { useProductsSearchParams } from "./util";
 
-export const OrderProducts = () => {
+export const OrderImports = () => {
   const [params, setParams] = useProductsSearchParams();
   const { data, isLoading, error } = useProducts(params);
 
