@@ -16,6 +16,8 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/order": "订单管理中心",
   "/order/configure": "自动生产配置",
   "/order/import": "批量导入",
+  "/system": "系统管理",
+  "/system/blacklist": "黑名单配置",
 };
 
 export const NavigationBar = () => {

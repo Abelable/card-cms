@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
-import { useProducts } from "service/order";
+import { useBlacklist } from "service/system";
 import { toNumber } from "utils";
+import { BlackModal } from "./components/black-modal";
 import { List } from "./components/list";
 import { useBlacklistSearchParams } from "./util";
 
 export const Blacklist = () => {
   const [params, setParams] = useBlacklistSearchParams();
-  const { data, isLoading, error } = useProducts(params);
+  const { data, isLoading, error } = useBlacklist(params);
 
   return (
     <Container>
@@ -22,6 +23,7 @@ export const Blacklist = () => {
             total: toNumber(data?.meta.pagination.total),
           }}
         />
+        <BlackModal blacklist={data?.data || []} />
       </Main>
     </Container>
   );
