@@ -645,7 +645,7 @@ export const NewPublishModal = () => {
             </Form.Item>
           </Form>
         </FormWrap>
-      ) : step === 1 ? (
+      ) : step === 2 ? (
         <FormWrap>
           <Form form={form} layout="vertical">
             <Form.Item
