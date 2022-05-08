@@ -1,5 +1,5 @@
-import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
-import { useCallback, useMemo } from "react";
+import { useUrlQueryParams } from "utils/url";
+import { useMemo } from "react";
 
 export const useProductsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -23,35 +23,4 @@ export const useProductsSearchParams = () => {
 export const useProductsQueryKey = () => {
   const [params] = useProductsSearchParams();
   return ["orderProducts", params];
-};
-
-export const useProductModal = () => {
-  const [{ productCreate }, setProductModalOpen] = useUrlQueryParams([
-    "productCreate",
-  ]);
-  const [{ editingProductId }, setEditingProductId] = useUrlQueryParams([
-    "editingProductId",
-  ]);
-  const setUrlParams = useSetUrlSearchParams();
-
-  const open = useCallback(
-    () => setProductModalOpen({ productCreate: true }),
-    [setProductModalOpen]
-  );
-  const startEdit = useCallback(
-    (id: string) => setEditingProductId({ editingProductId: id }),
-    [setEditingProductId]
-  );
-  const close = useCallback(
-    () => setUrlParams({ productCreate: "", editingProductId: "" }),
-    [setUrlParams]
-  );
-
-  return {
-    productModalOpen: productCreate === "true" || !!editingProductId,
-    editingProductId,
-    open,
-    startEdit,
-    close,
-  };
 };
