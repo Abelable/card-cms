@@ -1,6 +1,12 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
-import { Product, ProductsResult, ProductsSearchParams } from "types/order";
+import {
+  ImportsResult,
+  ImportsSearchParams,
+  Product,
+  ProductsResult,
+  ProductsSearchParams,
+} from "types/order";
 import {
   useAddConfig,
   useDeleteConfig,
@@ -48,5 +54,14 @@ export const useDeleteProduct = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useDeleteConfig(queryKey)
+  );
+};
+
+export const useImports = (params: Partial<ImportsSearchParams>) => {
+  const client = useHttp();
+  return useQuery<ImportsResult>(["products", params], () =>
+    client("/api/v1/admin/product/index", {
+      data: params,
+    })
   );
 };

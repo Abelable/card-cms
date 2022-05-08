@@ -22,3 +22,23 @@ export interface ProductsResult {
   data: Product[];
   meta: { pagination: Pagination };
 }
+
+export interface ImportsSearchParams {
+  per_page: number;
+  page: number;
+}
+
+export interface Import {
+  id: number;
+  order_number: number;
+  pic_number: number;
+  matching_pic_number: number;
+  unmatching_pic_number: number;
+  fail_number: number;
+  created_at: string;
+}
+
+export interface ImportsResult {
+  data: Import[];
+  meta: { pagination: Pagination };
+}
