@@ -14,6 +14,7 @@ import {
   useAgentModal,
   useGoodsModal,
   useLinkModal,
+  useNewPublishModal,
   usePublishModal,
 } from "../util";
 import { useNavigate } from "react-router";
@@ -39,6 +40,7 @@ export const List = ({
   const { startEdit: editAgent } = useAgentModal();
   const { startEdit: checkLink } = useLinkModal();
   const { open: openPublishModal } = usePublishModal();
+  const { open: openNewPublishModal } = useNewPublishModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -51,7 +53,9 @@ export const List = ({
       <Header between={true}>
         <h3>商品列表</h3>
         <Row gap>
-          <Button type={"default"}>发布全新套餐</Button>
+          <Button type={"default"} onClick={openNewPublishModal}>
+            发布全新套餐
+          </Button>
           <Button
             style={{ marginRight: 0 }}
             type={"primary"}

@@ -169,3 +169,15 @@ export const usePublishGoods = (queryKey: QueryKey) => {
     useEditConfig(queryKey)
   );
 };
+
+export const useNewPublishGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<Goods>) =>
+      client("/api/v1/admin/channel/update", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};

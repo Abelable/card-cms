@@ -16,6 +16,7 @@ import { GoodsModal } from "./components/goods-modal";
 import { AgentModal } from "./components/agent-modal";
 import { LinkModal } from "./components/link-modal";
 import { PublishModal } from "./components/publish-modal";
+import { NewPublishModal } from "./components/new-publish-modal";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -93,6 +94,7 @@ export const ProductGoodsList = () => {
       <AgentModal goodsList={data?.data || []} />
       <LinkModal goodsList={data?.data || []} />
       <PublishModal />
+      <NewPublishModal />
     </Container>
   );
 };

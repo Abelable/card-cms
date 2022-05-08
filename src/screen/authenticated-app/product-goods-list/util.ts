@@ -140,3 +140,22 @@ export const usePublishModal = () => {
     close,
   };
 };
+
+export const useNewPublishModal = () => {
+  const [{ newPublishModalVisible }, setNewPublishModalVisible] =
+    useUrlQueryParams(["newPublishModalVisible"]);
+  const open = useCallback(
+    () => setNewPublishModalVisible({ newPublishModalVisible: true }),
+    [setNewPublishModalVisible]
+  );
+  const setUrlParams = useSetUrlSearchParams();
+  const close = useCallback(
+    () => setUrlParams({ newPublishModalVisible: "" }),
+    [setUrlParams]
+  );
+  return {
+    newPublishModalOpen: newPublishModalVisible === "true",
+    open,
+    close,
+  };
+};
