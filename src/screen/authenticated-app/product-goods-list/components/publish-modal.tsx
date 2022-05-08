@@ -9,6 +9,7 @@ import {
   Radio,
   Row,
   Select,
+  Space,
   Steps,
 } from "antd";
 import { useGoodsListQueryKey, usePublishModal } from "../util";
@@ -65,6 +66,20 @@ export const PublishModal = () => {
       onClose={closeModal}
       visible={publishModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
+      extra={
+        step === 0 ? (
+          <Button onClick={() => setStep(1)} type="primary">
+            下一步
+          </Button>
+        ) : (
+          <Space>
+            <Button onClick={() => setStep(1)}>上一步</Button>
+            <Button onClick={() => setStep(2)} type="primary">
+              发布商品
+            </Button>
+          </Space>
+        )
+      }
     >
       <Steps current={step}>
         <Steps.Step title="定义销售页信息" description="对外宣传销售话术" />
