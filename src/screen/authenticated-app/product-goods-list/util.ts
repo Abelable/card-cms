@@ -120,3 +120,23 @@ export const useLinkModal = () => {
     close,
   };
 };
+
+export const usePublishModal = () => {
+  const [{ publishModalVisible }, setPublishModalVisible] = useUrlQueryParams([
+    "publishModalVisible",
+  ]);
+  const open = useCallback(
+    () => setPublishModalVisible({ publishModalVisible: true }),
+    [setPublishModalVisible]
+  );
+  const setUrlParams = useSetUrlSearchParams();
+  const close = useCallback(
+    () => setUrlParams({ publishModalVisible: "" }),
+    [setUrlParams]
+  );
+  return {
+    publishModalOpen: publishModalVisible === "true",
+    open,
+    close,
+  };
+};

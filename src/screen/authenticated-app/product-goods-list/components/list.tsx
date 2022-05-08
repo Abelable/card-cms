@@ -10,7 +10,12 @@ import {
 import { SearchPanelProps } from "./search-panel";
 import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
-import { useAgentModal, useGoodsModal, useLinkModal } from "../util";
+import {
+  useAgentModal,
+  useGoodsModal,
+  useLinkModal,
+  usePublishModal,
+} from "../util";
 import { useNavigate } from "react-router";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
@@ -33,6 +38,7 @@ export const List = ({
   const { startEdit } = useGoodsModal();
   const { startEdit: editAgent } = useAgentModal();
   const { startEdit: checkLink } = useLinkModal();
+  const { open: openPublishModal } = usePublishModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -46,7 +52,11 @@ export const List = ({
         <h3>商品列表</h3>
         <Row gap>
           <Button type={"default"}>发布全新套餐</Button>
-          <Button style={{ marginRight: 0 }} type={"primary"}>
+          <Button
+            style={{ marginRight: 0 }}
+            type={"primary"}
+            onClick={openPublishModal}
+          >
             基于已有产品渠道发布商品
           </Button>
         </Row>
