@@ -54,7 +54,7 @@ export const ProductModal = ({ products }: { products: Product[] }) => {
         <>
           <Button onClick={closeModal}>取消</Button>
           <Button type={"primary"} onClick={() => confirm()}>
-            提交
+            确定
           </Button>
         </>
       }
@@ -74,14 +74,28 @@ export const ProductModal = ({ products }: { products: Product[] }) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item name="code" label="本地编码">
+        <Form.Item
+          name="code"
+          label="本地编码"
+          rules={[{ required: true, message: "请输入本地编码" }]}
+        >
           <Input placeholder="请输入本地编码" />
         </Form.Item>
-        <Form.Item name="upper_product_code" label="上游编码">
+        <Form.Item
+          name="upper_product_code"
+          label="上游编码"
+          rules={[{ required: true, message: "请输入上游编码" }]}
+        >
           <Input placeholder="请输入上游编码" />
         </Form.Item>
+        <Form.Item name="contact_name" label="触点标识名称">
+          <Input placeholder="请输入触点标识名称" />
+        </Form.Item>
       </Form>
-      <Button type={"ghost"}>检测</Button>
+      <Button type="primary" danger>
+        检测
+      </Button>
+      <div>未设置过自动生产，点确定设置吧</div>
     </Modal>
   );
 };

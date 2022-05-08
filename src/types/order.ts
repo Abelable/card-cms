@@ -14,6 +14,7 @@ export interface Product {
   upper_product_code: string;
   name: string;
   code: string;
+  contact_name: string;
   created_at: string;
 }
 

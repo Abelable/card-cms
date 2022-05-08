@@ -6,7 +6,7 @@ import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useProductsSearchParams } from "./util";
 
-export const Products = () => {
+export const OrderProducts = () => {
   const [params, setParams] = useProductsSearchParams();
   const { data, isLoading, error } = useProducts(params);
 

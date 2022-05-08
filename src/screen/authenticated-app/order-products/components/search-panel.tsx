@@ -37,14 +37,14 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
-          <div>标题：</div>
+          <div>供应商：</div>
           <Select
             style={{ width: "20rem" }}
             value={temporaryParams.supplier_id}
             allowClear={true}
             onSelect={setSupplier}
             onClear={clearSupplier}
-            placeholder="请选择运营商"
+            placeholder="请选择供应商"
           >
             {supplierOptions.map(({ id, name }) => (
               <Select.Option key={id} value={id}>
