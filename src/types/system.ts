@@ -8,7 +8,7 @@ export interface BlacklistSearchParams {
 
 export interface Black {
   id: number;
-  id_num: string;
+  id_number: string;
   phone: string;
   address: string;
   created_at: string;
