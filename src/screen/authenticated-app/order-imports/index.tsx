@@ -16,14 +16,14 @@ export const OrderImports = () => {
     <Container>
       <Main>
         <Wrap gap>
-          <FileUpload name="导入订单" />
           <Button icon={<DownloadOutlined />}>下载订单模版</Button>
+          <FileUpload name="导入订单" />
           <Divider
             style={{ height: "3rem", marginRight: "2.8rem" }}
             type={"vertical"}
           />
-          <FileUpload name="上传照片" />
           <Button icon={<DownloadOutlined />}>下载照片模版</Button>
+          <FileUpload name="上传照片" />
           <Tooltip title="照片包上传后识别匹配大概需要等待30分钟">
             <QuestionCircleOutlined style={{ cursor: "pointer" }} />
           </Tooltip>
@@ -31,8 +31,8 @@ export const OrderImports = () => {
             style={{ height: "3rem", marginRight: "2.8rem" }}
             type={"vertical"}
           />
-          <FileUpload name="拼多多证件导入" />
           <Button icon={<DownloadOutlined />}>下载拼多多模版</Button>
+          <FileUpload name="拼多多证件导入" />
           <Divider
             style={{ height: "3rem", marginRight: "2.8rem" }}
             type={"vertical"}
