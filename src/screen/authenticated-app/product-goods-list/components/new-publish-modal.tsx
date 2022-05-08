@@ -117,7 +117,7 @@ export const NewPublishModal = () => {
 
   const submit = () => {
     form.validateFields().then(async () => {
-      // await mutateAsync(cleanObject(form.getFieldsValue()));
+      await mutateAsync(cleanObject(form.getFieldsValue()));
       setStep(3);
     });
   };
