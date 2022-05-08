@@ -32,9 +32,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             新增
           </Button>
         </Row>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
-        </Button>
       </Header>
       <ErrorBox error={error} />
       <Table
