@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
-import { useProducts } from "service/order";
+import { useImports } from "service/order";
 import { toNumber } from "utils";
 import { List } from "./components/list";
-import { useProductsSearchParams } from "./util";
+import { useImportsSearchParams } from "./util";
 import { Button, Divider, Tooltip } from "antd";
 import { DownloadOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { FileUpload } from "components/file-upload";
 
 export const OrderImports = () => {
-  const [params, setParams] = useProductsSearchParams();
-  const { data, isLoading, error } = useProducts(params);
+  const [params, setParams] = useImportsSearchParams();
+  const { data, isLoading, error } = useImports(params);
 
   return (
     <Container>
@@ -48,6 +48,7 @@ export const OrderImports = () => {
           error={error}
           params={params}
           setParams={setParams}
+          dataSource={data?.data}
           loading={isLoading}
           pagination={{
             current: toNumber(data?.meta.pagination.current_page),

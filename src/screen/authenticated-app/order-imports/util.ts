@@ -1,7 +1,7 @@
 import { useUrlQueryParams } from "utils/url";
 import { useMemo } from "react";
 
-export const useProductsSearchParams = () => {
+export const useImportsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "supplier_id",
     "page",
@@ -20,7 +20,7 @@ export const useProductsSearchParams = () => {
   ] as const;
 };
 
-export const useProductsQueryKey = () => {
-  const [params] = useProductsSearchParams();
-  return ["orderProducts", params];
+export const useImportsQueryKey = () => {
+  const [params] = useImportsSearchParams();
+  return ["orderImports", params];
 };

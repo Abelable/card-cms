@@ -16,6 +16,7 @@ export const Blacklist = () => {
           error={error}
           params={params}
           setParams={setParams}
+          dataSource={data?.data}
           loading={isLoading}
           pagination={{
             current: toNumber(data?.meta.pagination.current_page),
