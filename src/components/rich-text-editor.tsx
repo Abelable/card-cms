@@ -23,46 +23,46 @@ export const RichTextEditor = ({
           [{ color: [] }, { background: [] }],
           [{ list: "ordered" }, { list: "bullet" }],
           [{ align: [] }, { indent: "-1" }, { indent: "+1" }],
-          // ["link", "image"],
+          ["link", "image"],
         ],
         handlers: {
-          // image: () => {
-          //   const input = document.createElement("input");
-          //   input.setAttribute("type", "file");
-          //   input.setAttribute("accept", "image/*");
-          //   input.click();
-          //   input.onchange = async () => {
-          //     try {
-          //       const file = input.files ? input.files[0] : null;
-          //       const suffix =
-          //         file?.name.slice(file.name.lastIndexOf(".")) || "";
-          //       const filename = Date.now() + suffix;
-          //       const formData = new FormData();
-          //       formData.append("key", `${ossConfig?.dir}${filename}`);
-          //       formData.append("dir", ossConfig?.dir || "");
-          //       formData.append("policy", ossConfig?.policy || "");
-          //       formData.append(
-          //         "OSSAccessKeyId",
-          //         ossConfig?.OSSAccessKeyId || ""
-          //       );
-          //       formData.append("success_action_status", "200");
-          //       formData.append("signature", ossConfig?.signature || "");
-          //       formData.append("file", file || "", filename);
-          //       await window.fetch(`https:${ossConfig?.host}`, {
-          //         method: "POST",
-          //         body: formData,
-          //       });
-          //       const url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
-          //       const quillEditor = quillRef.current.getEditor();
-          //       const range = quillEditor.getSelection();
-          //       const index = range ? range.index : 0;
-          //       quillEditor.insertEmbed(index, "image", url);
-          //       quillEditor.setSelection(index + 1);
-          //     } catch (err) {
-          //       console.error(err);
-          //     }
-          //   };
-          // },
+          image: () => {
+            const input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
+            input.click();
+            input.onchange = async () => {
+              try {
+                const file = input.files ? input.files[0] : null;
+                const suffix =
+                  file?.name.slice(file.name.lastIndexOf(".")) || "";
+                const filename = Date.now() + suffix;
+                const formData = new FormData();
+                formData.append("key", `${ossConfig?.dir}${filename}`);
+                formData.append("dir", ossConfig?.dir || "");
+                formData.append("policy", ossConfig?.policy || "");
+                formData.append(
+                  "OSSAccessKeyId",
+                  ossConfig?.OSSAccessKeyId || ""
+                );
+                formData.append("success_action_status", "200");
+                formData.append("signature", ossConfig?.signature || "");
+                formData.append("file", file || "", filename);
+                await window.fetch(`https:${ossConfig?.host}`, {
+                  method: "POST",
+                  body: formData,
+                });
+                const url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
+                const quillEditor = quillRef.current.getEditor();
+                const range = quillEditor.getSelection();
+                const index = range ? range.index : 0;
+                quillEditor.insertEmbed(index, "image", url);
+                quillEditor.setSelection(index + 1);
+              } catch (err) {
+                console.error(err);
+              }
+            };
+          },
         },
       },
     }),
