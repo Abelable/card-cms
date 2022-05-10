@@ -1,6 +1,10 @@
 import { toNumber } from "utils";
 import { useDelivers } from "service/order";
-import { useOrderDeliversSearchParams, useStatusModal } from "./util";
+import {
+  useFailModal,
+  useOrderDeliversSearchParams,
+  useStatusModal,
+} from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -8,6 +12,7 @@ import styled from "@emotion/styled";
 import { Button, Drawer, Select } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
+import { FailModal } from "./components/fail-modal";
 import { StatusModal } from "./components/status-modal";
 
 const orderStatusOptions = [
@@ -30,11 +35,15 @@ export const OrderDelivers = () => {
       process.env.REACT_APP_API_URL
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
   };
-  const { startEdit: editStatus } = useStatusModal();
+  const { startEdit: editStatus, editingStatusDeliverIds } = useStatusModal();
+  const { startEdit: failDelivers, failDeliverIds } = useFailModal();
   const selectBatchOperation = (ids: string[]) => (type: number) => {
     switch (type) {
       case 1:
         editStatus(ids.join());
+        break;
+      case 2:
+        failDelivers(ids.join());
         break;
     }
   };
@@ -64,6 +73,7 @@ export const OrderDelivers = () => {
         />
       </Main>
       <StatusModal />
+      <FailModal />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}
@@ -89,6 +99,9 @@ export const OrderDelivers = () => {
             </Button>
             <Select
               style={{ width: "14rem" }}
+              value={
+                editingStatusDeliverIds ? 1 : failDeliverIds ? 2 : undefined
+              }
               allowClear={true}
               onSelect={selectBatchOperation(selectedRowKeys)}
               placeholder="批量操作"

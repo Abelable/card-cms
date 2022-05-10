@@ -14,7 +14,7 @@ import { ErrorBox, Row } from "components/lib";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
-import { useStatusModal } from "../util";
+import { useFailModal, useStatusModal } from "../util";
 
 type ExportDelivers = (ids: string[]) => void;
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
@@ -39,6 +39,7 @@ export const List = ({
       per_page: pagination.pageSize,
     });
   const { startEdit: editStatus } = useStatusModal();
+  const { startEdit: failDeliver } = useFailModal();
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
@@ -152,7 +153,9 @@ export const List = ({
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Link type={"link"}>查看详情</Link>
-                <Link type={"link"}>生产失败</Link>
+                <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
+                  生产失败
+                </Link>
                 <Link type={"link"}>录入生产数据</Link>
                 <Link type={"link"} onClick={() => editStatus(deliver.id)}>
                   修改状态

@@ -617,7 +617,7 @@ export const NewPublishModal = () => {
                   ]}
                   tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
                 >
-                  <Select mode="tags" placeholder="输入后回车生产商品卖点" />
+                  <Select mode="tags" placeholder="输入后回车生成商品卖点" />
                 </Form.Item>
               </Col>
             </Row>

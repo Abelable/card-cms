@@ -39,23 +39,46 @@ export const useOrderDeliversQueryKey = () => {
 };
 
 export const useStatusModal = () => {
-  const [{ editingDeliverIds }, setEditingDeliverIds] = useUrlQueryParams([
-    "editingDeliverIds",
-  ]);
+  const [{ editingStatusDeliverIds }, setEditingStatusDeliverIds] =
+    useUrlQueryParams(["editingStatusDeliverIds"]);
   const setUrlParams = useSetUrlSearchParams();
 
   const startEdit = useCallback(
-    (ids: string) => setEditingDeliverIds({ editingDeliverIds: ids }),
-    [setEditingDeliverIds]
+    (ids: string) =>
+      setEditingStatusDeliverIds({ editingStatusDeliverIds: ids }),
+    [setEditingStatusDeliverIds]
   );
   const close = useCallback(
-    () => setUrlParams({ editingDeliverIds: "" }),
+    () => setUrlParams({ editingStatusDeliverIds: "" }),
     [setUrlParams]
   );
 
   return {
-    statusModalOpen: !!editingDeliverIds,
-    editingDeliverIds,
+    statusModalOpen: !!editingStatusDeliverIds,
+    editingStatusDeliverIds,
+    startEdit,
+    close,
+  };
+};
+
+export const useFailModal = () => {
+  const [{ failDeliverIds }, setFailDeliverIds] = useUrlQueryParams([
+    "failDeliverIds",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const startEdit = useCallback(
+    (ids: string) => setFailDeliverIds({ failDeliverIds: ids }),
+    [setFailDeliverIds]
+  );
+  const close = useCallback(
+    () => setUrlParams({ failDeliverIds: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    statusModalOpen: !!failDeliverIds,
+    failDeliverIds,
     startEdit,
     close,
   };
