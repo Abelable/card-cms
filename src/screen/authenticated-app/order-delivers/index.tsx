@@ -5,11 +5,9 @@ import { useOrderDeliversSearchParams } from "./util";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
-import { GoodsModal } from "./components/goods-modal";
-import { AgentModal } from "./components/agent-modal";
-import { LinkModal } from "./components/link-modal";
-import { PublishModal } from "./components/publish-modal";
-import { NewPublishModal } from "./components/new-publish-modal";
+import { Button, Drawer } from "antd";
+import { Row } from "components/lib";
+import { useState } from "react";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -17,8 +15,14 @@ const modeOptions = [
 ];
 
 export const ProductGoodsList = () => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
   const { data, isLoading, error } = useDelivers(params);
+  const exportApplications = (ids: string[]) => {
+    window.location.href = `${
+      process.env.REACT_APP_API_URL
+    }/api/admin/enter-apply/export?ids=${ids.join()}`;
+  };
 
   return (
     <Container>
@@ -27,6 +31,7 @@ export const ProductGoodsList = () => {
         <List
           error={error}
           modeOptions={modeOptions}
+          setSelectedRowKeys={setSelectedRowKeys}
           params={params}
           setParams={setParams}
           dataSource={data?.data}
@@ -38,11 +43,30 @@ export const ProductGoodsList = () => {
           }}
         />
       </Main>
-      {/* <GoodsModal goodsList={data?.data || []} />
-      <AgentModal goodsList={data?.data || []} />
-      <LinkModal goodsList={data?.data || []} />
-      <PublishModal />
-      <NewPublishModal /> */}
+      <Drawer
+        visible={!!selectedRowKeys.length}
+        style={{ position: "absolute" }}
+        height={"8rem"}
+        placement="bottom"
+        mask={false}
+        getContainer={false}
+        closable={false}
+      >
+        <Row between={true}>
+          <div>
+            已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
+          </div>
+          <Row gap={true}>
+            <Button
+              onClick={() => exportApplications(selectedRowKeys)}
+              type={"primary"}
+              style={{ marginRight: 0 }}
+            >
+              批量导出
+            </Button>
+          </Row>
+        </Row>
+      </Drawer>
     </Container>
   );
 };
@@ -56,4 +80,9 @@ const Main = styled.div`
   padding: 2.4rem;
   height: 100%;
   overflow: scroll;
+`;
+
+const SelectedCount = styled.span`
+  color: #1890ff;
+  font-weight: 600;
 `;
