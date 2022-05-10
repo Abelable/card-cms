@@ -20,6 +20,7 @@ import { RecordModal } from "./components/record-modal";
 import { DataModal } from "./components/data-modal";
 import { InfoModal } from "./components/info-modal";
 import { ExportModal } from "./components/export-modal";
+import { DetailModal } from "./components/detail-modal";
 
 const orderStatusOptions = [
   { id: 1, name: "待发货" },
@@ -86,6 +87,7 @@ export const OrderDelivers = () => {
       <DataModal />
       <InfoModal />
       <ExportModal />
+      <DetailModal />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}

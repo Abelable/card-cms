@@ -16,6 +16,7 @@ import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
 import {
   useDataModal,
+  useDetailModal,
   useFailModal,
   useInfoModal,
   usePicModal,
@@ -51,6 +52,7 @@ export const List = ({
   const { startEdit: failDeliver } = useFailModal();
   const { open: openDataModal } = useDataModal();
   const { open: openInfoModal } = useInfoModal();
+  const { open: openDetailModal } = useDetailModal();
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
@@ -170,7 +172,9 @@ export const List = ({
             title: "操作",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
-                <Link type={"link"}>查看详情</Link>
+                <Link type={"link"} onClick={() => openDetailModal(deliver.id)}>
+                  查看详情
+                </Link>
                 <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
                   标记为生产失败
                 </Link>

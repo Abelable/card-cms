@@ -203,3 +203,27 @@ export const useExportModal = () => {
     close,
   };
 };
+
+export const useDetailModal = () => {
+  const [{ detailDeliverId }, setDetailDeliverId] = useUrlQueryParams([
+    "detailDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setDetailDeliverId({ detailDeliverId: ids }),
+    [setDetailDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ detailDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    detailModalOpen: !!detailDeliverId,
+    detailDeliverId,
+    open,
+    close,
+  };
+};
