@@ -38,11 +38,11 @@ export const ProductGoodsList = () => {
           }}
         />
       </Main>
-      <GoodsModal goodsList={data?.data || []} />
+      {/* <GoodsModal goodsList={data?.data || []} />
       <AgentModal goodsList={data?.data || []} />
       <LinkModal goodsList={data?.data || []} />
       <PublishModal />
-      <NewPublishModal />
+      <NewPublishModal /> */}
     </Container>
   );
 };
