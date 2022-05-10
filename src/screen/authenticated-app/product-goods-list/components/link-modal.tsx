@@ -1,11 +1,9 @@
 import { Modal, Button, Image } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { Goods } from "types/product";
 import { useLinkModal } from "../util";
 import styled from "@emotion/styled";
 
 export const LinkModal = ({ goodsList }: { goodsList: Goods[] }) => {
-  const [form] = useForm();
   const { linkModalOpen, goodsIdOfLink, close } = useLinkModal();
   const goods =
     goodsList?.find((item) => item.id === Number(goodsIdOfLink)) || undefined;
@@ -19,7 +17,6 @@ export const LinkModal = ({ goodsList }: { goodsList: Goods[] }) => {
   };
 
   const closeModal = () => {
-    form.resetFields();
     close();
   };
 
