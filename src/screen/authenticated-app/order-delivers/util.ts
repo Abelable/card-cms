@@ -77,7 +77,7 @@ export const useFailModal = () => {
   );
 
   return {
-    statusModalOpen: !!failDeliverIds,
+    failModalOpen: !!failDeliverIds,
     failDeliverIds,
     startEdit,
     close,
@@ -175,6 +175,30 @@ export const useInfoModal = () => {
   return {
     infoModalOpen: !!infoDeliverId,
     infoDeliverId,
+    open,
+    close,
+  };
+};
+
+export const useExportModal = () => {
+  const [{ exportDeliverId }, setExportDeliverId] = useUrlQueryParams([
+    "exportDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setExportDeliverId({ exportDeliverId: ids }),
+    [setExportDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ exportDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    exportModalOpen: !!exportDeliverId,
+    exportDeliverId,
     open,
     close,
   };

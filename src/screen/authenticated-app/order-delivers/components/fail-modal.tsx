@@ -6,7 +6,7 @@ import { useFailModal, useOrderDeliversQueryKey } from "../util";
 
 export const FailModal = () => {
   const [form] = useForm();
-  const { statusModalOpen, failDeliverIds, close } = useFailModal();
+  const { failModalOpen, failDeliverIds, close } = useFailModal();
   const { mutateAsync, isLoading, error } = useEditDeliversStatus(
     useOrderDeliversQueryKey()
   );
@@ -33,7 +33,7 @@ export const FailModal = () => {
           ? "批量标记失败"
           : "标记为生产失败"
       }
-      visible={statusModalOpen}
+      visible={failModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}

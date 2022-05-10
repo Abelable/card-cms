@@ -1,6 +1,7 @@
 import { toNumber } from "utils";
 import { useDelivers } from "service/order";
 import {
+  useExportModal,
   useFailModal,
   useOrderDeliversSearchParams,
   useStatusModal,
@@ -18,6 +19,7 @@ import { PicModal } from "./components/pic-modal";
 import { RecordModal } from "./components/record-modal";
 import { DataModal } from "./components/data-modal";
 import { InfoModal } from "./components/info-modal";
+import { ExportModal } from "./components/export-modal";
 
 const orderStatusOptions = [
   { id: 1, name: "待发货" },
@@ -41,6 +43,7 @@ export const OrderDelivers = () => {
   };
   const { startEdit: editStatus, editingStatusDeliverIds } = useStatusModal();
   const { startEdit: failDelivers, failDeliverIds } = useFailModal();
+  const { open: openExportModal } = useExportModal();
   const selectBatchOperation = (ids: string[]) => (type: number) => {
     switch (type) {
       case 1:
@@ -82,6 +85,7 @@ export const OrderDelivers = () => {
       <FailModal />
       <DataModal />
       <InfoModal />
+      <ExportModal />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}
@@ -100,7 +104,7 @@ export const OrderDelivers = () => {
               批量导出生产
             </Button>
             <Button
-              onClick={() => exportDelivers(selectedRowKeys)}
+              onClick={() => openExportModal(selectedRowKeys.join())}
               type={"primary"}
             >
               批量导出信息
