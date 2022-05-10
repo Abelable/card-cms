@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { Button, Cascader, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { GoodsListSearchParams } from "types/product";
+import { DeliversSearchParams } from "types/order";
 import styled from "@emotion/styled";
 
 export interface SearchPanelProps {
-  params: Partial<GoodsListSearchParams>;
-  setParams: (params: Partial<GoodsListSearchParams>) => void;
+  params: Partial<DeliversSearchParams>;
+  setParams: (params: Partial<DeliversSearchParams>) => void;
 }
+
+const orderStatusOptions = [
+  { id: 1, name: "待发货" },
+  { id: 2, name: "待收货" },
+  { id: 3, name: "已收货" },
+];
 
 const operatorOptions = [
   { id: 1, name: "移动" },
@@ -56,30 +62,32 @@ const regionOptions = [
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
-    goods_name: "",
-    supplier: "",
+    product_name: "",
     product_code: "",
+    order_id: "",
+    out_order_id: "",
+    supplier: "",
     goods_code: "",
     agent_id: undefined,
     deliver_address: "",
     ownership: undefined,
-  } as Partial<GoodsListSearchParams>;
+  } as Partial<DeliversSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<GoodsListSearchParams>>(params);
+    useState<Partial<DeliversSearchParams>>(params);
 
-  const setGoodsName = (evt: any) => {
+  const setProductName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        goods_name: "",
+        product_name: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      goods_name: evt.target.value,
+      product_name: evt.target.value,
     });
   };
 
@@ -88,14 +96,46 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        goods_code: "",
+        product_code: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      goods_code: evt.target.value,
+      product_code: evt.target.value,
+    });
+  };
+
+  const setOrderId = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        order_id: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      order_id: evt.target.value,
+    });
+  };
+
+  const setOutOrderId = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        out_order_id: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      out_order_id: evt.target.value,
     });
   };
 
@@ -161,22 +201,12 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   return (
     <Container>
       <Item>
-        <div>商品名称：</div>
+        <div>产品名称：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.goods_name}
-          onChange={setGoodsName}
-          placeholder="请输入商品名称"
-          allowClear={true}
-        />
-      </Item>
-      <Item>
-        <div>供应商：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.supplier}
-          onChange={setSupplier}
-          placeholder="请输入供应商名称"
+          value={temporaryParams.product_name}
+          onChange={setProductName}
+          placeholder="请输入产品名称"
           allowClear={true}
         />
       </Item>
@@ -187,6 +217,53 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
           value={temporaryParams.product_code}
           onChange={setProductCode}
           placeholder="请输入产品编码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>订单id：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.order_id}
+          onChange={setOrderId}
+          placeholder="请输入订单id"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>外部订单id：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.out_order_id}
+          onChange={setOutOrderId}
+          placeholder="请输入外部订单id"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>订单状态：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.order_status}
+          allowClear={true}
+          onSelect={setOperator}
+          onClear={clearOperator}
+          placeholder="请选择订单状态"
+        >
+          {orderStatusOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>供应商：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.supplier}
+          onChange={setSupplier}
+          placeholder="请输入供应商名称"
           allowClear={true}
         />
       </Item>
