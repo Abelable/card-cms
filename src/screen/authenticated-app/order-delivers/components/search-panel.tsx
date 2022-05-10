@@ -1,20 +1,15 @@
 import { useState } from "react";
 import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { DeliversSearchParams } from "types/order";
+import { DeliversSearchParams, OrderStatus } from "types/order";
 import styled from "@emotion/styled";
 import moment from "moment";
 
 export interface SearchPanelProps {
+  orderStatusOptions: OrderStatus[];
   params: Partial<DeliversSearchParams>;
   setParams: (params: Partial<DeliversSearchParams>) => void;
 }
-
-const orderStatusOptions = [
-  { id: 1, name: "待发货" },
-  { id: 2, name: "待收货" },
-  { id: 3, name: "已收货" },
-];
 
 const rechargeOptions = [
   { name: "未充值", value: 0 },
@@ -34,7 +29,11 @@ const timeTypeOptions = [
   { name: "订单激活时间", value: 2 },
 ];
 
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  orderStatusOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
     product_name: "",
     product_code: "",

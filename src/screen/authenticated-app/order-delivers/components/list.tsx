@@ -122,6 +122,18 @@ export const List = ({
             ),
           },
           {
+            title: "订单状态",
+            render: (value, deliver) => (
+              <>
+                <div>{deliver.status}</div>
+              </>
+            ),
+          },
+          {
+            title: "失败原因",
+            dataIndex: "fail_reason",
+          },
+          {
             title: "操作",
             render: (value, deliver) => (
               <Button

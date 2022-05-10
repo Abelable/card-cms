@@ -9,7 +9,13 @@ import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 
-export const ProductGoodsList = () => {
+const orderStatusOptions = [
+  { id: 1, name: "待发货" },
+  { id: 2, name: "待收货" },
+  { id: 3, name: "已收货" },
+];
+
+export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
   const { data, isLoading, error } = useDelivers(params);
@@ -22,9 +28,14 @@ export const ProductGoodsList = () => {
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          orderStatusOptions={orderStatusOptions}
+          params={params}
+          setParams={setParams}
+        />
         <List
           error={error}
+          orderStatusOptions={orderStatusOptions}
           setSelectedRowKeys={setSelectedRowKeys}
           exportDelivers={exportDelivers}
           params={params}

@@ -1,5 +1,10 @@
 import { Pagination } from "./common";
 
+export interface OrderStatus {
+  id: number;
+  name: string;
+}
+
 export interface DeliversSearchParams {
   product_name: string;
   product_code: string;
