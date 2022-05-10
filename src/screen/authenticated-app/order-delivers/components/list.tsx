@@ -14,6 +14,7 @@ import { ErrorBox, Row } from "components/lib";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
+import { useStatusModal } from "../util";
 
 type ExportDelivers = (ids: string[]) => void;
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
@@ -37,6 +38,7 @@ export const List = ({
       page: pagination.current,
       per_page: pagination.pageSize,
     });
+  const { startEdit: editStatus } = useStatusModal();
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
@@ -152,7 +154,9 @@ export const List = ({
                 <Link type={"link"}>查看详情</Link>
                 <Link type={"link"}>生产失败</Link>
                 <Link type={"link"}>录入生产数据</Link>
-                <Link type={"link"}>修改状态</Link>
+                <Link type={"link"} onClick={() => editStatus(deliver.id)}>
+                  修改状态
+                </Link>
                 <Link type={"link"}>修改订单信息</Link>
               </Space>
             ),
