@@ -1,5 +1,54 @@
 import { Pagination } from "./common";
 
+export interface DeliversSearchParams {
+  product_name: string;
+  product_code: string;
+  order_id: string;
+  out_order_id: string;
+  order_status: number;
+  id_number: string;
+  express_code: string;
+  production_number: string;
+  phone: string;
+  is_recharged: boolean;
+  is_activated: boolean;
+  upper_order_id: string;
+  agent_id: number;
+  time_type: number;
+  start_time: number;
+  end_time: number;
+  per_page: number;
+  page: number;
+}
+
+export interface Deliver {
+  id: string;
+  source: string;
+  downstream_order_code: string;
+  created_at: string;
+  pruduct_name: string;
+  pruduct_code: string;
+  id_card_name: string;
+  id_card_code: string;
+  id_card_positive_img: string;
+  id_card_back_img: string;
+  consignee_name: string;
+  consignee_phone: string;
+  consignee_address: string;
+  status: number;
+  is_activated: boolean;
+  recharge_amount: number;
+  fail_reason: string;
+  production_number: string;
+  express_company: string;
+  express_code: string;
+}
+
+export interface DeliversResult {
+  data: Deliver[];
+  meta: { pagination: Pagination };
+}
+
 export interface ProductsSearchParams {
   supplier_id: number;
   per_page: number;

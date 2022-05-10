@@ -1,6 +1,8 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import {
+  DeliversResult,
+  DeliversSearchParams,
   ImportsResult,
   ImportsSearchParams,
   Product,
@@ -12,6 +14,15 @@ import {
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
+
+export const useDelivers = (params: Partial<DeliversSearchParams>) => {
+  const client = useHttp();
+  return useQuery<DeliversResult>(["products", params], () =>
+    client("/api/v1/admin/product/index", {
+      data: params,
+    })
+  );
+};
 
 export const useProducts = (params: Partial<ProductsSearchParams>) => {
   const client = useHttp();
