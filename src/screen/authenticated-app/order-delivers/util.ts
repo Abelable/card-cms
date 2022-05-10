@@ -1,11 +1,24 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useGoodsListSearchParams = () => {
+export const useOrderDeliversSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "goods_name",
-    "goods_code",
-    "supplier",
+    "product_name",
+    "product_code",
+    "order_id",
+    "out_order_id",
+    "order_status",
+    "id_number",
+    "express_code",
+    "production_number",
+    "phone",
+    "is_recharged",
+    "is_activated",
+    "upper_order_id",
+    "agent_id",
+    "time_type",
+    "start_time",
+    "end_time",
     "page",
     "per_page",
   ]);
@@ -20,28 +33,9 @@ export const useGoodsListSearchParams = () => {
   ] as const;
 };
 
-export const useDownedGoodsListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams([
-    "goods_name",
-    "goods_code",
-    "supplier",
-    "page",
-    "per_page",
-  ]);
-  return [
-    useMemo(
-      () => ({
-        ...params,
-      }),
-      [params]
-    ),
-    setParams,
-  ] as const;
-};
-
-export const useGoodsListQueryKey = () => {
-  const [params] = useGoodsListSearchParams();
-  return ["product_goods_list", params];
+export const useOrderDeliversQueryKey = () => {
+  const [params] = useOrderDeliversSearchParams();
+  return ["order_delivers", params];
 };
 
 export const useGoodsModal = () => {
