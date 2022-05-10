@@ -9,16 +9,11 @@ import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 
-const modeOptions = [
-  { id: 1, name: "手动生产" },
-  { id: 2, name: "自动生产" },
-];
-
 export const ProductGoodsList = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
   const { data, isLoading, error } = useDelivers(params);
-  const exportApplications = (ids: string[]) => {
+  const exportDelivers = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
@@ -30,8 +25,8 @@ export const ProductGoodsList = () => {
         <SearchPanel params={params} setParams={setParams} />
         <List
           error={error}
-          modeOptions={modeOptions}
           setSelectedRowKeys={setSelectedRowKeys}
+          exportDelivers={exportDelivers}
           params={params}
           setParams={setParams}
           dataSource={data?.data}
@@ -58,7 +53,7 @@ export const ProductGoodsList = () => {
           </div>
           <Row gap={true}>
             <Button
-              onClick={() => exportApplications(selectedRowKeys)}
+              onClick={() => exportDelivers(selectedRowKeys)}
               type={"primary"}
               style={{ marginRight: 0 }}
             >

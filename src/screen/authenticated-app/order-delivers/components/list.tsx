@@ -6,37 +6,36 @@ import {
   TableProps,
   Image,
   Tag,
+  Space,
+  message,
 } from "antd";
+import { CopyOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
-import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import {
   useAgentModal,
-  useGoodsModal,
   useLinkModal,
   useNewPublishModal,
   usePublishModal,
 } from "../util";
-import { useNavigate } from "react-router";
+import { Deliver } from "types/order";
+import copy from "copy-to-clipboard";
 
-interface ListProps extends TableProps<Goods>, SearchPanelProps {
-  modeOptions: modeOption[];
+type ExportDelivers = (ids: string[]) => void;
+interface ListProps extends TableProps<Deliver>, SearchPanelProps {
+  setSelectedRowKeys: (selectedRowKeys: []) => void;
+  exportDelivers: ExportDelivers;
   error: Error | unknown;
 }
 
 export const List = ({
   error,
-  modeOptions,
+  setSelectedRowKeys,
+  exportDelivers,
   params,
   setParams,
   ...restProps
 }: ListProps) => {
-  const navigate = useNavigate();
-  const linkToChannels = (id: number) =>
-    navigate(`/product/channels?editingChannelId=${id}`);
-  const linkToAgents = (id: number) =>
-    navigate(`/product/sales/agents?goodsId=${id}`);
-  const { startEdit } = useGoodsModal();
   const { startEdit: editAgent } = useAgentModal();
   const { startEdit: checkLink } = useLinkModal();
   const { open: openPublishModal } = usePublishModal();
@@ -47,6 +46,10 @@ export const List = ({
       page: pagination.current,
       per_page: pagination.pageSize,
     });
+  const copyInfo = (info: string) => {
+    copy(info);
+    message.success("复制成功");
+  };
 
   return (
     <Container>
@@ -68,94 +71,63 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        rowSelection={{
+          type: "checkbox",
+          onChange: (selectedRowKeys) =>
+            setSelectedRowKeys(selectedRowKeys as []),
+        }}
         columns={[
           {
-            title: "编号",
-            dataIndex: "id",
-            width: "8rem",
-            sorter: (a, b) => Number(a.id) - Number(b.id),
-          },
-          {
-            title: "商品名称",
-            render: (value, goods) => (
-              <div style={{ display: "flex" }}>
-                <Image width={80} height={80} src={goods.img} />
-                <GoodsInfoWrap>
-                  <div style={{ marginBottom: "1rem" }}>{goods.name}</div>
-                  {goods.tags ? (
-                    goods.tags.map((item, index) => (
-                      <Tag key={index}>{item}</Tag>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-                  <div style={{ color: "#999" }}>商品编码：{goods.code}</div>
-                  <div style={{ color: "#999" }}>
-                    发布时间：{goods.created_at}
-                  </div>
-                </GoodsInfoWrap>
-              </div>
-            ),
-          },
-          {
-            title: "供应商&产品",
-            render: (value, goods) => (
+            title: "订单信息",
+            render: (value, deliver) => (
               <>
-                <div>{goods.supplier_name}</div>
-                <div>{goods.product_name}</div>
+                <Copy onClick={() => copyInfo(deliver.id)}>
+                  <div>订单id：{deliver.id}</div>
+                  <CopyOutlined style={{ color: "#1890ff" }} />
+                </Copy>
+                <Copy onClick={() => copyInfo(deliver.source)}>
+                  <div>订单来源：{deliver.source}</div>
+                  <CopyOutlined style={{ color: "#1890ff" }} />
+                </Copy>
+                <Copy onClick={() => copyInfo(deliver.downstream_order_code)}>
+                  <div>下游订单编号：{deliver.downstream_order_code}</div>
+                  <CopyOutlined style={{ color: "#1890ff" }} />
+                </Copy>
+                <div>平台创建时间：{deliver.created_at}</div>
               </>
             ),
           },
           {
-            title: "代理商",
-            render: (value, goods) => (
+            title: "产品信息",
+            render: (value, deliver) => (
               <>
-                <div>
-                  <Button
-                    type={"link"}
-                    onClick={() => editAgent(String(goods.id))}
-                  >
-                    设置代理商可见
-                  </Button>
-                </div>
-                <div>
-                  <Button type={"link"} onClick={() => linkToAgents(goods.id)}>
-                    查看代理商
-                  </Button>
-                </div>
+                <div>产品名称：{deliver.pruduct_name}</div>
+                <div>产品编码哦：{deliver.pruduct_code}</div>
               </>
             ),
           },
           {
-            title: "编辑商品",
-            render: (value, goods) => (
+            title: "证件信息&收获信息",
+            render: (value, deliver) => (
               <>
-                <div>
-                  <Button
-                    type={"link"}
-                    onClick={() => linkToChannels(goods.product_id)}
-                  >
-                    修改产品信息
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    type={"link"}
-                    onClick={() => startEdit(String(goods.id))}
-                  >
-                    修改商品信息
-                  </Button>
-                </div>
-                <div>
-                  <Button type={"link"}>下架</Button>
-                </div>
+                <Row>
+                  <div>证件姓名：{deliver.id_card_name}</div>
+                  <Button type={"link"}>查看照片</Button>
+                </Row>
+                <div>证件号码：{deliver.id_card_code}</div>
+                <div>收件人：{deliver.consignee_name}</div>
+                <div>联系电话：{deliver.consignee_phone}</div>
+                <div>收获地址：{deliver.consignee_address}</div>
               </>
             ),
           },
           {
             title: "操作",
-            render: (value, goods) => (
-              <Button type={"link"} onClick={() => checkLink(String(goods.id))}>
+            render: (value, deliver) => (
+              <Button
+                type={"link"}
+                onClick={() => checkLink(String(deliver.id))}
+              >
                 推广链接
               </Button>
             ),
@@ -177,8 +149,6 @@ const Header = styled(Row)`
   margin-bottom: 2.4rem;
 `;
 
-const GoodsInfoWrap = styled.div`
-  margin-left: 2rem;
-  flex: 1;
-  height: 80px;
+const Copy = styled(Row)`
+  cursor: pointer;
 `;
