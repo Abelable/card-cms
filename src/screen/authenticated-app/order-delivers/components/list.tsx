@@ -4,20 +4,12 @@ import {
   Table,
   TablePaginationConfig,
   TableProps,
-  Image,
-  Tag,
-  Space,
   message,
 } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { ErrorBox, Row } from "components/lib";
-import {
-  useAgentModal,
-  useLinkModal,
-  useNewPublishModal,
-  usePublishModal,
-} from "../util";
+import { useNewPublishModal, usePublishModal } from "../util";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
 
@@ -37,8 +29,6 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const { startEdit: editAgent } = useAgentModal();
-  const { startEdit: checkLink } = useLinkModal();
   const { open: openPublishModal } = usePublishModal();
   const { open: openNewPublishModal } = useNewPublishModal();
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -147,16 +137,24 @@ export const List = ({
           },
           {
             title: "生产信息",
+            render: (value, deliver) => (
+              <>
+                <div>生产号码：{deliver.production_number}</div>
+                <div>物流公司：{deliver.express_company}</div>
+                <div>物流单号：{deliver.express_code}</div>
+              </>
+            ),
           },
           {
             title: "操作",
             render: (value, deliver) => (
-              <Button
-                type={"link"}
-                onClick={() => checkLink(String(deliver.id))}
-              >
-                推广链接
-              </Button>
+              <>
+                <Button type={"link"}>查看详情</Button>
+                <Button type={"link"}>生产失败</Button>
+                <Button type={"link"}>录入生产数据</Button>
+                <Button type={"link"}>修改状态</Button>
+                <Button type={"link"}>修改订单信息</Button>
+              </>
             ),
           },
         ]}
