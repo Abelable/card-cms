@@ -14,7 +14,12 @@ import { ErrorBox, Row } from "components/lib";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
-import { useFailModal, usePicModal, useStatusModal } from "../util";
+import {
+  useFailModal,
+  usePicModal,
+  useRecordModal,
+  useStatusModal,
+} from "../util";
 
 type ExportDelivers = (ids: string[]) => void;
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
@@ -39,6 +44,7 @@ export const List = ({
       per_page: pagination.pageSize,
     });
   const { open: openPicModal } = usePicModal();
+  const { open: openRecordModal } = useRecordModal();
   const { startEdit: editStatus } = useStatusModal();
   const { startEdit: failDeliver } = useFailModal();
   const copyInfo = (info: string) => {
@@ -132,7 +138,9 @@ export const List = ({
                     )?.name
                   }
                 </div>
-                <Link type={"link"}>查看操作记录</Link>
+                <Link type={"link"} onClick={() => openRecordModal(deliver.id)}>
+                  查看操作记录
+                </Link>
                 <div>
                   激活状态：{deliver.is_activated ? "已激活" : "未激活"}
                 </div>

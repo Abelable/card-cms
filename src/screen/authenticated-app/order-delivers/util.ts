@@ -107,3 +107,27 @@ export const usePicModal = () => {
     close,
   };
 };
+
+export const useRecordModal = () => {
+  const [{ showRecordDeliverId }, setShowRecordDeliverId] = useUrlQueryParams([
+    "showRecordDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setShowRecordDeliverId({ showRecordDeliverId: ids }),
+    [setShowRecordDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ showRecordDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    recordModalOpen: !!showRecordDeliverId,
+    showRecordDeliverId,
+    open,
+    close,
+  };
+};
