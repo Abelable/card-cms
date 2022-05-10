@@ -14,7 +14,7 @@ import { ErrorBox, Row } from "components/lib";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
-import { useFailModal, useStatusModal } from "../util";
+import { useFailModal, usePicModal, useStatusModal } from "../util";
 
 type ExportDelivers = (ids: string[]) => void;
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
@@ -38,6 +38,7 @@ export const List = ({
       page: pagination.current,
       per_page: pagination.pageSize,
     });
+  const { open: openPicModal } = usePicModal();
   const { startEdit: editStatus } = useStatusModal();
   const { startEdit: failDeliver } = useFailModal();
   const copyInfo = (info: string) => {
@@ -106,7 +107,12 @@ export const List = ({
               <Space direction={"vertical"}>
                 <Row>
                   <div>证件姓名：{deliver.id_card_name}</div>
-                  <Button type={"link"}>查看照片</Button>
+                  <Button
+                    type={"link"}
+                    onClick={() => openPicModal(deliver.id)}
+                  >
+                    查看照片
+                  </Button>
                 </Row>
                 <div>证件号码：{deliver.id_card_code}</div>
                 <div>收件人：{deliver.consignee_name}</div>

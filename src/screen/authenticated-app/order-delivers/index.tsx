@@ -14,6 +14,7 @@ import { Row } from "components/lib";
 import { useState } from "react";
 import { FailModal } from "./components/fail-modal";
 import { StatusModal } from "./components/status-modal";
+import { PicModal } from "./components/pic-modal";
 
 const orderStatusOptions = [
   { id: 1, name: "待发货" },
@@ -72,6 +73,7 @@ export const OrderDelivers = () => {
           }}
         />
       </Main>
+      <PicModal />
       <StatusModal />
       <FailModal />
       <Drawer

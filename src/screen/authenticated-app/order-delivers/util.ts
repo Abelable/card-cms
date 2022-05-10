@@ -83,3 +83,27 @@ export const useFailModal = () => {
     close,
   };
 };
+
+export const usePicModal = () => {
+  const [{ showPicDeliverId }, setShowPicDeliverId] = useUrlQueryParams([
+    "showPicDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setShowPicDeliverId({ showPicDeliverId: ids }),
+    [setShowPicDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ showPicDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    picModalOpen: !!showPicDeliverId,
+    showPicDeliverId,
+    open,
+    close,
+  };
+};
