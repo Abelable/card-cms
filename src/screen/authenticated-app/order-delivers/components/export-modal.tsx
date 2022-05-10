@@ -1,9 +1,7 @@
 import { Button, Modal } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { useExportModal } from "../util";
 
 export const ExportModal = () => {
-  const [form] = useForm();
   const { exportModalOpen, exportDeliverId, close } = useExportModal();
 
   const check = () => {
@@ -17,7 +15,6 @@ export const ExportModal = () => {
   };
 
   const closeModal = () => {
-    form.resetFields();
     close();
   };
 

@@ -1,14 +1,11 @@
 import styled from "@emotion/styled";
 import { Modal, Image } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { usePicModal } from "../util";
 
 export const PicModal = () => {
-  const [form] = useForm();
   const { picModalOpen, close } = usePicModal();
 
   const closeModal = () => {
-    form.resetFields();
     close();
   };
 

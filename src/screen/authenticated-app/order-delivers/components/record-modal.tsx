@@ -1,13 +1,10 @@
 import { Modal } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { useRecordModal } from "../util";
 
 export const RecordModal = () => {
-  const [form] = useForm();
   const { recordModalOpen, close } = useRecordModal();
 
   const closeModal = () => {
-    form.resetFields();
     close();
   };
 
