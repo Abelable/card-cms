@@ -168,7 +168,7 @@ export const List = ({
               <Space direction={"vertical"}>
                 <Link type={"link"}>查看详情</Link>
                 <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
-                  生产失败
+                  标记为生产失败
                 </Link>
                 <Link type={"link"}>录入生产数据</Link>
                 <Link type={"link"} onClick={() => editStatus(deliver.id)}>
