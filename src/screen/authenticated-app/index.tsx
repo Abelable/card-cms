@@ -37,6 +37,7 @@ import {
   RobotOutlined,
   UserDeleteOutlined,
 } from "@ant-design/icons";
+import logo from "assets/images/logo.png";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -163,6 +164,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
     <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
       <Link to={"/"}>
         <Logo collapsed={collapsed}>
+          <LogoImg src={logo} />
           <div>久梦号卡系统后台</div>
         </Logo>
       </Link>
@@ -241,12 +243,12 @@ const Logo = styled.div<{ collapsed: boolean }>`
   }
 `;
 
-// const LogoImg = styled.img<{ size?: number }>`
-//   width: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
-//   height: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
-//   border-radius: 50%;
-//   cursor: pointer;
-// `;
+const LogoImg = styled.img<{ size?: number }>`
+  width: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
+  height: ${(props) => (props.size ? props.size + "rem" : "2.8rem")};
+  border-radius: 50%;
+  cursor: pointer;
+`;
 
 const Header = styled(Layout.Header)`
   display: flex;
