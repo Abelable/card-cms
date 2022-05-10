@@ -35,6 +35,7 @@ export const DetailModal = () => {
           </div>
         }
         column={2}
+        size={"small"}
       >
         <Descriptions.Item label="订单来源">WEBAPP</Descriptions.Item>
         <Descriptions.Item label="收货人">方某某</Descriptions.Item>
@@ -53,6 +54,20 @@ export const DetailModal = () => {
         </Descriptions.Item>
         <Descriptions.Item> </Descriptions.Item>
         <Descriptions.Item label="证件号码">32002018188198</Descriptions.Item>
+      </Descriptions>
+      <Descriptions
+        style={{ marginTop: "2rem" }}
+        title="商品信息"
+        bordered
+        layout="vertical"
+        size={"small"}
+      >
+        <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
+        <Descriptions.Item label="Billing">Prepaid</Descriptions.Item>
+        <Descriptions.Item label="time">18:00:00</Descriptions.Item>
+        <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
+        <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
+        <Descriptions.Item label="Official">$60.00</Descriptions.Item>
       </Descriptions>
     </Drawer>
   );
