@@ -16,6 +16,7 @@ import { FailModal } from "./components/fail-modal";
 import { StatusModal } from "./components/status-modal";
 import { PicModal } from "./components/pic-modal";
 import { RecordModal } from "./components/record-modal";
+import { DataModal } from "./components/data-modal";
 
 const orderStatusOptions = [
   { id: 1, name: "待发货" },
@@ -78,6 +79,7 @@ export const OrderDelivers = () => {
       <RecordModal />
       <StatusModal />
       <FailModal />
+      <DataModal />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}

@@ -131,3 +131,27 @@ export const useRecordModal = () => {
     close,
   };
 };
+
+export const useDataModal = () => {
+  const [{ dataDeliverId }, setDataDeliverId] = useUrlQueryParams([
+    "dataDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setDataDeliverId({ dataDeliverId: ids }),
+    [setDataDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ dataDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    dataModalOpen: !!dataDeliverId,
+    dataDeliverId,
+    open,
+    close,
+  };
+};

@@ -15,6 +15,7 @@ import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
 import {
+  useDataModal,
   useFailModal,
   usePicModal,
   useRecordModal,
@@ -47,6 +48,7 @@ export const List = ({
   const { open: openRecordModal } = useRecordModal();
   const { startEdit: editStatus } = useStatusModal();
   const { startEdit: failDeliver } = useFailModal();
+  const { open: openDataModal } = useDataModal();
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
@@ -170,7 +172,9 @@ export const List = ({
                 <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
                   标记为生产失败
                 </Link>
-                <Link type={"link"}>录入生产数据</Link>
+                <Link type={"link"} onClick={() => openDataModal(deliver.id)}>
+                  录入生产数据
+                </Link>
                 <Link type={"link"} onClick={() => editStatus(deliver.id)}>
                   修改状态
                 </Link>
