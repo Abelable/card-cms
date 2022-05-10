@@ -21,7 +21,7 @@ import { useAddChannel, useEditChannel } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import styled from "@emotion/styled";
-import "assets/style/ageLimit.css";
+import "assets/style/hideLeftBorder.css";
 import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
 
@@ -290,7 +290,7 @@ export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
                 />
                 <Form.Item name="max_age" style={{ marginBottom: 0 }}>
                   <Input
-                    className="max-age"
+                    className="hide-left-border"
                     style={{
                       width: 100,
                       textAlign: "center",

@@ -21,7 +21,7 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useNewPublishGoods } from "service/product";
 import { cleanObject } from "utils";
-import "assets/style/ageLimit.css";
+import "assets/style/hideLeftBorder.css";
 import { useState } from "react";
 import { OssUpload } from "components/oss-upload";
 import { RichTextEditor } from "components/rich-text-editor";
@@ -335,7 +335,7 @@ export const NewPublishModal = () => {
                     />
                     <Form.Item name="max_age" style={{ marginBottom: 0 }}>
                       <Input
-                        className="max-age"
+                        className="hide-left-border"
                         style={{
                           width: 100,
                           textAlign: "center",

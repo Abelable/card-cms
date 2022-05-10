@@ -3,7 +3,6 @@ import { useRouteType } from "utils/url";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 import { useUserInfo } from "service/auth";
-
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
 import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
@@ -20,7 +19,7 @@ import { ProductGoodsAgents } from "./product-goods-agents";
 import { OrderProducts } from "./order-products";
 import { OrderImports } from "./order-imports";
 import { Blacklist } from "./blacklist";
-
+import { OrderDelivers } from "./order-delivers";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -72,6 +71,7 @@ export const AuthenticatedApp = () => {
                 path="product/sales/agents"
                 element={<ProductGoodsAgents />}
               />
+              <Route path="order/deliver" element={<OrderDelivers />} />
               <Route path="order/configure" element={<OrderProducts />} />
               <Route path="order/import" element={<OrderImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />

@@ -17,7 +17,6 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { usePublishGoods } from "service/product";
 import { cleanObject } from "utils";
-import "assets/style/ageLimit.css";
 import { useState } from "react";
 import { OssUpload } from "components/oss-upload";
 import { RichTextEditor } from "components/rich-text-editor";

@@ -17,7 +17,6 @@ import { Goods } from "types/product";
 import { useAddGoods, useEditGoods } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
-import "assets/style/ageLimit.css";
 import { useState } from "react";
 import { OssUpload } from "components/oss-upload";
 import { RichTextEditor } from "components/rich-text-editor";

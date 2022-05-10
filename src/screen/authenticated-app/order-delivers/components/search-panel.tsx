@@ -391,31 +391,33 @@ export const SearchPanel = ({
       </Item>
       <Item>
         <div>选择时间：</div>
-        <Select
-          style={{ width: "15rem" }}
-          value={temporaryParams.time_type}
-          allowClear={true}
-          onSelect={setAgent}
-          onClear={clearAgent}
-          placeholder="请选择时间类型"
-        >
-          {timeTypeOptions.map(({ name, value }) => (
-            <Select.Option key={value} value={value}>
-              {name}
-            </Select.Option>
-          ))}
-        </Select>
-        <DatePicker.RangePicker
-          value={
-            temporaryParams.start_time
-              ? [
-                  moment(temporaryParams.start_time),
-                  moment(temporaryParams.end_time),
-                ]
-              : undefined
-          }
-          onChange={setDates}
-        />
+        <Input.Group compact>
+          <Select
+            style={{ width: "14rem" }}
+            value={temporaryParams.time_type}
+            allowClear={true}
+            onSelect={setAgent}
+            onClear={clearAgent}
+            placeholder="请选择时间类型"
+          >
+            {timeTypeOptions.map(({ name, value }) => (
+              <Select.Option key={value} value={value}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+          <DatePicker.RangePicker
+            value={
+              temporaryParams.start_time
+                ? [
+                    moment(temporaryParams.start_time),
+                    moment(temporaryParams.end_time),
+                  ]
+                : undefined
+            }
+            onChange={setDates}
+          />
+        </Input.Group>
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
@@ -443,6 +445,7 @@ const Container = styled.div`
 const Item = styled(Row)`
   margin-right: 2rem;
   padding-bottom: 2.4rem;
+  white-space: nowrap;
 `;
 
 const ButtonWrap = styled(Row)`
