@@ -6,13 +6,14 @@ import {
   TableProps,
   message,
   Space,
+  Divider,
 } from "antd";
-import { CopyOutlined } from "@ant-design/icons";
+import { CopyOutlined, DownloadOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { ErrorBox, Row } from "components/lib";
-import { useNewPublishModal, usePublishModal } from "../util";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
+import { FileUpload } from "components/file-upload";
 
 type ExportDelivers = (ids: string[]) => void;
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
@@ -30,8 +31,6 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const { open: openPublishModal } = usePublishModal();
-  const { open: openNewPublishModal } = useNewPublishModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -48,16 +47,16 @@ export const List = ({
       <Header between={true}>
         <h3>商品列表</h3>
         <Row gap>
-          <Button type={"default"} onClick={openNewPublishModal}>
-            发布全新套餐
-          </Button>
-          <Button
-            style={{ marginRight: 0 }}
-            type={"primary"}
-            onClick={openPublishModal}
-          >
-            基于已有产品渠道发布商品
-          </Button>
+          <Button icon={<DownloadOutlined />}>下载生产模版</Button>
+          <FileUpload name="导入生产数据" />
+          <Divider
+            style={{ height: "3rem", marginRight: "2.8rem" }}
+            type={"vertical"}
+          />
+          <Button icon={<DownloadOutlined />}>下载激活模版</Button>
+          <div style={{ marginRight: 0 }}>
+            <FileUpload name="导入激活数据" />
+          </div>
         </Row>
       </Header>
       <ErrorBox error={error} />
