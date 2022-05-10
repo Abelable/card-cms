@@ -96,12 +96,12 @@ export const List = ({
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <div>产品名称：{deliver.pruduct_name}</div>
-                <div>产品编码哦：{deliver.pruduct_code}</div>
+                <div>产品编码：{deliver.pruduct_code}</div>
               </Space>
             ),
           },
           {
-            title: "证件信息&收获信息",
+            title: "证件信息&收货信息",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Row>
