@@ -126,7 +126,7 @@ export const List = ({
                     )?.name
                   }
                 </div>
-                <Link type={"link"}>操作记录</Link>
+                <Link type={"link"}>查看操作记录</Link>
                 <div>
                   激活状态：{deliver.is_activated ? "已激活" : "未激活"}
                 </div>
