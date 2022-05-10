@@ -15,8 +15,8 @@ export interface DeliversSearchParams {
   upper_order_id: string;
   agent_id: number;
   time_type: number;
-  start_time: number;
-  end_time: number;
+  start_time: string;
+  end_time: string;
   per_page: number;
   page: number;
 }

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Input, Select } from "antd";
+import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { DeliversSearchParams } from "types/order";
 import styled from "@emotion/styled";
+import moment from "moment";
 
 export interface SearchPanelProps {
   params: Partial<DeliversSearchParams>;
@@ -28,6 +29,10 @@ const agentOptions = [
   { id: 1, name: "电信" },
   { id: 1, name: "移动" },
 ];
+const timeTypeOptions = [
+  { name: "平台创建时间", value: 1 },
+  { name: "订单激活时间", value: 2 },
+];
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
@@ -43,6 +48,10 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     is_recharged: undefined,
     is_activated: undefined,
     upper_order_id: "",
+    agent_id: undefined,
+    time_type: undefined,
+    start_time: "",
+    end_time: "",
   } as Partial<DeliversSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
@@ -209,6 +218,13 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const clearAgent = () =>
     setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
+  const setDates = (dates: any, formatString: [string, string]) =>
+    setTemporaryParams({
+      ...temporaryParams,
+      start_time: formatString[0],
+      end_time: formatString[1],
+    });
+
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
@@ -373,6 +389,34 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             </Select.Option>
           ))}
         </Select>
+      </Item>
+      <Item>
+        <div>选择时间：</div>
+        <Select
+          style={{ width: "15rem" }}
+          value={temporaryParams.time_type}
+          allowClear={true}
+          onSelect={setAgent}
+          onClear={clearAgent}
+          placeholder="请选择时间类型"
+        >
+          {timeTypeOptions.map(({ name, value }) => (
+            <Select.Option key={value} value={value}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+        <DatePicker.RangePicker
+          value={
+            temporaryParams.start_time
+              ? [
+                  moment(temporaryParams.start_time),
+                  moment(temporaryParams.end_time),
+                ]
+              : undefined
+          }
+          onChange={setDates}
+        />
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
