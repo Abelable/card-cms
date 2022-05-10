@@ -6,7 +6,7 @@ import { Goods } from "types/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useGoodsListQueryKey, useAgentModal } from "../util";
 
-const AgentOptions = [
+const agentOptions = [
   { id: 1, name: "联通" },
   { id: 1, name: "电信" },
   { id: 1, name: "移动" },
@@ -87,7 +87,7 @@ export const AgentModal = ({ goodsList }: { goodsList: Goods[] }) => {
         </Form.Item>
         <Form.Item name="agent_id" label="选择代理商">
           <Select placeholder="请选择代理商">
-            {AgentOptions.map((item) => (
+            {agentOptions.map((item) => (
               <Select.Option key={item.id} value={item.id}>
                 {item.name}
               </Select.Option>

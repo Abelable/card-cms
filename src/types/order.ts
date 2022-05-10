@@ -10,8 +10,8 @@ export interface DeliversSearchParams {
   express_code: string;
   production_number: string;
   phone: string;
-  is_recharged: boolean;
-  is_activated: boolean;
+  is_recharged: number;
+  is_activated: number;
   upper_order_id: string;
   agent_id: number;
   time_type: number;

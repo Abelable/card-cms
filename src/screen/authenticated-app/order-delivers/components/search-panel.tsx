@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Cascader, Input, Select } from "antd";
+import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { DeliversSearchParams } from "types/order";
 import styled from "@emotion/styled";
@@ -15,49 +15,18 @@ const orderStatusOptions = [
   { id: 3, name: "已收货" },
 ];
 
-const operatorOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
+const rechargeOptions = [
+  { name: "未充值", value: 0 },
+  { name: "已充值", value: 1 },
 ];
-
-const regionOptions = [
-  {
-    value: "1",
-    label: "浙江省",
-    children: [
-      {
-        value: "1",
-        label: "杭州市",
-        children: [
-          {
-            value: "1",
-            label: "西湖区",
-          },
-          {
-            value: "2",
-            label: "上城区",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "2",
-    label: "江苏省",
-    children: [
-      {
-        value: "1",
-        label: "南京市",
-        children: [
-          {
-            value: "1",
-            label: "中华门",
-          },
-        ],
-      },
-    ],
-  },
+const activateOptions = [
+  { name: "未激活", value: 0 },
+  { name: "已激活", value: 1 },
+];
+const agentOptions = [
+  { id: 1, name: "联通" },
+  { id: 1, name: "电信" },
+  { id: 1, name: "移动" },
 ];
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
@@ -66,11 +35,14 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     product_code: "",
     order_id: "",
     out_order_id: "",
-    supplier: "",
-    goods_code: "",
-    agent_id: undefined,
-    deliver_address: "",
-    ownership: undefined,
+    order_status: undefined,
+    id_number: "",
+    express_code: "",
+    production_number: "",
+    phone: "",
+    is_recharged: undefined,
+    is_activated: undefined,
+    upper_order_id: "",
   } as Partial<DeliversSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
@@ -139,59 +111,103 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
-  const setGoodsCode = (evt: any) => {
+  const setOrderStatus = (order_status: number) =>
+    setTemporaryParams({ ...temporaryParams, order_status });
+  const clearOrderStatus = () =>
+    setTemporaryParams({ ...temporaryParams, order_status: undefined });
+
+  const setIdNumber = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        goods_code: "",
+        id_number: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      goods_code: evt.target.value,
+      id_number: evt.target.value,
     });
   };
 
-  const setSupplier = (evt: any) => {
+  const setExpressCode = (evt: any) => {
+    // onInputClear
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        supplier: "",
+        express_code: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      supplier: evt.target.value,
+      express_code: evt.target.value,
     });
   };
 
-  const setOperator = (operator_id: number) =>
-    setTemporaryParams({ ...temporaryParams, operator_id });
-  const clearOperator = () =>
-    setTemporaryParams({ ...temporaryParams, operator_id: undefined });
-
-  const setAddress = (evt: any) => {
+  const setProductionNumber = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        deliver_address: "",
+        production_number: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      deliver_address: evt.target.value,
+      production_number: evt.target.value,
     });
   };
 
-  const setOwnership = (ownership: any) =>
-    setTemporaryParams({ ...temporaryParams, ownership });
+  const setPhone = (evt: any) => {
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        phone: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      phone: evt.target.value,
+    });
+  };
+
+  const setIsRecharge = (is_recharged: number) =>
+    setTemporaryParams({ ...temporaryParams, is_recharged });
+  const clearIsRecharge = () =>
+    setTemporaryParams({ ...temporaryParams, is_recharged: undefined });
+
+  const setIsActivated = (is_activated: number) =>
+    setTemporaryParams({ ...temporaryParams, is_activated });
+  const clearIsActivated = () =>
+    setTemporaryParams({ ...temporaryParams, is_activated: undefined });
+
+  const setUpperOrderId = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        upper_order_id: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      upper_order_id: evt.target.value,
+    });
+  };
+
+  const setAgent = (agent_id: number) =>
+    setTemporaryParams({ ...temporaryParams, agent_id });
+  const clearAgent = () =>
+    setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -246,8 +262,8 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
           style={{ width: "20rem" }}
           value={temporaryParams.order_status}
           allowClear={true}
-          onSelect={setOperator}
-          onClear={clearOperator}
+          onSelect={setOrderStatus}
+          onClear={clearOrderStatus}
           placeholder="请选择订单状态"
         >
           {orderStatusOptions.map(({ id, name }) => (
@@ -258,61 +274,105 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
         </Select>
       </Item>
       <Item>
-        <div>供应商：</div>
+        <div>身份证号：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.supplier}
-          onChange={setSupplier}
-          placeholder="请输入供应商名称"
+          value={temporaryParams.id_number}
+          onChange={setIdNumber}
+          placeholder="请输入身份证号"
           allowClear={true}
         />
       </Item>
       <Item>
-        <div>商品编码：</div>
+        <div>物流单号：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.goods_code}
-          onChange={setGoodsCode}
-          placeholder="请输入商品编码"
+          value={temporaryParams.express_code}
+          onChange={setExpressCode}
+          placeholder="请输入物流单号"
           allowClear={true}
         />
       </Item>
       <Item>
-        <div>运营商：</div>
+        <div>生产号码：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.production_number}
+          onChange={setProductionNumber}
+          placeholder="请输入生产号码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>手机号：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.phone}
+          onChange={setPhone}
+          placeholder="请输入手机号"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>是否充值：</div>
         <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.operator_id}
+          value={temporaryParams.is_recharged}
           allowClear={true}
-          onSelect={setOperator}
-          onClear={clearOperator}
-          placeholder="请选择运营商"
+          onSelect={setIsRecharge}
+          onClear={clearIsRecharge}
+          placeholder="请选择是否充值"
         >
-          {operatorOptions.map(({ id, name }) => (
-            <Select.Option key={id} value={id}>
+          {rechargeOptions.map(({ name, value }) => (
+            <Select.Option key={value} value={value}>
               {name}
             </Select.Option>
           ))}
         </Select>
       </Item>
       <Item>
-        <div>发货地址：</div>
+        <div>是否激活：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.is_activated}
+          allowClear={true}
+          onSelect={setIsActivated}
+          onClear={clearIsActivated}
+          placeholder="请选择是否充值"
+        >
+          {activateOptions.map(({ name, value }) => (
+            <Select.Option key={value} value={value}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>上游订单id：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.deliver_address}
-          onChange={setAddress}
-          placeholder="请输入商品编码"
+          value={temporaryParams.upper_order_id}
+          onChange={setUpperOrderId}
+          placeholder="请输入上游订单id"
           allowClear={true}
         />
       </Item>
       <Item>
-        <div>归属地：</div>
-        <Cascader
+        <div>代理商：</div>
+        <Select
           style={{ width: "20rem" }}
-          options={regionOptions}
-          value={temporaryParams.ownership}
-          onChange={setOwnership}
-          placeholder="请选择归属地"
-        />
+          value={temporaryParams.agent_id}
+          allowClear={true}
+          onSelect={setAgent}
+          onClear={clearAgent}
+          placeholder="请选择代理商"
+        >
+          {agentOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
