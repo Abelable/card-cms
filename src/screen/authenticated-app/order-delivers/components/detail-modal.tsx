@@ -14,7 +14,7 @@ export const DetailModal = () => {
   return (
     <Drawer
       title={"订单详情"}
-      width={"100rem"}
+      width={"120rem"}
       forceRender={true}
       onClose={closeModal}
       visible={detailModalOpen}
@@ -55,19 +55,76 @@ export const DetailModal = () => {
         <Descriptions.Item> </Descriptions.Item>
         <Descriptions.Item label="证件号码">32002018188198</Descriptions.Item>
       </Descriptions>
+
       <Descriptions
-        style={{ marginTop: "2rem" }}
+        style={{ marginTop: "3rem" }}
         title="商品信息"
         bordered
         layout="vertical"
         size={"small"}
+        column={7}
       >
-        <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
-        <Descriptions.Item label="Billing">Prepaid</Descriptions.Item>
-        <Descriptions.Item label="time">18:00:00</Descriptions.Item>
-        <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
-        <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
-        <Descriptions.Item label="Official">$60.00</Descriptions.Item>
+        <Descriptions.Item label="产品渠道">测试卡</Descriptions.Item>
+        <Descriptions.Item label="产品渠道编码">111111</Descriptions.Item>
+        <Descriptions.Item label="商品名称">移动花卡</Descriptions.Item>
+        <Descriptions.Item label="商品编号">12122</Descriptions.Item>
+        <Descriptions.Item label="归属地">浙江杭州</Descriptions.Item>
+        <Descriptions.Item label="购买号码">60</Descriptions.Item>
+        <Descriptions.Item label="购买数量">1</Descriptions.Item>
+      </Descriptions>
+
+      <Descriptions
+        style={{ marginTop: "5rem" }}
+        title="备注信息"
+        bordered
+        layout="vertical"
+        size={"small"}
+        column={1}
+      >
+        <Descriptions.Item label="生产备注（失败原因）">
+          2022-04-14系统身份证号错误
+        </Descriptions.Item>
+      </Descriptions>
+
+      <Descriptions
+        style={{ marginTop: "5rem" }}
+        title="发货&激活信息"
+        bordered
+        layout="vertical"
+        size={"small"}
+        column={7}
+      >
+        <Descriptions.Item label="物流公司">申通快递</Descriptions.Item>
+        <Descriptions.Item label="物流单号">111111</Descriptions.Item>
+        <Descriptions.Item label="生产号码">17121021</Descriptions.Item>
+        <Descriptions.Item label="激活状态">未激活</Descriptions.Item>
+        <Descriptions.Item label="激活时间">
+          2022-05-01 01:38:05
+        </Descriptions.Item>
+        <Descriptions.Item label="充值状态">已充值</Descriptions.Item>
+        <Descriptions.Item label="充值时间">
+          2022-05-01 01:38:05
+        </Descriptions.Item>
+      </Descriptions>
+
+      <Descriptions
+        style={{ marginTop: "5rem" }}
+        title="操作记录"
+        size={"small"}
+        column={1}
+      >
+        <Descriptions.Item>
+          2022-05-01 01:38:05订单初审：身份证号码错误
+        </Descriptions.Item>
+        <Descriptions.Item>
+          2022-05-01 01:38:05订单初审：身份证号码错误
+        </Descriptions.Item>
+        <Descriptions.Item>
+          2022-05-01 01:38:05订单初审：身份证号码错误
+        </Descriptions.Item>
+        <Descriptions.Item>
+          2022-05-01 01:38:05订单初审：身份证号码错误
+        </Descriptions.Item>
       </Descriptions>
     </Drawer>
   );
