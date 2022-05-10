@@ -1,6 +1,6 @@
 import { toNumber } from "utils";
 import { useDelivers } from "service/order";
-import { useOrderDeliversSearchParams } from "./util";
+import { useOrderDeliversSearchParams, useStatusModal } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -8,6 +8,7 @@ import styled from "@emotion/styled";
 import { Button, Drawer, Select } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
+import { StatusModal } from "./components/status-modal";
 
 const orderStatusOptions = [
   { id: 1, name: "待发货" },
@@ -22,7 +23,6 @@ const batchOperationOptions = [
 
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [batchOperation, setBatchOperation] = useState<number>();
   const [params, setParams] = useOrderDeliversSearchParams();
   const { data, isLoading, error } = useDelivers(params);
   const exportDelivers = (ids: string[]) => {
@@ -30,11 +30,14 @@ export const OrderDelivers = () => {
       process.env.REACT_APP_API_URL
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
   };
+  const { startEdit: editStatus } = useStatusModal();
   const selectBatchOperation = (ids: string[]) => (type: number) => {
-    setBatchOperation(type);
-    console.log(ids);
+    switch (type) {
+      case 1:
+        editStatus(ids.join());
+        break;
+    }
   };
-  const clearBatchOperation = () => setBatchOperation(undefined);
 
   return (
     <Container>
@@ -60,6 +63,7 @@ export const OrderDelivers = () => {
           }}
         />
       </Main>
+      <StatusModal />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}
@@ -86,8 +90,6 @@ export const OrderDelivers = () => {
             <Select
               style={{ width: "14rem" }}
               allowClear={true}
-              value={batchOperation}
-              onClear={clearBatchOperation}
               onSelect={selectBatchOperation(selectedRowKeys)}
               placeholder="批量操作"
             >
