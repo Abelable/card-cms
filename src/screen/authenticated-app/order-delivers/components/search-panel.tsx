@@ -438,7 +438,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 1.6rem;
-  padding: 2.4rem 16.8rem 0 2.4rem;
+  padding: 2.4rem 0rem 0 2.4rem;
   background: #fff;
 `;
 

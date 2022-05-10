@@ -17,6 +17,7 @@ import { FileUpload } from "components/file-upload";
 import {
   useDataModal,
   useFailModal,
+  useInfoModal,
   usePicModal,
   useRecordModal,
   useStatusModal,
@@ -49,6 +50,7 @@ export const List = ({
   const { startEdit: editStatus } = useStatusModal();
   const { startEdit: failDeliver } = useFailModal();
   const { open: openDataModal } = useDataModal();
+  const { open: openInfoModal } = useInfoModal();
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
@@ -178,7 +180,9 @@ export const List = ({
                 <Link type={"link"} onClick={() => editStatus(deliver.id)}>
                   修改状态
                 </Link>
-                <Link type={"link"}>修改订单信息</Link>
+                <Link type={"link"} onClick={() => openInfoModal(deliver.id)}>
+                  修改订单信息
+                </Link>
               </Space>
             ),
           },

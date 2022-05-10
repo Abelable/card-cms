@@ -155,3 +155,27 @@ export const useDataModal = () => {
     close,
   };
 };
+
+export const useInfoModal = () => {
+  const [{ infoDeliverId }, setInfoDeliverId] = useUrlQueryParams([
+    "infoDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setInfoDeliverId({ infoDeliverId: ids }),
+    [setInfoDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ infoDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    infoModalOpen: !!infoDeliverId,
+    infoDeliverId,
+    open,
+    close,
+  };
+};
