@@ -5,7 +5,7 @@ import { useOrderDeliversSearchParams } from "./util";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
-import { Button, Drawer } from "antd";
+import { Button, Drawer, Select } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 
@@ -15,8 +15,14 @@ const orderStatusOptions = [
   { id: 3, name: "已收货" },
 ];
 
+const batchOperationOptions = [
+  { id: 1, name: "批量修改状态" },
+  { id: 2, name: "批量标记失败" },
+];
+
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [batchOperation, setBatchOperation] = useState<number>();
   const [params, setParams] = useOrderDeliversSearchParams();
   const { data, isLoading, error } = useDelivers(params);
   const exportDelivers = (ids: string[]) => {
@@ -24,6 +30,11 @@ export const OrderDelivers = () => {
       process.env.REACT_APP_API_URL
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
   };
+  const selectBatchOperation = (ids: string[]) => (type: number) => {
+    setBatchOperation(type);
+    console.log(ids);
+  };
+  const clearBatchOperation = () => setBatchOperation(undefined);
 
   return (
     <Container>
@@ -62,14 +73,30 @@ export const OrderDelivers = () => {
           <div>
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
-          <Row gap={true}>
+          <Row gap>
+            <Button onClick={() => exportDelivers(selectedRowKeys)}>
+              批量导出生产
+            </Button>
             <Button
               onClick={() => exportDelivers(selectedRowKeys)}
               type={"primary"}
-              style={{ marginRight: 0 }}
             >
-              批量导出
+              批量导出信息
             </Button>
+            <Select
+              style={{ width: "14rem" }}
+              allowClear={true}
+              value={batchOperation}
+              onClear={clearBatchOperation}
+              onSelect={selectBatchOperation(selectedRowKeys)}
+              placeholder="批量操作"
+            >
+              {batchOperationOptions.map(({ id, name }) => (
+                <Select.Option key={id} value={id}>
+                  {name}
+                </Select.Option>
+              ))}
+            </Select>
           </Row>
         </Row>
       </Drawer>
