@@ -88,7 +88,7 @@ export const AuthenticatedApp = () => {
 };
 
 const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
-  const routeType = useRouteType();
+  const { defaultOpenKey, selectedKey } = useRouteType();
 
   const items: MenuProps["items"] = [
     {
@@ -169,7 +169,8 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       <Menu
         theme="dark"
         mode="inline"
-        selectedKeys={[routeType]}
+        defaultOpenKeys={[defaultOpenKey]}
+        selectedKeys={[selectedKey]}
         items={items}
       />
     </Layout.Sider>
