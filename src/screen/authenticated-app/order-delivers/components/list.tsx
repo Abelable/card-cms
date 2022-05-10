@@ -30,6 +30,7 @@ interface ListProps extends TableProps<Deliver>, SearchPanelProps {
 
 export const List = ({
   error,
+  orderStatusOptions,
   setSelectedRowKeys,
   exportDelivers,
   params,
@@ -125,13 +126,27 @@ export const List = ({
             title: "订单状态",
             render: (value, deliver) => (
               <>
-                <div>{deliver.status}</div>
+                <div>
+                  {
+                    orderStatusOptions.find(
+                      (item) => item.id === deliver.status
+                    )?.name
+                  }
+                </div>
+                <Button type={"link"}>操作记录</Button>
+                <div>
+                  激活状态：{deliver.is_activated ? "已激活" : "未激活"}
+                </div>
+                <div>充值金额：{deliver.recharge_amount}元</div>
               </>
             ),
           },
           {
             title: "失败原因",
             dataIndex: "fail_reason",
+          },
+          {
+            title: "生产信息",
           },
           {
             title: "操作",
