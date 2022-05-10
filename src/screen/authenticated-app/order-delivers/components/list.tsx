@@ -5,10 +5,11 @@ import {
   TablePaginationConfig,
   TableProps,
   message,
+  Space,
 } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
-import { ErrorBox, Row } from "components/lib";
+import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
 import { useNewPublishModal, usePublishModal } from "../util";
 import { Deliver } from "types/order";
 import copy from "copy-to-clipboard";
@@ -123,7 +124,7 @@ export const List = ({
                     )?.name
                   }
                 </div>
-                <Button type={"link"}>操作记录</Button>
+                <ButtonNoPadding type={"link"}>操作记录</ButtonNoPadding>
                 <div>
                   激活状态：{deliver.is_activated ? "已激活" : "未激活"}
                 </div>
@@ -148,13 +149,13 @@ export const List = ({
           {
             title: "操作",
             render: (value, deliver) => (
-              <>
+              <Space direction={"vertical"}>
                 <Button type={"link"}>查看详情</Button>
                 <Button type={"link"}>生产失败</Button>
                 <Button type={"link"}>录入生产数据</Button>
                 <Button type={"link"}>修改状态</Button>
                 <Button type={"link"}>修改订单信息</Button>
-              </>
+              </Space>
             ),
           },
         ]}
