@@ -14,8 +14,8 @@ import { ChannelModal } from "./components/channel-modal";
 import { useOperatorOptions } from "service/common";
 
 const modeOptions = [
-  { id: 1, name: "手动生产" },
-  { id: 2, name: "自动生产" },
+  { name: "手动生产", value: 0 },
+  { name: "自动生产", value: 1 },
 ];
 
 export const ProductChannels = () => {

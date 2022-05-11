@@ -67,7 +67,11 @@ export const DownedList = ({
             title: "生产方式",
             render: (value, channel) => (
               <span>
-                {modeOptions.find((item) => item.id === channel.mode)?.name}
+                {
+                  modeOptions.find(
+                    (item) => item.value === channel.is_auto_product
+                  )?.name
+                }
               </span>
             ),
           },

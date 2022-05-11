@@ -1,8 +1,8 @@
 import { Pagination } from "./common";
 
 export interface modeOption {
-  id: number;
   name: string;
+  value: number;
 }
 export interface ChannelsSearchParams {
   goods_name: string;
@@ -17,7 +17,7 @@ export interface Channel {
   name: string;
   encoding: string;
   operator_id: number;
-  mode: number;
+  is_auto_product: number;
   created_at: string;
 }
 

@@ -95,24 +95,33 @@ export const List = ({
                       label: (
                         <span
                           onClick={() =>
-                            editChannel({ id: channel.id, mode: item.id })
+                            editChannel({
+                              id: channel.id,
+                              is_auto_product: item.value,
+                            })
                           }
                         >
                           {item.name}
                         </span>
                       ),
-                      key: item.id,
+                      key: item.value,
                     }))}
                   />
                 }
               >
                 <ButtonNoPadding
-                  style={{ color: channel.mode ? "#1890ff" : "#999" }}
+                  style={{
+                    color:
+                      channel.is_auto_product !== undefined
+                        ? "#1890ff"
+                        : "#999",
+                  }}
                   type={"link"}
                   onClick={(e) => e.preventDefault()}
                 >
-                  {modeOptions.find((item) => item.id === channel.mode)?.name ||
-                    "选择等级名称"}
+                  {modeOptions.find(
+                    (item) => item.value === channel.is_auto_product
+                  )?.name || "选择等级名称"}
                   <DownOutlined />
                 </ButtonNoPadding>
               </Dropdown>

@@ -29,7 +29,7 @@ export const useChannels = (params: Partial<ChannelsSearchParams>) => {
 export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
   const client = useHttp();
   return useQuery<ChannelsResult>(["downed_channels", params], () =>
-    client("/api/v1/admin/downed_channel/index", {
+    client("/api/v1/admin/product/index", {
       data: params,
     })
   );
