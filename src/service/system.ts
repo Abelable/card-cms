@@ -9,8 +9,8 @@ import {
 
 export const useBlacklist = (params: Partial<BlacklistSearchParams>) => {
   const client = useHttp();
-  return useQuery<BlacklistResult>(["products", params], () =>
-    client("/api/v1/admin/product/index", {
+  return useQuery<BlacklistResult>(["blacklist", params], () =>
+    client("/api/v1/admin/blacklist/index", {
       data: params,
     })
   );

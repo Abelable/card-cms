@@ -46,7 +46,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "身份证号",
-            dataIndex: "id_number",
+            dataIndex: "idcard",
           },
           {
             title: "联系电话",

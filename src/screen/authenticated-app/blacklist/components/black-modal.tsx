@@ -18,8 +18,8 @@ export const BlackModal = ({ blacklist }: { blacklist: Black[] }) => {
 
   useDeepCompareEffect(() => {
     if (black) {
-      const { id_number, phone, address } = black;
-      form.setFieldsValue({ id_number, phone, address });
+      const { idcard, phone, address } = black;
+      form.setFieldsValue({ idcard, phone, address });
     }
   }, [black, form]);
 
@@ -56,7 +56,7 @@ export const BlackModal = ({ blacklist }: { blacklist: Black[] }) => {
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="id_number"
+          name="idcard"
           label="身份证号"
           rules={[{ required: true, message: "请输入身份证号" }]}
         >
