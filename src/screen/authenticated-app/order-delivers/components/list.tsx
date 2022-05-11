@@ -60,26 +60,6 @@ export const List = ({
 
   // columns={[
   //   {
-  //     title: "订单信息",
-  //     render: (value, deliver) => (
-  //       <Space direction={"vertical"}>
-  //         <Copy onClick={() => copyInfo(deliver.id)}>
-  //           <div>订单id：{deliver.id}</div>
-  //           <CopyOutlined style={{ color: "#1890ff" }} />
-  //         </Copy>
-  //         <Copy onClick={() => copyInfo(deliver.source)}>
-  //           <div>订单来源：{deliver.source}</div>
-  //           <CopyOutlined style={{ color: "#1890ff" }} />
-  //         </Copy>
-  //         <Copy onClick={() => copyInfo(deliver.downstream_order_code)}>
-  //           <div>下游订单编号：{deliver.downstream_order_code}</div>
-  //           <CopyOutlined style={{ color: "#1890ff" }} />
-  //         </Copy>
-  //         <div>平台创建时间：{deliver.created_at}</div>
-  //       </Space>
-  //     ),
-  //   },
-  //   {
   //     title: "产品信息",
   //     render: (value, deliver) => (
   //       <Space direction={"vertical"}>
@@ -203,9 +183,53 @@ export const List = ({
             render={(id) => (
               <div onClick={() => copyInfo(id)}>
                 {id}
+                {id}
+                {id}
+                {id}
                 <Copy />
               </div>
             )}
+          />
+          <Table.Column
+            title="订单来源"
+            dataIndex="source"
+            key="source"
+            render={(source) => (
+              <div onClick={() => copyInfo(source)}>
+                {source || "下游某某店铺"}
+                <Copy />
+              </div>
+            )}
+          />
+          <Table.Column
+            title="下游订单编号"
+            dataIndex="downstream_order_code"
+            key="downstream_order_code"
+            render={(downstream_order_code) => (
+              <div onClick={() => copyInfo(downstream_order_code)}>
+                {downstream_order_code || "161271127AJAHJmsxns"}
+                <Copy />
+              </div>
+            )}
+          />
+          <Table.Column
+            title="平台创建时间"
+            dataIndex="created_at"
+            key="created_at"
+          />
+        </Table.ColumnGroup>
+        <Table.ColumnGroup title="产品信息">
+          <Table.Column
+            title="产品名称"
+            dataIndex="pruduct_name"
+            key="pruduct_name"
+            render={(pruduct_name) => <span>{pruduct_name || "测试卡"}</span>}
+          />
+          <Table.Column
+            title="产品编码"
+            dataIndex="pruduct_code"
+            key="pruduct_code"
+            render={(pruduct_code) => <span>{pruduct_code || "1128219"}</span>}
           />
         </Table.ColumnGroup>
       </Table>
