@@ -21,7 +21,6 @@ const modeOptions = [
 export const ProductChannels = () => {
   const [type, setType] = useState("0");
   const operatorOptions = useOperatorOptions();
-  console.log(operatorOptions);
   const [params, setParams] = useChannelsSearchParams();
   const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -59,6 +58,7 @@ export const ProductChannels = () => {
             <SearchPanel params={params} setParams={setParams} />
             <List
               error={error}
+              operatorOptions={operatorOptions}
               modeOptions={modeOptions}
               params={params}
               setParams={setParams}

@@ -17,8 +17,10 @@ import { PlusOutlined, DownOutlined } from "@ant-design/icons";
 import { useDownChannel, useEditChannel } from "service/product";
 import { useChannelModal, useChannelsQueryKey } from "../util";
 import { useNavigate } from "react-router";
+import { OperatorOption } from "types/common";
 
 interface ListProps extends TableProps<Channel>, SearchPanelProps {
+  operatorOptions: OperatorOption[];
   modeOptions: modeOption[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
@@ -26,6 +28,7 @@ interface ListProps extends TableProps<Channel>, SearchPanelProps {
 
 export const List = ({
   error,
+  operatorOptions,
   modeOptions,
   params,
   setParams,
@@ -74,7 +77,12 @@ export const List = ({
           },
           {
             title: "运营商",
-            dataIndex: "supplier",
+            dataIndex: "operator_id",
+            render: (value) => (
+              <span>
+                {operatorOptions.find((item) => item.id === value)?.name}
+              </span>
+            ),
           },
           {
             title: "生产方式",

@@ -16,7 +16,7 @@ export interface Channel {
   id: number;
   name: string;
   encoding: string;
-  supplier: string;
+  operator_id: number;
   mode: number;
   created_at: string;
 }
