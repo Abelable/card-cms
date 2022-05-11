@@ -14,8 +14,8 @@ export interface ChannelsSearchParams {
 
 export interface Channel {
   id: number;
-  goods_name: string;
-  goods_code: string;
+  name: string;
+  encoding: string;
   supplier: string;
   mode: number;
   created_at: string;

@@ -13,3 +13,8 @@ export interface OssConfig {
   policy: string;
   signature: string;
 }
+
+export interface OperatorOption {
+  id: number;
+  name: string;
+}

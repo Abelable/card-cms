@@ -1,6 +1,6 @@
 import { useHttp } from "./http";
 import { useMutation, useQuery } from "react-query";
-import { OssConfig } from "types/common";
+import { OperatorOption, OssConfig } from "types/common";
 
 export const useOssConfig = () => {
   const client = useHttp();
@@ -15,4 +15,21 @@ export const useImportData = () => {
       method: "POST",
     })
   );
+};
+
+export const useOperatorOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["operator_options"], () =>
+    client("/api/v1/admin/operator/pluck")
+  );
+  const operatorOptions: OperatorOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      operatorOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return operatorOptions;
 };

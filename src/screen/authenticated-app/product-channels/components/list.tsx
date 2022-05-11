@@ -66,11 +66,11 @@ export const List = ({
           },
           {
             title: "产品名称",
-            dataIndex: "goods_name",
+            dataIndex: "name",
           },
           {
             title: "产品编码",
-            dataIndex: "goods_code",
+            dataIndex: "encoding",
           },
           {
             title: "运营商",

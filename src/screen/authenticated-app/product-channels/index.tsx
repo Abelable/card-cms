@@ -11,6 +11,7 @@ import { Row } from "components/lib";
 import { DownedList } from "./components/downed-list";
 import { DownedSearchPanel } from "./components/downed-search-panel";
 import { ChannelModal } from "./components/channel-modal";
+import { useOperatorOptions } from "service/common";
 
 const modeOptions = [
   { id: 1, name: "手动生产" },
@@ -19,6 +20,8 @@ const modeOptions = [
 
 export const ProductChannels = () => {
   const [type, setType] = useState("0");
+  const operatorOptions = useOperatorOptions();
+  console.log(operatorOptions);
   const [params, setParams] = useChannelsSearchParams();
   const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);

@@ -20,7 +20,7 @@ import {
 export const useChannels = (params: Partial<ChannelsSearchParams>) => {
   const client = useHttp();
   return useQuery<ChannelsResult>(["channels", params], () =>
-    client("/api/v1/admin/channel/index", {
+    client("/api/v1/admin/product/index", {
       data: params,
     })
   );
