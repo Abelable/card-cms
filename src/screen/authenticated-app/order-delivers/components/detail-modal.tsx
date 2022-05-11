@@ -1,7 +1,8 @@
-import { Button, Descriptions, Drawer } from "antd";
+import { Button, Descriptions, Drawer, Tooltip } from "antd";
 import { useDetailModal, usePicModal } from "../util";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
+import { IdcardOutlined } from "@ant-design/icons";
 
 export const DetailModal = () => {
   const { detailModalOpen, detailDeliverId, close } = useDetailModal();
@@ -47,9 +48,9 @@ export const DetailModal = () => {
         <Descriptions.Item label="证件姓名">
           <Row>
             <div>方某某</div>
-            <Link type={"link"} onClick={() => openPicModal(detailDeliverId)}>
-              查看照片
-            </Link>
+            <Tooltip title="查看证件照片">
+              <Check onClick={() => openPicModal(detailDeliverId)} />
+            </Tooltip>
           </Row>
         </Descriptions.Item>
         <Descriptions.Item> </Descriptions.Item>
@@ -145,4 +146,10 @@ const Link = styled(Button)`
   padding: 0;
   height: fit-content;
   line-height: 1;
+`;
+
+const Check = styled(IdcardOutlined)`
+  margin-left: 0.5rem;
+  color: #1890ff;
+  cursor: pointer;
 `;
