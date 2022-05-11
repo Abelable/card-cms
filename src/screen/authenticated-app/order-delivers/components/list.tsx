@@ -203,7 +203,7 @@ export const List = ({
             render={(id) => (
               <div onClick={() => copyInfo(id)}>
                 {id}
-                <CopyOutlined style={{}} />
+                <Copy />
               </div>
             )}
           />
@@ -223,7 +223,8 @@ const Header = styled(Row)`
 `;
 
 const Copy = styled(CopyOutlined)`
-  color: "#1890ff"
+  margin-left: 1rem;
+  color: #1890ff;
   cursor: pointer;
 `;
 
