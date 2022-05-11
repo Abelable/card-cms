@@ -181,12 +181,12 @@ export const List = ({
             dataIndex="id"
             key="id"
             render={(id) => (
-              <div onClick={() => copyInfo(id)}>
+              <div>
                 {id}
                 {id}
                 {id}
                 {id}
-                <Copy />
+                <Copy onClick={() => copyInfo(id)} />
               </div>
             )}
           />
@@ -195,9 +195,9 @@ export const List = ({
             dataIndex="source"
             key="source"
             render={(source) => (
-              <div onClick={() => copyInfo(source)}>
+              <div>
                 {source || "下游某某店铺"}
-                <Copy />
+                <Copy onClick={() => copyInfo(source)} />
               </div>
             )}
           />
@@ -206,9 +206,9 @@ export const List = ({
             dataIndex="downstream_order_code"
             key="downstream_order_code"
             render={(downstream_order_code) => (
-              <div onClick={() => copyInfo(downstream_order_code)}>
+              <div>
                 {downstream_order_code || "161271127AJAHJmsxns"}
-                <Copy />
+                <Copy onClick={() => copyInfo(downstream_order_code)} />
               </div>
             )}
           />
@@ -247,7 +247,7 @@ const Header = styled(Row)`
 `;
 
 const Copy = styled(CopyOutlined)`
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   color: #1890ff;
   cursor: pointer;
 `;
