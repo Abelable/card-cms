@@ -17,7 +17,7 @@ export const useBlacklistSearchParams = () => {
 
 export const useBlacklistQueryKey = () => {
   const [params] = useBlacklistSearchParams();
-  return ["orderBlacklist", params];
+  return ["blacklist", params];
 };
 
 export const useBlackModal = () => {

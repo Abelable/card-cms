@@ -20,7 +20,7 @@ export const useAddBlack = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<Black>) =>
-      client("/api/v1/admin/product/store", {
+      client("/api/v1/admin/blacklist/store", {
         data: params,
         method: "POST",
       }),
