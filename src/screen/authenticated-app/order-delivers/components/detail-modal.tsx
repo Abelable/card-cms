@@ -1,4 +1,4 @@
-import { Button, Descriptions, Drawer, Tooltip } from "antd";
+import { Descriptions, Drawer, Tooltip } from "antd";
 import { useDetailModal, usePicModal } from "../util";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
@@ -140,12 +140,6 @@ const Time = styled.div`
   color: #999;
   font-size: 13px;
   font-weight: 400;
-`;
-const Link = styled(Button)`
-  margin-left: 1rem;
-  padding: 0;
-  height: fit-content;
-  line-height: 1;
 `;
 
 const Check = styled(IdcardOutlined)`
