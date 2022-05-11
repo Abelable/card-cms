@@ -7,8 +7,13 @@ import {
   message,
   Space,
   Divider,
+  Tooltip,
 } from "antd";
-import { CopyOutlined, DownloadOutlined } from "@ant-design/icons";
+import {
+  CopyOutlined,
+  DownloadOutlined,
+  PictureOutlined,
+} from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { ErrorBox, Row } from "components/lib";
 import { Deliver } from "types/order";
@@ -59,15 +64,6 @@ export const List = ({
   };
 
   // columns={[
-  //   {
-  //     title: "产品信息",
-  //     render: (value, deliver) => (
-  //       <Space direction={"vertical"}>
-  //         <div>产品名称：{deliver.pruduct_name}</div>
-  //         <div>产品编码：{deliver.pruduct_code}</div>
-  //       </Space>
-  //     ),
-  //   },
   //   {
   //     title: "证件信息&收货信息",
   //     render: (value, deliver) => (
@@ -232,6 +228,31 @@ export const List = ({
             render={(pruduct_code) => <span>{pruduct_code || "1128219"}</span>}
           />
         </Table.ColumnGroup>
+        <Table.ColumnGroup title="证件信息">
+          <Table.Column
+            title="证件姓名"
+            dataIndex="id_card_name"
+            key="id_card_name"
+            render={(id_card_name, deliver) => (
+              <div>
+                {id_card_name || "方某某"}
+                <Tooltip title="查看证件照片">
+                  <Check
+                    onClick={() => openPicModal((deliver as Deliver).id)}
+                  />
+                </Tooltip>
+              </div>
+            )}
+          />
+          <Table.Column
+            title="证件号码"
+            dataIndex="id_card_code"
+            key="id_card_code"
+            render={(id_card_code) => (
+              <span>{id_card_code || "330112120191261661"}</span>
+            )}
+          />
+        </Table.ColumnGroup>
       </Table>
     </Container>
   );
@@ -247,6 +268,12 @@ const Header = styled(Row)`
 `;
 
 const Copy = styled(CopyOutlined)`
+  margin-left: 0.5rem;
+  color: #1890ff;
+  cursor: pointer;
+`;
+
+const Check = styled(PictureOutlined)`
   margin-left: 0.5rem;
   color: #1890ff;
   cursor: pointer;

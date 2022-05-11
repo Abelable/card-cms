@@ -11,7 +11,7 @@ export const PicModal = () => {
 
   return (
     <Modal
-      title={"查看照片"}
+      title={"证件照片"}
       visible={picModalOpen}
       onCancel={closeModal}
       footer={null}
