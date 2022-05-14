@@ -94,7 +94,7 @@ export const useEditChannelMode = (queryKey: QueryKey) => {
         data: { is_auto_product },
         method: "POST",
       }),
-    useDeleteConfig(queryKey)
+    useEditConfig(queryKey)
   );
 };
 
@@ -102,7 +102,8 @@ export const useDownChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client(`/api/v1/admin/channel/destroy/${id}`, {
+      client(`/api/v1/admin/product/simple-update/${id}`, {
+        data: { is_removed: 1 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)
@@ -113,7 +114,8 @@ export const useUpChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client(`/api/v1/admin/channel/destroy/${id}`, {
+      client(`/api/v1/admin/product/simple-update/${id}`, {
+        data: { is_removed: 0 },
         method: "POST",
       }),
     useDeleteConfig(queryKey)

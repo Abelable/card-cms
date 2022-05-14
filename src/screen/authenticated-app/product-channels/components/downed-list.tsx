@@ -4,7 +4,7 @@ import { Modal, Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
-import { useChannelsQueryKey } from "../util";
+import { useDownedChannelsQueryKey } from "../util";
 import { useUpChannel } from "service/product";
 
 interface ListProps
@@ -21,7 +21,7 @@ export const DownedList = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const { mutate: upChannel } = useUpChannel(useChannelsQueryKey());
+  const { mutate: upChannel } = useUpChannel(useDownedChannelsQueryKey());
   const confirmUpChannel = (id: number) => {
     Modal.confirm({
       title: "确定上架该产品吗？",

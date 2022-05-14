@@ -45,6 +45,11 @@ export const useChannelsQueryKey = () => {
   return ["channels", params];
 };
 
+export const useDownedChannelsQueryKey = () => {
+  const [params] = useChannelsSearchParams();
+  return ["downed_channels", params];
+};
+
 export const useChannelModal = () => {
   const [{ channelCreate }, setChannelsModalOpen] = useUrlQueryParams([
     "channelCreate",
