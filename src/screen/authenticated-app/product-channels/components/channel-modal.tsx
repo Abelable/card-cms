@@ -91,7 +91,6 @@ export const ChannelModal = ({
 }) => {
   const [form] = useForm();
   const [type, setType] = useState(1);
-
   const { channelModalOpen, editingChannelId, close } = useChannelModal();
   const channel =
     channels?.find((item) => item.id === Number(editingChannelId)) || undefined;

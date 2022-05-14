@@ -1,6 +1,6 @@
 import { useHttp } from "./http";
 import { useMutation, useQuery } from "react-query";
-import { OperatorOption, OssConfig } from "types/common";
+import { OperatorOption, OssConfig, RegionPluck } from "types/common";
 
 export const useOssConfig = () => {
   const client = useHttp();
@@ -32,4 +32,21 @@ export const useOperatorOptions = () => {
     );
   }
   return operatorOptions;
+};
+
+export const useRegionPlucks = (id: "0") => {
+  const client = useHttp();
+  const res = useQuery([`region_plucks_${id}`], () =>
+    client(`/api/v1/admin/province-city-area/pluck/${id}`)
+  );
+  const operatorPlucks: RegionPluck[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      operatorPlucks.push({
+        value: item,
+        label: res.data[item],
+      })
+    );
+  }
+  return operatorPlucks;
 };
