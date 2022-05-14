@@ -57,7 +57,11 @@ export const ProductChannels = () => {
       <Main>
         {type === "0" ? (
           <>
-            <SearchPanel params={params} setParams={setParams} />
+            <SearchPanel
+              supplierOptions={supplierOptions}
+              params={params}
+              setParams={setParams}
+            />
             <List
               error={error}
               operatorOptions={operatorOptions}
@@ -77,6 +81,7 @@ export const ProductChannels = () => {
         ) : (
           <>
             <DownedSearchPanel
+              supplierOptions={supplierOptions}
               params={downedParams}
               setParams={setDownedParams}
             />

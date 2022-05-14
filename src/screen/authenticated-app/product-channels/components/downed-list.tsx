@@ -7,7 +7,9 @@ import { ErrorBox, Row } from "components/lib";
 import { useChannelsQueryKey } from "../util";
 import { useUpChannel } from "service/product";
 
-interface ListProps extends TableProps<Channel>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Channel>,
+    Omit<SearchPanelProps, "supplierOptions"> {
   modeOptions: modeOption[];
   error: Error | unknown;
 }

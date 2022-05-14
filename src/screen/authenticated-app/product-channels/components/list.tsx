@@ -19,7 +19,9 @@ import { useChannelModal, useChannelsQueryKey } from "../util";
 import { useNavigate } from "react-router";
 import { OperatorOption } from "types/common";
 
-interface ListProps extends TableProps<Channel>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Channel>,
+    Omit<SearchPanelProps, "supplierOptions"> {
   operatorOptions: OperatorOption[];
   modeOptions: modeOption[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;

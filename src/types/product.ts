@@ -7,7 +7,7 @@ export interface modeOption {
 export interface ChannelsSearchParams {
   goods_name: string;
   goods_code: string;
-  supplier: string;
+  supplier_id: string;
   per_page: number;
   page: number;
 }

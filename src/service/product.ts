@@ -1,5 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
+import { cleanObject } from "utils/index";
 import {
   AgentsResult,
   AgentsSearchParams,
@@ -19,11 +20,18 @@ import {
 
 export const useChannels = (params: Partial<ChannelsSearchParams>) => {
   const client = useHttp();
-  return useQuery<ChannelsResult>(["channels", params], () =>
-    client("/api/v1/admin/product/index", {
-      data: params,
-    })
-  );
+  return useQuery<ChannelsResult>(["channels", params], () => {
+    const { page, per_page, ...restParams } = params;
+    return client("/api/v1/admin/product/index", {
+      data: cleanObject({
+        "filter[supplier_id]": restParams.supplier_id,
+        "filter[name]": restParams.goods_name,
+        "filter[encoding]": restParams.goods_code,
+        page,
+        per_page,
+      }),
+    });
+  });
 };
 
 export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
