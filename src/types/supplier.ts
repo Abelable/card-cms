@@ -36,3 +36,8 @@ export interface GoodsListResult {
   data: Goods[];
   meta: { pagination: Pagination };
 }
+
+export interface SupplierOption {
+  id: number;
+  name: string;
+}

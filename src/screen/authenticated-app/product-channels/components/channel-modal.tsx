@@ -24,17 +24,9 @@ import styled from "@emotion/styled";
 import "assets/style/hideLeftBorder.css";
 import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
+import { OperatorOption } from "types/common";
+import { SupplierOption } from "types/supplier";
 
-const operatorOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
-const supplierOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
 const regionOptions = [
   {
     value: "1",
@@ -88,7 +80,15 @@ const cycleOptions = [
   "12个月",
 ];
 
-export const ChannelModal = ({ channels }: { channels: Channel[] }) => {
+export const ChannelModal = ({
+  operatorOptions,
+  supplierOptions,
+  channels,
+}: {
+  operatorOptions: OperatorOption[];
+  supplierOptions: SupplierOption[];
+  channels: Channel[];
+}) => {
   const [form] = useForm();
   const [type, setType] = useState(1);
 

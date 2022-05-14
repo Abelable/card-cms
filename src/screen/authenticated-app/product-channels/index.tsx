@@ -12,6 +12,7 @@ import { DownedList } from "./components/downed-list";
 import { DownedSearchPanel } from "./components/downed-search-panel";
 import { ChannelModal } from "./components/channel-modal";
 import { useOperatorOptions } from "service/common";
+import { useSupplierOptions } from "service/supplier";
 
 const modeOptions = [
   { name: "手动生产", value: 0 },
@@ -21,6 +22,7 @@ const modeOptions = [
 export const ProductChannels = () => {
   const [type, setType] = useState("0");
   const operatorOptions = useOperatorOptions();
+  const supplierOptions = useSupplierOptions();
   const [params, setParams] = useChannelsSearchParams();
   const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -94,7 +96,11 @@ export const ProductChannels = () => {
           </>
         )}
       </Main>
-      <ChannelModal channels={data?.data || []} />
+      <ChannelModal
+        operatorOptions={operatorOptions}
+        supplierOptions={supplierOptions}
+        channels={data?.data || []}
+      />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}

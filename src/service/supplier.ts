@@ -4,6 +4,7 @@ import {
   GoodsListResult,
   GoodsListSearchParams,
   Supplier,
+  SupplierOption,
   SuppliersResult,
   SuppliersSearchParams,
 } from "types/supplier";
@@ -49,4 +50,21 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
       data: params,
     })
   );
+};
+
+export const useSupplierOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["supplier_options"], () =>
+    client("/api/v1/admin/supplier/pluck")
+  );
+  const supplierOptions: SupplierOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      supplierOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return supplierOptions;
 };
