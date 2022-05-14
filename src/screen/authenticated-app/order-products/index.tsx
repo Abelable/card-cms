@@ -6,9 +6,11 @@ import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useProductsSearchParams } from "./util";
 import { useSupplierOptions } from "service/supplier";
+import { useChannelOptions } from "service/product";
 
 export const OrderProducts = () => {
   const supplierOptions = useSupplierOptions();
+  const channelOptions = useChannelOptions();
   const [params, setParams] = useProductsSearchParams();
   const { data, isLoading, error } = useProducts(params);
 
@@ -22,6 +24,7 @@ export const OrderProducts = () => {
         />
         <List
           error={error}
+          channelOptions={channelOptions}
           params={params}
           setParams={setParams}
           loading={isLoading}

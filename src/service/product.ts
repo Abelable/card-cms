@@ -7,6 +7,7 @@ import {
   Channel,
   ChannelForm,
   ChannelGoodsListResult,
+  ChannelOption,
   ChannelsResult,
   ChannelsSearchParams,
   Goods,
@@ -120,6 +121,23 @@ export const useUpChannel = (queryKey: QueryKey) => {
       }),
     useDeleteConfig(queryKey)
   );
+};
+
+export const useChannelOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["channel_options"], () =>
+    client("/api/v1/admin/product/pluck")
+  );
+  const channelOptions: ChannelOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      channelOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return channelOptions;
 };
 
 export const useChannelGoodsList = (params: Partial<GoodsListSearchParams>) => {

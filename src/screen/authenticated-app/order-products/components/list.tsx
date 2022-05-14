@@ -14,14 +14,22 @@ import { SearchPanelProps } from "./search-panel";
 import { useProductsQueryKey, useProductModal } from "../util";
 import { Product } from "types/order";
 import { useDeleteProduct } from "service/order";
+import { ChannelOption } from "types/product";
 
 interface ListProps
   extends TableProps<Product>,
     Omit<SearchPanelProps, "supplierOptions"> {
+  channelOptions: ChannelOption[];
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  channelOptions,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const { open } = useProductModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -59,7 +67,14 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "本地产品名称",
-            dataIndex: "name",
+            render: (value, setting) => (
+              <>
+                {
+                  channelOptions.find((item) => item.id === setting.product_id)
+                    ?.name
+                }
+              </>
+            ),
           },
           {
             title: "本地产品编码",

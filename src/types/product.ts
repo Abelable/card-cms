@@ -65,6 +65,11 @@ export interface ChannelGoodsListResult {
   meta: { pagination: Pagination };
 }
 
+export interface ChannelOption {
+  id: number;
+  name: string;
+}
+
 export interface GoodsListSearchParams {
   goods_name: string;
   supplier: string;
