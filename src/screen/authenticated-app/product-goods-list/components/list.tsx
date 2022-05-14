@@ -18,8 +18,10 @@ import {
   usePublishModal,
 } from "../util";
 import { useNavigate } from "react-router";
+import { SupplierOption } from "types/supplier";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
+  supplierOptions: SupplierOption[];
   modeOptions: modeOption[];
   error: Error | unknown;
 }
@@ -27,6 +29,7 @@ interface ListProps extends TableProps<Goods>, SearchPanelProps {
 export const List = ({
   error,
   modeOptions,
+  supplierOptions,
   params,
   setParams,
   ...restProps
@@ -79,17 +82,19 @@ export const List = ({
             title: "商品名称",
             render: (value, goods) => (
               <div style={{ display: "flex" }}>
-                <Image width={80} height={80} src={goods.img} />
+                <Image width={90} height={90} src={goods.main_picture} />
                 <GoodsInfoWrap>
-                  <div style={{ marginBottom: "1rem" }}>{goods.name}</div>
-                  {goods.tags ? (
-                    goods.tags.map((item, index) => (
-                      <Tag key={index}>{item}</Tag>
-                    ))
+                  <div>{goods.name}</div>
+                  {goods.sale_point ? (
+                    goods.sale_point
+                      .split(",")
+                      .map((item, index) => <Tag key={index}>{item}</Tag>)
                   ) : (
                     <></>
                   )}
-                  <div style={{ color: "#999" }}>商品编码：{goods.code}</div>
+                  <div style={{ color: "#999" }}>
+                    商品编码：{goods.encoding}
+                  </div>
                   <div style={{ color: "#999" }}>
                     发布时间：{goods.created_at}
                   </div>
@@ -101,8 +106,14 @@ export const List = ({
             title: "供应商&产品",
             render: (value, goods) => (
               <>
-                <div>{goods.supplier_name}</div>
-                <div>{goods.product_name}</div>
+                <div>
+                  {
+                    supplierOptions.find(
+                      (item) => item.id === goods.product.supplier_id
+                    )?.name
+                  }
+                </div>
+                <div>{goods.product.name}</div>
               </>
             ),
           },

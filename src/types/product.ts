@@ -91,9 +91,10 @@ export interface GoodsForm {
 export interface Goods {
   id: number;
   name: string;
-  img: string;
-  tags: string[];
-  code: string;
+  main_picture: string;
+  sale_point: string;
+  encoding: string;
+  product: Partial<ChannelForm>;
   supplier_name: string;
   product_id: number;
   product_name: string;

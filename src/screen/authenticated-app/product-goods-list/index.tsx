@@ -17,6 +17,7 @@ import { AgentModal } from "./components/agent-modal";
 import { LinkModal } from "./components/link-modal";
 import { PublishModal } from "./components/publish-modal";
 import { NewPublishModal } from "./components/new-publish-modal";
+import { useSupplierOptions } from "service/supplier";
 
 const modeOptions = [
   { name: "手动生产", value: 0 },
@@ -26,6 +27,7 @@ const modeOptions = [
 export const ProductGoodsList = () => {
   const [type, setType] = useState("0");
   const [params, setParams] = useGoodsListSearchParams();
+  const supplierOptions = useSupplierOptions();
   const [downedParams, setDownedParams] = useDownedGoodsListSearchParams();
   const { data, isLoading, error } = useGoodsList(params);
   const {
@@ -57,6 +59,7 @@ export const ProductGoodsList = () => {
             <List
               error={error}
               modeOptions={modeOptions}
+              supplierOptions={supplierOptions}
               params={params}
               setParams={setParams}
               dataSource={data?.data}
@@ -77,6 +80,7 @@ export const ProductGoodsList = () => {
             <DownedList
               error={downedError}
               modeOptions={modeOptions}
+              supplierOptions={supplierOptions}
               params={downedParams}
               setParams={setDownedParams}
               dataSource={downedData?.data}

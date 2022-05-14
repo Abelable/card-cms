@@ -38,7 +38,7 @@ export const LinkModal = ({ goodsList }: { goodsList: Goods[] }) => {
         <div style={{ marginBottom: "2.4rem" }}>
           下载链接地址：http://www.baidu.com
         </div>
-        <Image width={160} height={160} src={goods?.img} />
+        <Image width={160} height={160} src={goods?.main_picture} />
       </Wrap>
     </Modal>
   );

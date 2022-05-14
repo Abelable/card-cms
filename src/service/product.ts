@@ -136,7 +136,7 @@ export const useChannelGoodsList = (params: Partial<GoodsListSearchParams>) => {
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
   return useQuery<GoodsListResult>(["product_goods_list", params], () =>
-    client("/api/v1/admin/agent/index", {
+    client("/api/v1/admin/goods/index", {
       data: params,
     })
   );
@@ -145,7 +145,7 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
 export const useDownedGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
   return useQuery<GoodsListResult>(["downed_product_goods_list", params], () =>
-    client("/api/v1/admin/agent/index", {
+    client("/api/v1/admin/goods/index", {
       data: params,
     })
   );
