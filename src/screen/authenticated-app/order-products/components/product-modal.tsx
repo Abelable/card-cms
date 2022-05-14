@@ -81,14 +81,14 @@ export const ProductModal = ({
           </Select>
         </Form.Item>
         <Form.Item
-          name="code"
+          name="product_encoding"
           label="本地编码"
           rules={[{ required: true, message: "请输入本地编码" }]}
         >
           <Input placeholder="请输入本地编码" />
         </Form.Item>
         <Form.Item
-          name="upper_product_code"
+          name="supplier_product_encoding"
           label="上游编码"
           rules={[{ required: true, message: "请输入上游编码" }]}
         >
