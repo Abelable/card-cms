@@ -36,11 +36,18 @@ export const useChannels = (params: Partial<ChannelsSearchParams>) => {
 
 export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
   const client = useHttp();
-  return useQuery<ChannelsResult>(["downed_channels", params], () =>
-    client("/api/v1/admin/product/index", {
-      data: params,
-    })
-  );
+  return useQuery<ChannelsResult>(["downed_channels", params], () => {
+    const { page, per_page, ...restParams } = params;
+    return client("/api/v1/admin/product/index", {
+      data: cleanObject({
+        "filter[supplier_id]": restParams.supplier_id,
+        "filter[name]": restParams.goods_name,
+        "filter[encoding]": restParams.goods_code,
+        page,
+        per_page,
+      }),
+    });
+  });
 };
 
 export const useAddChannel = (queryKey: QueryKey) => {
