@@ -29,17 +29,18 @@ export interface ChannelsResult {
 export interface ChannelForm {
   operator_id: number;
   supplier_id: number;
-  goods_name: string;
-  goods_code: string;
+  name: string;
+  encoding: string;
   ownership: string[];
-  need_id_number: boolean;
+  is_required_idphoto: boolean;
   need_id_card_pic: boolean;
   deliver_area_type: number;
   deliver_area: string[][];
   only_deliver_area: string[][];
-  age_limit: number[];
-  card_number_limit: number;
-  card_test_cycle: number;
+  min_age_limit: number;
+  max_age_limit: number;
+  per_person_card_num_limit: number;
+  per_person_card_num_limit_check_period: number;
   risk_warning_type: number;
   default_phone_repeat_limit: number;
   default_phone_test_cycle: number;

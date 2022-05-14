@@ -67,18 +67,18 @@ const regionOptions = [
   },
 ];
 const cycleOptions = [
-  "1个月",
-  "2个月",
-  "3个月",
-  "4个月",
-  "5个月",
-  "6个月",
-  "7个月",
-  "8个月",
-  "9个月",
-  "10个月",
-  "11个月",
-  "12个月",
+  { value: 1, label: "1个月" },
+  { value: 2, label: "2个月" },
+  { value: 3, label: "3个月" },
+  { value: 4, label: "4个月" },
+  { value: 5, label: "5个月" },
+  { value: 6, label: "6个月" },
+  { value: 7, label: "7个月" },
+  { value: 8, label: "8个月" },
+  { value: 9, label: "9个月" },
+  { value: 10, label: "10个月" },
+  { value: 11, label: "11个月" },
+  { value: 12, label: "12个月" },
 ];
 
 export const ChannelModal = ({
@@ -179,7 +179,7 @@ export const ChannelModal = ({
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="goods_name"
+                name="name"
                 label="产品名称"
                 rules={[{ required: true, message: "请输入产品名称" }]}
               >
@@ -188,7 +188,7 @@ export const ChannelModal = ({
             </Col>
             <Col span={12}>
               <Form.Item
-                name="goods_code"
+                name="encoding"
                 label="产品编码"
                 rules={[{ required: true, message: "请输入产品编码" }]}
               >
@@ -213,10 +213,13 @@ export const ChannelModal = ({
                 <span style={{ marginRight: "2rem" }}>
                   是否需要身份证号码：
                 </span>
-                <Form.Item name="need_id_number" style={{ marginBottom: 0 }}>
+                <Form.Item
+                  name="is_required_idcard"
+                  style={{ marginBottom: 0 }}
+                >
                   <Radio.Group>
-                    <Radio value={false}>不需要</Radio>
-                    <Radio value={true}>需要</Radio>
+                    <Radio value={0}>不需要</Radio>
+                    <Radio value={1}>需要</Radio>
                   </Radio.Group>
                 </Form.Item>
               </Row>
@@ -224,10 +227,13 @@ export const ChannelModal = ({
                 <span style={{ marginRight: "2rem" }}>
                   是否需要身份证照片：
                 </span>
-                <Form.Item name="need_id_card_pic" style={{ marginBottom: 0 }}>
+                <Form.Item
+                  name="is_required_idphoto"
+                  style={{ marginBottom: 0 }}
+                >
                   <Radio.Group>
-                    <Radio value={false}>不需要</Radio>
-                    <Radio value={true}>需要</Radio>
+                    <Radio value={0}>不需要</Radio>
+                    <Radio value={1}>需要</Radio>
                   </Radio.Group>
                 </Form.Item>
               </Row>
@@ -283,7 +289,7 @@ export const ChannelModal = ({
               <CustomFormItem>
                 <span style={{ marginRight: "2rem" }}>年龄限制（周岁）：</span>
                 <Input.Group compact>
-                  <Form.Item name="min_age" style={{ marginBottom: 0 }}>
+                  <Form.Item name="min_age_limit" style={{ marginBottom: 0 }}>
                     <Input
                       style={{ width: 100, textAlign: "center" }}
                       placeholder="最小年龄"
@@ -300,7 +306,7 @@ export const ChannelModal = ({
                     placeholder="~"
                     disabled
                   />
-                  <Form.Item name="max_age" style={{ marginBottom: 0 }}>
+                  <Form.Item name="max_age_limit" style={{ marginBottom: 0 }}>
                     <Input
                       className="hide-left-border"
                       style={{
@@ -318,11 +324,11 @@ export const ChannelModal = ({
                     单人开卡数量限制：
                   </span>
                   <Form.Item
-                    name="card_number_limit"
+                    name="per_person_card_num_limit"
                     style={{ marginBottom: 0, width: "100%" }}
                   >
                     <Select placeholder="不限制">
-                      {[1, 2, 3, 4, 5].map((item) => (
+                      {[1, 2, 3, 4, 5, 10].map((item) => (
                         <Select.Option key={item} value={item}>
                           {item}
                         </Select.Option>
@@ -333,13 +339,13 @@ export const ChannelModal = ({
                 <CustomFormItem width={30}>
                   <span style={{ marginRight: "2rem" }}>检测周期：</span>
                   <Form.Item
-                    name="card_test_cycle"
+                    name="per_person_card_num_limit_check_period"
                     style={{ marginBottom: 0, width: "100%" }}
                   >
                     <Select placeholder="不限制">
                       {cycleOptions.map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
+                        <Select.Option key={item.value} value={item.value}>
+                          {item.label}
                         </Select.Option>
                       ))}
                     </Select>
@@ -396,8 +402,11 @@ export const ChannelModal = ({
                         >
                           <Select placeholder="不限制">
                             {cycleOptions.map((item) => (
-                              <Select.Option key={item} value={item}>
-                                {item}
+                              <Select.Option
+                                key={item.value}
+                                value={item.value}
+                              >
+                                {item.label}
                               </Select.Option>
                             ))}
                           </Select>
@@ -427,8 +436,11 @@ export const ChannelModal = ({
                         >
                           <Select placeholder="不限制">
                             {cycleOptions.map((item) => (
-                              <Select.Option key={item} value={item}>
-                                {item}
+                              <Select.Option
+                                key={item.value}
+                                value={item.value}
+                              >
+                                {item.label}
                               </Select.Option>
                             ))}
                           </Select>
@@ -467,8 +479,11 @@ export const ChannelModal = ({
                         >
                           <Select placeholder="不限制">
                             {cycleOptions.map((item) => (
-                              <Select.Option key={item} value={item}>
-                                {item}
+                              <Select.Option
+                                key={item.value}
+                                value={item.value}
+                              >
+                                {item.label}
                               </Select.Option>
                             ))}
                           </Select>
@@ -498,8 +513,11 @@ export const ChannelModal = ({
                         >
                           <Select placeholder="不限制">
                             {cycleOptions.map((item) => (
-                              <Select.Option key={item} value={item}>
-                                {item}
+                              <Select.Option
+                                key={item.value}
+                                value={item.value}
+                              >
+                                {item.label}
                               </Select.Option>
                             ))}
                           </Select>
