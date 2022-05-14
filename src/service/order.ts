@@ -19,7 +19,7 @@ import {
 export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   const client = useHttp();
   return useQuery<DeliversResult>(["products", params], () =>
-    client("/api/v1/admin/product/index", {
+    client("/api/v1/admin/order/index", {
       data: params,
     })
   );
@@ -29,7 +29,7 @@ export const useEditDeliversStatus = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: Partial<Product>) =>
-      client(`/api/v1/admin/product/update/${id}`, {
+      client(`/api/v1/admin/order/update/${id}`, {
         data: params,
         method: "POST",
       }),
