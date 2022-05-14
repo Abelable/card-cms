@@ -173,7 +173,7 @@ const More = ({ channel }: { channel: Channel }) => {
     },
     {
       label: <span onClick={() => confirmDownChannel(channel.id)}>下架</span>,
-      key: "delete",
+      key: "down",
     },
     {
       label: <span onClick={() => link(channel.id)}>查看分销商品</span>,

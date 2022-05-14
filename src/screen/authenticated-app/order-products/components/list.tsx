@@ -3,6 +3,7 @@ import {
   Button,
   Dropdown,
   Menu,
+  MenuProps,
   Modal,
   Table,
   TablePaginationConfig,
@@ -110,22 +111,19 @@ const More = ({ id }: { id: number }) => {
     });
   };
 
+  const items: MenuProps["items"] = [
+    {
+      label: <span onClick={() => startEdit(String(id))}>编辑</span>,
+      key: "edit",
+    },
+    {
+      label: <span onClick={() => confirmDeleteProduct(String(id))}>删除</span>,
+      key: "delete",
+    },
+  ];
+
   return (
-    <Dropdown
-      overlay={
-        <Menu>
-          <Menu.Item onClick={() => startEdit(String(id))} key={"edit"}>
-            编辑
-          </Menu.Item>
-          <Menu.Item
-            onClick={() => confirmDeleteProduct(String(id))}
-            key={"delete"}
-          >
-            删除
-          </Menu.Item>
-        </Menu>
-      }
-    >
+    <Dropdown overlay={<Menu items={items} />}>
       <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
     </Dropdown>
   );

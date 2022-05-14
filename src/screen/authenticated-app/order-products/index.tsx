@@ -35,7 +35,10 @@ export const OrderProducts = () => {
             total: toNumber(data?.meta.pagination.total),
           }}
         />
-        <ProductModal products={data?.data || []} />
+        <ProductModal
+          supplierOptions={supplierOptions}
+          products={data?.data || []}
+        />
       </Main>
     </Container>
   );

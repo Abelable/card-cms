@@ -3,16 +3,17 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddProduct, useEditProduct } from "service/order";
 import { Product } from "types/order";
+import { SupplierOption } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useProductsQueryKey, useProductModal } from "../util";
 
-const supplierOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
-
-export const ProductModal = ({ products }: { products: Product[] }) => {
+export const ProductModal = ({
+  supplierOptions,
+  products,
+}: {
+  supplierOptions: SupplierOption[];
+  products: Product[];
+}) => {
   const [form] = useForm();
   const { productModalOpen, editingProductId, close } = useProductModal();
   const product =
