@@ -1,5 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
+import { useChannel } from "service/product";
 
 export const useChannelsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -52,6 +53,9 @@ export const useChannelModal = () => {
     "editingChannelId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
+  const { data: editingChannel, isLoading } = useChannel(
+    Number(editingChannelId)
+  );
 
   const open = useCallback(
     () => setChannelsModalOpen({ channelCreate: true }),
@@ -70,7 +74,9 @@ export const useChannelModal = () => {
     channelModalOpen: channelCreate === "true" || !!editingChannelId,
     editingChannelId,
     open,
-    startEdit,
     close,
+    startEdit,
+    editingChannel,
+    isLoading,
   };
 };

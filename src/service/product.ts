@@ -55,7 +55,7 @@ export const useChannel = (id?: number) => {
   const client = useHttp();
   return useQuery<ChannelForm>(
     ["channel", { id }],
-    () => client(`projects/${id}`),
+    () => client(`/api/v1/admin/product/show/${id}`),
     {
       enabled: Boolean(id),
     }
