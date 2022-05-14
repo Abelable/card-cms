@@ -54,7 +54,7 @@ export const useAddChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<Channel>) =>
-      client("/api/v1/admin/channel/store", {
+      client("/api/v1/admin/product/store", {
         data: params,
         method: "POST",
       }),
@@ -66,7 +66,7 @@ export const useEditChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: Partial<Channel>) =>
-      client(`/api/v1/admin/channel/update/${id}`, {
+      client(`/api/v1/admin/product/update/${id}`, {
         data: params,
         method: "POST",
       }),
