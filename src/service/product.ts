@@ -74,6 +74,18 @@ export const useEditChannel = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditChannelMode = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, is_auto_product }: { id: number; is_auto_product: number }) =>
+      client(`/api/v1/admin/product/simple-update/${id}`, {
+        data: { is_auto_product },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
 export const useDownChannel = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(

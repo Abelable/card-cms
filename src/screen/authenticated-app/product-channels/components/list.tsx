@@ -14,7 +14,7 @@ import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownOutlined } from "@ant-design/icons";
-import { useDownChannel, useEditChannel } from "service/product";
+import { useDownChannel, useEditChannelMode } from "service/product";
 import { useChannelModal, useChannelsQueryKey } from "../util";
 import { useNavigate } from "react-router";
 import { OperatorOption } from "types/common";
@@ -38,7 +38,7 @@ export const List = ({
   ...restProps
 }: ListProps) => {
   const { open } = useChannelModal();
-  const { mutate: editChannel } = useEditChannel(useChannelsQueryKey());
+  const { mutate: editChannel } = useEditChannelMode(useChannelsQueryKey());
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
