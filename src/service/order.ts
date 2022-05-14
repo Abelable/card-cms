@@ -1,5 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
+import { cleanObject } from "utils/index";
 import {
   DeliversResult,
   DeliversSearchParams,
@@ -38,11 +39,12 @@ export const useEditDeliversStatus = (queryKey: QueryKey) => {
 
 export const useProducts = (params: Partial<ProductsSearchParams>) => {
   const client = useHttp();
-  return useQuery<ProductsResult>(["products", params], () =>
-    client("/api/v1/admin/product/index", {
-      data: params,
-    })
-  );
+  return useQuery<ProductsResult>(["products", params], () => {
+    const { supplier_id, ...rest } = params;
+    return client("/api/v1/admin/supplier-product/index", {
+      data: cleanObject({ "filter[supplier_id]": supplier_id, ...rest }),
+    });
+  });
 };
 
 export const useAddProduct = (queryKey: QueryKey) => {

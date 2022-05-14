@@ -3,19 +3,19 @@ import { Button, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import { ProductsSearchParams } from "types/order";
+import { SupplierOption } from "types/supplier";
 
 export interface SearchPanelProps {
+  supplierOptions: SupplierOption[];
   params: Partial<ProductsSearchParams>;
   setParams: (params: Partial<ProductsSearchParams>) => void;
 }
 
-const supplierOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
-
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  supplierOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
     supplier_id: undefined,
   } as Partial<ProductsSearchParams>;

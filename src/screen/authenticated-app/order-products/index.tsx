@@ -5,15 +5,21 @@ import { ProductModal } from "./components/product-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useProductsSearchParams } from "./util";
+import { useSupplierOptions } from "service/supplier";
 
 export const OrderProducts = () => {
+  const supplierOptions = useSupplierOptions();
   const [params, setParams] = useProductsSearchParams();
   const { data, isLoading, error } = useProducts(params);
 
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          supplierOptions={supplierOptions}
+          params={params}
+          setParams={setParams}
+        />
         <List
           error={error}
           params={params}

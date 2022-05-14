@@ -24,8 +24,13 @@ export const ProductModal = ({ products }: { products: Product[] }) => {
 
   useDeepCompareEffect(() => {
     if (product) {
-      const { supplier_id, code, upper_product_code } = product;
-      form.setFieldsValue({ supplier_id, code, upper_product_code });
+      const { supplier_id, product_encoding, supplier_product_encoding } =
+        product;
+      form.setFieldsValue({
+        supplier_id,
+        product_encoding,
+        supplier_product_encoding,
+      });
     }
   }, [product, form]);
 

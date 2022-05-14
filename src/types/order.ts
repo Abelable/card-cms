@@ -60,14 +60,18 @@ export interface ProductsSearchParams {
   page: number;
 }
 
+interface Supplier {
+  id: number;
+  name: string;
+  phone: string;
+}
 export interface Product {
   id: number;
   supplier_id: number;
-  supplier_name: string;
-  upper_product_name: string;
-  upper_product_code: string;
-  name: string;
-  code: string;
+  supplier: Supplier;
+  supplier_product_encoding: string;
+  product_id: number;
+  product_encoding: string;
   contact_name: string;
   created_at: string;
 }

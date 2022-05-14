@@ -15,7 +15,9 @@ import { useProductsQueryKey, useProductModal } from "../util";
 import { Product } from "types/order";
 import { useDeleteProduct } from "service/order";
 
-interface ListProps extends TableProps<Product>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Product>,
+    Omit<SearchPanelProps, "supplierOptions"> {
   error: Error | unknown;
 }
 
@@ -32,7 +34,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>头图列表</h3>
+        <h3>配置列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -49,7 +51,11 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "供应商店铺名",
-            dataIndex: "supplier_name",
+            render: (value, setting) => <>{setting.supplier.name}</>,
+          },
+          {
+            title: "上游产品编码",
+            dataIndex: "supplier_product_encoding",
           },
           {
             title: "本地产品名称",
@@ -57,7 +63,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "本地产品编码",
-            dataIndex: "code",
+            dataIndex: "product_encoding",
           },
           {
             title: "操作",
