@@ -97,7 +97,7 @@ export const DownedSearchPanel = ({
             allowClear={true}
             onSelect={setSupplier}
             onClear={clearSupplier}
-            placeholder="请选择订单状态"
+            placeholder="请选择供应商"
           >
             {supplierOptions.map(({ id, name }) => (
               <Select.Option key={id} value={id}>
