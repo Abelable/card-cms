@@ -5,7 +5,7 @@ export const useChannelsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "goods_name",
     "goods_code",
-    "supplier",
+    "supplier_id",
     "page",
     "per_page",
   ]);
@@ -24,7 +24,7 @@ export const useDownedChannelsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "goods_name",
     "goods_code",
-    "supplier",
+    "supplier_id",
     "page",
     "per_page",
   ]);

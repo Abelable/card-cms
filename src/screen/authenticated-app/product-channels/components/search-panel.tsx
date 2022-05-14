@@ -56,7 +56,7 @@ export const SearchPanel = ({
     });
   };
 
-  const setSupplier = (supplier_id: string) =>
+  const setSupplier = (supplier_id: number) =>
     setTemporaryParams({ ...temporaryParams, supplier_id });
   const clearSupplier = () =>
     setTemporaryParams({ ...temporaryParams, supplier_id: undefined });

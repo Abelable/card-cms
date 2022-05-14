@@ -19,7 +19,7 @@ export const DownedSearchPanel = ({
   const defaultParams = {
     goods_name: "",
     goods_code: "",
-    supplier_id: "",
+    supplier_id: undefined,
   } as Partial<ChannelsSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
@@ -56,7 +56,7 @@ export const DownedSearchPanel = ({
     });
   };
 
-  const setSupplier = (supplier_id: string) =>
+  const setSupplier = (supplier_id: number) =>
     setTemporaryParams({ ...temporaryParams, supplier_id });
   const clearSupplier = () =>
     setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
