@@ -41,16 +41,12 @@ export interface ChannelForm {
   max_age_limit: number;
   per_person_card_num_limit: number;
   per_person_card_num_limit_check_period: number;
-  risk_warning_type: number;
-  default_phone_repeat_limit: number;
-  default_phone_test_cycle: number;
-  default_address_repeat_limit: number;
-  default_address_test_cycle: number;
-  phone_repeat_limit: number;
-  phone_test_cycle: number;
-  address_repeat_limit: number;
-  address_test_cycle: number;
-  enable_automatic_blacklist_filtering: boolean;
+  is_used_global_prewarn_setting: number;
+  phone_repeated_prewarn_num: number;
+  phone_repeated_prewarn_num_check_period: number;
+  address_repeated_prewarn_num: number;
+  address_repeated_prewarn_num_check_period: number;
+  is_filter_blacklist: number;
 }
 
 export interface ChannelGoodsListSearchParams {

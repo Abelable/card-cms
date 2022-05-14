@@ -17,7 +17,6 @@ import {
 import { useChannelModal, useChannelsQueryKey } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { Channel } from "types/product";
 import { useAddChannel, useEditChannel } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
@@ -84,11 +83,9 @@ const cycleOptions = [
 export const ChannelModal = ({
   operatorOptions,
   supplierOptions,
-  channels,
 }: {
   operatorOptions: OperatorOption[];
   supplierOptions: SupplierOption[];
-  channels: Channel[];
 }) => {
   const [form] = useForm();
   const [type, setType] = useState(1);
@@ -117,7 +114,11 @@ export const ChannelModal = ({
   };
 
   useDeepCompareEffect(() => {
-    form.setFieldsValue(editingChannel);
+    if (editingChannel) {
+      const { is_used_global_prewarn_setting, ...rest } = editingChannel;
+      setType(is_used_global_prewarn_setting === 1 ? 1 : 2);
+      form.setFieldsValue(rest);
+    }
   }, [form, editingChannel]);
 
   return (
@@ -385,7 +386,7 @@ export const ChannelModal = ({
                           联系电话重复：
                         </span>
                         <Form.Item
-                          name="default_phone_repeat_limit"
+                          name="phone_repeated_prewarn_num"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <InputNumber
@@ -397,7 +398,7 @@ export const ChannelModal = ({
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>检测周期：</span>
                         <Form.Item
-                          name="default_phone_test_cycle"
+                          name="phone_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Select placeholder="不限制">
@@ -419,7 +420,7 @@ export const ChannelModal = ({
                           收货地址重复：
                         </span>
                         <Form.Item
-                          name="default_address_repeat_limit"
+                          name="address_repeated_prewarn_num"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <InputNumber
@@ -431,7 +432,7 @@ export const ChannelModal = ({
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>检测周期：</span>
                         <Form.Item
-                          name="default_address_test_cycle"
+                          name="address_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Select placeholder="不限制">
@@ -462,7 +463,7 @@ export const ChannelModal = ({
                           联系电话重复：
                         </span>
                         <Form.Item
-                          name="phone_repeat_limit"
+                          name="phone_repeated_prewarn_num"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <InputNumber
@@ -474,7 +475,7 @@ export const ChannelModal = ({
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>检测周期：</span>
                         <Form.Item
-                          name="phone_test_cycle"
+                          name="phone_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Select placeholder="不限制">
@@ -496,7 +497,7 @@ export const ChannelModal = ({
                           收货地址重复：
                         </span>
                         <Form.Item
-                          name="address_repeat_limit"
+                          name="address_repeated_prewarn_num"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <InputNumber
@@ -508,7 +509,7 @@ export const ChannelModal = ({
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>检测周期：</span>
                         <Form.Item
-                          name="address_test_cycle"
+                          name="address_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Select placeholder="不限制">
@@ -532,7 +533,7 @@ export const ChannelModal = ({
           </Form.Item>
           <Form.Item
             label="黑名单"
-            name="enable_automatic_blacklist_filtering"
+            name="is_filter_blacklist"
             valuePropName="checked"
           >
             <Checkbox>电信诈骗黑名单用户自动过滤</Checkbox>

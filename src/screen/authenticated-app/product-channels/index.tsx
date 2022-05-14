@@ -104,7 +104,6 @@ export const ProductChannels = () => {
       <ChannelModal
         operatorOptions={operatorOptions}
         supplierOptions={supplierOptions}
-        channels={data?.data || []}
       />
       <Drawer
         visible={!!selectedRowKeys.length}
