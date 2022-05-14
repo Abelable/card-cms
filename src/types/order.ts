@@ -88,11 +88,11 @@ export interface ImportsSearchParams {
 
 export interface Import {
   id: number;
-  order_number: number;
-  pic_number: number;
-  matching_pic_number: number;
-  unmatching_pic_number: number;
-  fail_number: number;
+  import_order_num: number;
+  import_order_photo_num: number;
+  matched_photo_order_num: number;
+  unmatched_photo_order_num: number;
+  photo_review_num: number;
   created_at: string;
 }
 

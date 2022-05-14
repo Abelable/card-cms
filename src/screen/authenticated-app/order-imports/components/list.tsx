@@ -35,30 +35,36 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "导入订单数",
-            dataIndex: "order_number",
-            sorter: (a, b) => Number(a.order_number) - Number(b.order_number),
+            dataIndex: "import_order_num",
+            sorter: (a, b) =>
+              Number(a.import_order_num) - Number(b.import_order_num),
           },
           {
             title: "导入照片压缩包次数",
-            dataIndex: "pic_number",
-            sorter: (a, b) => Number(a.pic_number) - Number(b.pic_number),
+            dataIndex: "import_order_photo_num",
+            sorter: (a, b) =>
+              Number(a.import_order_photo_num) -
+              Number(b.import_order_photo_num),
           },
           {
             title: "已匹配照片订单数（包含不需要照片的订单数）",
-            dataIndex: "matching_pic_number",
+            dataIndex: "matched_photo_order_num",
             sorter: (a, b) =>
-              Number(a.matching_pic_number) - Number(b.matching_pic_number),
+              Number(a.matched_photo_order_num) -
+              Number(b.matched_photo_order_num),
           },
           {
             title: "未匹配照片订单数",
-            dataIndex: "unmatching_pic_number",
+            dataIndex: "unmatched_photo_order_num",
             sorter: (a, b) =>
-              Number(a.unmatching_pic_number) - Number(b.unmatching_pic_number),
+              Number(a.unmatched_photo_order_num) -
+              Number(b.unmatched_photo_order_num),
           },
           {
             title: "照片人工审核失败",
-            dataIndex: "fail_number",
-            sorter: (a, b) => Number(a.fail_number) - Number(b.fail_number),
+            dataIndex: "photo_review_num",
+            sorter: (a, b) =>
+              Number(a.photo_review_num) - Number(b.photo_review_num),
           },
         ]}
         onChange={setPagination}

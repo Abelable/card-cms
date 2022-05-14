@@ -84,8 +84,8 @@ export const useDeleteProduct = (queryKey: QueryKey) => {
 
 export const useImports = (params: Partial<ImportsSearchParams>) => {
   const client = useHttp();
-  return useQuery<ImportsResult>(["products", params], () =>
-    client("/api/v1/admin/product/index", {
+  return useQuery<ImportsResult>(["imports", params], () =>
+    client("/api/v1/admin/order-import/index", {
       data: params,
     })
   );
