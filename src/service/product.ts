@@ -5,6 +5,7 @@ import {
   AgentsResult,
   AgentsSearchParams,
   Channel,
+  ChannelForm,
   ChannelGoodsListResult,
   ChannelsResult,
   ChannelsSearchParams,
@@ -48,6 +49,17 @@ export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
       }),
     });
   });
+};
+
+export const useChannel = (id?: number) => {
+  const client = useHttp();
+  return useQuery<ChannelForm>(
+    ["channel", { id }],
+    () => client(`projects/${id}`),
+    {
+      enabled: Boolean(id),
+    }
+  );
 };
 
 export const useAddChannel = (queryKey: QueryKey) => {
