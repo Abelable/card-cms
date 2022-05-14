@@ -51,7 +51,7 @@ export const useAddProduct = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<Product>) =>
-      client("/api/v1/admin/product/store", {
+      client("/api/v1/admin/supplier-product/store", {
         data: params,
         method: "POST",
       }),
@@ -63,7 +63,7 @@ export const useEditProduct = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: Partial<Product>) =>
-      client(`/api/v1/admin/product/update/${id}`, {
+      client(`/api/v1/admin/supplier-product/update/${id}`, {
         data: params,
         method: "POST",
       }),
@@ -75,7 +75,7 @@ export const useDeleteProduct = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client(`/api/v1/admin/product/destroy/${id}`, {
+      client(`/api/v1/admin/supplier-product/destroy/${id}`, {
         method: "POST",
       }),
     useDeleteConfig(queryKey)
