@@ -4,12 +4,14 @@ import { Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Goods } from "types/supplier";
 import { ErrorBox } from "components/lib";
+import { useOperatorOptions } from "service/common";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   error: Error | unknown;
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+  const operatorOptions = useOperatorOptions();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -36,11 +38,14 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "产品编号",
-            dataIndex: "code",
+            dataIndex: "encoding",
           },
           {
             title: "运营商",
-            dataIndex: "supplier_name",
+            dataIndex: "operator_id",
+            render: (value) => (
+              <>{operatorOptions.find((item) => item.id === value)?.name}</>
+            ),
           },
           {
             title: "注册时间",

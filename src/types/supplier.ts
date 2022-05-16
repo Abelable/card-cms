@@ -27,8 +27,8 @@ export interface GoodsListSearchParams {
 export interface Goods {
   id: string;
   name: string;
-  code: string;
-  supplier_name: string;
+  encoding: string;
+  operator_id: string;
   created_at: string;
 }
 

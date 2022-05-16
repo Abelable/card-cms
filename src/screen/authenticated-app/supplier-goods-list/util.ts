@@ -6,14 +6,15 @@ export const useGoodsListSearchParams = () => {
     "supplier_id",
     "goods_name",
     "page",
-    "page_size",
+    "per_page",
   ]);
   return [
     useMemo(
       () => ({
         page: Number(params.page) || 1,
-        page_size: Number(params.page_size) || 10,
-        ...params,
+        per_page: Number(params.per_page) || 10,
+        supplier_id: Number(params.supplier_id) || undefined,
+        goods_name: params.goods_name || "",
       }),
       [params]
     ),

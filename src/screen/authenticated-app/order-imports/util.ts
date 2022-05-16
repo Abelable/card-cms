@@ -5,13 +5,13 @@ export const useImportsSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "supplier_id",
     "page",
-    "page_size",
+    "per_page",
   ]);
   return [
     useMemo(
       () => ({
         page: Number(params.page) || 1,
-        page_size: Number(params.page_size) || 10,
+        per_page: Number(params.per_page) || 10,
         ...params,
       }),
       [params]

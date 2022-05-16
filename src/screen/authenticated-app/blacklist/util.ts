@@ -2,12 +2,12 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useBlacklistSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["page", "page_size"]);
+  const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
   return [
     useMemo(
       () => ({
         page: Number(params.page) || 1,
-        page_size: Number(params.page_size) || 10,
+        per_page: Number(params.per_page) || 10,
       }),
       [params]
     ),

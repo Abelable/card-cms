@@ -22,7 +22,8 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     });
   const { open } = useSupplierModal();
 
-  const link = (id: string) => navigate(`/suppliers/goods_list?id=${id}`);
+  const link = (id: string) =>
+    navigate(`/suppliers/goods_list?supplier_id=${id}`);
 
   return (
     <Container>
