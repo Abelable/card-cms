@@ -3,6 +3,7 @@ import { Table, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Home } from "types/home";
 import { ErrorBox } from "components/lib";
+import dayjs from "dayjs";
 
 interface ListProps
   extends TableProps<Home>,
@@ -33,7 +34,7 @@ export const List = ({
           {
             title: "日期",
             dataIndex: "date",
-            sorter: (a, b) => Number(a.date) - Number(b.date),
+            sorter: (a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf(),
           },
           {
             title: "代理商",
