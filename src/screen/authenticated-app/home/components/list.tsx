@@ -4,7 +4,9 @@ import { SearchPanelProps } from "./search-panel";
 import { Home } from "types/home";
 import { ErrorBox } from "components/lib";
 
-interface ListProps extends TableProps<Home>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Home>,
+    Omit<SearchPanelProps, "agentOptions"> {
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }

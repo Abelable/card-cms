@@ -6,6 +6,7 @@ import {
   Agent,
   AgentsResult,
   AgentsSearchParams,
+  AgentOption,
 } from "types/agent";
 import {
   useAddConfig,
@@ -55,6 +56,23 @@ export const useDeleteAgent = (queryKey: QueryKey) => {
       }),
     useDeleteConfig(queryKey)
   );
+};
+
+export const useAgentOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["agent_options"], () =>
+    client("/api/v1/admin/agent/pluck")
+  );
+  const agentOptions: AgentOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      agentOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return agentOptions;
 };
 
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {

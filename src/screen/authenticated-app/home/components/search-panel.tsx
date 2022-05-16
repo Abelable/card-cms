@@ -1,20 +1,27 @@
 import { useState } from "react";
-import { Button, DatePicker, Input } from "antd";
+import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { HomeSearchParams } from "types/home";
 import moment from "moment";
 import styled from "@emotion/styled";
+import { AgentOption } from "types/agent";
 
 export interface SearchPanelProps {
+  agentOptions: AgentOption[];
   params: Partial<HomeSearchParams>;
   setParams: (params: Partial<HomeSearchParams>) => void;
 }
 
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  agentOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
-    s_time: "",
-    e_time: "",
-    nickname: "",
+    start_created_at: "",
+    end_created_at: "",
+    agent_id: undefined,
+    goods_name: "",
   } as Partial<HomeSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
@@ -23,25 +30,14 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const setDates = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
       ...temporaryParams,
-      s_time: formatString[0],
-      e_time: formatString[1],
+      start_created_at: formatString[0],
+      end_created_at: formatString[1],
     });
 
-  const setShopName = (evt: any) => {
-    // onInputClear
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        shop_name: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      shop_name: evt.target.value,
-    });
-  };
+  const setAgent = (agent_id: number) =>
+    setTemporaryParams({ ...temporaryParams, agent_id });
+  const clearAgent = () =>
+    setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
   const setGoodsName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
@@ -70,10 +66,10 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
           <div>注册时间：</div>
           <DatePicker.RangePicker
             value={
-              temporaryParams.s_time
+              temporaryParams.start_created_at
                 ? [
-                    moment(temporaryParams.s_time),
-                    moment(temporaryParams.e_time),
+                    moment(temporaryParams.start_created_at),
+                    moment(temporaryParams.end_created_at),
                   ]
                 : undefined
             }
@@ -82,13 +78,20 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
         </Row>
         <Row>
           <div>代理商店铺名称：</div>
-          <Input
+          <Select
             style={{ width: "20rem" }}
-            value={temporaryParams.shop_name}
-            onChange={setShopName}
-            placeholder="请输入代理商店铺名称"
+            value={temporaryParams.agent_id}
             allowClear={true}
-          />
+            onSelect={setAgent}
+            onClear={clearAgent}
+            placeholder="请选择代理商"
+          >
+            {agentOptions.map(({ id, name }) => (
+              <Select.Option key={id} value={id}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
         </Row>
         <Row>
           <div>商品名称：</div>

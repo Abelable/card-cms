@@ -39,6 +39,11 @@ export interface Goods {
   created_at: string;
 }
 
+export interface AgentOption {
+  id: number;
+  name: string;
+}
+
 export interface GoodsListResult {
   data: Goods[];
   meta: { pagination: Pagination };

@@ -9,8 +9,12 @@ export const useHome = (params: Partial<HomeSearchParams>) => {
   return useQuery<HomeResult>(["datas", params], () =>
     client("/api/v1/admin/index/index", {
       data: cleanObject({
-        s_time: params.s_time ? dayjs(params.s_time).valueOf() : "",
-        e_time: params.e_time ? dayjs(params.e_time).valueOf() : "",
+        s_time: params.start_created_at
+          ? dayjs(params.start_created_at).valueOf()
+          : "",
+        e_time: params.end_created_at
+          ? dayjs(params.end_created_at).valueOf()
+          : "",
         ...params,
       }),
     })

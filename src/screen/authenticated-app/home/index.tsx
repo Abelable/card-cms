@@ -8,10 +8,12 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { Button, Drawer } from "antd";
 import { Row } from "components/lib";
+import { useAgentOptions } from "service/agent";
 
 export const Home = () => {
   const [params, setParams] = useHomeSearchParams();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const agentOptions = useAgentOptions();
   const { data, isLoading, error } = useHome(params);
   const exportApplications = (ids: string[]) => {
     window.location.href = `${
@@ -22,7 +24,11 @@ export const Home = () => {
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          agentOptions={agentOptions}
+          params={params}
+          setParams={setParams}
+        />
         <List
           error={error}
           params={params}
