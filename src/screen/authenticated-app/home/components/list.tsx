@@ -22,7 +22,6 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"date"}
-        pagination={false}
         rowSelection={{
           type: "checkbox",
           onChange: (selectedRowKeys) =>
@@ -88,6 +87,7 @@ export const List = ({
           },
         ]}
         {...restProps}
+        pagination={false}
       />
     </Container>
   );
