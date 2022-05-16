@@ -35,13 +35,13 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             title: "商品名称",
             render: (value, goods) => (
               <div style={{ display: "flex" }}>
-                <Image width={80} height={80} src={goods.img} />
+                <Image width={80} height={80} src={goods.main_picture} />
                 <GoodsInfoWrap>
                   <div style={{ marginBottom: "1rem" }}>{goods.name}</div>
-                  {goods.tags ? (
-                    goods.tags.map((item, index) => (
-                      <Tag key={index}>{item}</Tag>
-                    ))
+                  {goods.sale_point ? (
+                    goods.sale_point
+                      .split(",")
+                      .map((item, index) => <Tag key={index}>{item}</Tag>)
                   ) : (
                     <></>
                   )}
@@ -51,11 +51,11 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "商品编号",
-            dataIndex: "code",
+            render: (value, goods) => <span>{goods.product.encoding}</span>,
           },
           {
             title: "所属产品渠道",
-            dataIndex: "channel",
+            render: (value, goods) => <span>{goods.product.name}</span>,
           },
           {
             title: "创建时间",

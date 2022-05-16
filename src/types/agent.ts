@@ -1,4 +1,5 @@
 import { Pagination } from "./common";
+import { ChannelForm } from "./product";
 
 export interface AgentsSearchParams {
   per_page: number;
@@ -30,13 +31,27 @@ export interface GoodsListSearchParams {
   page: number;
 }
 
+// export interface Goods {
+//   id: string;
+//   name: string;
+//   img: string;
+//   tags: string[];
+//   code: string;
+//   channel: string;
+//   created_at: string;
+// }
 export interface Goods {
-  id: string;
+  id: number;
   name: string;
-  img: string;
-  tags: string[];
-  code: string;
-  channel: string;
+  main_picture: string;
+  sale_point: string;
+  encoding: string;
+  product: Partial<ChannelForm>;
+  supplier_name: string;
+  product_id: number;
+  product_name: string;
+  visible_type: number;
+  agent_id: number;
   created_at: string;
 }
 
