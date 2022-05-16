@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import dayjs from "dayjs";
 import { Table, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Home } from "types/home";
@@ -22,7 +21,7 @@ export const List = ({
       <Title>数据列表</Title>
       <ErrorBox error={error} />
       <Table
-        rowKey={"id"}
+        rowKey={"date"}
         pagination={false}
         rowSelection={{
           type: "checkbox",
@@ -32,14 +31,8 @@ export const List = ({
         columns={[
           {
             title: "日期",
-            render: (value, data) => (
-              <span>
-                {data.created_at
-                  ? dayjs(Number(data.created_at) * 1000).format("YYYY-MM-DD")
-                  : ""}
-              </span>
-            ),
-            sorter: (a, b) => Number(a.created_at) - Number(b.created_at),
+            dataIndex: "date",
+            sorter: (a, b) => Number(a.date) - Number(b.date),
           },
           {
             title: "代理商",
@@ -51,40 +44,42 @@ export const List = ({
           },
           {
             title: "订单数",
-            dataIndex: "order_num",
-            sorter: (a, b) => Number(a.order_num) - Number(b.order_num),
+            dataIndex: "count",
+            sorter: (a, b) => Number(a.count) - Number(b.count),
           },
           {
             title: "发货数",
-            dataIndex: "deliver_num",
-            sorter: (a, b) => Number(a.deliver_num) - Number(b.deliver_num),
+            dataIndex: "shipped_count",
+            sorter: (a, b) => Number(a.shipped_count) - Number(b.shipped_count),
           },
           {
             title: "激活数",
-            dataIndex: "activation_num",
+            dataIndex: "activated_count",
             sorter: (a, b) =>
-              Number(a.activation_num) - Number(b.activation_num),
+              Number(a.activated_count) - Number(b.activated_count),
           },
           {
             title: "发货率",
-            dataIndex: "deliver_rate",
-            sorter: (a, b) => Number(a.deliver_rate) - Number(b.deliver_rate),
+            dataIndex: "shipped_rate",
+            sorter: (a, b) => Number(a.shipped_rate) - Number(b.shipped_rate),
           },
           {
             title: "激活率",
-            dataIndex: "activation_rate",
+            dataIndex: "activated_rate",
             sorter: (a, b) =>
-              Number(a.activation_rate) - Number(b.activation_rate),
+              Number(a.activated_rate) - Number(b.activated_rate),
           },
           {
             title: "充值数",
-            dataIndex: "recharge_num",
-            sorter: (a, b) => Number(a.recharge_num) - Number(b.recharge_num),
+            dataIndex: "recharged_count",
+            sorter: (a, b) =>
+              Number(a.recharged_count) - Number(b.recharged_count),
           },
           {
             title: "充值率",
-            dataIndex: "recharge_rate",
-            sorter: (a, b) => Number(a.recharge_rate) - Number(b.recharge_rate),
+            dataIndex: "recharged_rate",
+            sorter: (a, b) =>
+              Number(a.recharged_rate) - Number(b.recharged_rate),
           },
           {
             title: "中转率",

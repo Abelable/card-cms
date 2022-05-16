@@ -8,18 +8,17 @@ export interface HomeSearchParams {
 }
 
 export interface Home {
-  id: string;
   shop_name: string;
   goods_name: string;
-  order_num: number;
-  deliver_num: number;
-  activation_num: number;
-  deliver_rate: number;
-  activation_rate: number;
-  recharge_num: number;
-  recharge_rate: number;
+  count: number;
+  shipped_count: number;
+  activated_count: number;
+  shipped_rate: number;
+  activated_rate: string;
+  recharged_count: number;
+  recharged_rate: number;
   transfer_rate: number;
-  created_at: string;
+  date: string;
 }
 
 export interface HomeResult {
