@@ -59,12 +59,12 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
         <Row>
-          <div>商品名称：</div>
+          <div>产品名称：</div>
           <Input
             style={{ width: "20rem" }}
             value={temporaryParams.goods_name}
             onChange={setGoodsName}
-            placeholder="请输入商品名称"
+            placeholder="请输入产品名称"
             allowClear={true}
           />
         </Row>

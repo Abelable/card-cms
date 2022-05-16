@@ -19,7 +19,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 
   return (
     <Container>
-      <Title>商品列表</Title>
+      <Title>产品列表</Title>
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
