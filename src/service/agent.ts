@@ -13,6 +13,7 @@ import {
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
+import { cleanObject } from "utils";
 
 export const useAgents = (params: Partial<AgentsSearchParams>) => {
   const client = useHttp();
@@ -77,34 +78,14 @@ export const useAgentOptions = () => {
 
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(["agent_goods_list", params], () =>
-    client("/api/v1/admin/agent/index", {
-      data: params,
-    })
-  );
+  return useQuery<GoodsListResult>(["agent_goods_list", params], () => {
+    const { page, per_page, agent_id } = params;
+    return client("/api/v1/admin/goods/index", {
+      data: cleanObject({
+        "filter[goodsAgents.agent_id]": agent_id,
+        page,
+        per_page,
+      }),
+    });
+  });
 };
-
-// export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
-//   const client = useHttp();
-//   return useQuery<GoodsListResult>(["product_goods_list", params], () =>
-//     client("/api/v1/admin/goods/index", {
-//       data: params,
-//     })
-//   );
-// };
-
-// export const useChannels = (params: Partial<ChannelsSearchParams>) => {
-//   const client = useHttp();
-//   return useQuery<ChannelsResult>(["channels", params], () => {
-//     const { page, per_page, ...restParams } = params;
-//     return client("/api/v1/admin/product/index", {
-//       data: cleanObject({
-//         "filter[supplier_id]": restParams.supplier_id,
-//         "filter[name]": restParams.goods_name,
-//         "filter[encoding]": restParams.goods_code,
-//         page,
-//         per_page,
-//       }),
-//     });
-//   });
-// };

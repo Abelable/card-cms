@@ -25,6 +25,7 @@ export interface AgentsResult {
 }
 
 export interface GoodsListSearchParams {
+  agent_id: number;
   per_page: number;
   page: number;
 }

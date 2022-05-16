@@ -155,7 +155,7 @@ const Edit = styled(Row)`
 
 const More = ({ agent }: { agent: Agent }) => {
   const navigate = useNavigate();
-  const link = (id: number) => navigate(`/agents/goods_list?id=${id}`);
+  const link = (id: number) => navigate(`/agents/goods_list?agent_id=${id}`);
 
   const { mutate: deleteAgent } = useDeleteAgent(useAgentsQueryKey());
 
