@@ -153,28 +153,21 @@ export const useChannelGoodsList = (params: Partial<GoodsListSearchParams>) => {
 
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(["product_goods_list", params], () =>
-    client("/api/v1/admin/goods/index", {
-      data: params,
-    })
-  );
+  return useQuery<GoodsListResult>(["product_goods_list", params], () => {
+    const { page, per_page, ...rest } = params;
+    return client("/api/v1/admin/goods/index", {
+      data: cleanObject({
+        "filter[goods.name]": rest.goods_name,
+        "filter[goods.encoding]": rest.goods_code,
+        "filter[product.supplier_id]": rest.supplier_id,
+        "filter[product.encoding]": rest.product_code,
+        "filter[product.operator_id]": rest.operator_id,
+        page,
+        per_page,
+      }),
+    });
+  });
 };
-
-// export const useChannels = (params: Partial<ChannelsSearchParams>) => {
-//   const client = useHttp();
-//   return useQuery<ChannelsResult>(["channels", params], () => {
-//     const { page, per_page, ...restParams } = params;
-//     return client("/api/v1/admin/product/index", {
-//       data: cleanObject({
-//         "filter[supplier_id]": restParams.supplier_id,
-//         "filter[name]": restParams.goods_name,
-//         "filter[encoding]": restParams.goods_code,
-//         page,
-//         per_page,
-//       }),
-//     });
-//   });
-// };
 
 export const useDownedGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
