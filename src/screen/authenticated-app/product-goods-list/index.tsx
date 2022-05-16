@@ -55,7 +55,11 @@ export const ProductGoodsList = () => {
       <Main>
         {type === "0" ? (
           <>
-            <SearchPanel params={params} setParams={setParams} />
+            <SearchPanel
+              supplierOptions={supplierOptions}
+              params={params}
+              setParams={setParams}
+            />
             <List
               error={error}
               modeOptions={modeOptions}
@@ -74,6 +78,7 @@ export const ProductGoodsList = () => {
         ) : (
           <>
             <DownedSearchPanel
+              supplierOptions={supplierOptions}
               params={downedParams}
               setParams={setDownedParams}
             />

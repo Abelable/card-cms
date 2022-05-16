@@ -72,7 +72,7 @@ export interface ChannelOption {
 
 export interface GoodsListSearchParams {
   goods_name: string;
-  supplier: string;
+  supplier_id: number;
   product_code: string;
   goods_code: string;
   operator_id: number;

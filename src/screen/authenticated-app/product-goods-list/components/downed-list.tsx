@@ -12,10 +12,8 @@ import { Goods, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import { useAgentModal, useGoodsModal } from "../util";
 import { useNavigate } from "react-router";
-import { SupplierOption } from "types/supplier";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
-  supplierOptions: SupplierOption[];
   modeOptions: modeOption[];
   error: Error | unknown;
 }

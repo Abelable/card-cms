@@ -160,6 +160,22 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   );
 };
 
+// export const useChannels = (params: Partial<ChannelsSearchParams>) => {
+//   const client = useHttp();
+//   return useQuery<ChannelsResult>(["channels", params], () => {
+//     const { page, per_page, ...restParams } = params;
+//     return client("/api/v1/admin/product/index", {
+//       data: cleanObject({
+//         "filter[supplier_id]": restParams.supplier_id,
+//         "filter[name]": restParams.goods_name,
+//         "filter[encoding]": restParams.goods_code,
+//         page,
+//         per_page,
+//       }),
+//     });
+//   });
+// };
+
 export const useDownedGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
   return useQuery<GoodsListResult>(["downed_product_goods_list", params], () =>

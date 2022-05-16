@@ -18,10 +18,8 @@ import {
   usePublishModal,
 } from "../util";
 import { useNavigate } from "react-router";
-import { SupplierOption } from "types/supplier";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
-  supplierOptions: SupplierOption[];
   modeOptions: modeOption[];
   error: Error | unknown;
 }

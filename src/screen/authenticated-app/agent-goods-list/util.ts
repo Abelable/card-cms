@@ -1,11 +1,9 @@
 import { useUrlQueryParams } from "utils/url";
 import { useMemo } from "react";
 
-export const useGoodsListSearchParams = () => {
+export const useSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "s_time",
-    "e_time",
-    "nickname",
+    "agent_id",
     "page",
     "page_size",
   ]);

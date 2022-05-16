@@ -1,12 +1,12 @@
 import { toNumber } from "utils";
 import { useGoodsList } from "service/agent";
-import { useGoodsListSearchParams } from "./util";
+import { useSearchParams } from "./util";
 
 import { List } from "./components/list";
 import styled from "@emotion/styled";
 
 export const AgentGoodsList = () => {
-  const [params, setParams] = useGoodsListSearchParams();
+  const [params, setParams] = useSearchParams();
   const { data, isLoading, error } = useGoodsList(params);
 
   return (

@@ -3,8 +3,10 @@ import { Button, Cascader, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { GoodsListSearchParams } from "types/product";
 import styled from "@emotion/styled";
+import { SupplierOption } from "types/supplier";
 
 export interface SearchPanelProps {
+  supplierOptions: SupplierOption[];
   params: Partial<GoodsListSearchParams>;
   setParams: (params: Partial<GoodsListSearchParams>) => void;
 }
@@ -54,10 +56,14 @@ const regionOptions = [
   },
 ];
 
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  supplierOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
     goods_name: "",
-    supplier: "",
+    supplier_id: undefined,
     product_code: "",
     goods_code: "",
     agent_id: undefined,
@@ -115,20 +121,10 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
-  const setSupplier = (evt: any) => {
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        supplier: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      supplier: evt.target.value,
-    });
-  };
+  const setSupplier = (supplier_id: number) =>
+    setTemporaryParams({ ...temporaryParams, supplier_id });
+  const clearSupplier = () =>
+    setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
 
   const setOperator = (operator_id: number) =>
     setTemporaryParams({ ...temporaryParams, operator_id });
@@ -172,13 +168,20 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
       </Item>
       <Item>
         <div>供应商：</div>
-        <Input
+        <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.supplier}
-          onChange={setSupplier}
-          placeholder="请输入供应商名称"
+          value={temporaryParams.supplier_id}
           allowClear={true}
-        />
+          onSelect={setSupplier}
+          onClear={clearSupplier}
+          placeholder="请选择供应商"
+        >
+          {supplierOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
       </Item>
       <Item>
         <div>产品编码：</div>
@@ -223,7 +226,7 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
           style={{ width: "20rem" }}
           value={temporaryParams.deliver_address}
           onChange={setAddress}
-          placeholder="请输入商品编码"
+          placeholder="请输入发货地址"
           allowClear={true}
         />
       </Item>
