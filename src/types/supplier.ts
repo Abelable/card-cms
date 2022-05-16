@@ -19,7 +19,7 @@ export interface SuppliersResult {
 
 export interface GoodsListSearchParams {
   goods_name: string;
-  supplier_name: string;
+  supplier_id: number;
   per_page: number;
   page: number;
 }

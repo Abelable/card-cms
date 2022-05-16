@@ -9,6 +9,7 @@ import {
   SuppliersSearchParams,
 } from "types/supplier";
 import { useAddConfig, useEditConfig } from "./use-optimistic-options";
+import { cleanObject } from "utils";
 
 export const useSuppliers = (params: Partial<SuppliersSearchParams>) => {
   const client = useHttp();
@@ -45,11 +46,17 @@ export const useEditSupplier = (queryKey: QueryKey) => {
 
 export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(["supplier_goods_list", params], () =>
-    client("/api/v1/admin/supplier/index", {
-      data: params,
-    })
-  );
+  return useQuery<GoodsListResult>(["supplier_goods_list", params], () => {
+    const { page, per_page, ...restParams } = params;
+    return client("/api/v1/admin/product/index", {
+      data: cleanObject({
+        "filter[supplier_id]": restParams.supplier_id,
+        "filter[name]": restParams.goods_name,
+        page,
+        per_page,
+      }),
+    });
+  });
 };
 
 export const useSupplierOptions = () => {

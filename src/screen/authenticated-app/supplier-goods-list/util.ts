@@ -3,9 +3,8 @@ import { useMemo } from "react";
 
 export const useGoodsListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "s_time",
-    "e_time",
-    "nickname",
+    "supplier_id",
+    "goods_name",
     "page",
     "page_size",
   ]);

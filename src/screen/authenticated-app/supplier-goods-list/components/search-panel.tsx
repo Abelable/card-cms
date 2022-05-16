@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { GoodsListSearchParams } from "types/supplier";
 import styled from "@emotion/styled";
+import { useSupplierOptions } from "service/supplier";
 
 export interface SearchPanelProps {
   params: Partial<GoodsListSearchParams>;
@@ -12,8 +13,9 @@ export interface SearchPanelProps {
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
     goods_name: "",
-    supplier_name: "",
+    supplier_id: undefined,
   } as Partial<GoodsListSearchParams>;
+  const supplierOptions = useSupplierOptions();
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<GoodsListSearchParams>>(params);
@@ -34,21 +36,10 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
     });
   };
 
-  const setSupplierName = (evt: any) => {
-    // onInputClear
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        supplier_name: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      supplier_name: evt.target.value,
-    });
-  };
+  const setSupplier = (supplier_id: number) =>
+    setTemporaryParams({ ...temporaryParams, supplier_id });
+  const clearSupplier = () =>
+    setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -70,13 +61,20 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
         </Row>
         <Row>
           <div>供应商：</div>
-          <Input
+          <Select
             style={{ width: "20rem" }}
-            value={temporaryParams.supplier_name}
-            onChange={setSupplierName}
-            placeholder="请输入供应商名称"
+            value={temporaryParams.supplier_id}
             allowClear={true}
-          />
+            onSelect={setSupplier}
+            onClear={clearSupplier}
+            placeholder="请选择供应商"
+          >
+            {supplierOptions.map(({ id, name }) => (
+              <Select.Option key={id} value={id}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
         </Row>
       </Row>
       <Row gap={true}>
