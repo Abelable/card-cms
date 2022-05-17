@@ -45,7 +45,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           {
             title: "商品上下架状态",
             render: (value, goods) => (
-              <span>{goods.status === 1 ? "上架中" : "已下架"}</span>
+              <span>{goods.is_removed === 0 ? "上架中" : "已下架"}</span>
             ),
           },
         ]}

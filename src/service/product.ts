@@ -149,7 +149,7 @@ export const useChannelGoodsList = (
     ["product_channel_goods_list", params],
     () => {
       const { product_id, page, per_page } = params;
-      return client("/api/v1/admin/agent/index", {
+      return client("/api/v1/admin/goods/index", {
         data: cleanObject({
           "filter[goods.product_id]": product_id,
           page,

@@ -58,7 +58,7 @@ export interface ChannelGoodsListSearchParams {
 export interface ChannelGoods {
   id: string;
   name: string;
-  status: number;
+  is_removed: number;
 }
 
 export interface ChannelGoodsListResult {
