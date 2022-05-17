@@ -62,6 +62,25 @@ export const SearchPanel = ({
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
   };
 
+  const query = () => {
+    setParams({
+      ...params,
+      start_created_at:
+        temporaryParams.start_created_at || defaultParams.start_created_at,
+      end_created_at:
+        temporaryParams.end_created_at || defaultParams.end_created_at,
+      agent_id: temporaryParams.agent_id,
+      goods_name: temporaryParams.goods_name,
+    });
+    if (!temporaryParams.start_created_at) {
+      setTemporaryParams({
+        ...temporaryParams,
+        start_created_at: defaultParams.start_created_at,
+        end_created_at: defaultParams.end_created_at,
+      });
+    }
+  };
+
   return (
     <Container marginBottom={1.6} between={true}>
       <Row gap={true}>
@@ -109,10 +128,7 @@ export const SearchPanel = ({
       </Row>
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>
-        <Button
-          type={"primary"}
-          onClick={() => setParams({ ...params, ...temporaryParams })}
-        >
+        <Button type={"primary"} onClick={query}>
           查询
         </Button>
         <Button style={{ marginRight: 0 }} type={"primary"} onClick={clear}>
