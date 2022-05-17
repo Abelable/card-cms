@@ -27,6 +27,7 @@ export const useChannels = (params: Partial<ChannelsSearchParams>) => {
     const { page, per_page, ...restParams } = params;
     return client("/api/v1/admin/product/index", {
       data: cleanObject({
+        "filter[is_removed]": 0,
         "filter[supplier_id]": restParams.supplier_id,
         "filter[name]": restParams.goods_name,
         "filter[encoding]": restParams.goods_code,
@@ -43,6 +44,7 @@ export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
     const { page, per_page, ...restParams } = params;
     return client("/api/v1/admin/product/index", {
       data: cleanObject({
+        "filter[is_removed]": 1,
         "filter[supplier_id]": restParams.supplier_id,
         "filter[name]": restParams.goods_name,
         "filter[encoding]": restParams.goods_code,
