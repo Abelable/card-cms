@@ -1,7 +1,16 @@
 import styled from "@emotion/styled";
-import { Table, TablePaginationConfig, TableProps } from "antd";
+import {
+  Button,
+  Divider,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+  Tooltip,
+} from "antd";
+import { FileUpload } from "components/file-upload";
 import { ErrorBox, Row } from "components/lib";
 import dayjs from "dayjs";
+import { DownloadOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { ImportsSearchParams, Import } from "types/order";
 
 interface ListProps extends TableProps<Import> {
@@ -21,7 +30,50 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>导入记录列表</h3>
+        <h3>导入记录</h3>
+        <Row gap>
+          <div style={{ marginRight: "1rem" }}>
+            <FileUpload name="导入订单" />
+          </div>
+          <Tooltip title="下载订单模版">
+            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+          </Tooltip>
+          <Divider
+            style={{ height: "3rem", marginLeft: 0 }}
+            type={"vertical"}
+          />
+          <Tooltip title="照片包上传后识别匹配大概需要等待30分钟">
+            <Question />
+          </Tooltip>
+          <div style={{ marginRight: "1rem" }}>
+            <FileUpload name="上传照片" />
+          </div>
+          <Tooltip title="下载照片模版">
+            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+          </Tooltip>
+          <Divider
+            style={{ height: "3rem", marginLeft: 0 }}
+            type={"vertical"}
+          />
+          <div style={{ marginRight: "1rem" }}>
+            <FileUpload name="导入拼多多证件" />
+          </div>
+          <Tooltip title="下载拼多多模版">
+            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+          </Tooltip>
+          <Divider
+            style={{ height: "3rem", marginLeft: 0 }}
+            type={"vertical"}
+          />
+          <FileUpload name="导入天猫信息" />
+          <Divider
+            style={{ height: "3rem", marginLeft: 0 }}
+            type={"vertical"}
+          />
+          <div style={{ marginRight: 0 }}>
+            <FileUpload name="导入有赞信息" />
+          </div>
+        </Row>
       </Header>
       <ErrorBox error={error} />
       <Table
@@ -81,4 +133,13 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const Question = styled(QuestionCircleOutlined)`
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: #1890ff;
+  }
 `;

@@ -1,5 +1,5 @@
 import { Button, Upload } from "antd";
-import { ImportOutlined, LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import { fileToBase64 } from "utils";
 import { useImportData } from "service/common";
 
@@ -22,10 +22,7 @@ export const FileUpload = ({ name, ...restProps }: FileUploadType) => {
       showUploadList={false}
       {...restProps}
     >
-      <Button
-        type={"primary"}
-        icon={isLoading ? <LoadingOutlined /> : <ImportOutlined />}
-      >
+      <Button type={"primary"} icon={isLoading ? <LoadingOutlined /> : null}>
         {name}
       </Button>
     </Upload>
