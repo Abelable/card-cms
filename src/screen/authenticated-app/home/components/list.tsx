@@ -1,17 +1,14 @@
 import styled from "@emotion/styled";
 import { Table, TableProps } from "antd";
-import { SearchPanelProps } from "./search-panel";
 import { Home } from "types/home";
 import { ErrorBox } from "components/lib";
 import dayjs from "dayjs";
 
-interface ListProps
-  extends TableProps<Home>,
-    Omit<SearchPanelProps, "agentOptions"> {
+interface ListProps extends TableProps<Home> {
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({ error, ...restProps }: ListProps) => {
   return (
     <Container>
       <Title>数据列表</Title>

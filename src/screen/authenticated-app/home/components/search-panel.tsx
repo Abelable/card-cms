@@ -6,6 +6,7 @@ import moment from "moment";
 import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
 import dayjs from "dayjs";
+import { useExportHome } from "service/home";
 
 export interface SearchPanelProps {
   agentOptions: AgentOption[];
@@ -29,6 +30,8 @@ export const SearchPanel = ({
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<HomeSearchParams>>(defaultParams);
+
+  const exportHome = useExportHome();
 
   const setDates = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
@@ -131,7 +134,11 @@ export const SearchPanel = ({
         <Button type={"primary"} onClick={query}>
           查询
         </Button>
-        <Button style={{ marginRight: 0 }} type={"primary"} onClick={clear}>
+        <Button
+          style={{ marginRight: 0 }}
+          type={"primary"}
+          onClick={() => exportHome(params)}
+        >
           导出
         </Button>
       </Row>

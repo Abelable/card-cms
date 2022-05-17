@@ -19,13 +19,7 @@ export const Home = () => {
           params={params}
           setParams={setParams}
         />
-        <List
-          error={error}
-          params={params}
-          setParams={setParams}
-          dataSource={data?.data}
-          loading={isLoading}
-        />
+        <List error={error} dataSource={data?.data} loading={isLoading} />
       </Main>
     </Container>
   );
