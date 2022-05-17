@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, DatePicker, Input, Select } from "antd";
+import { Button, DatePicker, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { HomeSearchParams } from "types/home";
 import moment from "moment";
@@ -142,6 +142,7 @@ export const SearchPanel = ({
         <Button type={"primary"} onClick={query}>
           查询
         </Button>
+        <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
         <Button
           style={{ marginRight: 0 }}
           type={"primary"}
