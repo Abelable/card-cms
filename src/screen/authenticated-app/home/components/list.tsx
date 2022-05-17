@@ -8,28 +8,16 @@ import dayjs from "dayjs";
 interface ListProps
   extends TableProps<Home>,
     Omit<SearchPanelProps, "agentOptions"> {
-  setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }
 
-export const List = ({
-  error,
-  params,
-  setParams,
-  setSelectedRowKeys,
-  ...restProps
-}: ListProps) => {
+export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Title>数据列表</Title>
       <ErrorBox error={error} />
       <Table
         rowKey={"date"}
-        rowSelection={{
-          type: "checkbox",
-          onChange: (selectedRowKeys) =>
-            setSelectedRowKeys(selectedRowKeys as []),
-        }}
         columns={[
           {
             title: "日期",
