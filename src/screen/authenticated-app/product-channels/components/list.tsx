@@ -152,7 +152,8 @@ export const List = ({
 
 const More = ({ channel }: { channel: Channel }) => {
   const navigate = useNavigate();
-  const link = (id: number) => navigate(`/channels/goods_list?id=${id}`);
+  const link = (id: number) =>
+    navigate(`/product/channels/goods_list?id=${id}`);
   const { startEdit } = useChannelModal();
   const { mutate: downChannel } = useDownChannel(useChannelsQueryKey());
 
@@ -176,7 +177,7 @@ const More = ({ channel }: { channel: Channel }) => {
       key: "down",
     },
     {
-      label: <span onClick={() => link(channel.id)}>查看分销商品</span>,
+      label: <span onClick={() => link(channel.id)}>查看关联商品</span>,
       key: "link",
     },
   ];
