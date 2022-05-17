@@ -1,10 +1,10 @@
 import { Pagination } from "./common";
 
 export interface HomeSearchParams {
-  agent_id: number;
-  goods_name: string;
   start_created_at: string;
   end_created_at: string;
+  agent_id: number;
+  goods_name: string;
 }
 
 export interface Home {

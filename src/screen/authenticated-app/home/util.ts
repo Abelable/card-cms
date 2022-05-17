@@ -1,20 +1,25 @@
 import { useUrlQueryParams } from "utils/url";
 import { useMemo } from "react";
+import dayjs from "dayjs";
 
 export const useHomeSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "s_time",
-    "e_time",
-    "shop_name",
+    "start_created_at",
+    "end_created_at",
+    "agent_id",
     "goods_name",
   ]);
   return [
-    useMemo(
-      () => ({
+    useMemo(() => {
+      const date = new Date();
+      date.setDate(date.getDate() - 6);
+      return {
+        start_created_at:
+          params.start_created_at || dayjs(date).format("YYYY-MM-DD"),
+        end_created_at: params.start_created_at || dayjs().format("YYYY-MM-DD"),
         ...params,
-      }),
-      [params]
-    ),
+      };
+    }, [params]),
     setParams,
   ] as const;
 };

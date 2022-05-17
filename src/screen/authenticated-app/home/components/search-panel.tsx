@@ -5,7 +5,7 @@ import { HomeSearchParams } from "types/home";
 import moment from "moment";
 import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
-import { DownloadOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 export interface SearchPanelProps {
   agentOptions: AgentOption[];
@@ -18,15 +18,17 @@ export const SearchPanel = ({
   params,
   setParams,
 }: SearchPanelProps) => {
+  const date = new Date();
+  date.setDate(date.getDate() - 6);
   const defaultParams = {
-    start_created_at: "",
-    end_created_at: "",
+    start_created_at: dayjs(date).format("YYYY-MM-DD"),
+    end_created_at: dayjs().format("YYYY-MM-DD"),
     agent_id: undefined,
     goods_name: "",
   } as Partial<HomeSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<HomeSearchParams>>(params);
+    useState<Partial<HomeSearchParams>>(defaultParams);
 
   const setDates = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
@@ -113,12 +115,7 @@ export const SearchPanel = ({
         >
           查询
         </Button>
-        <Button
-          style={{ marginRight: 0 }}
-          onClick={clear}
-          icon={<DownloadOutlined />}
-          shape="round"
-        >
+        <Button style={{ marginRight: 0 }} type={"primary"} onClick={clear}>
           导出
         </Button>
       </Row>
