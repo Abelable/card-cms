@@ -5,6 +5,7 @@ import { HomeSearchParams } from "types/home";
 import moment from "moment";
 import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export interface SearchPanelProps {
   agentOptions: AgentOption[];
@@ -107,11 +108,18 @@ export const SearchPanel = ({
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
-          style={{ marginRight: 0 }}
           type={"primary"}
           onClick={() => setParams({ ...params, ...temporaryParams })}
         >
           查询
+        </Button>
+        <Button
+          style={{ marginRight: 0 }}
+          onClick={clear}
+          icon={<DownloadOutlined />}
+          shape="round"
+        >
+          导出
         </Button>
       </Row>
     </Container>
