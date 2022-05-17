@@ -1,12 +1,19 @@
 import styled from "@emotion/styled";
-import { Button, Table, TablePaginationConfig, TableProps } from "antd";
+import {
+  Button,
+  Divider,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+  Tooltip,
+} from "antd";
 import { ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownloadOutlined } from "@ant-design/icons";
-import { BlacklistSearchParams, Black } from "types/system";
 import { useBlackModal } from "../util";
 import { FileUpload } from "components/file-upload";
+import type { BlacklistSearchParams, BlackItem } from "types/system";
 
-interface ListProps extends TableProps<Black> {
+interface ListProps extends TableProps<BlackItem> {
   params: Partial<BlacklistSearchParams>;
   setParams: (params: Partial<BlacklistSearchParams>) => void;
   error: Error | unknown;
@@ -26,9 +33,22 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <Header between={true}>
         <h3>黑名单列表</h3>
         <Row gap>
-          <Button icon={<DownloadOutlined />}>下载模版</Button>
-          <FileUpload name="上传文件" />
-          <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
+          <div style={{ marginRight: "1rem" }}>
+            <FileUpload name="上传文件" />
+          </div>
+          <Tooltip title="下载模版">
+            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+          </Tooltip>
+          <Divider
+            style={{ height: "3rem", marginLeft: 0 }}
+            type={"vertical"}
+          />
+          <Button
+            style={{ marginRight: 0 }}
+            onClick={open}
+            type={"primary"}
+            icon={<PlusOutlined />}
+          >
             新增
           </Button>
         </Row>

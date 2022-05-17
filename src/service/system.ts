@@ -1,6 +1,10 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
-import { Black, BlacklistResult, BlacklistSearchParams } from "types/system";
+import {
+  BlackItem,
+  BlacklistResult,
+  BlacklistSearchParams,
+} from "types/system";
 import {
   useAddConfig,
   useDeleteConfig,
@@ -19,7 +23,7 @@ export const useBlacklist = (params: Partial<BlacklistSearchParams>) => {
 export const useAddBlack = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<Black>) =>
+    (params: Partial<BlackItem>) =>
       client("/api/v1/admin/blacklist/store", {
         data: params,
         method: "POST",
@@ -31,7 +35,7 @@ export const useAddBlack = (queryKey: QueryKey) => {
 export const useEditBlack = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    ({ id, ...params }: Partial<Black>) =>
+    ({ id, ...params }: Partial<BlackItem>) =>
       client(`/api/v1/admin/product/update/${id}`, {
         data: params,
         method: "POST",

@@ -5,7 +5,7 @@ export interface BlacklistSearchParams {
   page: number;
 }
 
-export interface Black {
+export interface BlackItem {
   id: number;
   idcard: string;
   phone: string;
@@ -14,6 +14,6 @@ export interface Black {
 }
 
 export interface BlacklistResult {
-  data: Black[];
+  data: BlackItem[];
   meta: { pagination: Pagination };
 }

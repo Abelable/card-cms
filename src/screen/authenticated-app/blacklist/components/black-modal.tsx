@@ -2,11 +2,11 @@ import { Form, Modal, Button, Input } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddBlack, useEditBlack } from "service/system";
-import { Black } from "types/system";
+import { BlackItem } from "types/system";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useBlacklistQueryKey, useBlackModal } from "../util";
 
-export const BlackModal = ({ blacklist }: { blacklist: Black[] }) => {
+export const BlackModal = ({ blacklist }: { blacklist: BlackItem[] }) => {
   const [form] = useForm();
   const { blackModalOpen, editingBlackId, close } = useBlackModal();
   const black =
