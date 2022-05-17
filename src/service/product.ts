@@ -38,6 +38,24 @@ export const useChannels = (params: Partial<ChannelsSearchParams>) => {
   });
 };
 
+export const useExportChannels = () => {
+  const client = useHttp();
+  return (params: Partial<ChannelsSearchParams>) => {
+    const { page, per_page, ...restParams } = params;
+    return client("/api/v1/admin/product/index", {
+      data: cleanObject({
+        is_export: 1,
+        "filter[is_removed]": 0,
+        "filter[supplier_id]": restParams.supplier_id,
+        "filter[name]": restParams.goods_name,
+        "filter[encoding]": restParams.goods_code,
+        page,
+        per_page,
+      }),
+    });
+  };
+};
+
 export const useDownedChannels = (params: Partial<ChannelsSearchParams>) => {
   const client = useHttp();
   return useQuery<ChannelsResult>(["downed_channels", params], () => {

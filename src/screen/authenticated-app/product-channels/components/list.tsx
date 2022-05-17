@@ -24,7 +24,6 @@ interface ListProps
     Omit<SearchPanelProps, "supplierOptions"> {
   operatorOptions: OperatorOption[];
   modeOptions: modeOption[];
-  setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }
 
@@ -34,7 +33,6 @@ export const List = ({
   modeOptions,
   params,
   setParams,
-  setSelectedRowKeys,
   ...restProps
 }: ListProps) => {
   const { open } = useChannelModal();
@@ -57,11 +55,6 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
-        rowSelection={{
-          type: "checkbox",
-          onChange: (selectedRowKeys) =>
-            setSelectedRowKeys(selectedRowKeys as []),
-        }}
         columns={[
           {
             title: "编号",

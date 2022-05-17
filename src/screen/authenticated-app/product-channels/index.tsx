@@ -6,8 +6,7 @@ import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { Button, Drawer, Menu, MenuProps } from "antd";
-import { Row } from "components/lib";
+import { Menu, MenuProps } from "antd";
 import { DownedList } from "./components/downed-list";
 import { DownedSearchPanel } from "./components/downed-search-panel";
 import { ChannelModal } from "./components/channel-modal";
@@ -25,18 +24,12 @@ export const ProductChannels = () => {
   const supplierOptions = useSupplierOptions();
   const [params, setParams] = useChannelsSearchParams();
   const [downedParams, setDownedParams] = useDownedChannelsSearchParams();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const { data, isLoading, error } = useChannels(params);
   const {
     data: downedData,
     isLoading: downedLoading,
     error: downedError,
   } = useDownedChannels(downedParams);
-  const exportApplications = (ids: string[]) => {
-    window.location.href = `${
-      process.env.REACT_APP_API_URL
-    }/api/admin/enter-apply/export?ids=${ids.join()}`;
-  };
 
   const items: MenuProps["items"] = [
     {
@@ -69,7 +62,6 @@ export const ProductChannels = () => {
               params={params}
               setParams={setParams}
               dataSource={data?.data}
-              setSelectedRowKeys={setSelectedRowKeys}
               loading={isLoading}
               pagination={{
                 current: toNumber(data?.meta.pagination.current_page),
@@ -106,30 +98,6 @@ export const ProductChannels = () => {
         operatorOptions={operatorOptions}
         supplierOptions={supplierOptions}
       />
-      <Drawer
-        visible={!!selectedRowKeys.length}
-        style={{ position: "absolute" }}
-        height={"8rem"}
-        placement="bottom"
-        mask={false}
-        getContainer={false}
-        closable={false}
-      >
-        <Row between={true}>
-          <div>
-            已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
-          </div>
-          <Row gap={true}>
-            <Button
-              onClick={() => exportApplications(selectedRowKeys)}
-              type={"primary"}
-              style={{ marginRight: 0 }}
-            >
-              批量导出
-            </Button>
-          </Row>
-        </Row>
-      </Drawer>
     </Container>
   );
 };
@@ -147,9 +115,4 @@ const Main = styled.div`
   padding: 2.4rem;
   height: 100%;
   overflow: scroll;
-`;
-
-const SelectedCount = styled.span`
-  color: #1890ff;
-  font-weight: 600;
 `;

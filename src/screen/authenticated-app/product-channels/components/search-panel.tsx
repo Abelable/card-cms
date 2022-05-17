@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { ChannelsSearchParams } from "types/product";
 import styled from "@emotion/styled";
-import { SupplierOption } from "types/supplier";
+import { useExportChannels } from "service/product";
+import type { ChannelsSearchParams } from "types/product";
+import type { SupplierOption } from "types/supplier";
 
 export interface SearchPanelProps {
   supplierOptions: SupplierOption[];
@@ -24,6 +25,8 @@ export const SearchPanel = ({
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<ChannelsSearchParams>>(params);
+
+  const exportChannels = useExportChannels();
 
   const setGoodsName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
@@ -110,11 +113,17 @@ export const SearchPanel = ({
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
-          style={{ marginRight: 0 }}
           type={"primary"}
           onClick={() => setParams({ ...params, ...temporaryParams })}
         >
           查询
+        </Button>
+        <Button
+          style={{ marginRight: 0 }}
+          type={"primary"}
+          onClick={() => exportChannels(params)}
+        >
+          导出
         </Button>
       </Row>
     </Container>
