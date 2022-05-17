@@ -51,7 +51,7 @@ export const List = ({
       <Header between={true}>
         <h3>产品列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增
+          新增产品（渠道）
         </Button>
       </Header>
       <ErrorBox error={error} />
