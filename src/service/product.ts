@@ -7,6 +7,7 @@ import {
   Channel,
   ChannelForm,
   ChannelGoodsListResult,
+  ChannelGoodsListSearchParams,
   ChannelOption,
   ChannelsResult,
   ChannelsSearchParams,
@@ -140,14 +141,22 @@ export const useChannelOptions = () => {
   return channelOptions;
 };
 
-export const useChannelGoodsList = (params: Partial<GoodsListSearchParams>) => {
+export const useChannelGoodsList = (
+  params: Partial<ChannelGoodsListSearchParams>
+) => {
   const client = useHttp();
   return useQuery<ChannelGoodsListResult>(
     ["product_channel_goods_list", params],
-    () =>
-      client("/api/v1/admin/agent/index", {
-        data: params,
-      })
+    () => {
+      const { product_id, page, per_page } = params;
+      return client("/api/v1/admin/agent/index", {
+        data: cleanObject({
+          "filter[goods.product_id]": product_id,
+          page,
+          per_page,
+        }),
+      });
+    }
   );
 };
 

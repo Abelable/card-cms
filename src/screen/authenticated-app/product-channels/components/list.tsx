@@ -153,7 +153,7 @@ export const List = ({
 const More = ({ channel }: { channel: Channel }) => {
   const navigate = useNavigate();
   const link = (id: number) =>
-    navigate(`/product/channels/goods_list?id=${id}`);
+    navigate(`/product/channels/goods_list?product_id=${id}`);
   const { startEdit } = useChannelModal();
   const { mutate: downChannel } = useDownChannel(useChannelsQueryKey());
 

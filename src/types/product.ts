@@ -50,8 +50,9 @@ export interface ChannelForm {
 }
 
 export interface ChannelGoodsListSearchParams {
-  per_page: number;
+  product_id: number;
   page: number;
+  per_page: number;
 }
 
 export interface ChannelGoods {

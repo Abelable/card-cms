@@ -1,15 +1,17 @@
 import styled from "@emotion/styled";
 import { Table, TablePaginationConfig, TableProps } from "antd";
-import { ChannelGoods, GoodsListSearchParams } from "types/product";
+import { ChannelGoods, ChannelGoodsListSearchParams } from "types/product";
 import { ErrorBox } from "components/lib";
+import { useChannelOptions } from "service/product";
 
 interface ListProps extends TableProps<ChannelGoods> {
-  params: Partial<GoodsListSearchParams>;
-  setParams: (params: Partial<GoodsListSearchParams>) => void;
+  params: Partial<ChannelGoodsListSearchParams>;
+  setParams: (params: Partial<ChannelGoodsListSearchParams>) => void;
   error: Error | unknown;
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+  const productOptions = useChannelOptions();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -19,7 +21,13 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 
   return (
     <Container>
-      <Title>关联商品列表-移动花卡</Title>
+      <Title>
+        关联商品列表-
+        {
+          productOptions.find((item) => item.id === Number(params.product_id))
+            ?.name
+        }
+      </Title>
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
