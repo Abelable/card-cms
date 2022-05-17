@@ -32,8 +32,16 @@ export const SearchPanel = ({
     useState<Partial<HomeSearchParams>>(defaultParams);
 
   const exportHome = useExportHome();
-
-  const setDates = (dates: any, formatString: [string, string]) =>
+  const [dates, setDates] = useState<any[]>([]);
+  const disabledDate = (current: any) => {
+    if (!dates || dates.length === 0) {
+      return false;
+    }
+    const tooLate = dates[0] && current.diff(dates[0], "days") > 29;
+    const tooEarly = dates[1] && dates[1].diff(current, "days") > 29;
+    return tooEarly || tooLate;
+  };
+  const setDateRange = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
       ...temporaryParams,
       start_created_at: formatString[0],
@@ -89,6 +97,8 @@ export const SearchPanel = ({
       <Item>
         <div>注册时间：</div>
         <DatePicker.RangePicker
+          disabledDate={disabledDate}
+          onCalendarChange={(val) => setDates(val as any)}
           value={
             temporaryParams.start_created_at
               ? [
@@ -97,7 +107,7 @@ export const SearchPanel = ({
                 ]
               : undefined
           }
-          onChange={setDates}
+          onChange={setDateRange}
         />
       </Item>
       <Item>
