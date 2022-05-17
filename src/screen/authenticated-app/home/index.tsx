@@ -1,4 +1,3 @@
-import { toNumber } from "utils";
 import { useHome } from "service/home";
 import { useHomeSearchParams } from "./util";
 
@@ -26,11 +25,6 @@ export const Home = () => {
           setParams={setParams}
           dataSource={data?.data}
           loading={isLoading}
-          pagination={{
-            current: toNumber(data?.meta.pagination.current_page),
-            pageSize: toNumber(data?.meta.pagination.per_page),
-            total: toNumber(data?.meta.pagination.total),
-          }}
         />
       </Main>
     </Container>

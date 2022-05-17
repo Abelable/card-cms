@@ -1,5 +1,3 @@
-import { Pagination } from "./common";
-
 export interface HomeSearchParams {
   start_created_at: string;
   end_created_at: string;
@@ -23,5 +21,4 @@ export interface Home {
 
 export interface HomeResult {
   data: Home[];
-  meta: { pagination: Pagination };
 }
