@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input, Select } from "antd";
+import { Button, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import { useExportChannels } from "service/product";
@@ -118,6 +118,7 @@ export const SearchPanel = ({
         >
           查询
         </Button>
+        <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
         <Button
           style={{ marginRight: 0 }}
           type={"primary"}
