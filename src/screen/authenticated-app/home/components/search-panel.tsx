@@ -85,51 +85,49 @@ export const SearchPanel = ({
   };
 
   return (
-    <Container marginBottom={1.6} between={true}>
-      <Row gap={true}>
-        <Row>
-          <div>注册时间：</div>
-          <DatePicker.RangePicker
-            value={
-              temporaryParams.start_created_at
-                ? [
-                    moment(temporaryParams.start_created_at),
-                    moment(temporaryParams.end_created_at),
-                  ]
-                : undefined
-            }
-            onChange={setDates}
-          />
-        </Row>
-        <Row>
-          <div>代理商店铺名称：</div>
-          <Select
-            style={{ width: "20rem" }}
-            value={temporaryParams.agent_id}
-            allowClear={true}
-            onSelect={setAgent}
-            onClear={clearAgent}
-            placeholder="请选择代理商"
-          >
-            {agentOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
-        <Row>
-          <div>商品名称：</div>
-          <Input
-            style={{ width: "20rem" }}
-            value={temporaryParams.goods_name}
-            onChange={setGoodsName}
-            placeholder="请输入商品名称"
-            allowClear={true}
-          />
-        </Row>
-      </Row>
-      <Row gap={true}>
+    <Container>
+      <Item>
+        <div>注册时间：</div>
+        <DatePicker.RangePicker
+          value={
+            temporaryParams.start_created_at
+              ? [
+                  moment(temporaryParams.start_created_at),
+                  moment(temporaryParams.end_created_at),
+                ]
+              : undefined
+          }
+          onChange={setDates}
+        />
+      </Item>
+      <Item>
+        <div>代理商店铺名称：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.agent_id}
+          allowClear={true}
+          onSelect={setAgent}
+          onClear={clearAgent}
+          placeholder="请选择代理商"
+        >
+          {agentOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>商品名称：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.goods_name}
+          onChange={setGoodsName}
+          placeholder="请输入商品名称"
+          allowClear={true}
+        />
+      </Item>
+      <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button type={"primary"} onClick={query}>
           查询
@@ -141,12 +139,27 @@ export const SearchPanel = ({
         >
           导出
         </Button>
-      </Row>
+      </ButtonWrap>
     </Container>
   );
 };
 
-const Container = styled(Row)`
-  padding: 2.4rem;
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+  padding: 2.4rem 22rem 0 2.4rem;
   background: #fff;
+`;
+
+const Item = styled(Row)`
+  margin-right: 2rem;
+  padding-bottom: 2.4rem;
+`;
+
+const ButtonWrap = styled(Row)`
+  position: absolute;
+  right: 2.4rem;
+  bottom: 2.4rem;
 `;
