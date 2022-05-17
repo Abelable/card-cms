@@ -1,21 +1,24 @@
 import styled from "@emotion/styled";
 import dayjs from "dayjs";
-import { Modal, Table, TablePaginationConfig, TableProps } from "antd";
+import { Button, Modal, Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import { useDownedChannelsQueryKey } from "../util";
 import { useUpChannel } from "service/product";
+import { OperatorOption } from "types/common";
 
 interface ListProps
   extends TableProps<Channel>,
     Omit<SearchPanelProps, "supplierOptions"> {
+  operatorOptions: OperatorOption[];
   modeOptions: modeOption[];
   error: Error | unknown;
 }
 
 export const DownedList = ({
   error,
+  operatorOptions,
   modeOptions,
   params,
   setParams,
@@ -55,15 +58,20 @@ export const DownedList = ({
           },
           {
             title: "产品名称",
-            dataIndex: "goods_name",
+            dataIndex: "name",
           },
           {
             title: "产品编码",
-            dataIndex: "goods_code",
+            dataIndex: "encoding",
           },
           {
             title: "运营商",
-            dataIndex: "supplier",
+            dataIndex: "operator_id",
+            render: (value) => (
+              <span>
+                {operatorOptions.find((item) => item.id === value)?.name}
+              </span>
+            ),
           },
           {
             title: "生产方式",
@@ -86,7 +94,9 @@ export const DownedList = ({
           {
             title: "操作",
             render: (value, channel) => (
-              <span onClick={() => confirmUpChannel(channel.id)}>上架</span>
+              <Button type="link" onClick={() => confirmUpChannel(channel.id)}>
+                上架
+              </Button>
             ),
             width: "8rem",
           },

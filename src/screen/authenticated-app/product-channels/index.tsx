@@ -87,6 +87,7 @@ export const ProductChannels = () => {
             />
             <DownedList
               error={downedError}
+              operatorOptions={operatorOptions}
               modeOptions={modeOptions}
               params={downedParams}
               setParams={setDownedParams}
