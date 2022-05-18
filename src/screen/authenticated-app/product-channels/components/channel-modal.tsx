@@ -72,7 +72,6 @@ export const ChannelModal = ({
 }) => {
   const { data: regionOptions } = useRegionOptions();
   const { data: defaultWarningSetting } = useDefaultWarningSetting();
-  console.log(defaultWarningSetting);
   const [form] = useForm();
   const [type, setType] = useState(1);
   const {
@@ -175,7 +174,23 @@ export const ChannelModal = ({
         ...rest,
       });
     }
-  }, [editingChannel, form]);
+    if (defaultWarningSetting) {
+      form.setFieldsValue({
+        default_phone_repeated_prewarn_num: Number(
+          defaultWarningSetting?.phone_repeated_prewarn_num
+        ),
+        default_phone_repeated_prewarn_num_check_period: Number(
+          defaultWarningSetting?.phone_repeated_prewarn_num_check_period
+        ),
+        default_address_repeated_prewarn_num: Number(
+          defaultWarningSetting?.address_repeated_prewarn_num
+        ),
+        default_address_repeated_prewarn_num_check_period: Number(
+          defaultWarningSetting?.address_repeated_prewarn_num_check_period
+        ),
+      });
+    }
+  }, [editingChannel, form, defaultWarningSetting]);
 
   return (
     <Drawer
@@ -429,7 +444,7 @@ export const ChannelModal = ({
                           联系电话重复：
                         </span>
                         <Form.Item
-                          name="phone_repeated_prewarn_num"
+                          name="default_phone_repeated_prewarn_num"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <InputNumber
@@ -441,7 +456,7 @@ export const ChannelModal = ({
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>检测周期：</span>
                         <Form.Item
-                          name="phone_repeated_prewarn_num_check_period"
+                          name="default_phone_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Select>
@@ -460,7 +475,7 @@ export const ChannelModal = ({
                           收货地址重复：
                         </span>
                         <Form.Item
-                          name="address_repeated_prewarn_num"
+                          name="default_address_repeated_prewarn_num"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <InputNumber
@@ -472,7 +487,7 @@ export const ChannelModal = ({
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>检测周期：</span>
                         <Form.Item
-                          name="address_repeated_prewarn_num_check_period"
+                          name="default_address_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Select>

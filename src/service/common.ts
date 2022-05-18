@@ -1,6 +1,11 @@
 import { useHttp } from "./http";
 import { useMutation, useQuery } from "react-query";
-import { OperatorOption, OssConfig, RegionOption } from "types/common";
+import {
+  OperatorOption,
+  OssConfig,
+  RegionOption,
+  WarningSetting,
+} from "types/common";
 
 export const useOssConfig = () => {
   const client = useHttp();
@@ -45,7 +50,7 @@ export const useRegionOptions = (depth = 2) => {
 
 export const useDefaultWarningSetting = () => {
   const client = useHttp();
-  return useQuery(["default_warning_setting"], () =>
+  return useQuery<WarningSetting>(["default_warning_setting"], () =>
     client("/api/v1/admin/setting/show/product.prewarn")
   );
 };

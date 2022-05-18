@@ -29,3 +29,10 @@ export interface RegionItem {
   province_id: number;
   city_id: number;
 }
+
+export interface WarningSetting {
+  address_repeated_prewarn_num: string;
+  address_repeated_prewarn_num_check_period: string;
+  phone_repeated_prewarn_num: string;
+  phone_repeated_prewarn_num_check_period: string;
+}
