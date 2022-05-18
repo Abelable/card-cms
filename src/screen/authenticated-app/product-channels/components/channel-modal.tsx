@@ -92,10 +92,15 @@ export const ChannelModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
+      const { ownership, non_shipping_region, ...rest } = form.getFieldsValue();
       await mutateAsync(
         cleanObject({
           id: editingChannelId || "",
-          ...form.getFieldsValue(),
+          is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+          province_id: ownership[0],
+          city_id: ownership[1],
+          dont_ship_addresses: non_shipping_region,
+          ...rest,
         })
       );
       closeModal();
@@ -104,9 +109,18 @@ export const ChannelModal = ({
 
   useDeepCompareEffect(() => {
     if (editingChannel) {
-      const { is_used_global_prewarn_setting, ...rest } = editingChannel;
+      const {
+        is_used_global_prewarn_setting,
+        province_id,
+        city_id,
+        dont_ship_addresses,
+        ...rest
+      } = editingChannel;
       setType(is_used_global_prewarn_setting === 1 ? 1 : 2);
-      form.setFieldsValue(rest);
+      form.setFieldsValue({
+        ownership: [province_id, city_id],
+        ...rest,
+      });
     }
   }, [editingChannel, form]);
 
@@ -249,7 +263,7 @@ export const ChannelModal = ({
               <CustomFormItem width={50}>
                 <span style={{ marginRight: "2rem" }}>不发货地区：</span>
                 <Form.Item
-                  name="ship_addresses"
+                  name="non_shipping_region"
                   style={{ marginBottom: 0, width: "100%" }}
                 >
                   <Cascader
