@@ -93,13 +93,34 @@ export const ChannelModal = ({
   const submit = () => {
     form.validateFields().then(async () => {
       const { ownership, non_shipping_region, ...rest } = form.getFieldsValue();
+
+      const dont_ship_addresses: { province_id: number; city_id: number }[] =
+        [];
+      non_shipping_region.forEach((item: number[]) => {
+        if (item.length === 1) {
+          regionOptions
+            ?.find((province) => province.id === item[0])
+            ?.children?.forEach((city) => {
+              dont_ship_addresses.push({
+                province_id: item[0],
+                city_id: city.id,
+              });
+            });
+        } else {
+          dont_ship_addresses.push({
+            province_id: item[0],
+            city_id: item[1],
+          });
+        }
+      });
+
       await mutateAsync(
         cleanObject({
           id: editingChannelId || "",
           is_used_global_prewarn_setting: type === 1 ? 1 : 0,
           province_id: ownership[0],
           city_id: ownership[1],
-          dont_ship_addresses: non_shipping_region,
+          dont_ship_addresses,
           ...rest,
         })
       );
@@ -117,8 +138,39 @@ export const ChannelModal = ({
         ...rest
       } = editingChannel;
       setType(is_used_global_prewarn_setting === 1 ? 1 : 2);
+
+      // 处理不发货地区
+      const non_shipping_region_obj: { [key: string]: number[][] } = {};
+      dont_ship_addresses.forEach((item) => {
+        if (!non_shipping_region_obj[`${item.province_id}`]) {
+          non_shipping_region_obj[`${item.province_id}`] = [
+            [item.province_id, item.city_id],
+          ];
+        } else {
+          non_shipping_region_obj[`${item.province_id}`].push([
+            item.province_id,
+            item.city_id,
+          ]);
+        }
+      });
+      let non_shipping_region: number[][] = [];
+      Object.keys(non_shipping_region_obj).forEach((key) => {
+        if (
+          regionOptions?.find((item) => item.id === Number(key))?.children
+            ?.length === non_shipping_region_obj[key].length
+        ) {
+          non_shipping_region.push([Number(key)]);
+        } else {
+          non_shipping_region = [
+            ...non_shipping_region,
+            ...non_shipping_region_obj[key],
+          ];
+        }
+      });
+
       form.setFieldsValue({
         ownership: [province_id, city_id],
+        non_shipping_region,
         ...rest,
       });
     }

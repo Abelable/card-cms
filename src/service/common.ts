@@ -1,6 +1,6 @@
 import { useHttp } from "./http";
 import { useMutation, useQuery } from "react-query";
-import { OperatorOption, OssConfig } from "types/common";
+import { OperatorOption, OssConfig, RegionOption } from "types/common";
 
 export const useOssConfig = () => {
   const client = useHttp();
@@ -36,7 +36,7 @@ export const useOperatorOptions = () => {
 
 export const useRegionOptions = (depth = 2) => {
   const client = useHttp();
-  return useQuery(["region_options"], () =>
+  return useQuery<RegionOption[]>(["region_options"], () =>
     client("/api/v1/admin/province-city-area/tree", {
       data: { depth },
     })

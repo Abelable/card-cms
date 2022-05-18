@@ -18,3 +18,9 @@ export interface OperatorOption {
   id: number;
   name: string;
 }
+
+export interface RegionOption {
+  id: number;
+  name: string;
+  children?: RegionOption[];
+}
