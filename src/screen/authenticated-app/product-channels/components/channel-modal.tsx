@@ -28,8 +28,17 @@ import { OperatorOption } from "types/common";
 import { SupplierOption } from "types/supplier";
 import { useRegionOptions } from "service/common";
 
+const limitOptions = [
+  { value: 0, label: "不限制" },
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "4" },
+  { value: 5, label: "5" },
+];
+
 const cycleOptions = [
-  { value: undefined, label: "不限制" },
+  { value: 0, label: "不限制" },
   { value: 30, label: "1个月" },
   { value: 60, label: "2个月" },
   { value: 90, label: "3个月" },
@@ -45,7 +54,7 @@ const cycleOptions = [
 ];
 
 const halfCycleOptions = [
-  { value: undefined, label: "不限制" },
+  { value: 0, label: "不限制" },
   { value: 30, label: "1个月" },
   { value: 60, label: "2个月" },
   { value: 90, label: "3个月" },
@@ -64,8 +73,13 @@ export const ChannelModal = ({
   const { data: regionOptions } = useRegionOptions();
   const [form] = useForm();
   const [type, setType] = useState(1);
-  const { channelModalOpen, editingChannelId, editingChannel, close } =
-    useChannelModal();
+  const {
+    channelModalOpen,
+    editingChannelId,
+    editingChannel,
+    close,
+    isLoading: initLoading,
+  } = useChannelModal();
 
   const useMutationChannel = editingChannelId ? useEditChannel : useAddChannel;
   const { mutateAsync, error, isLoading } = useMutationChannel(
@@ -113,12 +127,21 @@ export const ChannelModal = ({
         </Space>
       }
     >
-      {isLoading ? (
+      {initLoading ? (
         <Loading>
           <Spin size={"large"} />
         </Loading>
       ) : (
-        <Form form={form} layout="vertical">
+        <Form
+          initialValues={{
+            per_person_card_num_limit: 0,
+            per_person_card_num_limit_check_period: 0,
+            phone_repeated_prewarn_num_check_period: 0,
+            address_repeated_prewarn_num_check_period: 0,
+          }}
+          form={form}
+          layout="vertical"
+        >
           <ErrorBox error={error} />
           <Row gutter={16}>
             <Col span={12}>
@@ -310,9 +333,9 @@ export const ChannelModal = ({
                     style={{ marginBottom: 0, width: "100%" }}
                   >
                     <Select>
-                      {[1, 2, 3, 4, 5].map((item) => (
-                        <Select.Option key={item} value={item}>
-                          {item}
+                      {limitOptions.map((item, index) => (
+                        <Select.Option key={index} value={item.value}>
+                          {item.label}
                         </Select.Option>
                       ))}
                     </Select>
@@ -372,7 +395,7 @@ export const ChannelModal = ({
                         >
                           <InputNumber
                             style={{ width: "100%" }}
-                            placeholder="不限制"
+                            placeholder="输入上限数量"
                           />
                         </Form.Item>
                       </CustomFormItem>
@@ -403,7 +426,7 @@ export const ChannelModal = ({
                         >
                           <InputNumber
                             style={{ width: "100%" }}
-                            placeholder="不限制"
+                            placeholder="输入上限数量"
                           />
                         </Form.Item>
                       </CustomFormItem>
@@ -443,7 +466,7 @@ export const ChannelModal = ({
                         >
                           <InputNumber
                             style={{ width: "100%" }}
-                            placeholder="不限制"
+                            placeholder="输入上限数量"
                           />
                         </Form.Item>
                       </CustomFormItem>
@@ -474,7 +497,7 @@ export const ChannelModal = ({
                         >
                           <InputNumber
                             style={{ width: "100%" }}
-                            placeholder="不限制"
+                            placeholder="输入上限数量"
                           />
                         </Form.Item>
                       </CustomFormItem>
