@@ -134,6 +134,8 @@ export const ChannelModal = ({
       ) : (
         <Form
           initialValues={{
+            is_required_idcard: 1,
+            is_required_idphoto: 1,
             per_person_card_num_limit: 0,
             per_person_card_num_limit_check_period: 0,
             phone_repeated_prewarn_num_check_period: 0,
