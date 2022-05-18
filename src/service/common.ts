@@ -34,9 +34,11 @@ export const useOperatorOptions = () => {
   return operatorOptions;
 };
 
-export const useRegionOptions = () => {
+export const useRegionOptions = (depth = 2) => {
   const client = useHttp();
   return useQuery(["region_options"], () =>
-    client(`/api/v1/admin/province-city-area/tree`)
+    client("/api/v1/admin/province-city-area/tree", {
+      data: { depth },
+    })
   );
 };
