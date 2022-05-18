@@ -18,8 +18,3 @@ export interface OperatorOption {
   id: number;
   name: string;
 }
-
-export interface RegionPluck {
-  value: string;
-  label: string;
-}

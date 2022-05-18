@@ -26,45 +26,8 @@ import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
 import { OperatorOption } from "types/common";
 import { SupplierOption } from "types/supplier";
+import { useRegionOptions } from "service/common";
 
-const regionOptions = [
-  {
-    value: "1",
-    label: "浙江省",
-    children: [
-      {
-        value: "1",
-        label: "杭州市",
-        children: [
-          {
-            value: "1",
-            label: "西湖区",
-          },
-          {
-            value: "2",
-            label: "上城区",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "2",
-    label: "江苏省",
-    children: [
-      {
-        value: "1",
-        label: "南京市",
-        children: [
-          {
-            value: "1",
-            label: "中华门",
-          },
-        ],
-      },
-    ],
-  },
-];
 const cycleOptions = [
   { value: 1, label: "1个月" },
   { value: 2, label: "2个月" },
@@ -87,6 +50,7 @@ export const ChannelModal = ({
   operatorOptions: OperatorOption[];
   supplierOptions: SupplierOption[];
 }) => {
+  const { data: regionOptions } = useRegionOptions();
   const [form] = useForm();
   const [type, setType] = useState(1);
   const { channelModalOpen, editingChannelId, editingChannel, close } =
@@ -119,7 +83,7 @@ export const ChannelModal = ({
       setType(is_used_global_prewarn_setting === 1 ? 1 : 2);
       form.setFieldsValue(rest);
     }
-  }, [form, editingChannel]);
+  }, [editingChannel, form]);
 
   return (
     <Drawer
@@ -204,7 +168,11 @@ export const ChannelModal = ({
                 label="归属地"
                 rules={[{ required: true, message: "请选择归属地" }]}
               >
-                <Cascader options={regionOptions} placeholder="请选择归属地" />
+                <Cascader
+                  fieldNames={{ label: "name", value: "id" }}
+                  options={regionOptions}
+                  placeholder="请选择归属地"
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -255,6 +223,7 @@ export const ChannelModal = ({
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Cascader
+                            fieldNames={{ label: "name", value: "id" }}
                             style={{ width: "100%" }}
                             options={regionOptions}
                             multiple
@@ -275,6 +244,7 @@ export const ChannelModal = ({
                           style={{ marginBottom: 0, width: "100%" }}
                         >
                           <Cascader
+                            fieldNames={{ label: "name", value: "id" }}
                             options={regionOptions}
                             multiple
                             maxTagCount="responsive"
