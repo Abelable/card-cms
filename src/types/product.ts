@@ -8,6 +8,7 @@ export interface ChannelsSearchParams {
   goods_name: string;
   goods_code: string;
   supplier_id: number;
+  is_removed: string;
   per_page: number;
   page: number;
 }

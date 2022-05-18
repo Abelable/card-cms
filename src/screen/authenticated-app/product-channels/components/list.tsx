@@ -14,7 +14,11 @@ import { SearchPanelProps } from "./search-panel";
 import { Channel, modeOption } from "types/product";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownOutlined } from "@ant-design/icons";
-import { useDownChannel, useEditChannelMode } from "service/product";
+import {
+  useDownChannel,
+  useEditChannelMode,
+  useUpChannel,
+} from "service/product";
 import { useChannelModal, useChannelsQueryKey } from "../util";
 import { useNavigate } from "react-router";
 import { OperatorOption } from "types/common";
@@ -44,13 +48,26 @@ export const List = ({
       per_page: pagination.pageSize,
     });
 
+  const { mutate: upChannel } = useUpChannel(useChannelsQueryKey());
+  const confirmUpChannel = (id: number) => {
+    Modal.confirm({
+      title: "确定上架该产品吗？",
+      content: "点击确定上架",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => upChannel(String(id)),
+    });
+  };
+
   return (
     <Container>
       <Header between={true}>
         <h3>产品列表</h3>
-        <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
-          新增产品（渠道）
-        </Button>
+        {params.is_removed === "0" ? (
+          <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
+            新增
+          </Button>
+        ) : null}
       </Header>
       <ErrorBox error={error} />
       <Table
@@ -82,44 +99,56 @@ export const List = ({
           {
             title: "生产方式",
             render: (value, channel) => (
-              <Dropdown
-                trigger={["click"]}
-                overlay={
-                  <Menu
-                    items={modeOptions.map((item) => ({
-                      label: (
-                        <span
-                          onClick={() =>
-                            editChannel({
-                              id: channel.id,
-                              is_auto_product: item.value,
-                            })
-                          }
-                        >
-                          {item.name}
-                        </span>
-                      ),
-                      key: item.value,
-                    }))}
-                  />
-                }
-              >
-                <ButtonNoPadding
-                  style={{
-                    color:
-                      channel.is_auto_product !== undefined
-                        ? "#1890ff"
-                        : "#999",
-                  }}
-                  type={"link"}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {modeOptions.find(
-                    (item) => item.value === channel.is_auto_product
-                  )?.name || "选择等级名称"}
-                  <DownOutlined />
-                </ButtonNoPadding>
-              </Dropdown>
+              <>
+                {params.is_removed === "0" ? (
+                  <Dropdown
+                    trigger={["click"]}
+                    overlay={
+                      <Menu
+                        items={modeOptions.map((item) => ({
+                          label: (
+                            <span
+                              onClick={() =>
+                                editChannel({
+                                  id: channel.id,
+                                  is_auto_product: item.value,
+                                })
+                              }
+                            >
+                              {item.name}
+                            </span>
+                          ),
+                          key: item.value,
+                        }))}
+                      />
+                    }
+                  >
+                    <ButtonNoPadding
+                      style={{
+                        color:
+                          channel.is_auto_product !== undefined
+                            ? "#1890ff"
+                            : "#999",
+                      }}
+                      type={"link"}
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      {modeOptions.find(
+                        (item) => item.value === channel.is_auto_product
+                      )?.name || "选择等级名称"}
+                      <DownOutlined />
+                    </ButtonNoPadding>
+                  </Dropdown>
+                ) : (
+                  <span>
+                    {
+                      modeOptions.find(
+                        (item) => item.value === channel.is_auto_product
+                      )?.name
+                    }
+                  </span>
+                )}
+              </>
             ),
           },
           {
@@ -130,9 +159,20 @@ export const List = ({
           },
           {
             title: "操作",
-            render(value, channel) {
-              return <More channel={channel} />;
-            },
+            render: (value, channel) => (
+              <>
+                {params.is_removed === "0" ? (
+                  <More channel={channel} />
+                ) : (
+                  <Button
+                    type="link"
+                    onClick={() => confirmUpChannel(channel.id)}
+                  >
+                    上架
+                  </Button>
+                )}
+              </>
+            ),
             width: "8rem",
           },
         ]}

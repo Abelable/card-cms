@@ -112,20 +112,35 @@ export const SearchPanel = ({
       </Row>
       <Row gap={true}>
         <Button onClick={clear}>重置</Button>
-        <Button
-          type={"primary"}
-          onClick={() => setParams({ ...params, ...temporaryParams })}
-        >
-          查询
-        </Button>
-        <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
-        <Button
-          style={{ marginRight: 0 }}
-          type={"primary"}
-          onClick={() => exportChannels(params)}
-        >
-          导出
-        </Button>
+        {params.is_removed === "0" ? (
+          <>
+            <Button
+              type={"primary"}
+              onClick={() => setParams({ ...params, ...temporaryParams })}
+            >
+              查询
+            </Button>
+            <Divider
+              style={{ height: "3rem", marginLeft: 0 }}
+              type={"vertical"}
+            />
+            <Button
+              style={{ marginRight: 0 }}
+              type={"primary"}
+              onClick={() => exportChannels(params)}
+            >
+              导出
+            </Button>
+          </>
+        ) : (
+          <Button
+            type={"primary"}
+            style={{ marginRight: 0 }}
+            onClick={() => setParams({ ...params, ...temporaryParams })}
+          >
+            查询
+          </Button>
+        )}
       </Row>
     </Container>
   );

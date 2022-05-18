@@ -7,31 +7,16 @@ export const useChannelsSearchParams = () => {
     "goods_name",
     "goods_code",
     "supplier_id",
+    "is_removed",
     "page",
     "per_page",
   ]);
   return [
     useMemo(
       () => ({
-        ...params,
-      }),
-      [params]
-    ),
-    setParams,
-  ] as const;
-};
-
-export const useDownedChannelsSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams([
-    "goods_name",
-    "goods_code",
-    "supplier_id",
-    "page",
-    "per_page",
-  ]);
-  return [
-    useMemo(
-      () => ({
+        page: Number(params.page) || 1,
+        per_page: Number(params.per_page) || 10,
+        is_removed: params.is_removed || "0",
         ...params,
       }),
       [params]
@@ -43,11 +28,6 @@ export const useDownedChannelsSearchParams = () => {
 export const useChannelsQueryKey = () => {
   const [params] = useChannelsSearchParams();
   return ["channels", params];
-};
-
-export const useDownedChannelsQueryKey = () => {
-  const [params] = useChannelsSearchParams();
-  return ["downed_channels", params];
 };
 
 export const useChannelModal = () => {
