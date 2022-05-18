@@ -26,7 +26,11 @@ import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
 import { OperatorOption, RegionItem } from "types/common";
 import { SupplierOption } from "types/supplier";
-import { useDefaultWarningSetting, useRegionOptions } from "service/common";
+import {
+  useDefaultWarningSetting,
+  useRegionOptions,
+  useUpdateDefaultWarningSetting,
+} from "service/common";
 
 const limitOptions = [
   { value: 0, label: "不限制" },
@@ -86,6 +90,8 @@ export const ChannelModal = ({
   const { mutateAsync, error, isLoading } = useMutationChannel(
     useChannelsQueryKey()
   );
+  const { mutate: updateDefaultWarningSetting } =
+    useUpdateDefaultWarningSetting();
 
   const closeModal = () => {
     form.resetFields();
@@ -125,6 +131,23 @@ export const ChannelModal = ({
         })
       );
       closeModal();
+    });
+  };
+
+  const saveDefaultWarningSetting = () => {
+    const {
+      default_phone_repeated_prewarn_num: phone_repeated_prewarn_num,
+      default_phone_repeated_prewarn_num_check_period:
+        phone_repeated_prewarn_num_check_period,
+      default_address_repeated_prewarn_num: address_repeated_prewarn_num,
+      default_address_repeated_prewarn_num_check_period:
+        address_repeated_prewarn_num_check_period,
+    } = form.getFieldsValue();
+    updateDefaultWarningSetting({
+      phone_repeated_prewarn_num,
+      phone_repeated_prewarn_num_check_period,
+      address_repeated_prewarn_num,
+      address_repeated_prewarn_num_check_period,
     });
   };
 
@@ -501,7 +524,12 @@ export const ChannelModal = ({
                       </CustomFormItem>
                     </CustomRow>
                     <CustomRow gap>
-                      <Button type={"primary"}>修改默认方案</Button>
+                      <Button
+                        type={"primary"}
+                        onClick={saveDefaultWarningSetting}
+                      >
+                        修改默认方案
+                      </Button>
                       <div style={{ color: "red" }}>
                         注：修改默认方案会导致使用默认方案的所有基础产品风控规则变更
                       </div>

@@ -6,6 +6,7 @@ import {
   RegionOption,
   WarningSetting,
 } from "types/common";
+import { useEditDefaultWarningSettingConfig } from "./use-optimistic-options";
 
 export const useOssConfig = () => {
   const client = useHttp();
@@ -52,5 +53,17 @@ export const useDefaultWarningSetting = () => {
   const client = useHttp();
   return useQuery<WarningSetting>(["default_warning_setting"], () =>
     client("/api/v1/admin/setting/show/product.prewarn")
+  );
+};
+
+export const useUpdateDefaultWarningSetting = () => {
+  const client = useHttp();
+  return useMutation(
+    (params: WarningSetting) =>
+      client("/api/v1/admin/setting/update/product.prewarn", {
+        data: params,
+        method: "POST",
+      }),
+    useEditDefaultWarningSettingConfig()
   );
 };

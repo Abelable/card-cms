@@ -40,3 +40,9 @@ export const useDeleteConfig = (queryKey: QueryKey) =>
     ...old,
     data: old.data.filter((item: any) => item.id !== target) || [],
   }));
+
+export const useEditDefaultWarningSettingConfig = () =>
+  useConfig(["default_warning_setting"], (target, old) => ({
+    ...old,
+    ...target,
+  }));
