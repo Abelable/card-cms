@@ -246,53 +246,23 @@ export const ChannelModal = ({
           </Form.Item>
           <Form.Item label="限制条件">
             <Wrap padding={2.4}>
-              <Form.Item name="deliver_area_type">
-                <Radio.Group>
-                  <Space direction="vertical">
-                    <Radio value={1}>
-                      <CustomFormItem width={50} marginBottom={0}>
-                        <span style={{ marginRight: "2rem" }}>
-                          不发货地址：
-                        </span>
-                        <Form.Item
-                          name="deliver_area"
-                          style={{ marginBottom: 0, width: "100%" }}
-                        >
-                          <Cascader
-                            fieldNames={{ label: "name", value: "id" }}
-                            style={{ width: "100%" }}
-                            options={regionOptions}
-                            multiple
-                            maxTagCount="responsive"
-                            placeholder="请选择地址"
-                            onClick={(e) => e.preventDefault()}
-                          />
-                        </Form.Item>
-                      </CustomFormItem>
-                    </Radio>
-                    <Radio value={2}>
-                      <CustomFormItem width={50} marginBottom={0}>
-                        <span style={{ marginRight: "2rem" }}>
-                          只发货地址：
-                        </span>
-                        <Form.Item
-                          name="only_deliver_area"
-                          style={{ marginBottom: 0, width: "100%" }}
-                        >
-                          <Cascader
-                            fieldNames={{ label: "name", value: "id" }}
-                            options={regionOptions}
-                            multiple
-                            maxTagCount="responsive"
-                            placeholder="请选择地址"
-                            onClick={(e) => e.preventDefault()}
-                          />
-                        </Form.Item>
-                      </CustomFormItem>
-                    </Radio>
-                  </Space>
-                </Radio.Group>
-              </Form.Item>
+              <CustomFormItem width={50}>
+                <span style={{ marginRight: "2rem" }}>不发货地区：</span>
+                <Form.Item
+                  name="ship_addresses"
+                  style={{ marginBottom: 0, width: "100%" }}
+                >
+                  <Cascader
+                    fieldNames={{ label: "name", value: "id" }}
+                    style={{ width: "100%" }}
+                    options={regionOptions}
+                    multiple
+                    maxTagCount="responsive"
+                    placeholder="请选择不发货地区"
+                    onClick={(e) => e.preventDefault()}
+                  />
+                </Form.Item>
+              </CustomFormItem>
               <CustomFormItem>
                 <span style={{ marginRight: "2rem" }}>年龄限制（周岁）：</span>
                 <Input.Group compact>

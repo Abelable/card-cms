@@ -31,12 +31,11 @@ export interface ChannelForm {
   supplier_id: number;
   name: string;
   encoding: string;
-  ownership: string[];
+  province_id: number;
+  city_id: number;
   is_required_idphoto: boolean;
   need_id_card_pic: boolean;
-  deliver_area_type: number;
-  deliver_area: string[][];
-  only_deliver_area: string[][];
+  dont_ship_addresses: { province_id: number; city_id: number }[];
   min_age_limit: number;
   max_age_limit: number;
   per_person_card_num_limit: number;
