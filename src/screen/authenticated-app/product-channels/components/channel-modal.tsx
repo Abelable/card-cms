@@ -29,18 +29,29 @@ import { SupplierOption } from "types/supplier";
 import { useRegionOptions } from "service/common";
 
 const cycleOptions = [
-  { value: 1, label: "1个月" },
-  { value: 2, label: "2个月" },
-  { value: 3, label: "3个月" },
-  { value: 4, label: "4个月" },
-  { value: 5, label: "5个月" },
-  { value: 6, label: "6个月" },
-  { value: 7, label: "7个月" },
-  { value: 8, label: "8个月" },
-  { value: 9, label: "9个月" },
-  { value: 10, label: "10个月" },
-  { value: 11, label: "11个月" },
-  { value: 12, label: "12个月" },
+  { value: undefined, label: "不限制" },
+  { value: 30, label: "1个月" },
+  { value: 60, label: "2个月" },
+  { value: 90, label: "3个月" },
+  { value: 120, label: "4个月" },
+  { value: 150, label: "5个月" },
+  { value: 180, label: "6个月" },
+  { value: 210, label: "7个月" },
+  { value: 240, label: "8个月" },
+  { value: 270, label: "9个月" },
+  { value: 300, label: "10个月" },
+  { value: 330, label: "11个月" },
+  { value: 360, label: "12个月" },
+];
+
+const halfCycleOptions = [
+  { value: undefined, label: "不限制" },
+  { value: 30, label: "1个月" },
+  { value: 60, label: "2个月" },
+  { value: 90, label: "3个月" },
+  { value: 120, label: "4个月" },
+  { value: 150, label: "5个月" },
+  { value: 180, label: "6个月" },
 ];
 
 export const ChannelModal = ({
@@ -298,8 +309,8 @@ export const ChannelModal = ({
                     name="per_person_card_num_limit"
                     style={{ marginBottom: 0, width: "100%" }}
                   >
-                    <Select placeholder="不限制">
-                      {[1, 2, 3, 4, 5, 10].map((item) => (
+                    <Select>
+                      {[1, 2, 3, 4, 5].map((item) => (
                         <Select.Option key={item} value={item}>
                           {item}
                         </Select.Option>
@@ -313,9 +324,9 @@ export const ChannelModal = ({
                     name="per_person_card_num_limit_check_period"
                     style={{ marginBottom: 0, width: "100%" }}
                   >
-                    <Select placeholder="不限制">
-                      {cycleOptions.map((item) => (
-                        <Select.Option key={item.value} value={item.value}>
+                    <Select>
+                      {cycleOptions.map((item, index) => (
+                        <Select.Option key={index} value={item.value}>
                           {item.label}
                         </Select.Option>
                       ))}
@@ -371,12 +382,9 @@ export const ChannelModal = ({
                           name="phone_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
-                          <Select placeholder="不限制">
-                            {cycleOptions.map((item) => (
-                              <Select.Option
-                                key={item.value}
-                                value={item.value}
-                              >
+                          <Select>
+                            {halfCycleOptions.map((item, index) => (
+                              <Select.Option key={index} value={item.value}>
                                 {item.label}
                               </Select.Option>
                             ))}
@@ -405,12 +413,9 @@ export const ChannelModal = ({
                           name="address_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
-                          <Select placeholder="不限制">
-                            {cycleOptions.map((item) => (
-                              <Select.Option
-                                key={item.value}
-                                value={item.value}
-                              >
+                          <Select>
+                            {halfCycleOptions.map((item, index) => (
+                              <Select.Option key={index} value={item.value}>
                                 {item.label}
                               </Select.Option>
                             ))}
@@ -448,12 +453,9 @@ export const ChannelModal = ({
                           name="phone_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
-                          <Select placeholder="不限制">
-                            {cycleOptions.map((item) => (
-                              <Select.Option
-                                key={item.value}
-                                value={item.value}
-                              >
+                          <Select>
+                            {halfCycleOptions.map((item, index) => (
+                              <Select.Option key={index} value={item.value}>
                                 {item.label}
                               </Select.Option>
                             ))}
@@ -461,7 +463,7 @@ export const ChannelModal = ({
                         </Form.Item>
                       </CustomFormItem>
                     </CustomRow>
-                    <CustomRow gap marginBottom={2.4}>
+                    <CustomRow gap>
                       <CustomFormItem width={30}>
                         <span style={{ marginRight: "2rem" }}>
                           收货地址重复：
@@ -482,12 +484,9 @@ export const ChannelModal = ({
                           name="address_repeated_prewarn_num_check_period"
                           style={{ marginBottom: 0, width: "100%" }}
                         >
-                          <Select placeholder="不限制">
-                            {cycleOptions.map((item) => (
-                              <Select.Option
-                                key={item.value}
-                                value={item.value}
-                              >
+                          <Select>
+                            {halfCycleOptions.map((item, index) => (
+                              <Select.Option key={index} value={item.value}>
                                 {item.label}
                               </Select.Option>
                             ))}
@@ -495,7 +494,6 @@ export const ChannelModal = ({
                         </Form.Item>
                       </CustomFormItem>
                     </CustomRow>
-                    <Button type={"primary"}>保存自定义</Button>
                   </>
                 )}
               </div>

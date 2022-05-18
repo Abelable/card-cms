@@ -549,7 +549,6 @@ export const NewPublishModal = () => {
                           </Form.Item>
                         </CustomFormItem>
                       </CustomRow>
-                      <Button type={"primary"}>保存自定义</Button>
                     </>
                   )}
                 </div>
