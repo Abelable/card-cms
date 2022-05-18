@@ -1,4 +1,4 @@
-import { Pagination } from "./common";
+import type { Pagination, RegionItem } from "./common";
 
 export interface modeOption {
   name: string;
@@ -35,7 +35,7 @@ export interface ChannelForm {
   city_id: number;
   is_required_idphoto: boolean;
   need_id_card_pic: boolean;
-  dont_ship_addresses: { province_id: number; city_id: number }[];
+  dont_ship_addresses: RegionItem[];
   min_age_limit: number;
   max_age_limit: number;
   per_person_card_num_limit: number;

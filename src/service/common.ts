@@ -42,3 +42,10 @@ export const useRegionOptions = (depth = 2) => {
     })
   );
 };
+
+export const useDefaultWarningSetting = () => {
+  const client = useHttp();
+  return useQuery(["default_warning_setting"], () =>
+    client("/api/v1/admin/setting/show/product.prewarn")
+  );
+};

@@ -24,9 +24,9 @@ import styled from "@emotion/styled";
 import "assets/style/hideLeftBorder.css";
 import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
-import { OperatorOption } from "types/common";
+import { OperatorOption, RegionItem } from "types/common";
 import { SupplierOption } from "types/supplier";
-import { useRegionOptions } from "service/common";
+import { useDefaultWarningSetting, useRegionOptions } from "service/common";
 
 const limitOptions = [
   { value: 0, label: "不限制" },
@@ -71,6 +71,8 @@ export const ChannelModal = ({
   supplierOptions: SupplierOption[];
 }) => {
   const { data: regionOptions } = useRegionOptions();
+  const { data: defaultWarningSetting } = useDefaultWarningSetting();
+  console.log(defaultWarningSetting);
   const [form] = useForm();
   const [type, setType] = useState(1);
   const {
@@ -94,8 +96,7 @@ export const ChannelModal = ({
     form.validateFields().then(async () => {
       const { ownership, non_shipping_region, ...rest } = form.getFieldsValue();
 
-      const dont_ship_addresses: { province_id: number; city_id: number }[] =
-        [];
+      const dont_ship_addresses: RegionItem[] = [];
       non_shipping_region.forEach((item: number[]) => {
         if (item.length === 1) {
           regionOptions

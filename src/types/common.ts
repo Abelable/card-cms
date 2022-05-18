@@ -24,3 +24,8 @@ export interface RegionOption {
   name: string;
   children?: RegionOption[];
 }
+
+export interface RegionItem {
+  province_id: number;
+  city_id: number;
+}
