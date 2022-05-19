@@ -1,28 +1,20 @@
-import { toNumber } from "utils";
-import { useGoodsAgents } from "service/product";
-import { useAgentsSearchParams } from "./util";
-
+import { useGoods } from "service/product";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
+import { useUrlQueryParams } from "utils/url";
 
 export const ProductGoodsAgents = () => {
-  const [params, setParams] = useAgentsSearchParams();
-  const { data, isLoading, error } = useGoodsAgents(params);
+  const [{ goods_id }] = useUrlQueryParams(["goods_id"]);
+  const { data, isLoading, error } = useGoods(Number(goods_id));
 
   return (
     <Container>
       <Main>
         <List
+          goodsName={data?.name || ""}
           error={error}
-          params={params}
-          setParams={setParams}
-          dataSource={data?.data}
+          dataSource={data?.agents}
           loading={isLoading}
-          pagination={{
-            current: toNumber(data?.meta.pagination.current_page),
-            pageSize: toNumber(data?.meta.pagination.per_page),
-            total: toNumber(data?.meta.pagination.total),
-          }}
         />
       </Main>
     </Container>

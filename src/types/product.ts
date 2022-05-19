@@ -86,6 +86,12 @@ export interface GoodsListSearchParams {
   page: number;
 }
 
+export interface GoodsAgent {
+  id: number;
+  store: string;
+  phone: string;
+  is_removed: number;
+}
 export interface GoodsForm {
   id: number;
   name: string;
@@ -96,6 +102,8 @@ export interface GoodsForm {
   detail: string;
   remark: string;
   visible_status: number;
+  agents: GoodsAgent[];
+  agent_ids: number[];
   is_removed: number;
 }
 
