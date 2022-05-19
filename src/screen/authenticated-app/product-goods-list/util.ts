@@ -45,6 +45,8 @@ export const useGoodsModal = () => {
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
+  const { data: editingGoods, isLoading } = useGoods(Number(editingGoodsId));
+
   const open = useCallback(
     () => setGoodsListModalOpen({ goodsCreate: true }),
     [setGoodsListModalOpen]
@@ -61,9 +63,11 @@ export const useGoodsModal = () => {
   return {
     goodsModalOpen: goodsCreate === "true" || !!editingGoodsId,
     editingGoodsId,
+    editingGoods,
     open,
     startEdit,
     close,
+    isLoading,
   };
 };
 
@@ -72,6 +76,7 @@ export const useAgentModal = () => {
     "goodsIdOfEditingAgent",
   ]);
   const setUrlParams = useSetUrlSearchParams();
+
   const { data: editingGoods, isLoading } = useGoods(
     Number(goodsIdOfEditingAgent)
   );
