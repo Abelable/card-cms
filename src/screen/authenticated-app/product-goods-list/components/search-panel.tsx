@@ -66,8 +66,8 @@ export const SearchPanel = ({
     supplier_id: undefined,
     product_code: "",
     goods_code: "",
-    agent_id: undefined,
-    deliver_address: "",
+    operator_id: undefined,
+    deliver_address: undefined,
     ownership: undefined,
   } as Partial<GoodsListSearchParams>;
 
@@ -94,14 +94,14 @@ export const SearchPanel = ({
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        goods_code: "",
+        product_code: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      goods_code: evt.target.value,
+      product_code: evt.target.value,
     });
   };
 
@@ -131,20 +131,8 @@ export const SearchPanel = ({
   const clearOperator = () =>
     setTemporaryParams({ ...temporaryParams, operator_id: undefined });
 
-  const setAddress = (evt: any) => {
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        deliver_address: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      deliver_address: evt.target.value,
-    });
-  };
+  const setAddress = (deliver_address: any) =>
+    setTemporaryParams({ ...temporaryParams, deliver_address });
 
   const setOwnership = (ownership: any) =>
     setTemporaryParams({ ...temporaryParams, ownership });
@@ -222,12 +210,12 @@ export const SearchPanel = ({
       </Item>
       <Item>
         <div>发货地址：</div>
-        <Input
+        <Cascader
           style={{ width: "20rem" }}
+          options={regionOptions}
           value={temporaryParams.deliver_address}
           onChange={setAddress}
-          placeholder="请输入发货地址"
-          allowClear={true}
+          placeholder="请选择发货地址"
         />
       </Item>
       <Item>

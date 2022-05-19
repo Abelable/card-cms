@@ -1,11 +1,25 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
+// goods_name: string;
+//   supplier_id: number;
+//   product_code: string;
+//   goods_code: string;
+//   operator_id: number;
+//   deliver_address: number[];
+//   ownership: number[];
+//   per_page: number;
+//   page: number;
+
 export const useGoodsListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "goods_name",
+    "supplier_id",
+    "product_code",
     "goods_code",
-    "supplier",
+    "operator_id",
+    "deliver_address",
+    "ownership",
     "page",
     "per_page",
   ]);

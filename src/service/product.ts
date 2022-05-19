@@ -170,10 +170,22 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
     return client("/api/v1/admin/goods/index", {
       data: cleanObject({
         "filter[goods.name]": rest.goods_name,
-        "filter[goods.encoding]": rest.goods_code,
         "filter[product.supplier_id]": rest.supplier_id,
         "filter[product.encoding]": rest.product_code,
+        "filter[goods.encoding]": rest.goods_code,
         "filter[product.operator_id]": rest.operator_id,
+        "filter[product.ship_province_id]": rest.deliver_address?.length
+          ? rest.deliver_address[0]
+          : "",
+        "filter[product.ship_city_id]": rest.deliver_address?.length
+          ? rest.deliver_address[1]
+          : "",
+        "filter[product.province_id]": rest.ownership?.length
+          ? rest.ownership[0]
+          : "",
+        "filter[product.city_id]": rest.ownership?.length
+          ? rest.ownership[1]
+          : "",
         page,
         per_page,
       }),
