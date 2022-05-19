@@ -6,12 +6,14 @@ import {
   TableProps,
   Image,
   Tag,
+  Modal,
 } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Goods } from "types/product";
 import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
 import {
   useAgentModal,
+  useGoodsListQueryKey,
   useGoodsModal,
   useLinkModal,
   useNewPublishModal,
@@ -19,6 +21,7 @@ import {
 } from "../util";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/lib/table";
+import { useDownGoods, useUpGoods } from "service/product";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   error: Error | unknown;
@@ -48,6 +51,28 @@ export const List = ({
       per_page: pagination.pageSize,
     });
 
+  const { mutate: upGoods } = useUpGoods(useGoodsListQueryKey());
+  const confirmUpGoods = (id: number) => {
+    Modal.confirm({
+      title: "确定上架该商品吗？",
+      content: "点击确定上架",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => upGoods(id),
+    });
+  };
+
+  const { mutate: downGoods } = useDownGoods(useGoodsListQueryKey());
+  const confirmDownGoods = (id: number) => {
+    Modal.confirm({
+      title: "确定下架该商品吗？",
+      content: "点击确定下架",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => downGoods(id),
+    });
+  };
+
   const columns: ColumnsType<Goods> = [
     {
       title: "编号",
@@ -76,7 +101,7 @@ export const List = ({
       ),
     },
     {
-      title: "供应商&产品",
+      title: "供应商&商品",
       render: (value, goods) => (
         <>
           <div>
@@ -87,7 +112,7 @@ export const List = ({
               )?.name
             }
           </div>
-          <div>产品：{goods.product.name}</div>
+          <div>商品：{goods.product.name}</div>
         </>
       ),
     },
@@ -126,7 +151,7 @@ export const List = ({
               type={"link"}
               onClick={() => linkToChannels(goods.product_id)}
             >
-              修改产品信息
+              修改商品信息
             </ButtonNoPadding>
           </div>
           <div>
@@ -139,12 +164,19 @@ export const List = ({
           </div>
           {params.is_removed === "0" ? (
             <div>
-              <ButtonNoPadding type={"link"}>下架</ButtonNoPadding>
+              <ButtonNoPadding
+                type={"link"}
+                onClick={() => confirmDownGoods(goods.id)}
+              >
+                下架
+              </ButtonNoPadding>
             </div>
           ) : (
             <>
               <div>
-                <Button type={"link"}>上架</Button>
+                <Button type={"link"} onClick={() => confirmUpGoods(goods.id)}>
+                  上架
+                </Button>
               </div>
               <div>
                 <Button type={"link"}>删除</Button>
@@ -184,7 +216,7 @@ export const List = ({
               type={"primary"}
               onClick={openPublishModal}
             >
-              基于已有产品渠道发布商品
+              基于已有商品渠道发布商品
             </Button>
           </Row>
         ) : null}

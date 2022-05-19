@@ -222,6 +222,30 @@ export const useEditGoods = (queryKey: QueryKey) => {
   );
 };
 
+export const useDownGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: number) =>
+      client(`/api/v1/admin/goods/simple-update/${id}`, {
+        data: { is_removed: 1 },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
+export const useUpGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: number) =>
+      client(`/api/v1/admin/goods/simple-update/${id}`, {
+        data: { is_removed: 0 },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
 interface EditGoodsAgentParams extends Partial<Goods> {
   id: number;
 }
