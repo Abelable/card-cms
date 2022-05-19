@@ -14,7 +14,7 @@ import {
 import { useGoodsModal, useGoodsListQueryKey } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddGoods, useEditGoods } from "service/product";
+import { useEditGoods, useChannelOptions } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import { useState } from "react";
@@ -22,17 +22,11 @@ import { OssUpload } from "components/oss-upload";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
 
-const operatorOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
-
 export const GoodsModal = () => {
   const [form] = useForm();
-
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
+  const channelOptions = useChannelOptions();
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;
@@ -41,14 +35,12 @@ export const GoodsModal = () => {
 
   const {
     goodsModalOpen,
-    editingGoodsId,
     editingGoods,
     close,
     isLoading: initLoading,
   } = useGoodsModal();
 
-  const useMutationGoods = editingGoodsId ? useEditGoods : useAddGoods;
-  const { mutateAsync, error, isLoading } = useMutationGoods(
+  const { mutateAsync, error, isLoading } = useEditGoods(
     useGoodsListQueryKey()
   );
 
@@ -59,10 +51,17 @@ export const GoodsModal = () => {
 
   const submit = () => {
     form.validateFields().then(async () => {
+      const { tags, img, ...rest } = form.getFieldsValue();
+      const sale_point = tags.join();
+      const main_picture = img.length ? img[0].url : "";
       await mutateAsync(
         cleanObject({
           ...editingGoods,
-          ...form.getFieldsValue(),
+          sale_point,
+          main_picture,
+          detail,
+          remark,
+          ...rest,
         })
       );
       closeModal();
@@ -70,7 +69,15 @@ export const GoodsModal = () => {
   };
 
   useDeepCompareEffect(() => {
-    editingGoods && form.setFieldsValue(editingGoods);
+    if (editingGoods) {
+      const { sale_point, main_picture, detail, remark, ...rest } =
+        editingGoods;
+      const tags = sale_point.split(",");
+      const img = main_picture ? [{ url: main_picture }] : undefined;
+      form.setFieldsValue({ tags, img, ...rest });
+      setDetail(detail);
+      setRemark(remark);
+    }
   }, [form, editingGoods]);
 
   return (
@@ -105,7 +112,7 @@ export const GoodsModal = () => {
                 rules={[{ required: true, message: "请选择基础产品" }]}
               >
                 <Select placeholder="请选择基础产品">
-                  {operatorOptions.map(({ id, name }) => (
+                  {channelOptions.map(({ id, name }) => (
                     <Select.Option key={id} value={id}>
                       {name}
                     </Select.Option>
@@ -127,7 +134,7 @@ export const GoodsModal = () => {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="code"
+                name="encoding"
                 label="商品编码"
                 rules={[{ required: true, message: "请输入商品编码" }]}
               >
@@ -150,10 +157,10 @@ export const GoodsModal = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item name="needImg" label="销售页上传照片">
+          <Form.Item name="is_required_upload_picture" label="销售页上传照片">
             <Radio.Group>
-              <Radio value={false}>无需上传</Radio>
-              <Radio value={true}>需要上传</Radio>
+              <Radio value={0}>无需上传</Radio>
+              <Radio value={1}>需要上传</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item
@@ -170,7 +177,11 @@ export const GoodsModal = () => {
           <Form.Item label="其他备注">
             <RichTextEditor content={remark} setContent={setRemark} />
           </Form.Item>
-          <Form.Item label="强制同步" name="isForce" valuePropName="checked">
+          <Form.Item
+            label="强制同步"
+            name="is_forced_sync"
+            valuePropName="checked"
+          >
             <Checkbox>强制同步分销商此商品详情页</Checkbox>
           </Form.Item>
         </Form>

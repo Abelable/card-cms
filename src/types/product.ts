@@ -106,6 +106,7 @@ export interface GoodsForm {
   agents: GoodsAgent[];
   agent_ids: number[];
   is_removed: number;
+  is_forced_sync: number;
 }
 
 export interface Goods {
