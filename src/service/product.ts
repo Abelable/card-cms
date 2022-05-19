@@ -246,6 +246,17 @@ export const useUpGoods = (queryKey: QueryKey) => {
   );
 };
 
+export const useDeleteGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: number) =>
+      client(`/api/v1/admin/goods/destroy/${id}`, {
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
 interface EditGoodsAgentParams extends Partial<Goods> {
   id: number;
 }

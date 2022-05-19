@@ -21,7 +21,7 @@ import {
 } from "../util";
 import { useNavigate } from "react-router";
 import { ColumnsType } from "antd/lib/table";
-import { useDownGoods, useUpGoods } from "service/product";
+import { useDeleteGoods, useDownGoods, useUpGoods } from "service/product";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   error: Error | unknown;
@@ -70,6 +70,17 @@ export const List = ({
       okText: "确定",
       cancelText: "取消",
       onOk: () => downGoods(id),
+    });
+  };
+
+  const { mutate: deleteGoods } = useDeleteGoods(useGoodsListQueryKey());
+  const confirmDeleteGoods = (id: number) => {
+    Modal.confirm({
+      title: "确定删除该商品吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => deleteGoods(id),
     });
   };
 
@@ -179,7 +190,12 @@ export const List = ({
                 </Button>
               </div>
               <div>
-                <Button type={"link"}>删除</Button>
+                <Button
+                  type={"link"}
+                  onClick={() => confirmDeleteGoods(goods.id)}
+                >
+                  删除
+                </Button>
               </div>
             </>
           )}
