@@ -162,7 +162,7 @@ export const List = ({
               type={"link"}
               onClick={() => linkToChannels(goods.product_id)}
             >
-              修改商品信息
+              修改产品信息
             </ButtonNoPadding>
           </div>
           <div>
@@ -185,17 +185,20 @@ export const List = ({
           ) : (
             <>
               <div>
-                <Button type={"link"} onClick={() => confirmUpGoods(goods.id)}>
+                <ButtonNoPadding
+                  type={"link"}
+                  onClick={() => confirmUpGoods(goods.id)}
+                >
                   上架
-                </Button>
+                </ButtonNoPadding>
               </div>
               <div>
-                <Button
+                <ButtonNoPadding
                   type={"link"}
                   onClick={() => confirmDeleteGoods(goods.id)}
                 >
                   删除
-                </Button>
+                </ButtonNoPadding>
               </div>
             </>
           )}
