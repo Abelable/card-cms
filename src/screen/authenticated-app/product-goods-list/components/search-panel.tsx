@@ -174,61 +174,124 @@ export const SearchPanel = ({
           allowClear={true}
         />
       </Item>
-      <Item>
-        <div>运营商：</div>
-        <Select
-          style={{ width: "20rem" }}
-          value={temporaryParams.operator_id}
-          allowClear={true}
-          onSelect={setOperator}
-          onClear={clearOperator}
-          placeholder="请选择运营商"
-        >
-          {operatorOptions.map(({ id, name }) => (
-            <Select.Option key={id} value={id}>
-              {name}
-            </Select.Option>
-          ))}
-        </Select>
-      </Item>
-      <Item>
-        <div>发货地址：</div>
-        <Cascader
-          style={{ width: "20rem" }}
-          fieldNames={{ label: "name", value: "id" }}
-          options={regionOptions}
-          value={
-            temporaryParams.ship_province_id
-              ? [
-                  Number(temporaryParams.ship_province_id),
-                  Number(temporaryParams.ship_city_id),
-                ]
-              : undefined
-          }
-          onChange={setAddress}
-          onClear={clearAddress}
-          placeholder="请选择发货地址"
-        />
-      </Item>
-      <Item>
-        <div>归属地：</div>
-        <Cascader
-          style={{ width: "20rem" }}
-          fieldNames={{ label: "name", value: "id" }}
-          options={regionOptions}
-          value={
-            temporaryParams.province_id
-              ? [
-                  Number(temporaryParams.province_id),
-                  Number(temporaryParams.city_id),
-                ]
-              : undefined
-          }
-          onChange={setOwnership}
-          onClear={clearOwnership}
-          placeholder="请选择归属地"
-        />
-      </Item>
+      {params.is_removed === "0" ? (
+        <>
+          <Item>
+            <div>运营商：</div>
+            <Select
+              style={{ width: "20rem" }}
+              value={temporaryParams.operator_id}
+              allowClear={true}
+              onSelect={setOperator}
+              onClear={clearOperator}
+              placeholder="请选择运营商"
+            >
+              {operatorOptions.map(({ id, name }) => (
+                <Select.Option key={id} value={id}>
+                  {name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Item>
+          <Item>
+            <div>发货地址：</div>
+            <Cascader
+              style={{ width: "20rem" }}
+              fieldNames={{ label: "name", value: "id" }}
+              options={regionOptions}
+              value={
+                temporaryParams.ship_province_id
+                  ? [
+                      Number(temporaryParams.ship_province_id),
+                      Number(temporaryParams.ship_city_id),
+                    ]
+                  : undefined
+              }
+              onChange={setAddress}
+              onClear={clearAddress}
+              placeholder="请选择发货地址"
+            />
+          </Item>
+          <Item>
+            <div>归属地：</div>
+            <Cascader
+              style={{ width: "20rem" }}
+              fieldNames={{ label: "name", value: "id" }}
+              options={regionOptions}
+              value={
+                temporaryParams.province_id
+                  ? [
+                      Number(temporaryParams.province_id),
+                      Number(temporaryParams.city_id),
+                    ]
+                  : undefined
+              }
+              onChange={setOwnership}
+              onClear={clearOwnership}
+              placeholder="请选择归属地"
+            />
+          </Item>
+        </>
+      ) : (
+        <></>
+      )}
+      <>
+        <Item>
+          <div>运营商：</div>
+          <Select
+            style={{ width: "20rem" }}
+            value={temporaryParams.operator_id}
+            allowClear={true}
+            onSelect={setOperator}
+            onClear={clearOperator}
+            placeholder="请选择运营商"
+          >
+            {operatorOptions.map(({ id, name }) => (
+              <Select.Option key={id} value={id}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Item>
+        <Item>
+          <div>发货地址：</div>
+          <Cascader
+            style={{ width: "20rem" }}
+            fieldNames={{ label: "name", value: "id" }}
+            options={regionOptions}
+            value={
+              temporaryParams.ship_province_id
+                ? [
+                    Number(temporaryParams.ship_province_id),
+                    Number(temporaryParams.ship_city_id),
+                  ]
+                : undefined
+            }
+            onChange={setAddress}
+            onClear={clearAddress}
+            placeholder="请选择发货地址"
+          />
+        </Item>
+        <Item>
+          <div>归属地：</div>
+          <Cascader
+            style={{ width: "20rem" }}
+            fieldNames={{ label: "name", value: "id" }}
+            options={regionOptions}
+            value={
+              temporaryParams.province_id
+                ? [
+                    Number(temporaryParams.province_id),
+                    Number(temporaryParams.city_id),
+                  ]
+                : undefined
+            }
+            onChange={setOwnership}
+            onClear={clearOwnership}
+            placeholder="请选择归属地"
+          />
+        </Item>
+      </>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button

@@ -81,6 +81,7 @@ export interface GoodsListSearchParams {
   ship_city_id: number;
   province_id: number;
   city_id: number;
+  is_removed: string;
   per_page: number;
   page: number;
 }
