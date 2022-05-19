@@ -169,6 +169,7 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
     const { page, per_page, ...rest } = params;
     return client("/api/v1/admin/goods/index", {
       data: cleanObject({
+        "filter[goods.is_removed]": rest.is_removed,
         "filter[goods.name]": rest.goods_name,
         "filter[product.supplier_id]": rest.supplier_id,
         "filter[product.encoding]": rest.product_code,
