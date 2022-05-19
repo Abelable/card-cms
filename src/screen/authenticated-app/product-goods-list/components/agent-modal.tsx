@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Form, Modal, Radio, Select, Space, Button, Spin } from "antd";
+import { Form, Modal, Radio, Select, Button, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAgentOptions } from "service/agent";
@@ -62,6 +62,7 @@ export const AgentModal = ({
   return (
     <Modal
       title={"修改代理商可见"}
+      width={600}
       onCancel={closeModal}
       visible={agentModalOpen}
       confirmLoading={isLoading}
@@ -93,12 +94,10 @@ export const AgentModal = ({
             rules={[{ required: true, message: "请选择代理商可见设置" }]}
           >
             <Radio.Group>
-              <Space direction={"vertical"}>
-                <Radio value={1}>仅自己可见</Radio>
-                <Radio value={2}>全部代理商可见</Radio>
-                <Radio value={3}>选择代理商可见</Radio>
-                <Radio value={4}>选择代理商不可见</Radio>
-              </Space>
+              <Radio value={1}>仅自己可见</Radio>
+              <Radio value={2}>全部代理商可见</Radio>
+              <Radio value={3}>选择代理商可见</Radio>
+              <Radio value={4}>选择代理商不可见</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item
@@ -109,7 +108,11 @@ export const AgentModal = ({
           >
             {({ getFieldValue }) =>
               [3, 4].includes(getFieldValue("visible_status")) && (
-                <Form.Item name="agent_id" label="选择代理商">
+                <Form.Item
+                  name="agent_id"
+                  label="选择代理商"
+                  rules={[{ required: true, message: "请选择代理商" }]}
+                >
                   <Select mode="tags" placeholder="请选择代理商">
                     {agentOptions.map((item) => (
                       <Select.Option key={item.id} value={item.id}>
