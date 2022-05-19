@@ -3,7 +3,7 @@ import { Form, Modal, Radio, Select, Button, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAgentOptions } from "service/agent";
-import { useEditGoods } from "service/product";
+import { useEditGoods, useUpGoods } from "service/product";
 import { GoodsListSearchParams } from "types/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useGoodsListQueryKey, useAgentModal } from "../util";
@@ -25,6 +25,7 @@ export const AgentModal = ({
   const { mutateAsync, isLoading, error } = useEditGoods(
     useGoodsListQueryKey()
   );
+  const { mutate: upGoods } = useUpGoods(useGoodsListQueryKey());
 
   useDeepCompareEffect(() => {
     if (editingGoods) {
@@ -46,9 +47,10 @@ export const AgentModal = ({
   const confirmAndUp = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
-        id: goodsIdOfEditingAgent || "",
+        ...editingGoods,
         ...form.getFieldsValue(),
       });
+      upGoods(Number(goodsIdOfEditingAgent));
       closeModal();
     });
   };
