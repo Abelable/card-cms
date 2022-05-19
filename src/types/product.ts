@@ -93,6 +93,7 @@ export interface GoodsForm {
   encoding: string;
   product_id: number;
   sale_point: string;
+  detail: string;
   remark: string;
   visible_status: number;
   is_removed: number;
