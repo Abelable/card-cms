@@ -4,19 +4,13 @@ import { Row } from "components/lib";
 import { GoodsListSearchParams } from "types/product";
 import styled from "@emotion/styled";
 import { SupplierOption } from "types/supplier";
-import { useRegionOptions } from "service/common";
+import { useOperatorOptions, useRegionOptions } from "service/common";
 
 export interface SearchPanelProps {
   supplierOptions: SupplierOption[];
   params: Partial<GoodsListSearchParams>;
   setParams: (params: Partial<GoodsListSearchParams>) => void;
 }
-
-const operatorOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
 
 export const SearchPanel = ({
   supplierOptions,
@@ -38,6 +32,7 @@ export const SearchPanel = ({
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<GoodsListSearchParams>>(params);
 
+  const operatorOptions = useOperatorOptions();
   const { data: regionOptions } = useRegionOptions();
 
   const setGoodsName = (evt: any) => {
