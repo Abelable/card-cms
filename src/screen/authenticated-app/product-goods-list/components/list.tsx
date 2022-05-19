@@ -18,6 +18,7 @@ import {
   usePublishModal,
 } from "../util";
 import { useNavigate } from "react-router";
+import { ButtonNoPadding } from "../../../../components/lib";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   error: Error | unknown;
@@ -103,13 +104,14 @@ export const List = ({
             render: (value, goods) => (
               <>
                 <div>
+                  供应商：
                   {
                     supplierOptions.find(
                       (item) => item.id === goods.product.supplier_id
                     )?.name
                   }
                 </div>
-                <div>{goods.product.name}</div>
+                <div>产品：{goods.product.name}</div>
               </>
             ),
           },
@@ -118,17 +120,20 @@ export const List = ({
             render: (value, goods) => (
               <>
                 <div>
-                  <Button
+                  <ButtonNoPadding
                     type={"link"}
                     onClick={() => editAgent(String(goods.id))}
                   >
                     设置代理商可见
-                  </Button>
+                  </ButtonNoPadding>
                 </div>
                 <div>
-                  <Button type={"link"} onClick={() => linkToAgents(goods.id)}>
+                  <ButtonNoPadding
+                    type={"link"}
+                    onClick={() => linkToAgents(goods.id)}
+                  >
                     查看代理商
-                  </Button>
+                  </ButtonNoPadding>
                 </div>
               </>
             ),
@@ -138,23 +143,23 @@ export const List = ({
             render: (value, goods) => (
               <>
                 <div>
-                  <Button
+                  <ButtonNoPadding
                     type={"link"}
                     onClick={() => linkToChannels(goods.product_id)}
                   >
                     修改产品信息
-                  </Button>
+                  </ButtonNoPadding>
                 </div>
                 <div>
-                  <Button
+                  <ButtonNoPadding
                     type={"link"}
                     onClick={() => startEdit(String(goods.id))}
                   >
                     修改商品信息
-                  </Button>
+                  </ButtonNoPadding>
                 </div>
                 <div>
-                  <Button type={"link"}>下架</Button>
+                  <ButtonNoPadding type={"link"}>下架</ButtonNoPadding>
                 </div>
               </>
             ),
@@ -162,9 +167,12 @@ export const List = ({
           {
             title: "操作",
             render: (value, goods) => (
-              <Button type={"link"} onClick={() => checkLink(String(goods.id))}>
+              <ButtonNoPadding
+                type={"link"}
+                onClick={() => checkLink(String(goods.id))}
+              >
                 推广链接
-              </Button>
+              </ButtonNoPadding>
             ),
           },
         ]}
