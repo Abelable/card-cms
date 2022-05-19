@@ -99,6 +99,7 @@ export interface GoodsForm {
   encoding: string;
   product_id: number;
   sale_point: string;
+  is_required_upload_picture: number;
   detail: string;
   remark: string;
   visible_status: number;
