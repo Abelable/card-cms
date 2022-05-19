@@ -77,8 +77,10 @@ export interface GoodsListSearchParams {
   product_code: string;
   goods_code: string;
   operator_id: number;
-  deliver_address: number[];
-  ownership: number[];
+  ship_province_id: number;
+  ship_city_id: number;
+  province_id: number;
+  city_id: number;
   per_page: number;
   page: number;
 }

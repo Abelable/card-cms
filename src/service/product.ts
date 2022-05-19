@@ -174,18 +174,10 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
         "filter[product.encoding]": rest.product_code,
         "filter[goods.encoding]": rest.goods_code,
         "filter[product.operator_id]": rest.operator_id,
-        "filter[product.ship_province_id]": rest.deliver_address?.length
-          ? rest.deliver_address[0]
-          : "",
-        "filter[product.ship_city_id]": rest.deliver_address?.length
-          ? rest.deliver_address[1]
-          : "",
-        "filter[product.province_id]": rest.ownership?.length
-          ? rest.ownership[0]
-          : "",
-        "filter[product.city_id]": rest.ownership?.length
-          ? rest.ownership[1]
-          : "",
+        "filter[product.ship_province_id]": rest.ship_province_id,
+        "filter[product.ship_city_id]": rest.ship_city_id,
+        "filter[product.province_id]": rest.province_id,
+        "filter[product.city_id]": rest.city_id,
         page,
         per_page,
       }),
