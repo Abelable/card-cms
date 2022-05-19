@@ -1,14 +1,10 @@
 import { toNumber } from "utils";
-import { useGoodsList, useDownedGoodsList } from "service/product";
-import {
-  useGoodsListSearchParams,
-  useDownedGoodsListSearchParams,
-} from "./util";
+import { useGoodsList } from "service/product";
+import { useGoodsListSearchParams } from "./util";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
 import { Menu, MenuProps } from "antd";
-import { DownedList } from "./components/downed-list";
 import { GoodsModal } from "./components/goods-modal";
 import { AgentModal } from "./components/agent-modal";
 import { LinkModal } from "./components/link-modal";
@@ -19,13 +15,7 @@ import { useSupplierOptions } from "service/supplier";
 export const ProductGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
   const supplierOptions = useSupplierOptions();
-  const [downedParams, setDownedParams] = useDownedGoodsListSearchParams();
   const { data, isLoading, error } = useGoodsList(params);
-  const {
-    data: downedData,
-    isLoading: downedLoading,
-    error: downedError,
-  } = useDownedGoodsList(downedParams);
 
   const items: MenuProps["items"] = [
     {
@@ -61,35 +51,19 @@ export const ProductGoodsList = () => {
           params={params}
           setParams={setParams}
         />
-        {params.is_removed === "0" ? (
-          <List
-            error={error}
-            supplierOptions={supplierOptions}
-            params={params}
-            setParams={setParams}
-            dataSource={data?.data}
-            loading={isLoading}
-            pagination={{
-              current: toNumber(data?.meta.pagination.current_page),
-              pageSize: toNumber(data?.meta.pagination.per_page),
-              total: toNumber(data?.meta.pagination.total),
-            }}
-          />
-        ) : (
-          <DownedList
-            error={downedError}
-            supplierOptions={supplierOptions}
-            params={downedParams}
-            setParams={setDownedParams}
-            dataSource={downedData?.data}
-            loading={downedLoading}
-            pagination={{
-              current: toNumber(downedData?.meta.pagination.current_page),
-              pageSize: toNumber(downedData?.meta.pagination.per_page),
-              total: toNumber(downedData?.meta.pagination.total),
-            }}
-          />
-        )}
+        <List
+          error={error}
+          supplierOptions={supplierOptions}
+          params={params}
+          setParams={setParams}
+          dataSource={data?.data}
+          loading={isLoading}
+          pagination={{
+            current: toNumber(data?.meta.pagination.current_page),
+            pageSize: toNumber(data?.meta.pagination.per_page),
+            total: toNumber(data?.meta.pagination.total),
+          }}
+        />
       </Main>
       <GoodsModal goodsList={data?.data || []} />
       <AgentModal goodsList={data?.data || []} />
