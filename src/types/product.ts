@@ -87,16 +87,17 @@ export interface GoodsListSearchParams {
 }
 
 export interface GoodsForm {
-  product_id: number;
+  id: number;
   name: string;
-  code: string;
-  tags: string[];
-  needImg: boolean;
-  img: string;
-  detail: string;
-  remarks: string;
-  isForce: boolean;
+  main_picture: string;
+  encoding: string;
+  product_id: number;
+  sale_point: string;
+  remark: string;
+  visible_status: number;
+  is_removed: number;
 }
+
 export interface Goods {
   id: number;
   name: string;
@@ -107,7 +108,7 @@ export interface Goods {
   supplier_name: string;
   product_id: number;
   product_name: string;
-  visible_type: number;
+  visible_status: number;
   agent_id: number;
   created_at: string;
 }

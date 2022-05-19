@@ -12,6 +12,7 @@ import {
   ChannelsResult,
   ChannelsSearchParams,
   Goods,
+  GoodsForm,
   GoodsListResult,
   GoodsListSearchParams,
 } from "types/product";
@@ -186,22 +187,13 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
   });
 };
 
-export const useDownedGoodsList = (params: Partial<GoodsListSearchParams>) => {
+export const useGoods = (id?: number) => {
   const client = useHttp();
-  return useQuery<GoodsListResult>(
-    ["downed_product_goods_list", params],
-    () => {
-      const { page, per_page, ...rest } = params;
-      return client("/api/v1/admin/goods/index", {
-        data: cleanObject({
-          "filter[goods.name]": rest.goods_name,
-          "filter[product.supplier_id]": rest.supplier_id,
-          "filter[product.encoding]": rest.product_code,
-          "filter[goods.encoding]": rest.goods_code,
-          page,
-          per_page,
-        }),
-      });
+  return useQuery<GoodsForm>(
+    ["goods", { id }],
+    () => client(`/api/v1/admin/goods/show/${id}`),
+    {
+      enabled: Boolean(id),
     }
   );
 };

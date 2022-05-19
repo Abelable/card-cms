@@ -1,5 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
+import { useGoods } from "service/product";
 
 export const useGoodsListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -22,25 +23,6 @@ export const useGoodsListSearchParams = () => {
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
         is_removed: params.is_removed || "0",
-        ...params,
-      }),
-      [params]
-    ),
-    setParams,
-  ] as const;
-};
-
-export const useDownedGoodsListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams([
-    "goods_name",
-    "goods_code",
-    "supplier",
-    "page",
-    "per_page",
-  ]);
-  return [
-    useMemo(
-      () => ({
         ...params,
       }),
       [params]
@@ -90,6 +72,9 @@ export const useAgentModal = () => {
     "goodsIdOfEditingAgent",
   ]);
   const setUrlParams = useSetUrlSearchParams();
+  const { data: editingGoods, isLoading } = useGoods(
+    Number(goodsIdOfEditingAgent)
+  );
 
   const startEdit = useCallback(
     (id: string) => setEditingGoodsId({ goodsIdOfEditingAgent: id }),
@@ -103,8 +88,10 @@ export const useAgentModal = () => {
   return {
     agentModalOpen: !!goodsIdOfEditingAgent,
     goodsIdOfEditingAgent,
+    editingGoods,
     startEdit,
     close,
+    isLoading,
   };
 };
 
