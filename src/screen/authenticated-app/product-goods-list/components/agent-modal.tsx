@@ -3,7 +3,7 @@ import { Form, Modal, Radio, Select, Button, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAgentOptions } from "service/agent";
-import { useEditGoodsAgent } from "service/product";
+import { useEditGoods } from "service/product";
 import { GoodsListSearchParams } from "types/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useGoodsListQueryKey, useAgentModal } from "../util";
@@ -22,22 +22,21 @@ export const AgentModal = ({
     isLoading: initLoading,
     close,
   } = useAgentModal();
-  const { mutateAsync, isLoading, error } = useEditGoodsAgent(
+  const { mutateAsync, isLoading, error } = useEditGoods(
     useGoodsListQueryKey()
   );
 
   useDeepCompareEffect(() => {
     if (editingGoods) {
-      // const { , agent_id } = editingGoods;
-      // form.setFieldsValue({ visible_type, agent_id });
-      form.setFieldsValue(editingGoods);
+      const { visible_status, agent_ids } = editingGoods;
+      form.setFieldsValue({ visible_status, agent_ids });
     }
   }, [editingGoods, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
-        id: goodsIdOfEditingAgent || "",
+        ...editingGoods,
         ...form.getFieldsValue(),
       });
       closeModal();
@@ -109,7 +108,7 @@ export const AgentModal = ({
             {({ getFieldValue }) =>
               [3, 4].includes(getFieldValue("visible_status")) && (
                 <Form.Item
-                  name="agent_id"
+                  name="agent_ids"
                   label="选择代理商"
                   rules={[{ required: true, message: "请选择代理商" }]}
                 >

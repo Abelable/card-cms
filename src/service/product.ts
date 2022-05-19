@@ -202,7 +202,7 @@ export const useAddGoods = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (params: Partial<Goods>) =>
-      client("/api/v1/admin/channel/store", {
+      client("/api/v1/admin/goods/store", {
         data: params,
         method: "POST",
       }),
@@ -214,7 +214,7 @@ export const useEditGoods = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: Partial<Goods>) =>
-      client(`/api/v1/admin/channel/update/${id}`, {
+      client(`/api/v1/admin/goods/update/${id}`, {
         data: params,
         method: "POST",
       }),
@@ -254,21 +254,6 @@ export const useDeleteGoods = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useDeleteConfig(queryKey)
-  );
-};
-
-interface EditGoodsAgentParams extends Partial<Goods> {
-  id: number;
-}
-export const useEditGoodsAgent = (queryKey: QueryKey) => {
-  const client = useHttp();
-  return useMutation(
-    ({ id, ...params }: EditGoodsAgentParams) =>
-      client(`/api/v1/admin/channel/update/${id}`, {
-        data: params,
-        method: "POST",
-      }),
-    useEditConfig(queryKey)
   );
 };
 
