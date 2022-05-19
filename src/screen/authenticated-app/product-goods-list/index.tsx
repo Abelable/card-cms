@@ -19,11 +19,6 @@ import { PublishModal } from "./components/publish-modal";
 import { NewPublishModal } from "./components/new-publish-modal";
 import { useSupplierOptions } from "service/supplier";
 
-const modeOptions = [
-  { name: "手动生产", value: 0 },
-  { name: "自动生产", value: 1 },
-];
-
 export const ProductGoodsList = () => {
   const [type, setType] = useState("0");
   const [params, setParams] = useGoodsListSearchParams();
@@ -62,7 +57,6 @@ export const ProductGoodsList = () => {
             />
             <List
               error={error}
-              modeOptions={modeOptions}
               supplierOptions={supplierOptions}
               params={params}
               setParams={setParams}
@@ -84,7 +78,6 @@ export const ProductGoodsList = () => {
             />
             <DownedList
               error={downedError}
-              modeOptions={modeOptions}
               supplierOptions={supplierOptions}
               params={downedParams}
               setParams={setDownedParams}

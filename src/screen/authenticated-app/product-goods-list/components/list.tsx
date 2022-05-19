@@ -8,7 +8,7 @@ import {
   Tag,
 } from "antd";
 import { SearchPanelProps } from "./search-panel";
-import { Goods, modeOption } from "types/product";
+import { Goods } from "types/product";
 import { ErrorBox, Row } from "components/lib";
 import {
   useAgentModal,
@@ -20,13 +20,11 @@ import {
 import { useNavigate } from "react-router";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
-  modeOptions: modeOption[];
   error: Error | unknown;
 }
 
 export const List = ({
   error,
-  modeOptions,
   supplierOptions,
   params,
   setParams,
