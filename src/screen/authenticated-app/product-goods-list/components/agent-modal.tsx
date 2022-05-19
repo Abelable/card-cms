@@ -88,7 +88,7 @@ export const AgentModal = ({
       ) : (
         <Form form={form} layout="vertical">
           <Form.Item
-            name="visible_type"
+            name="visible_status"
             label="代理商可见设置"
             rules={[{ required: true, message: "请选择代理商可见设置" }]}
           >
@@ -101,14 +101,25 @@ export const AgentModal = ({
               </Space>
             </Radio.Group>
           </Form.Item>
-          <Form.Item name="agent_id" label="选择代理商">
-            <Select mode="tags" placeholder="请选择代理商">
-              {agentOptions.map((item) => (
-                <Select.Option key={item.id} value={item.id}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.visible_status !== currentValues.visible_status
+            }
+          >
+            {({ getFieldValue }) =>
+              [3, 4].includes(getFieldValue("visible_status")) && (
+                <Form.Item name="agent_id" label="选择代理商">
+                  <Select mode="tags" placeholder="请选择代理商">
+                    {agentOptions.map((item) => (
+                      <Select.Option key={item.id} value={item.id}>
+                        {item.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              )
+            }
           </Form.Item>
         </Form>
       )}
