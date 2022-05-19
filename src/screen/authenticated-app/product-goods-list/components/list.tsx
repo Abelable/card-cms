@@ -9,7 +9,7 @@ import {
 } from "antd";
 import { SearchPanelProps } from "./search-panel";
 import { Goods } from "types/product";
-import { ErrorBox, Row } from "components/lib";
+import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
 import {
   useAgentModal,
   useGoodsModal,
@@ -18,7 +18,6 @@ import {
   usePublishModal,
 } from "../util";
 import { useNavigate } from "react-router";
-import { ButtonNoPadding } from "../../../../components/lib";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   error: Error | unknown;
