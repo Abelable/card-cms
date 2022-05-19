@@ -51,18 +51,20 @@ export const List = ({
     <Container>
       <Header between={true}>
         <h3>商品列表</h3>
-        <Row gap>
-          <Button type={"default"} onClick={openNewPublishModal}>
-            发布全新套餐
-          </Button>
-          <Button
-            style={{ marginRight: 0 }}
-            type={"primary"}
-            onClick={openPublishModal}
-          >
-            基于已有产品渠道发布商品
-          </Button>
-        </Row>
+        {params.is_removed === "0" ? (
+          <Row gap>
+            <Button type={"default"} onClick={openNewPublishModal}>
+              发布全新套餐
+            </Button>
+            <Button
+              style={{ marginRight: 0 }}
+              type={"primary"}
+              onClick={openPublishModal}
+            >
+              基于已有产品渠道发布商品
+            </Button>
+          </Row>
+        ) : null}
       </Header>
       <ErrorBox error={error} />
       <Table
