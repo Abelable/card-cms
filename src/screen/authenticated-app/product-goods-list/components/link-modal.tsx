@@ -1,11 +1,11 @@
-import { Modal, Button, Image, Spin } from "antd";
+import { Modal, Button, Spin } from "antd";
 import copy from "copy-to-clipboard";
+import QRCode from "qrcode.react";
 import { useLinkModal } from "../util";
 import styled from "@emotion/styled";
 
 export const LinkModal = () => {
   const { linkModalOpen, goodsExtension, close, isLoading } = useLinkModal();
-  console.log(goodsExtension);
 
   const copyLink = () => {
     copy(goodsExtension ? goodsExtension[0] : "");
@@ -44,11 +44,7 @@ export const LinkModal = () => {
           <div style={{ marginBottom: "2.4rem" }}>
             下单链接地址：{goodsExtension ? goodsExtension[0] : ""}
           </div>
-          <Image
-            width={160}
-            height={160}
-            src={goodsExtension ? goodsExtension[0] : ""}
-          />
+          <QRCode value={goodsExtension ? goodsExtension[0] : ""} />
         </Wrap>
       )}
     </Modal>
