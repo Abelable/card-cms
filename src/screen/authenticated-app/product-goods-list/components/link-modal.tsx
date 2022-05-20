@@ -1,6 +1,8 @@
-import { Modal, Button, Spin } from "antd";
+import { Modal, Button, Spin, message } from "antd";
 import copy from "copy-to-clipboard";
 import QRCode from "qrcode.react";
+import domtoimage from "dom-to-image";
+import { saveAs } from "file-saver";
 import { useLinkModal } from "../util";
 import styled from "@emotion/styled";
 
@@ -9,12 +11,16 @@ export const LinkModal = () => {
 
   const copyLink = () => {
     copy(goodsExtension ? goodsExtension[0] : "");
-    closeModal();
+    message.success("复制成功");
   };
 
   const open = () => {
     window.location.href = goodsExtension ? goodsExtension[0] : "";
-    closeModal();
+  };
+
+  const download = () => {
+    const node = document.getElementById("code");
+    domtoimage.toBlob(node as Node).then((blob) => saveAs(blob));
   };
 
   const closeModal = () => {
@@ -44,7 +50,9 @@ export const LinkModal = () => {
           <div style={{ marginBottom: "2.4rem" }}>
             下单链接地址：{goodsExtension ? goodsExtension[0] : ""}
           </div>
-          <QRCode value={goodsExtension ? goodsExtension[0] : ""} />
+          <QRCodeWrap id="code" onClick={() => download()}>
+            <QRCode value={goodsExtension ? goodsExtension[0] : ""} />
+          </QRCodeWrap>
         </Wrap>
       )}
     </Modal>
@@ -63,4 +71,8 @@ const Loading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const QRCodeWrap = styled.div`
+  cursor: pointer;
 `;
