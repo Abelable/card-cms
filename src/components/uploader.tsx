@@ -4,11 +4,11 @@ import { useState } from "react";
 import { initNonce, initTimestamp } from "service/http";
 import { useAuth } from "context/auth-context";
 
-interface OssUploadProps extends React.ComponentProps<typeof Upload> {
+interface UploaderProps extends React.ComponentProps<typeof Upload> {
   maxCount?: number;
 }
 
-export const OssUpload = (props: OssUploadProps) => {
+export const Uploader = (props: UploaderProps) => {
   const { token } = useAuth();
   const [previewImage, setPreviewImage] = useState("");
   const preview = (file: any) => setPreviewImage(file.thumbUrl);

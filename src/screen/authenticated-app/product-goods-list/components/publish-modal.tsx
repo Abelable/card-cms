@@ -18,7 +18,7 @@ import { ErrorBox } from "components/lib";
 import { usePublishGoods } from "service/product";
 import { cleanObject } from "utils";
 import { useState } from "react";
-import { OssUpload } from "components/oss-upload";
+import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
 
@@ -158,7 +158,7 @@ export const PublishModal = () => {
               valuePropName="fileList"
               getValueFromEvent={normFile}
             >
-              <OssUpload maxCount={1} />
+              <Uploader maxCount={1} />
             </Form.Item>
             <Form.Item label="商品详情" required>
               <RichTextEditor content={detail} setContent={setDetail} />
