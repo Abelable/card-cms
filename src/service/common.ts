@@ -1,17 +1,7 @@
 import { useHttp } from "./http";
 import { useMutation, useQuery } from "react-query";
-import {
-  OperatorOption,
-  OssConfig,
-  RegionOption,
-  WarningSetting,
-} from "types/common";
+import { OperatorOption, RegionOption, WarningSetting } from "types/common";
 import { useEditDefaultWarningSettingConfig } from "./use-optimistic-options";
-
-export const useOssConfig = () => {
-  const client = useHttp();
-  return useQuery<OssConfig>(["ossConfig"], () => client("/api/admin/oss/ali"));
-};
 
 export const useImportData = () => {
   const client = useHttp();

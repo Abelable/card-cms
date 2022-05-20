@@ -6,30 +6,35 @@ import { useCallback } from "react";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface Config extends RequestInit {
-  data?: object;
   token?: string;
+  data?: object;
+  formData?: FormData;
 }
 
 export const http = async (
   endpoint: string,
-  { data, token, headers, ...customConfig }: Config = {}
+  { token, data, formData, headers, ...customConfig }: Config = {}
 ) => {
   const config = {
     method: "GET",
     headers: {
-      "Content-Type": data ? "application/json" : "",
       Authorization: token ? `Bearer ${token}` : "",
       timestamp: initTimestamp(),
       nonce: initNonce(),
       ...headers,
-    },
+    } as any,
     ...customConfig,
   };
 
   if (config.method.toUpperCase() === "GET") {
     endpoint += `?${qs.stringify(data)}`;
   } else {
-    config.body = JSON.stringify(data || {});
+    if (formData) {
+      config.body = formData;
+    } else {
+      config.headers["Content-Type"] = "application/json";
+      config.body = JSON.stringify(data || {});
+    }
   }
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {

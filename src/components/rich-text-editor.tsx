@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useOssConfig } from "service/common";
+import { useHttp } from "service/http";
 
 export const RichTextEditor = ({
   content,
@@ -12,7 +12,7 @@ export const RichTextEditor = ({
   setContent: (value: any) => void;
 }) => {
   const quillRef: any = useRef(null);
-  const { data: ossConfig } = useOssConfig();
+  const client = useHttp();
 
   const modules = useMemo(
     () => ({
@@ -32,41 +32,22 @@ export const RichTextEditor = ({
             input.setAttribute("accept", "image/*");
             input.click();
             input.onchange = async () => {
-              try {
-                const file = input.files ? input.files[0] : null;
-                const suffix =
-                  file?.name.slice(file.name.lastIndexOf(".")) || "";
-                const filename = Date.now() + suffix;
+              const file = input.files ? input.files[0] : null;
+              if (file) {
                 const formData = new FormData();
-                formData.append("key", `${ossConfig?.dir}${filename}`);
-                formData.append("dir", ossConfig?.dir || "");
-                formData.append("policy", ossConfig?.policy || "");
-                formData.append(
-                  "OSSAccessKeyId",
-                  ossConfig?.OSSAccessKeyId || ""
-                );
-                formData.append("success_action_status", "200");
-                formData.append("signature", ossConfig?.signature || "");
-                formData.append("file", file || "", filename);
-                await window.fetch(`https:${ossConfig?.host}`, {
+                formData.append("image", file);
+                const res = await client("/api/v1/admin/upload/image", {
                   method: "POST",
-                  body: formData,
+                  formData,
                 });
-                const url = `https:${ossConfig?.host}/${ossConfig?.dir}${filename}`;
-                const quillEditor = quillRef.current.getEditor();
-                const range = quillEditor.getSelection();
-                const index = range ? range.index : 0;
-                quillEditor.insertEmbed(index, "image", url);
-                quillEditor.setSelection(index + 1);
-              } catch (err) {
-                console.error(err);
+                console.log(res);
               }
             };
           },
         },
       },
     }),
-    [ossConfig]
+    [client]
   );
 
   return (
