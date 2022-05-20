@@ -54,9 +54,10 @@ export const useHttp = () => {
   );
 };
 
-const initTimestamp = () => Math.round(new Date().getTime() / 1000).toString();
+export const initTimestamp = () =>
+  Math.round(new Date().getTime() / 1000).toString();
 
-const initNonce = () => {
+export const initNonce = () => {
   const chars = [
     "0",
     "1",

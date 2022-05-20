@@ -632,7 +632,7 @@ export const NewPublishModal = () => {
               valuePropName="fileList"
               getValueFromEvent={normFile}
             >
-              <OssUpload />
+              <OssUpload maxCount={1} />
             </Form.Item>
             <Form.Item label="商品详情" required>
               <RichTextEditor content={detail} setContent={setDetail} />
