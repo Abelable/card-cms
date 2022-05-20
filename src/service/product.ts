@@ -255,6 +255,17 @@ export const useDeleteGoods = (queryKey: QueryKey) => {
   );
 };
 
+export const useGoodsExtension = (id?: number) => {
+  const client = useHttp();
+  return useQuery<string[]>(
+    ["goods_extension", { id }],
+    () => client("/api/v1/admin/goods/sponsored-link", { data: { id } }),
+    {
+      enabled: Boolean(id),
+    }
+  );
+};
+
 export const usePublishGoods = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(

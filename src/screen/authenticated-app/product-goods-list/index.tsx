@@ -67,7 +67,7 @@ export const ProductGoodsList = () => {
       </Main>
       <GoodsModal />
       <AgentModal params={params} />
-      <LinkModal goodsList={data?.data || []} />
+      <LinkModal />
       <PublishModal />
       <NewPublishModal />
     </Container>

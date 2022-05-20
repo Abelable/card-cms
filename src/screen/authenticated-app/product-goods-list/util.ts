@@ -1,6 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
-import { useGoods } from "service/product";
+import { useGoods, useGoodsExtension } from "service/product";
 
 export const useGoodsListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -106,6 +106,10 @@ export const useLinkModal = () => {
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
+  const { data: goodsExtension, isLoading } = useGoodsExtension(
+    Number(goodsIdOfLink)
+  );
+
   const startEdit = useCallback(
     (id: string) => setGoodsIdOfLink({ goodsIdOfLink: id }),
     [setGoodsIdOfLink]
@@ -118,8 +122,10 @@ export const useLinkModal = () => {
   return {
     linkModalOpen: !!goodsIdOfLink,
     goodsIdOfLink,
+    goodsExtension,
     startEdit,
     close,
+    isLoading,
   };
 };
 
