@@ -2,12 +2,14 @@ import { Modal, Upload } from "antd";
 import { useOssConfig } from "service/common";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { useHttp } from "service/http";
 
 interface OssUploadProps extends React.ComponentProps<typeof Upload> {
   maxCount?: number;
 }
 
 export const OssUpload = (props: OssUploadProps) => {
+  const client = useHttp();
   const { data: ossConfig } = useOssConfig();
   const getExtraData = (file: any) => {
     return {
@@ -25,15 +27,25 @@ export const OssUpload = (props: OssUploadProps) => {
     return file;
   };
 
+  const uploadImg = (info: any) => {
+    console.log(info);
+    client("/api/v1/admin/upload/image", {
+      data: { image: info.file },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      method: "POST",
+    }).then((res) => {
+      console.log("res", res);
+      info.onSuccess(res, info.file);
+    });
+  };
+
   const [previewImage, setPreviewImage] = useState("");
   const preview = (file: any) => setPreviewImage(file.url);
 
   return (
     <>
       <Upload
-        beforeUpload={beforeUpload}
-        action={ossConfig?.host}
-        data={getExtraData}
+        customRequest={uploadImg}
         onPreview={preview}
         listType="picture-card"
         {...props}
