@@ -40,7 +40,11 @@ export const RichTextEditor = ({
                   method: "POST",
                   formData,
                 });
-                console.log(res);
+                const quillEditor = quillRef.current.getEditor();
+                const range = quillEditor.getSelection();
+                const index = range ? range.index : 0;
+                quillEditor.insertEmbed(index, "image", res.url);
+                quillEditor.setSelection(index + 1);
               }
             };
           },
