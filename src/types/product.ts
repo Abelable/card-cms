@@ -142,15 +142,3 @@ export interface AgentsSearchParams {
   per_page: number;
   page: number;
 }
-export interface Agent {
-  id: number;
-  distributor_name: string;
-  phone: string;
-  status: number;
-  created_at: string;
-}
-
-export interface AgentsResult {
-  data: Agent[];
-  meta: { pagination: Pagination };
-}
