@@ -53,7 +53,11 @@ export const GoodsModal = () => {
     form.validateFields().then(async () => {
       const { tags, img, ...rest } = form.getFieldsValue();
       const sale_point = tags.join();
-      const main_picture = img.length ? img[0].url : "";
+      const main_picture = img.length
+        ? img[0].xhr
+          ? JSON.parse(img[0].xhr.response).data.relative_url
+          : img[0].url
+        : "";
       await mutateAsync(
         cleanObject({
           ...editingGoods,
@@ -73,7 +77,9 @@ export const GoodsModal = () => {
       const { sale_point, main_picture, detail, remark, ...rest } =
         editingGoods;
       const tags = sale_point.split(",");
-      const img = main_picture ? [{ url: main_picture }] : undefined;
+      const img = main_picture
+        ? [{ url: main_picture, thumbUrl: main_picture }]
+        : undefined;
       form.setFieldsValue({ tags, img, ...rest });
       setDetail(detail);
       setRemark(remark);
