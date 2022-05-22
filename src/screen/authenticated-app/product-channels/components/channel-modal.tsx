@@ -122,7 +122,7 @@ export const ChannelModal = ({
 
       await mutateAsync(
         cleanObject({
-          id: editingChannelId || "",
+          ...editingChannel,
           is_used_global_prewarn_setting: type === 1 ? 1 : 0,
           province_id: ownership[0],
           city_id: ownership[1],

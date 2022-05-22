@@ -19,7 +19,12 @@ import {
 import { useGoodsListQueryKey, useNewPublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useNewPublishGoods } from "service/product";
+import {
+  useAddChannel,
+  useChannel,
+  useEditChannel,
+  useNewPublishGoods,
+} from "service/product";
 import { cleanObject } from "utils";
 import "assets/style/hideLeftBorder.css";
 import { useState } from "react";
@@ -35,6 +40,8 @@ import {
 } from "service/common";
 import { SupplierOption } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import { useChannelsQueryKey } from "screen/authenticated-app/product-channels/util";
+import { RegionItem } from "types/common";
 
 const limitOptions = [
   { value: 0, label: "不限制" },
@@ -84,6 +91,10 @@ export const NewPublishModal = ({
   const operatorOptions = useOperatorOptions();
   const [step, setStep] = useState(0);
   const [type, setType] = useState(1);
+  const [productId, setProductId] = useState(undefined);
+  const { data: productInfo, isLoading: initProductLoading } = useChannel(
+    Number(productId)
+  );
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
 
@@ -97,6 +108,66 @@ export const NewPublishModal = ({
   const { mutateAsync, error, isLoading } = useNewPublishGoods(
     useGoodsListQueryKey()
   );
+  const {
+    mutateAsync: addProduct,
+    error: addProductError,
+    isLoading: addProductLoading,
+  } = useAddChannel(useChannelsQueryKey());
+  const {
+    mutateAsync: editProduct,
+    error: editProductError,
+    isLoading: editProductLoading,
+  } = useEditChannel(useChannelsQueryKey());
+
+  const toSecondStep = () => {
+    form.validateFields().then(async () => {
+      const { ownership, non_shipping_region, ...rest } = form.getFieldsValue();
+
+      const dont_ship_addresses: RegionItem[] = [];
+      non_shipping_region.forEach((item: number[]) => {
+        if (item.length === 1) {
+          regionOptions
+            ?.find((province) => province.id === item[0])
+            ?.children?.forEach((city) => {
+              dont_ship_addresses.push({
+                province_id: item[0],
+                city_id: city.id,
+              });
+            });
+        } else {
+          dont_ship_addresses.push({
+            province_id: item[0],
+            city_id: item[1],
+          });
+        }
+      });
+
+      if (productId) {
+        await editProduct(
+          cleanObject({
+            ...productInfo,
+            is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+            province_id: ownership[0],
+            city_id: ownership[1],
+            dont_ship_addresses,
+            ...rest,
+          })
+        );
+      } else {
+        await addProduct(
+          cleanObject({
+            is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+            province_id: ownership[0],
+            city_id: ownership[1],
+            dont_ship_addresses,
+            ...rest,
+          })
+        );
+      }
+
+      setStep(1);
+    });
+  };
 
   const closeModal = () => {
     form.resetFields();
@@ -157,7 +228,11 @@ export const NewPublishModal = ({
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         step === 0 ? (
-          <Button onClick={() => setStep(1)} type="primary">
+          <Button
+            onClick={toSecondStep}
+            loading={addProductLoading || editProductLoading}
+            type="primary"
+          >
             下一步
           </Button>
         ) : step === 1 ? (
