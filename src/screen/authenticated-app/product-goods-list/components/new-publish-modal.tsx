@@ -92,9 +92,7 @@ export const NewPublishModal = ({
   const [step, setStep] = useState(0);
   const [type, setType] = useState(1);
   const [productId, setProductId] = useState(undefined);
-  const { data: productInfo, isLoading: initProductLoading } = useChannel(
-    Number(productId)
-  );
+  const { data: productInfo } = useChannel(Number(productId));
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
 
@@ -154,7 +152,7 @@ export const NewPublishModal = ({
           })
         );
       } else {
-        await addProduct(
+        const res = await addProduct(
           cleanObject({
             is_used_global_prewarn_setting: type === 1 ? 1 : 0,
             province_id: ownership[0],
@@ -163,10 +161,59 @@ export const NewPublishModal = ({
             ...rest,
           })
         );
+        console.log(res);
       }
-
       setStep(1);
     });
+  };
+
+  const toFirstStep = () => {
+    setStep(0);
+    if (productInfo) {
+      const {
+        is_used_global_prewarn_setting,
+        province_id,
+        city_id,
+        dont_ship_addresses,
+        ...rest
+      } = productInfo;
+      setType(is_used_global_prewarn_setting === 1 ? 1 : 2);
+
+      // 处理不发货地区
+      const non_shipping_region_obj: { [key: string]: number[][] } = {};
+      dont_ship_addresses.forEach((item) => {
+        if (!non_shipping_region_obj[`${item.province_id}`]) {
+          non_shipping_region_obj[`${item.province_id}`] = [
+            [item.province_id, item.city_id],
+          ];
+        } else {
+          non_shipping_region_obj[`${item.province_id}`].push([
+            item.province_id,
+            item.city_id,
+          ]);
+        }
+      });
+      let non_shipping_region: number[][] = [];
+      Object.keys(non_shipping_region_obj).forEach((key) => {
+        if (
+          regionOptions?.find((item) => item.id === Number(key))?.children
+            ?.length === non_shipping_region_obj[key].length
+        ) {
+          non_shipping_region.push([Number(key)]);
+        } else {
+          non_shipping_region = [
+            ...non_shipping_region,
+            ...non_shipping_region_obj[key],
+          ];
+        }
+      });
+
+      form.setFieldsValue({
+        ownership: [province_id, city_id],
+        non_shipping_region,
+        ...rest,
+      });
+    }
   };
 
   const closeModal = () => {
@@ -237,7 +284,7 @@ export const NewPublishModal = ({
           </Button>
         ) : step === 1 ? (
           <Space>
-            <Button onClick={() => setStep(0)}>上一步</Button>
+            <Button onClick={toFirstStep}>上一步</Button>
             <Button
               onClick={() => setStep(2)}
               loading={isLoading}
