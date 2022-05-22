@@ -69,7 +69,7 @@ export const ProductGoodsList = () => {
       <AgentModal params={params} />
       <LinkModal />
       <PublishModal />
-      <NewPublishModal />
+      <NewPublishModal supplierOptions={supplierOptions} />
     </Container>
   );
 };

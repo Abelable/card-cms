@@ -27,72 +27,61 @@ import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
 import { Row as CustomRow } from "components/lib";
+import {
+  useDefaultWarningSetting,
+  useOperatorOptions,
+  useRegionOptions,
+  useUpdateDefaultWarningSetting,
+} from "service/common";
+import { SupplierOption } from "types/supplier";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
-const operatorOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
+const limitOptions = [
+  { value: 0, label: "不限制" },
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "4" },
+  { value: 5, label: "5" },
 ];
-const supplierOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
-const regionOptions = [
-  {
-    value: "1",
-    label: "浙江省",
-    children: [
-      {
-        value: "1",
-        label: "杭州市",
-        children: [
-          {
-            value: "1",
-            label: "西湖区",
-          },
-          {
-            value: "2",
-            label: "上城区",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "2",
-    label: "江苏省",
-    children: [
-      {
-        value: "1",
-        label: "南京市",
-        children: [
-          {
-            value: "1",
-            label: "中华门",
-          },
-        ],
-      },
-    ],
-  },
-];
+
 const cycleOptions = [
-  "1个月",
-  "2个月",
-  "3个月",
-  "4个月",
-  "5个月",
-  "6个月",
-  "7个月",
-  "8个月",
-  "9个月",
-  "10个月",
-  "11个月",
-  "12个月",
+  { value: 0, label: "不限制" },
+  { value: 30, label: "1个月" },
+  { value: 60, label: "2个月" },
+  { value: 90, label: "3个月" },
+  { value: 120, label: "4个月" },
+  { value: 150, label: "5个月" },
+  { value: 180, label: "6个月" },
+  { value: 210, label: "7个月" },
+  { value: 240, label: "8个月" },
+  { value: 270, label: "9个月" },
+  { value: 300, label: "10个月" },
+  { value: 330, label: "11个月" },
+  { value: 360, label: "12个月" },
 ];
 
-export const NewPublishModal = () => {
+const halfCycleOptions = [
+  { value: 0, label: "不限制" },
+  { value: 30, label: "1个月" },
+  { value: 60, label: "2个月" },
+  { value: 90, label: "3个月" },
+  { value: 120, label: "4个月" },
+  { value: 150, label: "5个月" },
+  { value: 180, label: "6个月" },
+];
+
+export const NewPublishModal = ({
+  supplierOptions,
+}: {
+  supplierOptions: SupplierOption[];
+}) => {
   const [form] = useForm();
+  const { data: regionOptions } = useRegionOptions();
+  const { data: defaultWarningSetting } = useDefaultWarningSetting();
+  const { mutate: updateDefaultWarningSetting } =
+    useUpdateDefaultWarningSetting();
+  const operatorOptions = useOperatorOptions();
   const [step, setStep] = useState(0);
   const [type, setType] = useState(1);
   const [detail, setDetail] = useState("");
@@ -121,6 +110,42 @@ export const NewPublishModal = () => {
       setStep(3);
     });
   };
+
+  const saveDefaultWarningSetting = () => {
+    const {
+      default_phone_repeated_prewarn_num: phone_repeated_prewarn_num,
+      default_phone_repeated_prewarn_num_check_period:
+        phone_repeated_prewarn_num_check_period,
+      default_address_repeated_prewarn_num: address_repeated_prewarn_num,
+      default_address_repeated_prewarn_num_check_period:
+        address_repeated_prewarn_num_check_period,
+    } = form.getFieldsValue();
+    updateDefaultWarningSetting({
+      phone_repeated_prewarn_num,
+      phone_repeated_prewarn_num_check_period,
+      address_repeated_prewarn_num,
+      address_repeated_prewarn_num_check_period,
+    });
+  };
+
+  useDeepCompareEffect(() => {
+    if (defaultWarningSetting) {
+      form.setFieldsValue({
+        default_phone_repeated_prewarn_num: Number(
+          defaultWarningSetting?.phone_repeated_prewarn_num
+        ),
+        default_phone_repeated_prewarn_num_check_period: Number(
+          defaultWarningSetting?.phone_repeated_prewarn_num_check_period
+        ),
+        default_address_repeated_prewarn_num: Number(
+          defaultWarningSetting?.address_repeated_prewarn_num
+        ),
+        default_address_repeated_prewarn_num_check_period: Number(
+          defaultWarningSetting?.address_repeated_prewarn_num_check_period
+        ),
+      });
+    }
+  }, [form, defaultWarningSetting]);
 
   return (
     <Drawer
