@@ -168,7 +168,6 @@ export const NewPublishModal = () => {
       <FormWrap>
         <Form form={form} layout="vertical">
           <ErrorBox error={error} />
-
           {step === 0 ? (
             <>
               <Row gutter={16}>
