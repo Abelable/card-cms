@@ -166,7 +166,18 @@ export const NewPublishModal = () => {
       </Steps>
       <Divider />
       <FormWrap>
-        <Form form={form} layout="vertical">
+        <Form
+          initialValues={{
+            is_required_idcard: 1,
+            is_required_idphoto: 1,
+            per_person_card_num_limit: 0,
+            per_person_card_num_limit_check_period: 0,
+            phone_repeated_prewarn_num_check_period: 0,
+            address_repeated_prewarn_num_check_period: 0,
+          }}
+          form={form}
+          layout="vertical"
+        >
           <ErrorBox error={error} />
           {step === 0 ? (
             <>
