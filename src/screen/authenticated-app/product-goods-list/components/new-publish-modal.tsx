@@ -165,485 +165,466 @@ export const NewPublishModal = () => {
         <Steps.Step title="确认发布" description="上线销售发展用户" />
       </Steps>
       <Divider />
+      <FormWrap>
+        <Form form={form} layout="vertical">
+          <ErrorBox error={error} />
+        </Form>
+      </FormWrap>
       {step === 0 ? (
-        <FormWrap>
-          <Form form={form} layout="vertical">
-            <ErrorBox error={error} />
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="operator_id"
-                  label="运营商"
-                  rules={[{ required: true, message: "请选择运营商" }]}
-                >
-                  <Select placeholder="请选择运营商">
-                    {operatorOptions.map(({ id, name }) => (
-                      <Select.Option key={id} value={id}>
-                        {name}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="supplier_id"
-                  label="供应商"
-                  rules={[{ required: true, message: "请选择供应商" }]}
-                >
-                  <Select placeholder="请选择供应商">
-                    {supplierOptions.map(({ id, name }) => (
-                      <Select.Option key={id} value={id}>
-                        {name}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="goods_name"
-                  label="产品名称"
-                  rules={[{ required: true, message: "请输入产品名称" }]}
-                >
-                  <Input placeholder="请输入产品名称" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="goods_code"
-                  label="产品编码"
-                  rules={[{ required: true, message: "请输入产品编码" }]}
-                >
-                  <Input placeholder="请输入产品编码" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="ownership"
-                  label="归属地"
-                  rules={[{ required: true, message: "请选择归属地" }]}
-                >
-                  <Cascader
-                    options={regionOptions}
-                    placeholder="请选择归属地"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item label="生产定义" required>
-              <Wrap padding={2.4}>
-                <Row style={{ alignItems: "center" }}>
-                  <span style={{ marginRight: "2rem" }}>
-                    是否需要身份证号码：
-                  </span>
-                  <Form.Item name="need_id_number" style={{ marginBottom: 0 }}>
-                    <Radio.Group>
-                      <Radio value={false}>不需要</Radio>
-                      <Radio value={true}>需要</Radio>
-                    </Radio.Group>
-                  </Form.Item>
-                </Row>
-                <Row style={{ alignItems: "center" }}>
-                  <span style={{ marginRight: "2rem" }}>
-                    是否需要身份证照片：
-                  </span>
-                  <Form.Item
-                    name="need_id_card_pic"
-                    style={{ marginBottom: 0 }}
-                  >
-                    <Radio.Group>
-                      <Radio value={false}>不需要</Radio>
-                      <Radio value={true}>需要</Radio>
-                    </Radio.Group>
-                  </Form.Item>
-                </Row>
-              </Wrap>
-            </Form.Item>
-            <Form.Item label="限制条件">
-              <Wrap padding={2.4}>
-                <Form.Item name="deliver_area_type">
+        <>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="operator_id"
+                label="运营商"
+                rules={[{ required: true, message: "请选择运营商" }]}
+              >
+                <Select placeholder="请选择运营商">
+                  {operatorOptions.map(({ id, name }) => (
+                    <Select.Option key={id} value={id}>
+                      {name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="supplier_id"
+                label="供应商"
+                rules={[{ required: true, message: "请选择供应商" }]}
+              >
+                <Select placeholder="请选择供应商">
+                  {supplierOptions.map(({ id, name }) => (
+                    <Select.Option key={id} value={id}>
+                      {name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="goods_name"
+                label="产品名称"
+                rules={[{ required: true, message: "请输入产品名称" }]}
+              >
+                <Input placeholder="请输入产品名称" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="goods_code"
+                label="产品编码"
+                rules={[{ required: true, message: "请输入产品编码" }]}
+              >
+                <Input placeholder="请输入产品编码" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="ownership"
+                label="归属地"
+                rules={[{ required: true, message: "请选择归属地" }]}
+              >
+                <Cascader options={regionOptions} placeholder="请选择归属地" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item label="生产定义" required>
+            <Wrap padding={2.4}>
+              <Row style={{ alignItems: "center" }}>
+                <span style={{ marginRight: "2rem" }}>
+                  是否需要身份证号码：
+                </span>
+                <Form.Item name="need_id_number" style={{ marginBottom: 0 }}>
                   <Radio.Group>
-                    <Space direction="vertical">
-                      <Radio value={1}>
-                        <CustomFormItem width={50} marginBottom={0}>
-                          <span style={{ marginRight: "2rem" }}>
-                            不发货地址：
-                          </span>
-                          <Form.Item
-                            name="deliver_area"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <Cascader
-                              style={{ width: "100%" }}
-                              options={regionOptions}
-                              multiple
-                              maxTagCount="responsive"
-                              placeholder="请选择地址"
-                              onClick={(e) => e.preventDefault()}
-                            />
-                          </Form.Item>
-                        </CustomFormItem>
-                      </Radio>
-                      <Radio value={2}>
-                        <CustomFormItem width={50} marginBottom={0}>
-                          <span style={{ marginRight: "2rem" }}>
-                            只发货地址：
-                          </span>
-                          <Form.Item
-                            name="only_deliver_area"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <Cascader
-                              options={regionOptions}
-                              multiple
-                              maxTagCount="responsive"
-                              placeholder="请选择地址"
-                              onClick={(e) => e.preventDefault()}
-                            />
-                          </Form.Item>
-                        </CustomFormItem>
-                      </Radio>
-                    </Space>
+                    <Radio value={false}>不需要</Radio>
+                    <Radio value={true}>需要</Radio>
                   </Radio.Group>
                 </Form.Item>
-                <CustomFormItem>
-                  <span style={{ marginRight: "2rem" }}>
-                    年龄限制（周岁）：
-                  </span>
-                  <Input.Group compact>
-                    <Form.Item name="min_age" style={{ marginBottom: 0 }}>
-                      <Input
-                        style={{ width: 100, textAlign: "center" }}
-                        placeholder="最小年龄"
-                      />
-                    </Form.Item>
+              </Row>
+              <Row style={{ alignItems: "center" }}>
+                <span style={{ marginRight: "2rem" }}>
+                  是否需要身份证照片：
+                </span>
+                <Form.Item name="need_id_card_pic" style={{ marginBottom: 0 }}>
+                  <Radio.Group>
+                    <Radio value={false}>不需要</Radio>
+                    <Radio value={true}>需要</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </Row>
+            </Wrap>
+          </Form.Item>
+          <Form.Item label="限制条件">
+            <Wrap padding={2.4}>
+              <Form.Item name="deliver_area_type">
+                <Radio.Group>
+                  <Space direction="vertical">
+                    <Radio value={1}>
+                      <CustomFormItem width={50} marginBottom={0}>
+                        <span style={{ marginRight: "2rem" }}>
+                          不发货地址：
+                        </span>
+                        <Form.Item
+                          name="deliver_area"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <Cascader
+                            style={{ width: "100%" }}
+                            options={regionOptions}
+                            multiple
+                            maxTagCount="responsive"
+                            placeholder="请选择地址"
+                            onClick={(e) => e.preventDefault()}
+                          />
+                        </Form.Item>
+                      </CustomFormItem>
+                    </Radio>
+                    <Radio value={2}>
+                      <CustomFormItem width={50} marginBottom={0}>
+                        <span style={{ marginRight: "2rem" }}>
+                          只发货地址：
+                        </span>
+                        <Form.Item
+                          name="only_deliver_area"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <Cascader
+                            options={regionOptions}
+                            multiple
+                            maxTagCount="responsive"
+                            placeholder="请选择地址"
+                            onClick={(e) => e.preventDefault()}
+                          />
+                        </Form.Item>
+                      </CustomFormItem>
+                    </Radio>
+                  </Space>
+                </Radio.Group>
+              </Form.Item>
+              <CustomFormItem>
+                <span style={{ marginRight: "2rem" }}>年龄限制（周岁）：</span>
+                <Input.Group compact>
+                  <Form.Item name="min_age" style={{ marginBottom: 0 }}>
                     <Input
-                      style={{
-                        width: 30,
-                        borderLeft: 0,
-                        borderRight: 0,
-                        pointerEvents: "none",
-                        background: "#fff",
-                      }}
-                      placeholder="~"
-                      disabled
+                      style={{ width: 100, textAlign: "center" }}
+                      placeholder="最小年龄"
                     />
-                    <Form.Item name="max_age" style={{ marginBottom: 0 }}>
-                      <Input
-                        className="hide-left-border"
-                        style={{
-                          width: 100,
-                          textAlign: "center",
-                        }}
-                        placeholder="最大年龄"
-                      />
-                    </Form.Item>
-                  </Input.Group>
-                </CustomFormItem>
-                <CustomRow gap>
-                  <CustomFormItem width={30}>
-                    <span style={{ marginRight: "2rem" }}>
-                      单人开卡数量限制：
-                    </span>
-                    <Form.Item
-                      name="card_number_limit"
-                      style={{ marginBottom: 0, width: "100%" }}
-                    >
-                      <Select placeholder="不限制">
-                        {[1, 2, 3, 4, 5].map((item) => (
-                          <Select.Option key={item} value={item}>
-                            {item}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </CustomFormItem>
-                  <CustomFormItem width={30}>
-                    <span style={{ marginRight: "2rem" }}>检测周期：</span>
-                    <Form.Item
-                      name="card_test_cycle"
-                      style={{ marginBottom: 0, width: "100%" }}
-                    >
-                      <Select placeholder="不限制">
-                        {cycleOptions.map((item) => (
-                          <Select.Option key={item} value={item}>
-                            {item}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                  </CustomFormItem>
-                </CustomRow>
-              </Wrap>
-            </Form.Item>
-            <Form.Item label="风险预警设置">
-              <Wrap>
-                <TypeMenu>
-                  <Menu
-                    mode="horizontal"
-                    selectedKeys={[String(type)]}
-                    items={[
-                      {
-                        label: (
-                          <span onClick={() => setType(1)}>
-                            使用全局默认方案
-                          </span>
-                        ),
-                        key: 1,
-                      },
-                      {
-                        label: (
-                          <span onClick={() => setType(2)}>使用自定义方案</span>
-                        ),
-                        key: 2,
-                      },
-                    ]}
+                  </Form.Item>
+                  <Input
+                    style={{
+                      width: 30,
+                      borderLeft: 0,
+                      borderRight: 0,
+                      pointerEvents: "none",
+                      background: "#fff",
+                    }}
+                    placeholder="~"
+                    disabled
                   />
-                </TypeMenu>
-                <div style={{ padding: "2.4rem" }}>
-                  {type === 1 ? (
-                    <>
-                      <CustomRow gap marginBottom={2.4}>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            联系电话重复：
-                          </span>
-                          <Form.Item
-                            name="default_phone_repeat_limit"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <InputNumber
-                              style={{ width: "100%" }}
-                              placeholder="不限制"
-                            />
-                          </Form.Item>
-                        </CustomFormItem>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            检测周期：
-                          </span>
-                          <Form.Item
-                            name="default_phone_test_cycle"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <Select placeholder="不限制">
-                              {cycleOptions.map((item) => (
-                                <Select.Option key={item} value={item}>
-                                  {item}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
-                        </CustomFormItem>
-                      </CustomRow>
-                      <CustomRow gap marginBottom={2.4}>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            收货地址重复：
-                          </span>
-                          <Form.Item
-                            name="default_address_repeat_limit"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <InputNumber
-                              style={{ width: "100%" }}
-                              placeholder="不限制"
-                            />
-                          </Form.Item>
-                        </CustomFormItem>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            检测周期：
-                          </span>
-                          <Form.Item
-                            name="default_address_test_cycle"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <Select placeholder="不限制">
-                              {cycleOptions.map((item) => (
-                                <Select.Option key={item} value={item}>
-                                  {item}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
-                        </CustomFormItem>
-                      </CustomRow>
-                      <CustomRow gap>
-                        <Button type={"primary"}>修改默认方案</Button>
-                        <div style={{ color: "red" }}>
-                          注：修改默认方案会导致使用默认方案的所有基础产品风控规则变更
-                        </div>
-                      </CustomRow>
-                    </>
-                  ) : (
-                    <>
-                      <CustomRow gap marginBottom={2.4}>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            联系电话重复：
-                          </span>
-                          <Form.Item
-                            name="phone_repeat_limit"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <InputNumber
-                              style={{ width: "100%" }}
-                              placeholder="不限制"
-                            />
-                          </Form.Item>
-                        </CustomFormItem>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            检测周期：
-                          </span>
-                          <Form.Item
-                            name="phone_test_cycle"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <Select placeholder="不限制">
-                              {cycleOptions.map((item) => (
-                                <Select.Option key={item} value={item}>
-                                  {item}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
-                        </CustomFormItem>
-                      </CustomRow>
-                      <CustomRow gap marginBottom={2.4}>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            收货地址重复：
-                          </span>
-                          <Form.Item
-                            name="address_repeat_limit"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <InputNumber
-                              style={{ width: "100%" }}
-                              placeholder="不限制"
-                            />
-                          </Form.Item>
-                        </CustomFormItem>
-                        <CustomFormItem width={30}>
-                          <span style={{ marginRight: "2rem" }}>
-                            检测周期：
-                          </span>
-                          <Form.Item
-                            name="address_test_cycle"
-                            style={{ marginBottom: 0, width: "100%" }}
-                          >
-                            <Select placeholder="不限制">
-                              {cycleOptions.map((item) => (
-                                <Select.Option key={item} value={item}>
-                                  {item}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
-                        </CustomFormItem>
-                      </CustomRow>
-                    </>
-                  )}
-                </div>
-              </Wrap>
-            </Form.Item>
-            <Form.Item
-              label="黑名单"
-              name="enable_automatic_blacklist_filtering"
-              valuePropName="checked"
-            >
-              <Checkbox>电信诈骗黑名单用户自动过滤</Checkbox>
-            </Form.Item>
-          </Form>
-        </FormWrap>
-      ) : step === 1 ? (
-        <FormWrap>
-          <Form form={form} layout="vertical">
-            <ErrorBox error={error} />
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="product_id"
-                  label="选择基础产品"
-                  rules={[{ required: true, message: "请选择基础产品" }]}
-                >
-                  <Select placeholder="请选择基础产品">
-                    {operatorOptions.map(({ id, name }) => (
-                      <Select.Option key={id} value={id}>
-                        {name}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="name"
-                  label="商品名称"
-                  rules={[{ required: true, message: "请输入商品名称" }]}
-                  tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
-                >
-                  <Input placeholder="请输入商品名称" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="code"
-                  label="商品编码"
-                  rules={[{ required: true, message: "请输入商品编码" }]}
-                >
-                  <Input placeholder="请输入商品编码" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="tags"
-                  label="商品卖点"
-                  rules={[
+                  <Form.Item name="max_age" style={{ marginBottom: 0 }}>
+                    <Input
+                      className="hide-left-border"
+                      style={{
+                        width: 100,
+                        textAlign: "center",
+                      }}
+                      placeholder="最大年龄"
+                    />
+                  </Form.Item>
+                </Input.Group>
+              </CustomFormItem>
+              <CustomRow gap>
+                <CustomFormItem width={30}>
+                  <span style={{ marginRight: "2rem" }}>
+                    单人开卡数量限制：
+                  </span>
+                  <Form.Item
+                    name="card_number_limit"
+                    style={{ marginBottom: 0, width: "100%" }}
+                  >
+                    <Select placeholder="不限制">
+                      {[1, 2, 3, 4, 5].map((item) => (
+                        <Select.Option key={item} value={item}>
+                          {item}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </CustomFormItem>
+                <CustomFormItem width={30}>
+                  <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                  <Form.Item
+                    name="card_test_cycle"
+                    style={{ marginBottom: 0, width: "100%" }}
+                  >
+                    <Select placeholder="不限制">
+                      {cycleOptions.map((item) => (
+                        <Select.Option key={item} value={item}>
+                          {item}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </CustomFormItem>
+              </CustomRow>
+            </Wrap>
+          </Form.Item>
+          <Form.Item label="风险预警设置">
+            <Wrap>
+              <TypeMenu>
+                <Menu
+                  mode="horizontal"
+                  selectedKeys={[String(type)]}
+                  items={[
                     {
-                      type: "array",
-                      max: 3,
+                      label: (
+                        <span onClick={() => setType(1)}>使用全局默认方案</span>
+                      ),
+                      key: 1,
+                    },
+                    {
+                      label: (
+                        <span onClick={() => setType(2)}>使用自定义方案</span>
+                      ),
+                      key: 2,
                     },
                   ]}
-                  tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
-                >
-                  <Select mode="tags" placeholder="输入后回车生成商品卖点" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item name="needImg" label="销售页上传照片">
-              <Radio.Group>
-                <Radio value={false}>无需上传</Radio>
-                <Radio value={true}>需要上传</Radio>
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item
-              name="img"
-              label="商品主图"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-            >
-              <Uploader maxCount={1} />
-            </Form.Item>
-            <Form.Item label="商品详情" required>
-              <RichTextEditor content={detail} setContent={setDetail} />
-            </Form.Item>
-            <Form.Item label="其他备注">
-              <RichTextEditor content={remark} setContent={setRemark} />
-            </Form.Item>
-          </Form>
-        </FormWrap>
+                />
+              </TypeMenu>
+              <div style={{ padding: "2.4rem" }}>
+                {type === 1 ? (
+                  <>
+                    <CustomRow gap marginBottom={2.4}>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>
+                          联系电话重复：
+                        </span>
+                        <Form.Item
+                          name="default_phone_repeat_limit"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <InputNumber
+                            style={{ width: "100%" }}
+                            placeholder="不限制"
+                          />
+                        </Form.Item>
+                      </CustomFormItem>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                        <Form.Item
+                          name="default_phone_test_cycle"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <Select placeholder="不限制">
+                            {cycleOptions.map((item) => (
+                              <Select.Option key={item} value={item}>
+                                {item}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                      </CustomFormItem>
+                    </CustomRow>
+                    <CustomRow gap marginBottom={2.4}>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>
+                          收货地址重复：
+                        </span>
+                        <Form.Item
+                          name="default_address_repeat_limit"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <InputNumber
+                            style={{ width: "100%" }}
+                            placeholder="不限制"
+                          />
+                        </Form.Item>
+                      </CustomFormItem>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                        <Form.Item
+                          name="default_address_test_cycle"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <Select placeholder="不限制">
+                            {cycleOptions.map((item) => (
+                              <Select.Option key={item} value={item}>
+                                {item}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                      </CustomFormItem>
+                    </CustomRow>
+                    <CustomRow gap>
+                      <Button type={"primary"}>修改默认方案</Button>
+                      <div style={{ color: "red" }}>
+                        注：修改默认方案会导致使用默认方案的所有基础产品风控规则变更
+                      </div>
+                    </CustomRow>
+                  </>
+                ) : (
+                  <>
+                    <CustomRow gap marginBottom={2.4}>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>
+                          联系电话重复：
+                        </span>
+                        <Form.Item
+                          name="phone_repeat_limit"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <InputNumber
+                            style={{ width: "100%" }}
+                            placeholder="不限制"
+                          />
+                        </Form.Item>
+                      </CustomFormItem>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                        <Form.Item
+                          name="phone_test_cycle"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <Select placeholder="不限制">
+                            {cycleOptions.map((item) => (
+                              <Select.Option key={item} value={item}>
+                                {item}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                      </CustomFormItem>
+                    </CustomRow>
+                    <CustomRow gap marginBottom={2.4}>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>
+                          收货地址重复：
+                        </span>
+                        <Form.Item
+                          name="address_repeat_limit"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <InputNumber
+                            style={{ width: "100%" }}
+                            placeholder="不限制"
+                          />
+                        </Form.Item>
+                      </CustomFormItem>
+                      <CustomFormItem width={30}>
+                        <span style={{ marginRight: "2rem" }}>检测周期：</span>
+                        <Form.Item
+                          name="address_test_cycle"
+                          style={{ marginBottom: 0, width: "100%" }}
+                        >
+                          <Select placeholder="不限制">
+                            {cycleOptions.map((item) => (
+                              <Select.Option key={item} value={item}>
+                                {item}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                      </CustomFormItem>
+                    </CustomRow>
+                  </>
+                )}
+              </div>
+            </Wrap>
+          </Form.Item>
+          <Form.Item
+            label="黑名单"
+            name="enable_automatic_blacklist_filtering"
+            valuePropName="checked"
+          >
+            <Checkbox>电信诈骗黑名单用户自动过滤</Checkbox>
+          </Form.Item>
+        </>
+      ) : step === 1 ? (
+        <>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="product_id"
+                label="选择基础产品"
+                rules={[{ required: true, message: "请选择基础产品" }]}
+              >
+                <Select placeholder="请选择基础产品">
+                  {operatorOptions.map(({ id, name }) => (
+                    <Select.Option key={id} value={id}>
+                      {name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="name"
+                label="商品名称"
+                rules={[{ required: true, message: "请输入商品名称" }]}
+                tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
+              >
+                <Input placeholder="请输入商品名称" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="code"
+                label="商品编码"
+                rules={[{ required: true, message: "请输入商品编码" }]}
+              >
+                <Input placeholder="请输入商品编码" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="tags"
+                label="商品卖点"
+                rules={[
+                  {
+                    type: "array",
+                    max: 3,
+                  },
+                ]}
+                tooltip="不超过3组词，例：费用低，流量大，免租金等，不易过长"
+              >
+                <Select mode="tags" placeholder="输入后回车生成商品卖点" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item name="needImg" label="销售页上传照片">
+            <Radio.Group>
+              <Radio value={false}>无需上传</Radio>
+              <Radio value={true}>需要上传</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item
+            name="img"
+            label="商品主图"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+          >
+            <Uploader maxCount={1} />
+          </Form.Item>
+          <Form.Item label="商品详情" required>
+            <RichTextEditor content={detail} setContent={setDetail} />
+          </Form.Item>
+          <Form.Item label="其他备注">
+            <RichTextEditor content={remark} setContent={setRemark} />
+          </Form.Item>
+        </>
       ) : step === 2 ? (
-        <FormWrap>
+        <>
           <Form form={form} layout="vertical">
             <Form.Item
               name="visible_type"
@@ -667,7 +648,7 @@ export const NewPublishModal = () => {
               </Select>
             </Form.Item>
           </Form>
-        </FormWrap>
+        </>
       ) : (
         <Result status="success" title="发布成功" />
       )}
