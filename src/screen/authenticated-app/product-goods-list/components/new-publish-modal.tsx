@@ -205,7 +205,7 @@ export const NewPublishModal = () => {
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
-                    name="goods_name"
+                    name="name"
                     label="产品名称"
                     rules={[{ required: true, message: "请输入产品名称" }]}
                   >
@@ -214,7 +214,7 @@ export const NewPublishModal = () => {
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    name="goods_code"
+                    name="encoding"
                     label="产品编码"
                     rules={[{ required: true, message: "请输入产品编码" }]}
                   >
@@ -230,6 +230,7 @@ export const NewPublishModal = () => {
                     rules={[{ required: true, message: "请选择归属地" }]}
                   >
                     <Cascader
+                      fieldNames={{ label: "name", value: "id" }}
                       options={regionOptions}
                       placeholder="请选择归属地"
                     />
@@ -243,12 +244,12 @@ export const NewPublishModal = () => {
                       是否需要身份证号码：
                     </span>
                     <Form.Item
-                      name="need_id_number"
+                      name="is_required_idcard"
                       style={{ marginBottom: 0 }}
                     >
                       <Radio.Group>
-                        <Radio value={false}>不需要</Radio>
-                        <Radio value={true}>需要</Radio>
+                        <Radio value={0}>不需要</Radio>
+                        <Radio value={1}>需要</Radio>
                       </Radio.Group>
                     </Form.Item>
                   </Row>
@@ -257,12 +258,12 @@ export const NewPublishModal = () => {
                       是否需要身份证照片：
                     </span>
                     <Form.Item
-                      name="need_id_card_pic"
+                      name="is_required_idphoto"
                       style={{ marginBottom: 0 }}
                     >
                       <Radio.Group>
-                        <Radio value={false}>不需要</Radio>
-                        <Radio value={true}>需要</Radio>
+                        <Radio value={0}>不需要</Radio>
+                        <Radio value={1}>需要</Radio>
                       </Radio.Group>
                     </Form.Item>
                   </Row>
@@ -270,57 +271,32 @@ export const NewPublishModal = () => {
               </Form.Item>
               <Form.Item label="限制条件">
                 <Wrap padding={2.4}>
-                  <Form.Item name="deliver_area_type">
-                    <Radio.Group>
-                      <Space direction="vertical">
-                        <Radio value={1}>
-                          <CustomFormItem width={50} marginBottom={0}>
-                            <span style={{ marginRight: "2rem" }}>
-                              不发货地址：
-                            </span>
-                            <Form.Item
-                              name="deliver_area"
-                              style={{ marginBottom: 0, width: "100%" }}
-                            >
-                              <Cascader
-                                style={{ width: "100%" }}
-                                options={regionOptions}
-                                multiple
-                                maxTagCount="responsive"
-                                placeholder="请选择地址"
-                                onClick={(e) => e.preventDefault()}
-                              />
-                            </Form.Item>
-                          </CustomFormItem>
-                        </Radio>
-                        <Radio value={2}>
-                          <CustomFormItem width={50} marginBottom={0}>
-                            <span style={{ marginRight: "2rem" }}>
-                              只发货地址：
-                            </span>
-                            <Form.Item
-                              name="only_deliver_area"
-                              style={{ marginBottom: 0, width: "100%" }}
-                            >
-                              <Cascader
-                                options={regionOptions}
-                                multiple
-                                maxTagCount="responsive"
-                                placeholder="请选择地址"
-                                onClick={(e) => e.preventDefault()}
-                              />
-                            </Form.Item>
-                          </CustomFormItem>
-                        </Radio>
-                      </Space>
-                    </Radio.Group>
-                  </Form.Item>
+                  <CustomFormItem width={50}>
+                    <span style={{ marginRight: "2rem" }}>不发货地区：</span>
+                    <Form.Item
+                      name="non_shipping_region"
+                      style={{ marginBottom: 0, width: "100%" }}
+                    >
+                      <Cascader
+                        fieldNames={{ label: "name", value: "id" }}
+                        style={{ width: "100%" }}
+                        options={regionOptions}
+                        multiple
+                        maxTagCount="responsive"
+                        placeholder="请选择不发货地区"
+                        onClick={(e) => e.preventDefault()}
+                      />
+                    </Form.Item>
+                  </CustomFormItem>
                   <CustomFormItem>
                     <span style={{ marginRight: "2rem" }}>
                       年龄限制（周岁）：
                     </span>
                     <Input.Group compact>
-                      <Form.Item name="min_age" style={{ marginBottom: 0 }}>
+                      <Form.Item
+                        name="min_age_limit"
+                        style={{ marginBottom: 0 }}
+                      >
                         <Input
                           style={{ width: 100, textAlign: "center" }}
                           placeholder="最小年龄"
@@ -337,7 +313,10 @@ export const NewPublishModal = () => {
                         placeholder="~"
                         disabled
                       />
-                      <Form.Item name="max_age" style={{ marginBottom: 0 }}>
+                      <Form.Item
+                        name="max_age_limit"
+                        style={{ marginBottom: 0 }}
+                      >
                         <Input
                           className="hide-left-border"
                           style={{
@@ -355,13 +334,13 @@ export const NewPublishModal = () => {
                         单人开卡数量限制：
                       </span>
                       <Form.Item
-                        name="card_number_limit"
+                        name="per_person_card_num_limit"
                         style={{ marginBottom: 0, width: "100%" }}
                       >
-                        <Select placeholder="不限制">
-                          {[1, 2, 3, 4, 5].map((item) => (
-                            <Select.Option key={item} value={item}>
-                              {item}
+                        <Select>
+                          {limitOptions.map((item, index) => (
+                            <Select.Option key={index} value={item.value}>
+                              {item.label}
                             </Select.Option>
                           ))}
                         </Select>
@@ -370,13 +349,13 @@ export const NewPublishModal = () => {
                     <CustomFormItem width={30}>
                       <span style={{ marginRight: "2rem" }}>检测周期：</span>
                       <Form.Item
-                        name="card_test_cycle"
+                        name="per_person_card_num_limit_check_period"
                         style={{ marginBottom: 0, width: "100%" }}
                       >
-                        <Select placeholder="不限制">
-                          {cycleOptions.map((item) => (
-                            <Select.Option key={item} value={item}>
-                              {item}
+                        <Select>
+                          {cycleOptions.map((item, index) => (
+                            <Select.Option key={index} value={item.value}>
+                              {item.label}
                             </Select.Option>
                           ))}
                         </Select>
@@ -420,12 +399,12 @@ export const NewPublishModal = () => {
                               联系电话重复：
                             </span>
                             <Form.Item
-                              name="default_phone_repeat_limit"
+                              name="default_phone_repeated_prewarn_num"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
                               <InputNumber
                                 style={{ width: "100%" }}
-                                placeholder="不限制"
+                                placeholder="输入上限数量"
                               />
                             </Form.Item>
                           </CustomFormItem>
@@ -434,13 +413,13 @@ export const NewPublishModal = () => {
                               检测周期：
                             </span>
                             <Form.Item
-                              name="default_phone_test_cycle"
+                              name="default_phone_repeated_prewarn_num_check_period"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
-                              <Select placeholder="不限制">
-                                {cycleOptions.map((item) => (
-                                  <Select.Option key={item} value={item}>
-                                    {item}
+                              <Select>
+                                {halfCycleOptions.map((item, index) => (
+                                  <Select.Option key={index} value={item.value}>
+                                    {item.label}
                                   </Select.Option>
                                 ))}
                               </Select>
@@ -453,12 +432,12 @@ export const NewPublishModal = () => {
                               收货地址重复：
                             </span>
                             <Form.Item
-                              name="default_address_repeat_limit"
+                              name="default_address_repeated_prewarn_num"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
                               <InputNumber
                                 style={{ width: "100%" }}
-                                placeholder="不限制"
+                                placeholder="输入上限数量"
                               />
                             </Form.Item>
                           </CustomFormItem>
@@ -467,13 +446,13 @@ export const NewPublishModal = () => {
                               检测周期：
                             </span>
                             <Form.Item
-                              name="default_address_test_cycle"
+                              name="default_address_repeated_prewarn_num_check_period"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
-                              <Select placeholder="不限制">
-                                {cycleOptions.map((item) => (
-                                  <Select.Option key={item} value={item}>
-                                    {item}
+                              <Select>
+                                {halfCycleOptions.map((item, index) => (
+                                  <Select.Option key={index} value={item.value}>
+                                    {item.label}
                                   </Select.Option>
                                 ))}
                               </Select>
@@ -481,7 +460,12 @@ export const NewPublishModal = () => {
                           </CustomFormItem>
                         </CustomRow>
                         <CustomRow gap>
-                          <Button type={"primary"}>修改默认方案</Button>
+                          <Button
+                            type={"primary"}
+                            onClick={saveDefaultWarningSetting}
+                          >
+                            修改默认方案
+                          </Button>
                           <div style={{ color: "red" }}>
                             注：修改默认方案会导致使用默认方案的所有基础产品风控规则变更
                           </div>
@@ -495,12 +479,12 @@ export const NewPublishModal = () => {
                               联系电话重复：
                             </span>
                             <Form.Item
-                              name="phone_repeat_limit"
+                              name="phone_repeated_prewarn_num"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
                               <InputNumber
                                 style={{ width: "100%" }}
-                                placeholder="不限制"
+                                placeholder="输入上限数量"
                               />
                             </Form.Item>
                           </CustomFormItem>
@@ -509,31 +493,31 @@ export const NewPublishModal = () => {
                               检测周期：
                             </span>
                             <Form.Item
-                              name="phone_test_cycle"
+                              name="phone_repeated_prewarn_num_check_period"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
-                              <Select placeholder="不限制">
-                                {cycleOptions.map((item) => (
-                                  <Select.Option key={item} value={item}>
-                                    {item}
+                              <Select>
+                                {halfCycleOptions.map((item, index) => (
+                                  <Select.Option key={index} value={item.value}>
+                                    {item.label}
                                   </Select.Option>
                                 ))}
                               </Select>
                             </Form.Item>
                           </CustomFormItem>
                         </CustomRow>
-                        <CustomRow gap marginBottom={2.4}>
+                        <CustomRow gap>
                           <CustomFormItem width={30}>
                             <span style={{ marginRight: "2rem" }}>
                               收货地址重复：
                             </span>
                             <Form.Item
-                              name="address_repeat_limit"
+                              name="address_repeated_prewarn_num"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
                               <InputNumber
                                 style={{ width: "100%" }}
-                                placeholder="不限制"
+                                placeholder="输入上限数量"
                               />
                             </Form.Item>
                           </CustomFormItem>
@@ -542,13 +526,13 @@ export const NewPublishModal = () => {
                               检测周期：
                             </span>
                             <Form.Item
-                              name="address_test_cycle"
+                              name="address_repeated_prewarn_num_check_period"
                               style={{ marginBottom: 0, width: "100%" }}
                             >
-                              <Select placeholder="不限制">
-                                {cycleOptions.map((item) => (
-                                  <Select.Option key={item} value={item}>
-                                    {item}
+                              <Select>
+                                {halfCycleOptions.map((item, index) => (
+                                  <Select.Option key={index} value={item.value}>
+                                    {item.label}
                                   </Select.Option>
                                 ))}
                               </Select>
@@ -562,7 +546,7 @@ export const NewPublishModal = () => {
               </Form.Item>
               <Form.Item
                 label="黑名单"
-                name="enable_automatic_blacklist_filtering"
+                name="is_filter_blacklist"
                 valuePropName="checked"
               >
                 <Checkbox>电信诈骗黑名单用户自动过滤</Checkbox>
