@@ -82,7 +82,12 @@ export const List = ({
             <FileUpload name="导入激活数据" />
           </div>
           <Tooltip title="下载激活模版">
-            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+            <Button
+              style={{ marginRight: 0 }}
+              size="small"
+              shape="circle"
+              icon={<DownloadOutlined />}
+            />
           </Tooltip>
         </Row>
       </Header>
