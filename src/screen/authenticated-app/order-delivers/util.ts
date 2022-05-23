@@ -14,7 +14,6 @@ export const useOrderDeliversSearchParams = () => {
     "phone",
     "is_recharged",
     "is_activated",
-    "upper_order_id",
     "agent_id",
     "time_type",
     "start_time",
