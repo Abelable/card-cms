@@ -19,13 +19,20 @@ export const useConfig = (
 };
 
 export const useAddConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    data: [
-      { id: old.data[0] ? `${Number(old.data[0].id) + 1}` : "1", ...target },
-      ...old.data,
-    ],
-  }));
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          data: [
+            {
+              id: old.data[0] ? `${Number(old.data[0].id) + 1}` : "1",
+              ...target,
+            },
+            ...old.data,
+          ],
+        }
+      : null
+  );
 
 export const useEditConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({

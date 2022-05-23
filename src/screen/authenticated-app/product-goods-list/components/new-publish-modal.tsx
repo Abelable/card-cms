@@ -119,7 +119,19 @@ export const NewPublishModal = ({
 
   const toSecondStep = () => {
     form.validateFields().then(async () => {
-      const { ownership, non_shipping_region, ...rest } = form.getFieldsValue();
+      const {
+        ownership,
+        non_shipping_region,
+        default_phone_repeated_prewarn_num,
+        default_phone_repeated_prewarn_num_check_period,
+        default_address_repeated_prewarn_num,
+        default_address_repeated_prewarn_num_check_period,
+        phone_repeated_prewarn_num,
+        phone_repeated_prewarn_num_check_period,
+        address_repeated_prewarn_num,
+        address_repeated_prewarn_num_check_period,
+        ...rest
+      } = form.getFieldsValue();
 
       const dont_ship_addresses: RegionItem[] = [];
       non_shipping_region.forEach((item: number[]) => {
@@ -145,6 +157,22 @@ export const NewPublishModal = ({
           cleanObject({
             ...productInfo,
             is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+            phone_repeated_prewarn_num:
+              type === 1
+                ? default_phone_repeated_prewarn_num
+                : phone_repeated_prewarn_num,
+            phone_repeated_prewarn_num_check_period:
+              type === 1
+                ? default_phone_repeated_prewarn_num_check_period
+                : phone_repeated_prewarn_num_check_period,
+            address_repeated_prewarn_num:
+              type === 1
+                ? default_address_repeated_prewarn_num
+                : address_repeated_prewarn_num,
+            address_repeated_prewarn_num_check_period:
+              type === 1
+                ? default_address_repeated_prewarn_num_check_period
+                : address_repeated_prewarn_num_check_period,
             province_id: ownership[0],
             city_id: ownership[1],
             dont_ship_addresses,
@@ -155,6 +183,22 @@ export const NewPublishModal = ({
         const res = await addProduct(
           cleanObject({
             is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+            phone_repeated_prewarn_num:
+              type === 1
+                ? default_phone_repeated_prewarn_num
+                : phone_repeated_prewarn_num,
+            phone_repeated_prewarn_num_check_period:
+              type === 1
+                ? default_phone_repeated_prewarn_num_check_period
+                : phone_repeated_prewarn_num_check_period,
+            address_repeated_prewarn_num:
+              type === 1
+                ? default_address_repeated_prewarn_num
+                : address_repeated_prewarn_num,
+            address_repeated_prewarn_num_check_period:
+              type === 1
+                ? default_address_repeated_prewarn_num_check_period
+                : address_repeated_prewarn_num_check_period,
             province_id: ownership[0],
             city_id: ownership[1],
             dont_ship_addresses,
@@ -321,11 +365,12 @@ export const NewPublishModal = ({
             per_person_card_num_limit_check_period: 0,
             phone_repeated_prewarn_num_check_period: 0,
             address_repeated_prewarn_num_check_period: 0,
+            is_filter_blacklist: 0,
           }}
           form={form}
           layout="vertical"
         >
-          <ErrorBox error={error} />
+          <ErrorBox error={addProductError || editProductError} />
           {step === 0 ? (
             <>
               <Row gutter={16}>
