@@ -108,9 +108,9 @@ export const List = ({
                   />
                 </Row>
                 <Row>
-                  <div>下游订单编号：{deliver.downstream_order_code}</div>
+                  <div>下游订单编号：{deliver.outer_order_no}</div>
                   <Copy
-                    onClick={() => copyInfo(deliver.downstream_order_code)}
+                    onClick={() => copyInfo(deliver.outer_order_no)}
                     style={{ color: "#1890ff" }}
                   />
                 </Row>
@@ -122,8 +122,8 @@ export const List = ({
             title: "产品信息",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
-                <div>产品名称：{deliver.pruduct_name}</div>
-                <div>产品编码：{deliver.pruduct_code}</div>
+                <div>产品名称：{deliver.product?.name}</div>
+                <div>产品编码：{deliver.product?.encoding}</div>
               </Space>
             ),
           },
@@ -132,17 +132,17 @@ export const List = ({
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Row>
-                  <div>证件姓名：{deliver.id_card_name}</div>
+                  <div>证件姓名：{deliver.buyer}</div>
                   <Tooltip title="查看证件照片">
                     <Check
                       onClick={() => openPicModal((deliver as Deliver).id)}
                     />
                   </Tooltip>
                 </Row>
-                <div>证件号码：{deliver.id_card_code}</div>
-                <div>收件人：{deliver.consignee_name}</div>
-                <div>联系电话：{deliver.consignee_phone}</div>
-                <div>收获地址：{deliver.consignee_address}</div>
+                <div>证件号码：{deliver.idcard}</div>
+                <div>收件人：{deliver.buyer}</div>
+                <div>联系电话：{deliver.phone}</div>
+                <div>收获地址：{deliver.detail_address}</div>
               </Space>
             ),
           },

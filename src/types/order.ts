@@ -1,4 +1,5 @@
 import { Pagination } from "./common";
+import { Channel } from "./product";
 
 export interface OrderStatus {
   id: number;
@@ -28,17 +29,15 @@ export interface DeliversSearchParams {
 export interface Deliver {
   id: string;
   source: string;
-  downstream_order_code: string;
+  outer_order_no: string;
   created_at: string;
-  pruduct_name: string;
-  pruduct_code: string;
-  id_card_name: string;
-  id_card_code: string;
+  product: Channel;
+  idcard: string;
   id_card_positive_img: string;
   id_card_back_img: string;
-  consignee_name: string;
-  consignee_phone: string;
-  consignee_address: string;
+  buyer: string;
+  phone: string;
+  detail_address: string;
   status: number;
   is_activated: boolean;
   recharge_amount: number;
