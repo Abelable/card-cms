@@ -759,23 +759,13 @@ export const NewPublishModal = ({
             <>
               <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item
-                    name="product_id"
-                    label="选择基础产品"
-                    rules={[{ required: true, message: "请选择基础产品" }]}
-                  >
-                    <Select placeholder="请选择基础产品">
-                      {operatorOptions.map(({ id, name }) => (
-                        <Select.Option key={id} value={id}>
-                          {name}
-                        </Select.Option>
-                      ))}
-                    </Select>
+                  <Form.Item required label="选择基础产品">
+                    <Select defaultValue={productInfo?.name} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    name="name"
+                    name="goods_name"
                     label="商品名称"
                     rules={[{ required: true, message: "请输入商品名称" }]}
                     tooltip="对外展示的产品标题，能清晰描述概括产品，例：北京19元月租大王卡赠2GB流量"
@@ -787,7 +777,7 @@ export const NewPublishModal = ({
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
-                    name="code"
+                    name="goods_code"
                     label="商品编码"
                     rules={[{ required: true, message: "请输入商品编码" }]}
                   >

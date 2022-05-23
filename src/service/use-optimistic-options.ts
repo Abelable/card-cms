@@ -35,12 +35,16 @@ export const useAddConfig = (queryKey: QueryKey) =>
   );
 
 export const useEditConfig = (queryKey: QueryKey) =>
-  useConfig(queryKey, (target, old) => ({
-    ...old,
-    data: old.data.map((item: any) =>
-      item.id === target.id ? { ...item, ...target } : item
-    ),
-  }));
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          data: old.data.map((item: any) =>
+            item.id === target.id ? { ...item, ...target } : item
+          ),
+        }
+      : null
+  );
 
 export const useDeleteConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => ({

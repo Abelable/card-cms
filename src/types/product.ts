@@ -28,6 +28,7 @@ export interface ChannelsResult {
 }
 
 export interface ChannelForm {
+  id: number;
   operator_id: number;
   supplier_id: number;
   name: string;
