@@ -9,7 +9,7 @@ import { useInfoModal, useOrderDeliversQueryKey } from "../util";
 
 export const InfoModal = () => {
   const [form] = useForm();
-  const regionOptions = useRegionOptions(3);
+  const { data: regionOptions } = useRegionOptions(3);
   const {
     infoModalOpen,
     editingDeliver,
@@ -33,7 +33,6 @@ export const InfoModal = () => {
   const confirm = () => {
     form.validateFields().then(async () => {
       const { address_region, ...rest } = form.getFieldsValue();
-
       await mutateAsync({
         ...editingDeliver,
         province_id: address_region[0],
@@ -100,7 +99,7 @@ export const InfoModal = () => {
           >
             <Cascader
               fieldNames={{ label: "name", value: "id" }}
-              options={regionOptions}
+              options={regionOptions as any}
               placeholder="请选择收货地址"
             />
           </Form.Item>
