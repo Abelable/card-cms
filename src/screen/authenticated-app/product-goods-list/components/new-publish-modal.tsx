@@ -777,7 +777,7 @@ export const NewPublishModal = ({
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
-                    name="goods_code"
+                    name="goods_encoding"
                     label="商品编码"
                     rules={[{ required: true, message: "请输入商品编码" }]}
                   >
@@ -800,10 +800,13 @@ export const NewPublishModal = ({
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item name="needImg" label="销售页上传照片">
+              <Form.Item
+                name="is_required_upload_picture"
+                label="销售页上传照片"
+              >
                 <Radio.Group>
-                  <Radio value={false}>无需上传</Radio>
-                  <Radio value={true}>需要上传</Radio>
+                  <Radio value={0}>无需上传</Radio>
+                  <Radio value={1}>需要上传</Radio>
                 </Radio.Group>
               </Form.Item>
               <Form.Item
