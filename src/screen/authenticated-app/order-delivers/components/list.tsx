@@ -29,10 +29,8 @@ import {
   useStatusModal,
 } from "../util";
 
-type ExportDelivers = (ids: string[]) => void;
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
   setSelectedRowKeys: (selectedRowKeys: []) => void;
-  exportDelivers: ExportDelivers;
   error: Error | unknown;
 }
 
@@ -40,7 +38,6 @@ export const List = ({
   error,
   orderStatusOptions,
   setSelectedRowKeys,
-  exportDelivers,
   params,
   setParams,
   ...restProps

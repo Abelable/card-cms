@@ -16,6 +16,7 @@ import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
+  useEditDeliversConfig,
 } from "./use-optimistic-options";
 
 export const useDelivers = (params: Partial<DeliversSearchParams>) => {
@@ -103,7 +104,7 @@ export const useEditDelivers = (queryKey: QueryKey) => {
         data: params,
         method: "POST",
       }),
-    useEditConfig(queryKey)
+    useEditDeliversConfig(queryKey)
   );
 };
 

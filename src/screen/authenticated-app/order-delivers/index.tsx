@@ -1,9 +1,13 @@
 import { toNumber } from "utils";
-import { useDelivers, useOrderStatusOptions } from "service/order";
+import {
+  useDelivers,
+  useEditDelivers,
+  useOrderStatusOptions,
+} from "service/order";
 import {
   useFailModal,
+  useOrderDeliversQueryKey,
   useOrderDeliversSearchParams,
-  useStatusModal,
 } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
@@ -21,32 +25,22 @@ import { InfoModal } from "./components/info-modal";
 import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
 
-const batchOperationOptions = [
-  { id: 1, name: "批量修改状态" },
-  { id: 2, name: "批量标记失败" },
-];
-
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
   const orderStatusOptions = useOrderStatusOptions();
   const { data, isLoading, error } = useDelivers(params);
-
-  const exportDelivers = (ids: string[]) => {
-    window.location.href = `${
-      process.env.REACT_APP_API_URL
-    }/api/admin/enter-apply/export?ids=${ids.join()}`;
-  };
-
-  const { startEdit: editStatus, editingStatusDeliverId } = useStatusModal();
-  const { startEdit: failDelivers, failDeliverIds } = useFailModal();
-  const selectBatchOperation = (ids: string[]) => (type: number) => {
-    switch (type) {
-      case 1:
-        editStatus(ids.join());
-        break;
-      case 2:
+  const { mutateAsync: editDelivers } = useEditDelivers(
+    useOrderDeliversQueryKey()
+  );
+  const { startEdit: failDelivers } = useFailModal();
+  const selectBatchStatus = (ids: string[]) => (status: number) => {
+    switch (status) {
+      case 3:
         failDelivers(ids.join());
+        break;
+      default:
+        editDelivers({ ids, status });
         break;
     }
   };
@@ -63,7 +57,6 @@ export const OrderDelivers = () => {
           error={error}
           orderStatusOptions={orderStatusOptions}
           setSelectedRowKeys={setSelectedRowKeys}
-          exportDelivers={exportDelivers}
           params={params}
           setParams={setParams}
           dataSource={data?.data}
@@ -99,14 +92,11 @@ export const OrderDelivers = () => {
           <Row gap>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
-              value={
-                editingStatusDeliverId ? 1 : failDeliverIds ? 2 : undefined
-              }
               allowClear={true}
-              onSelect={selectBatchOperation(selectedRowKeys)}
-              placeholder="批量操作"
+              onSelect={selectBatchStatus(selectedRowKeys)}
+              placeholder="批量修改状态"
             >
-              {batchOperationOptions.map(({ id, name }) => (
+              {orderStatusOptions.map(({ id, name }) => (
                 <Select.Option key={id} value={id}>
                   {name}
                 </Select.Option>

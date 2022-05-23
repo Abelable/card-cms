@@ -57,3 +57,15 @@ export const useEditDefaultWarningSettingConfig = () =>
     ...old,
     ...target,
   }));
+
+export const useEditDeliversConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          data: old.data.map((item: any) =>
+            target.ids.includes(`${item.id}`) ? { ...item, ...target } : item
+          ),
+        }
+      : null
+  );
