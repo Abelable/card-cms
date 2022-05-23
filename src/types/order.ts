@@ -1,7 +1,7 @@
 import { Pagination } from "./common";
 import { Channel } from "./product";
 
-export interface OrderStatus {
+export interface OrderStatusOption {
   id: number;
   name: string;
 }
@@ -39,12 +39,12 @@ export interface Deliver {
   phone: string;
   detail_address: string;
   status: number;
-  is_activated: boolean;
+  is_activated: number;
   recharge_amount: number;
-  fail_reason: string;
-  production_number: string;
-  express_company: string;
-  express_code: string;
+  product_failed_reason: string;
+  product_no: string;
+  express_name: string;
+  express_no: string;
 }
 
 export interface DeliversResult {

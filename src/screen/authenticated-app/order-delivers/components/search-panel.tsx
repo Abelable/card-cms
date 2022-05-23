@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Button, DatePicker, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { DeliversSearchParams, OrderStatus } from "types/order";
+import { DeliversSearchParams, OrderStatusOption } from "types/order";
 import styled from "@emotion/styled";
 import moment from "moment";
 
 export interface SearchPanelProps {
-  orderStatusOptions: OrderStatus[];
+  orderStatusOptions: OrderStatusOption[];
   params: Partial<DeliversSearchParams>;
   setParams: (params: Partial<DeliversSearchParams>) => void;
 }

@@ -161,7 +161,7 @@ export const List = ({
                   查看操作记录
                 </Link>
                 <div>
-                  激活状态：{deliver.is_activated ? "已激活" : "未激活"}
+                  激活状态：{deliver.is_activated === 1 ? "已激活" : "未激活"}
                 </div>
                 <div>充值金额：{deliver.recharge_amount}元</div>
               </Space>
@@ -169,15 +169,15 @@ export const List = ({
           },
           {
             title: "失败原因",
-            dataIndex: "fail_reason",
+            dataIndex: "product_failed_reason",
           },
           {
             title: "生产信息",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
-                <div>生产号码：{deliver.production_number}</div>
-                <div>物流公司：{deliver.express_company}</div>
-                <div>物流单号：{deliver.express_code}</div>
+                <div>生产号码：{deliver.product_no}</div>
+                <div>物流公司：{deliver.express_name}</div>
+                <div>物流单号：{deliver.express_no}</div>
               </Space>
             ),
           },

@@ -1,5 +1,5 @@
 import { toNumber } from "utils";
-import { useDelivers } from "service/order";
+import { useDelivers, useOrderStatusOptions } from "service/order";
 import {
   useExportModal,
   useFailModal,
@@ -22,12 +22,6 @@ import { InfoModal } from "./components/info-modal";
 import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
 
-const orderStatusOptions = [
-  { id: 1, name: "待发货" },
-  { id: 2, name: "待收货" },
-  { id: 3, name: "已收货" },
-];
-
 const batchOperationOptions = [
   { id: 1, name: "批量修改状态" },
   { id: 2, name: "批量标记失败" },
@@ -36,12 +30,15 @@ const batchOperationOptions = [
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
+  const orderStatusOptions = useOrderStatusOptions();
   const { data, isLoading, error } = useDelivers(params);
+
   const exportDelivers = (ids: string[]) => {
     window.location.href = `${
       process.env.REACT_APP_API_URL
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
   };
+
   const { startEdit: editStatus, editingStatusDeliverIds } = useStatusModal();
   const { startEdit: failDelivers, failDeliverIds } = useFailModal();
   const { open: openExportModal } = useExportModal();

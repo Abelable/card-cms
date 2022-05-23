@@ -6,6 +6,7 @@ import {
   DeliversSearchParams,
   ImportsResult,
   ImportsSearchParams,
+  OrderStatusOption,
   Product,
   ProductsResult,
   ProductsSearchParams,
@@ -47,6 +48,23 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
       }),
     });
   });
+};
+
+export const useOrderStatusOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["order_status_options"], () =>
+    client("/api/v1/admin/order/status-pluck")
+  );
+  const operatorOptions: OrderStatusOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      operatorOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return operatorOptions;
 };
 
 export const useEditDeliversStatus = (queryKey: QueryKey) => {
