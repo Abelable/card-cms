@@ -91,6 +91,22 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditDelivers = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: {
+      ids: string[];
+      status: number;
+      product_failed_reason?: string;
+    }) =>
+      client("/api/v1/admin/order/batch-simple-update", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useProducts = (params: Partial<ProductsSearchParams>) => {
   const client = useHttp();
   return useQuery<ProductsResult>(["products", params], () => {

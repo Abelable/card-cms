@@ -1,13 +1,13 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditDeliver } from "service/order";
+import { useEditDelivers } from "service/order";
 import { useFailModal, useOrderDeliversQueryKey } from "../util";
 
 export const FailModal = () => {
   const [form] = useForm();
   const { failModalOpen, failDeliverIds, close } = useFailModal();
-  const { mutateAsync, isLoading, error } = useEditDeliver(
+  const { mutateAsync, isLoading, error } = useEditDelivers(
     useOrderDeliversQueryKey()
   );
 
@@ -15,7 +15,7 @@ export const FailModal = () => {
     form.validateFields().then(async () => {
       const { product_failed_reason } = form.getFieldsValue();
       await mutateAsync({
-        id: failDeliverIds,
+        ids: failDeliverIds.split(","),
         status: 3,
         product_failed_reason,
       });
