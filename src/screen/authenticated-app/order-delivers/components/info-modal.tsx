@@ -59,54 +59,60 @@ export const InfoModal = () => {
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
-        <Form.Item
-          name="buyer"
-          label="收货人姓名"
-          rules={[{ required: true, message: "请输入收货人姓名" }]}
-        >
-          <Input placeholder="请输入收货人姓名" />
-        </Form.Item>
-        <Form.Item
-          name="buyer"
-          label="身份证姓名"
-          rules={[{ required: true, message: "请输入身份证姓名" }]}
-        >
-          <Input placeholder="请输入身份证姓名" />
-        </Form.Item>
-        <Form.Item
-          name="idcard"
-          label="身份证号"
-          rules={[{ required: true, message: "请输入身份证号" }]}
-        >
-          <Input placeholder="请输入身份证号" />
-        </Form.Item>
-        <Form.Item
-          name="phone"
-          label="联系电话"
-          rules={[{ required: true, message: "请输入联系电话" }]}
-        >
-          <Input placeholder="请输入联系电话" />
-        </Form.Item>
-        <Form.Item
-          name="address_region"
-          label="收货地址"
-          rules={[{ required: true, message: "请选择收货地址" }]}
-        >
-          <Cascader
-            fieldNames={{ label: "name", value: "id" }}
-            options={regionOptions}
-            placeholder="请选择收货地址"
-          />
-        </Form.Item>
-        <Form.Item
-          name="detail_address"
-          label="详细地址"
-          rules={[{ required: true, message: "请输入详细地址" }]}
-        >
-          <Input.TextArea rows={4} placeholder="请输入详细地址" />
-        </Form.Item>
-      </Form>
+      {initLoading ? (
+        <Loading>
+          <Spin size={"large"} />
+        </Loading>
+      ) : (
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="buyer"
+            label="收货人姓名"
+            rules={[{ required: true, message: "请输入收货人姓名" }]}
+          >
+            <Input placeholder="请输入收货人姓名" />
+          </Form.Item>
+          <Form.Item
+            name="buyer"
+            label="身份证姓名"
+            rules={[{ required: true, message: "请输入身份证姓名" }]}
+          >
+            <Input placeholder="请输入身份证姓名" />
+          </Form.Item>
+          <Form.Item
+            name="idcard"
+            label="身份证号"
+            rules={[{ required: true, message: "请输入身份证号" }]}
+          >
+            <Input placeholder="请输入身份证号" />
+          </Form.Item>
+          <Form.Item
+            name="phone"
+            label="联系电话"
+            rules={[{ required: true, message: "请输入联系电话" }]}
+          >
+            <Input placeholder="请输入联系电话" />
+          </Form.Item>
+          <Form.Item
+            name="address_region"
+            label="收货地址"
+            rules={[{ required: true, message: "请选择收货地址" }]}
+          >
+            <Cascader
+              fieldNames={{ label: "name", value: "id" }}
+              options={regionOptions}
+              placeholder="请选择收货地址"
+            />
+          </Form.Item>
+          <Form.Item
+            name="detail_address"
+            label="详细地址"
+            rules={[{ required: true, message: "请输入详细地址" }]}
+          >
+            <Input.TextArea rows={4} placeholder="请输入详细地址" />
+          </Form.Item>
+        </Form>
+      )}
     </Modal>
   );
 };
