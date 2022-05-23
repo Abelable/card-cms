@@ -1,22 +1,35 @@
-import { Form, Input, Modal, Select } from "antd";
+import { Form, Input, Modal, Select, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditDeliversStatus } from "service/order";
 import { useDataModal, useOrderDeliversQueryKey } from "../util";
 import { useOperatorOptions } from "service/common";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import styled from "@emotion/styled";
 
 export const DataModal = () => {
   const [form] = useForm();
   const expressOptions = useOperatorOptions();
-  const { dataModalOpen, dataDeliverId, close } = useDataModal();
+  const {
+    dataModalOpen,
+    editingDeliver,
+    close,
+    isLoading: initLoading,
+  } = useDataModal();
   const { mutateAsync, isLoading, error } = useEditDeliversStatus(
     useOrderDeliversQueryKey()
   );
 
+  useDeepCompareEffect(() => {
+    if (editingDeliver) {
+      form.setFieldsValue(editingDeliver);
+    }
+  }, [editingDeliver, form]);
+
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
-        id: dataDeliverId || "",
+        ...editingDeliver,
         ...form.getFieldsValue(),
       });
       closeModal();
@@ -37,35 +50,49 @@ export const DataModal = () => {
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
-        <Form.Item
-          name="product_no"
-          label="生产号码"
-          rules={[{ required: true, message: "请输入生产号码" }]}
-        >
-          <Input placeholder="请输入生产号码" />
-        </Form.Item>
-        <Form.Item
-          name="express_name"
-          label="物流公司"
-          rules={[{ required: true, message: "请选择物流公司" }]}
-        >
-          <Select placeholder="请选择物流公司">
-            {expressOptions.map((item) => (
-              <Select.Option key={item.id} value={item.id}>
-                {item.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="express_no"
-          label="运单号"
-          rules={[{ required: true, message: "请输入运单号" }]}
-        >
-          <Input placeholder="请输入运单号" />
-        </Form.Item>
-      </Form>
+      {initLoading ? (
+        <Loading>
+          <Spin size={"large"} />
+        </Loading>
+      ) : (
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="product_no"
+            label="生产号码"
+            rules={[{ required: true, message: "请输入生产号码" }]}
+          >
+            <Input placeholder="请输入生产号码" />
+          </Form.Item>
+          <Form.Item
+            name="express_name"
+            label="物流公司"
+            rules={[{ required: true, message: "请选择物流公司" }]}
+          >
+            <Select placeholder="请选择物流公司">
+              {expressOptions.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="express_no"
+            label="运单号"
+            rules={[{ required: true, message: "请输入运单号" }]}
+          >
+            <Input placeholder="请输入运单号" />
+          </Form.Item>
+        </Form>
+      )}
     </Modal>
   );
 };
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

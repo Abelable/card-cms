@@ -1,5 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
+import { useDeliver } from "service/order";
 
 export const useOrderDeliversSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -139,8 +140,10 @@ export const useDataModal = () => {
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
+  const { data: editingDeliver, isLoading } = useDeliver(Number(dataDeliverId));
+
   const open = useCallback(
-    (ids: string) => setDataDeliverId({ dataDeliverId: ids }),
+    (id: string) => setDataDeliverId({ dataDeliverId: id }),
     [setDataDeliverId]
   );
 
@@ -152,8 +155,10 @@ export const useDataModal = () => {
   return {
     dataModalOpen: !!dataDeliverId,
     dataDeliverId,
+    editingDeliver,
     open,
     close,
+    isLoading,
   };
 };
 

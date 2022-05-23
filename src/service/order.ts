@@ -51,6 +51,17 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   });
 };
 
+export const useDeliver = (id?: number) => {
+  const client = useHttp();
+  return useQuery<Deliver>(
+    ["deliver", { id }],
+    () => client(`/api/v1/admin/order/show/${id}`),
+    {
+      enabled: Boolean(id),
+    }
+  );
+};
+
 export const useOrderStatusOptions = () => {
   const client = useHttp();
   const res = useQuery(["order_status_options"], () =>
@@ -72,7 +83,7 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...rest }: Partial<Deliver>) =>
-      client(`/api/v1/admin/order/simple-update/${id}`, {
+      client(`/api/v1/admin/order/update/${id}`, {
         data: rest,
         method: "POST",
       }),
