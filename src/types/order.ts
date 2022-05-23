@@ -33,8 +33,8 @@ export interface Deliver {
   created_at: string;
   product: Channel;
   idcard: string;
-  id_card_positive_img: string;
-  id_card_back_img: string;
+  idcard_front_photo: string;
+  idcard_back_photo: string;
   buyer: string;
   phone: string;
   detail_address: string;

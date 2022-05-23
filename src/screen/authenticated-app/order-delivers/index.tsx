@@ -77,7 +77,7 @@ export const OrderDelivers = () => {
           }}
         />
       </Main>
-      <PicModal />
+      <PicModal orderList={data?.data || []} />
       <RecordModal />
       <StatusModal />
       <FailModal />
