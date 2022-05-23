@@ -17,13 +17,12 @@ export interface DeliversSearchParams {
   phone: string;
   is_recharged: number;
   is_activated: number;
-  upper_order_id: string;
   agent_id: number;
   time_type: number;
   start_time: string;
   end_time: string;
-  per_page: number;
   page: number;
+  per_page: number;
 }
 
 export interface Deliver {

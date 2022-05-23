@@ -18,11 +18,35 @@ import {
 
 export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   const client = useHttp();
-  return useQuery<DeliversResult>(["products", params], () =>
-    client("/api/v1/admin/order/index", {
-      data: params,
-    })
-  );
+  return useQuery<DeliversResult>(["order_delivers", params], () => {
+    const { page, per_page, ...restParams } = params;
+    return client("/api/v1/admin/product/index", {
+      data: cleanObject({
+        "filter[product.name]": restParams.product_name,
+        "filter[product.code]": restParams.product_code,
+        "filter[order.id]": restParams.order_id,
+        "filter[order.outer_order_no]": restParams.out_order_id,
+        "filter[order.status]": restParams.order_status,
+        "filter[order.idcard]": restParams.id_number,
+        "filter[order.express_no]": restParams.express_code,
+        "filter[order.product_no]": restParams.production_number,
+        "filter[order.phone]": restParams.phone,
+        "filter[order.is_recharged]": restParams.is_recharged,
+        "filter[order.is_activated]": restParams.is_activated,
+        "filter[order.agent_id]": restParams.agent_id,
+        "filter[order.start_created_at]":
+          restParams.time_type === 1 ? restParams.start_time : "",
+        "filter[order.end_created_at]":
+          restParams.time_type === 1 ? restParams.end_time : "",
+        "filter[order.start_activated_at]":
+          restParams.time_type === 2 ? restParams.start_time : "",
+        "filter[order.end_activated_at]":
+          restParams.time_type === 2 ? restParams.end_time : "",
+        page,
+        per_page,
+      }),
+    });
+  });
 };
 
 export const useEditDeliversStatus = (queryKey: QueryKey) => {

@@ -46,7 +46,6 @@ export const SearchPanel = ({
     phone: "",
     is_recharged: undefined,
     is_activated: undefined,
-    upper_order_id: "",
     agent_id: undefined,
     time_type: undefined,
     start_time: "",
@@ -196,21 +195,21 @@ export const SearchPanel = ({
   const clearIsActivated = () =>
     setTemporaryParams({ ...temporaryParams, is_activated: undefined });
 
-  const setUpperOrderId = (evt: any) => {
-    // onInputClear
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        upper_order_id: "",
-      });
-      return;
-    }
+  // const setUpperOrderId = (evt: any) => {
+  //   // onInputClear
+  //   if (!evt.target.value && evt.type !== "change") {
+  //     setTemporaryParams({
+  //       ...temporaryParams,
+  //       upper_order_id: "",
+  //     });
+  //     return;
+  //   }
 
-    setTemporaryParams({
-      ...temporaryParams,
-      upper_order_id: evt.target.value,
-    });
-  };
+  //   setTemporaryParams({
+  //     ...temporaryParams,
+  //     upper_order_id: evt.target.value,
+  //   });
+  // };
 
   const setAgent = (agent_id: number) =>
     setTemporaryParams({ ...temporaryParams, agent_id });
@@ -362,7 +361,7 @@ export const SearchPanel = ({
           ))}
         </Select>
       </Item>
-      <Item>
+      {/* <Item>
         <div>上游订单id：</div>
         <Input
           style={{ width: "20rem" }}
@@ -371,7 +370,7 @@ export const SearchPanel = ({
           placeholder="请输入上游订单id"
           allowClear={true}
         />
-      </Item>
+      </Item> */}
       <Item>
         <div>代理商：</div>
         <Select
