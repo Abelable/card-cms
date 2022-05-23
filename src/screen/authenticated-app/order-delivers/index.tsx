@@ -98,7 +98,7 @@ export const OrderDelivers = () => {
           </div>
           <Row gap>
             <Select
-              style={{ width: "14rem" }}
+              style={{ width: "14rem", marginRight: 0 }}
               value={
                 editingStatusDeliverIds ? 1 : failDeliverIds ? 2 : undefined
               }
