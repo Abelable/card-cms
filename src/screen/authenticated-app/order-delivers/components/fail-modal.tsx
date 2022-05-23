@@ -16,6 +16,7 @@ export const FailModal = () => {
       const { product_failed_reason } = form.getFieldsValue();
       await mutateAsync({
         id: failDeliverIds,
+        status: 3,
         product_failed_reason,
       });
       closeModal();

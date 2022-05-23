@@ -22,7 +22,8 @@ export const DataModal = () => {
 
   useDeepCompareEffect(() => {
     if (editingDeliver) {
-      form.setFieldsValue(editingDeliver);
+      const { express_name, ...rest } = editingDeliver;
+      form.setFieldsValue({ express_name: express_name || undefined, ...rest });
     }
   }, [editingDeliver, form]);
 
