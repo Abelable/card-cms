@@ -1,60 +1,45 @@
 import { Cascader, Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
+import { useRegionOptions } from "service/common";
 import { useEditDeliversStatus } from "service/order";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useInfoModal, useOrderDeliversQueryKey } from "../util";
-
-const regionOptions = [
-  {
-    value: "1",
-    label: "浙江省",
-    children: [
-      {
-        value: "1",
-        label: "杭州市",
-        children: [
-          {
-            value: "1",
-            label: "西湖区",
-          },
-          {
-            value: "2",
-            label: "上城区",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "2",
-    label: "江苏省",
-    children: [
-      {
-        value: "1",
-        label: "南京市",
-        children: [
-          {
-            value: "1",
-            label: "中华门",
-          },
-        ],
-      },
-    ],
-  },
-];
 
 export const InfoModal = () => {
   const [form] = useForm();
-  const { infoModalOpen, infoDeliverId, close } = useInfoModal();
+  const regionOptions = useRegionOptions(3);
+  const {
+    infoModalOpen,
+    infoDeliverId,
+    editingDeliver,
+    close,
+    isLoading: initLoading,
+  } = useInfoModal();
   const { mutateAsync, isLoading, error } = useEditDeliversStatus(
     useOrderDeliversQueryKey()
   );
 
+  useDeepCompareEffect(() => {
+    if (editingDeliver) {
+      const { province_id, city_id, area_id, ...rest } = editingDeliver;
+      form.setFieldsValue({
+        address_region: [province_id, city_id, area_id],
+        ...rest,
+      });
+    }
+  }, [editingDeliver, form]);
+
   const confirm = () => {
     form.validateFields().then(async () => {
+      const { address_region, ...rest } = form.getFieldsValue();
+
       await mutateAsync({
-        id: infoDeliverId || "",
-        ...form.getFieldsValue(),
+        ...editingDeliver,
+        province_id: address_region[0],
+        city_id: address_region[1],
+        area_id: address_region[2],
+        ...rest,
       });
       closeModal();
     });
@@ -76,28 +61,28 @@ export const InfoModal = () => {
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="consignee_name"
+          name="buyer"
           label="收货人姓名"
           rules={[{ required: true, message: "请输入收货人姓名" }]}
         >
           <Input placeholder="请输入收货人姓名" />
         </Form.Item>
         <Form.Item
-          name="id_card_name"
+          name="buyer"
           label="身份证姓名"
           rules={[{ required: true, message: "请输入身份证姓名" }]}
         >
           <Input placeholder="请输入身份证姓名" />
         </Form.Item>
         <Form.Item
-          name="id_card_code"
+          name="idcard"
           label="身份证号"
           rules={[{ required: true, message: "请输入身份证号" }]}
         >
           <Input placeholder="请输入身份证号" />
         </Form.Item>
         <Form.Item
-          name="consignee_phone"
+          name="phone"
           label="联系电话"
           rules={[{ required: true, message: "请输入联系电话" }]}
         >
@@ -108,10 +93,14 @@ export const InfoModal = () => {
           label="收货地址"
           rules={[{ required: true, message: "请选择收货地址" }]}
         >
-          <Cascader options={regionOptions} placeholder="请选择收货地址" />
+          <Cascader
+            fieldNames={{ label: "name", value: "id" }}
+            options={regionOptions}
+            placeholder="请选择收货地址"
+          />
         </Form.Item>
         <Form.Item
-          name="address_detail"
+          name="detail_address"
           label="详细地址"
           rules={[{ required: true, message: "请输入详细地址" }]}
         >

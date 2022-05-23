@@ -168,8 +168,10 @@ export const useInfoModal = () => {
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
+  const { data: editingDeliver, isLoading } = useDeliver(Number(infoDeliverId));
+
   const open = useCallback(
-    (ids: string) => setInfoDeliverId({ infoDeliverId: ids }),
+    (id: string) => setInfoDeliverId({ infoDeliverId: id }),
     [setInfoDeliverId]
   );
 
@@ -181,8 +183,10 @@ export const useInfoModal = () => {
   return {
     infoModalOpen: !!infoDeliverId,
     infoDeliverId,
+    editingDeliver,
     open,
     close,
+    isLoading,
   };
 };
 

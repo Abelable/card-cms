@@ -45,6 +45,9 @@ export interface Deliver {
   product_no: string;
   express_name: string;
   express_no: string;
+  province_id: number;
+  city_id: number;
+  area_id: number;
 }
 
 export interface DeliversResult {
