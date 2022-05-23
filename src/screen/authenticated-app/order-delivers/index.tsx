@@ -13,7 +13,7 @@ import {
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
-import { Drawer, Select } from "antd";
+import { Drawer, Modal, Select } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 import { FailModal } from "./components/fail-modal";
@@ -34,13 +34,28 @@ export const OrderDelivers = () => {
     useOrderDeliversQueryKey()
   );
   const { startEdit: failDelivers } = useFailModal();
+  const [batchStatus, setBatchStatus] = useState<number | undefined>(undefined);
   const selectBatchStatus = (ids: string[]) => (status: number) => {
+    setBatchStatus(status);
     switch (status) {
       case 3:
         failDelivers(ids.join());
         break;
       default:
-        editDelivers({ ids, status });
+        Modal.confirm({
+          title: `确定将选中订单状态修改为${
+            orderStatusOptions.find((item) => item.id === status)?.name
+          }吗？`,
+          content: "点击确定修改",
+          okText: "确定",
+          cancelText: "取消",
+          onCancel: () => setBatchStatus(undefined),
+          onOk: () => {
+            editDelivers({ ids, status });
+            setBatchStatus(undefined);
+            setSelectedRowKeys([]);
+          },
+        });
         break;
     }
   };
@@ -56,6 +71,7 @@ export const OrderDelivers = () => {
         <List
           error={error}
           orderStatusOptions={orderStatusOptions}
+          selectedRowKeys={selectedRowKeys}
           setSelectedRowKeys={setSelectedRowKeys}
           params={params}
           setParams={setParams}
@@ -71,7 +87,10 @@ export const OrderDelivers = () => {
       <PicModal orderList={data?.data || []} />
       <RecordModal />
       <StatusModal orderStatusOptions={orderStatusOptions} />
-      <FailModal />
+      <FailModal
+        setBatchStatus={setBatchStatus}
+        setSelectedRowKeys={setSelectedRowKeys}
+      />
       <DataModal />
       <InfoModal />
       <ExportModal />
@@ -92,6 +111,7 @@ export const OrderDelivers = () => {
           <Row gap>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
+              value={batchStatus}
               allowClear={true}
               onSelect={selectBatchStatus(selectedRowKeys)}
               placeholder="批量修改状态"

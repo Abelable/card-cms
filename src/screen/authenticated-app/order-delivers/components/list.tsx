@@ -30,6 +30,7 @@ import {
 } from "../util";
 
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
+  selectedRowKeys: React.Key[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;
 }
@@ -37,6 +38,7 @@ interface ListProps extends TableProps<Deliver>, SearchPanelProps {
 export const List = ({
   error,
   orderStatusOptions,
+  selectedRowKeys,
   setSelectedRowKeys,
   params,
   setParams,
@@ -93,6 +95,7 @@ export const List = ({
         rowKey={"id"}
         rowSelection={{
           type: "checkbox",
+          selectedRowKeys,
           onChange: (selectedRowKeys) =>
             setSelectedRowKeys(selectedRowKeys as []),
         }}

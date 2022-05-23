@@ -1,10 +1,15 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
+import { Dispatch, SetStateAction } from "react";
 import { useEditDelivers } from "service/order";
 import { useFailModal, useOrderDeliversQueryKey } from "../util";
 
-export const FailModal = () => {
+export const FailModal = ({
+  setBatchStatus,
+}: {
+  setBatchStatus: Dispatch<SetStateAction<number | undefined>>;
+}) => {
   const [form] = useForm();
   const { failModalOpen, failDeliverIds, close } = useFailModal();
   const { mutateAsync, isLoading, error } = useEditDelivers(
@@ -26,6 +31,7 @@ export const FailModal = () => {
   const closeModal = () => {
     form.resetFields();
     close();
+    setBatchStatus(undefined);
   };
 
   return (
