@@ -68,12 +68,12 @@ export const useOrderStatusOptions = () => {
   return operatorOptions;
 };
 
-export const useFailDeliver = (queryKey: QueryKey) => {
+export const useEditDeliver = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    ({ id, product_failed_reason }: Partial<Deliver>) =>
+    ({ id, ...rest }: Partial<Deliver>) =>
       client(`/api/v1/admin/order/simple-update/${id}`, {
-        data: { product_failed_reason },
+        data: rest,
         method: "POST",
       }),
     useEditConfig(queryKey)
