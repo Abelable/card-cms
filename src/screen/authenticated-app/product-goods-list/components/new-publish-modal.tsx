@@ -205,7 +205,7 @@ export const NewPublishModal = ({
             ...rest,
           })
         );
-        console.log(res);
+        setProductId(res.id);
       }
       setStep(1);
     });
@@ -370,7 +370,7 @@ export const NewPublishModal = ({
           form={form}
           layout="vertical"
         >
-          <ErrorBox error={addProductError || editProductError} />
+          <ErrorBox error={addProductError || editProductError || error} />
           {step === 0 ? (
             <>
               <Row gutter={16}>
