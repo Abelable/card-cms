@@ -3,15 +3,11 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditDeliversStatus } from "service/order";
 import { useDataModal, useOrderDeliversQueryKey } from "../util";
-
-const expressOptions = [
-  { id: 1, name: "圆通" },
-  { id: 2, name: "申通" },
-  { id: 3, name: "中通" },
-];
+import { useOperatorOptions } from "service/common";
 
 export const DataModal = () => {
   const [form] = useForm();
+  const expressOptions = useOperatorOptions();
   const { dataModalOpen, dataDeliverId, close } = useDataModal();
   const { mutateAsync, isLoading, error } = useEditDeliversStatus(
     useOrderDeliversQueryKey()
@@ -43,7 +39,7 @@ export const DataModal = () => {
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="product_n0"
+          name="product_no"
           label="生产号码"
           rules={[{ required: true, message: "请输入生产号码" }]}
         >
