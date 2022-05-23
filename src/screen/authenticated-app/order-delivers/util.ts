@@ -41,25 +41,30 @@ export const useOrderDeliversQueryKey = () => {
 };
 
 export const useStatusModal = () => {
-  const [{ editingStatusDeliverIds }, setEditingStatusDeliverIds] =
-    useUrlQueryParams(["editingStatusDeliverIds"]);
+  const [{ editingStatusDeliverId }, setEditingStatusDeliverIds] =
+    useUrlQueryParams(["editingStatusDeliverId"]);
   const setUrlParams = useSetUrlSearchParams();
 
+  const { data: editingDeliver, isLoading } = useDeliver(
+    Number(editingStatusDeliverId)
+  );
+
   const startEdit = useCallback(
-    (ids: string) =>
-      setEditingStatusDeliverIds({ editingStatusDeliverIds: ids }),
+    (id: string) => setEditingStatusDeliverIds({ editingStatusDeliverId: id }),
     [setEditingStatusDeliverIds]
   );
   const close = useCallback(
-    () => setUrlParams({ editingStatusDeliverIds: "" }),
+    () => setUrlParams({ editingStatusDeliverId: "" }),
     [setUrlParams]
   );
 
   return {
-    statusModalOpen: !!editingStatusDeliverIds,
-    editingStatusDeliverIds,
+    statusModalOpen: !!editingStatusDeliverId,
+    editingStatusDeliverId,
+    editingDeliver,
     startEdit,
     close,
+    isLoading,
   };
 };
 

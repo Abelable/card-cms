@@ -1,26 +1,38 @@
-import { Form, Modal, Select } from "antd";
+import styled from "@emotion/styled";
+import { Form, Input, Modal, Select, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditDeliversStatus } from "service/order";
+import { useEditDeliver } from "service/order";
+import { OrderStatusOption } from "types/order";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useStatusModal, useOrderDeliversQueryKey } from "../util";
 
-const statusOptions = [
-  { id: 1, name: "待发货" },
-  { id: 2, name: "待收货" },
-  { id: 3, name: "已收货" },
-];
-
-export const StatusModal = () => {
+export const StatusModal = ({
+  orderStatusOptions,
+}: {
+  orderStatusOptions: OrderStatusOption[];
+}) => {
   const [form] = useForm();
-  const { statusModalOpen, editingStatusDeliverIds, close } = useStatusModal();
-  const { mutateAsync, isLoading, error } = useEditDeliversStatus(
+  const {
+    statusModalOpen,
+    editingDeliver,
+    close,
+    isLoading: initLoading,
+  } = useStatusModal();
+  const { mutateAsync, isLoading, error } = useEditDeliver(
     useOrderDeliversQueryKey()
   );
+
+  useDeepCompareEffect(() => {
+    if (editingDeliver) {
+      form.setFieldsValue(editingDeliver);
+    }
+  }, [editingDeliver, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
-        id: editingStatusDeliverIds || "",
+        ...editingDeliver,
         ...form.getFieldsValue(),
       });
       closeModal();
@@ -34,35 +46,49 @@ export const StatusModal = () => {
 
   return (
     <Modal
-      title={
-        editingStatusDeliverIds && editingStatusDeliverIds.includes(",")
-          ? "批量修改状态"
-          : "修改状态"
-      }
+      title={"修改状态"}
       visible={statusModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
-        <Form.Item
-          name="status"
-          label="选择状态"
-          rules={[{ required: true, message: "请选择状态" }]}
-        >
-          <Select placeholder="请选择状态">
-            {statusOptions.map((item) => (
-              <Select.Option key={item.id} value={item.id}>
-                {item.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item name="reason" label="备注原因">
-          <Select mode="tags" placeholder="输入后回车生成原因" />
-        </Form.Item>
-      </Form>
+      {initLoading ? (
+        <Loading>
+          <Spin size={"large"} />
+        </Loading>
+      ) : (
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="status"
+            label="选择状态"
+            rules={[{ required: true, message: "请选择状态" }]}
+          >
+            <Select placeholder="请选择状态">
+              {orderStatusOptions.map((item) => (
+                <Select.Option key={item.id} value={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="product_failed_reason"
+            label="备注原因"
+            rules={[{ required: true, message: "请输入具体原因" }]}
+          >
+            <Input placeholder="请输入具体原因" />
+          </Form.Item>
+        </Form>
+      )}
     </Modal>
   );
 };
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

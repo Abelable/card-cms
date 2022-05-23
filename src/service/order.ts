@@ -91,18 +91,6 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   );
 };
 
-export const useEditDeliversStatus = (queryKey: QueryKey) => {
-  const client = useHttp();
-  return useMutation(
-    ({ id, ...params }: Partial<Product>) =>
-      client(`/api/v1/admin/order/update/${id}`, {
-        data: params,
-        method: "POST",
-      }),
-    useEditConfig(queryKey)
-  );
-};
-
 export const useProducts = (params: Partial<ProductsSearchParams>) => {
   const client = useHttp();
   return useQuery<ProductsResult>(["products", params], () => {

@@ -38,7 +38,7 @@ export const OrderDelivers = () => {
     }/api/admin/enter-apply/export?ids=${ids.join()}`;
   };
 
-  const { startEdit: editStatus, editingStatusDeliverIds } = useStatusModal();
+  const { startEdit: editStatus, editingStatusDeliverId } = useStatusModal();
   const { startEdit: failDelivers, failDeliverIds } = useFailModal();
   const selectBatchOperation = (ids: string[]) => (type: number) => {
     switch (type) {
@@ -77,7 +77,7 @@ export const OrderDelivers = () => {
       </Main>
       <PicModal orderList={data?.data || []} />
       <RecordModal />
-      <StatusModal />
+      <StatusModal orderStatusOptions={orderStatusOptions} />
       <FailModal />
       <DataModal />
       <InfoModal />
@@ -100,7 +100,7 @@ export const OrderDelivers = () => {
             <Select
               style={{ width: "14rem", marginRight: 0 }}
               value={
-                editingStatusDeliverIds ? 1 : failDeliverIds ? 2 : undefined
+                editingStatusDeliverId ? 1 : failDeliverIds ? 2 : undefined
               }
               allowClear={true}
               onSelect={selectBatchOperation(selectedRowKeys)}

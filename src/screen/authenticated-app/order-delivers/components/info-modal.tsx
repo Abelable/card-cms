@@ -3,7 +3,7 @@ import { Cascader, Form, Input, Modal, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useRegionOptions } from "service/common";
-import { useEditDeliversStatus } from "service/order";
+import { useEditDeliver } from "service/order";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useInfoModal, useOrderDeliversQueryKey } from "../util";
 
@@ -16,7 +16,7 @@ export const InfoModal = () => {
     close,
     isLoading: initLoading,
   } = useInfoModal();
-  const { mutateAsync, isLoading, error } = useEditDeliversStatus(
+  const { mutateAsync, isLoading, error } = useEditDeliver(
     useOrderDeliversQueryKey()
   );
 
