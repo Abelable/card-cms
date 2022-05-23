@@ -188,7 +188,7 @@ export const useExportModal = () => {
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    (ids: string) => setExportDeliverId({ exportDeliverId: ids }),
+    () => setExportDeliverId({ exportDeliverId: "1" }),
     [setExportDeliverId]
   );
 

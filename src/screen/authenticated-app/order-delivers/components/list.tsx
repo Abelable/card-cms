@@ -68,16 +68,22 @@ export const List = ({
       <Header between={true}>
         <h3>订单生产列表</h3>
         <Row gap>
-          <Button icon={<DownloadOutlined />}>下载生产模版</Button>
-          <FileUpload name="导入生产数据" />
+          <div style={{ marginRight: "1rem" }}>
+            <FileUpload name="导入生产数据" />
+          </div>
+          <Tooltip title="下载生产模版">
+            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+          </Tooltip>
           <Divider
-            style={{ height: "3rem", marginRight: "2.8rem" }}
+            style={{ height: "3rem", marginLeft: 0 }}
             type={"vertical"}
           />
-          <Button icon={<DownloadOutlined />}>下载激活模版</Button>
-          <div style={{ marginRight: 0 }}>
+          <div style={{ marginRight: "1rem" }}>
             <FileUpload name="导入激活数据" />
           </div>
+          <Tooltip title="下载激活模版">
+            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+          </Tooltip>
         </Row>
       </Header>
       <ErrorBox error={error} />

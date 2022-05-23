@@ -1,7 +1,6 @@
 import { toNumber } from "utils";
 import { useDelivers, useOrderStatusOptions } from "service/order";
 import {
-  useExportModal,
   useFailModal,
   useOrderDeliversSearchParams,
   useStatusModal,
@@ -10,7 +9,7 @@ import {
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
-import { Button, Drawer, Select } from "antd";
+import { Drawer, Select } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 import { FailModal } from "./components/fail-modal";
@@ -41,7 +40,6 @@ export const OrderDelivers = () => {
 
   const { startEdit: editStatus, editingStatusDeliverIds } = useStatusModal();
   const { startEdit: failDelivers, failDeliverIds } = useFailModal();
-  const { open: openExportModal } = useExportModal();
   const selectBatchOperation = (ids: string[]) => (type: number) => {
     switch (type) {
       case 1:
@@ -99,15 +97,6 @@ export const OrderDelivers = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap>
-            <Button onClick={() => exportDelivers(selectedRowKeys)}>
-              批量导出生产
-            </Button>
-            <Button
-              onClick={() => openExportModal(selectedRowKeys.join())}
-              type={"primary"}
-            >
-              批量导出信息
-            </Button>
             <Select
               style={{ width: "14rem" }}
               value={

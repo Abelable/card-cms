@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Button, DatePicker, Input, Select } from "antd";
+import { Button, DatePicker, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { DeliversSearchParams, OrderStatusOption } from "types/order";
 import styled from "@emotion/styled";
 import moment from "moment";
+import { useExportModal } from "../util";
 
 export interface SearchPanelProps {
   orderStatusOptions: OrderStatusOption[];
@@ -54,6 +55,8 @@ export const SearchPanel = ({
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<DeliversSearchParams>>(params);
+
+  const { open: openExportModal } = useExportModal();
 
   const setProductName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
@@ -421,11 +424,20 @@ export const SearchPanel = ({
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
-          style={{ marginRight: 0 }}
           type={"primary"}
           onClick={() => setParams({ ...params, ...temporaryParams })}
         >
           查询
+        </Button>
+        <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
+        <Button type={"primary"}>导出生产</Button>
+        <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
+        <Button
+          style={{ marginRight: 0 }}
+          onClick={() => openExportModal()}
+          type={"primary"}
+        >
+          导出信息
         </Button>
       </ButtonWrap>
     </Container>
