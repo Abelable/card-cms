@@ -22,17 +22,14 @@ import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
-
-const operatorOptions = [
-  { id: 1, name: "移动" },
-  { id: 2, name: "联通" },
-  { id: 3, name: "电信" },
-];
+import { ChannelOption } from "types/product";
 
 export const PublishModal = ({
   agentOptions,
+  channelOptions,
 }: {
   agentOptions: AgentOption[];
+  channelOptions: ChannelOption[];
 }) => {
   const [form] = useForm();
   const [step, setStep] = useState(0);
@@ -105,7 +102,7 @@ export const PublishModal = ({
                     rules={[{ required: true, message: "请选择基础产品" }]}
                   >
                     <Select placeholder="请选择基础产品">
-                      {operatorOptions.map(({ id, name }) => (
+                      {channelOptions.map(({ id, name }) => (
                         <Select.Option key={id} value={id}>
                           {name}
                         </Select.Option>
@@ -127,7 +124,7 @@ export const PublishModal = ({
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
-                    name="code"
+                    name="encoding"
                     label="商品编码"
                     rules={[{ required: true, message: "请输入商品编码" }]}
                   >
@@ -150,10 +147,13 @@ export const PublishModal = ({
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item name="needImg" label="销售页上传照片">
+              <Form.Item
+                name="is_required_upload_picture"
+                label="销售页上传照片"
+              >
                 <Radio.Group>
-                  <Radio value={false}>无需上传</Radio>
-                  <Radio value={true}>需要上传</Radio>
+                  <Radio value={0}>无需上传</Radio>
+                  <Radio value={1}>需要上传</Radio>
                 </Radio.Group>
               </Form.Item>
               <Form.Item
@@ -174,7 +174,7 @@ export const PublishModal = ({
           ) : step === 1 ? (
             <>
               <Form.Item
-                name="visible_type"
+                name="visible_status"
                 label="代理商可见设置"
                 rules={[{ required: true, message: "请选择代理商可见设置" }]}
               >
@@ -185,14 +185,29 @@ export const PublishModal = ({
                   <Radio value={4}>选择代理商不可见</Radio>
                 </Radio.Group>
               </Form.Item>
-              <Form.Item name="agent_id" label="选择代理商">
-                <Select placeholder="请选择代理商">
-                  {operatorOptions.map((item) => (
-                    <Select.Option key={item.id} value={item.id}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
-                </Select>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.visible_status !== currentValues.visible_status
+                }
+              >
+                {({ getFieldValue }) =>
+                  [3, 4].includes(getFieldValue("visible_status")) && (
+                    <Form.Item
+                      name="agent_ids"
+                      label="选择代理商"
+                      rules={[{ required: true, message: "请选择代理商" }]}
+                    >
+                      <Select mode="tags" placeholder="请选择代理商">
+                        {agentOptions.map((item) => (
+                          <Select.Option key={item.id} value={item.id}>
+                            {item.name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  )
+                }
               </Form.Item>
             </>
           ) : (

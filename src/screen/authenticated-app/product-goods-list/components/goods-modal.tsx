@@ -14,19 +14,23 @@ import {
 import { useGoodsModal, useGoodsListQueryKey } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditGoods, useChannelOptions } from "service/product";
+import { useEditGoods } from "service/product";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import { useState } from "react";
 import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
+import { ChannelOption } from "types/product";
 
-export const GoodsModal = () => {
+export const GoodsModal = ({
+  channelOptions,
+}: {
+  channelOptions: ChannelOption[];
+}) => {
   const [form] = useForm();
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
-  const channelOptions = useChannelOptions();
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) return e;

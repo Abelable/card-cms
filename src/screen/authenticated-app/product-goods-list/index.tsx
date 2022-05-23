@@ -1,5 +1,5 @@
 import { toNumber } from "utils";
-import { useGoodsList } from "service/product";
+import { useChannelOptions, useGoodsList } from "service/product";
 import { useGoodsListSearchParams } from "./util";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
@@ -17,6 +17,7 @@ export const ProductGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
   const supplierOptions = useSupplierOptions();
   const agentOptions = useAgentOptions();
+  const channelOptions = useChannelOptions();
   const { data, isLoading, error } = useGoodsList(params);
 
   const items: MenuProps["items"] = [
@@ -67,10 +68,13 @@ export const ProductGoodsList = () => {
           }}
         />
       </Main>
-      <GoodsModal />
+      <GoodsModal channelOptions={channelOptions} />
       <AgentModal params={params} />
       <LinkModal />
-      <PublishModal agentOptions={agentOptions} />
+      <PublishModal
+        agentOptions={agentOptions}
+        channelOptions={channelOptions}
+      />
       <NewPublishModal
         supplierOptions={supplierOptions}
         agentOptions={agentOptions}
