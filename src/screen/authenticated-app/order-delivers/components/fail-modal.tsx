@@ -7,8 +7,10 @@ import { useFailModal, useOrderDeliversQueryKey } from "../util";
 
 export const FailModal = ({
   setBatchStatus,
+  setSelectedRowKeys,
 }: {
   setBatchStatus: Dispatch<SetStateAction<number | undefined>>;
+  setSelectedRowKeys: Dispatch<SetStateAction<never[]>>;
 }) => {
   const [form] = useForm();
   const { failModalOpen, failDeliverIds, close } = useFailModal();
@@ -24,6 +26,7 @@ export const FailModal = ({
         status: 3,
         product_failed_reason,
       });
+      setSelectedRowKeys([]);
       closeModal();
     });
   };
