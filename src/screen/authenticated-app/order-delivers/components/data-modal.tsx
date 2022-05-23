@@ -3,13 +3,13 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditDeliver } from "service/order";
 import { useDataModal, useOrderDeliversQueryKey } from "../util";
-import { useOperatorOptions } from "service/common";
+import { useExpressOptions } from "service/common";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import styled from "@emotion/styled";
 
 export const DataModal = () => {
   const [form] = useForm();
-  const expressOptions = useOperatorOptions();
+  const expressOptions = useExpressOptions();
   const {
     dataModalOpen,
     editingDeliver,
@@ -70,8 +70,8 @@ export const DataModal = () => {
           >
             <Select placeholder="请选择物流公司">
               {expressOptions.map((item) => (
-                <Select.Option key={item.id} value={item.id}>
-                  {item.name}
+                <Select.Option key={item} value={item}>
+                  {item}
                 </Select.Option>
               ))}
             </Select>
