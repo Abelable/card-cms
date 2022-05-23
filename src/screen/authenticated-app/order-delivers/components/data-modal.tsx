@@ -43,14 +43,14 @@ export const DataModal = () => {
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="production_number"
+          name="product_n0"
           label="生产号码"
           rules={[{ required: true, message: "请输入生产号码" }]}
         >
           <Input placeholder="请输入生产号码" />
         </Form.Item>
         <Form.Item
-          name="express_company"
+          name="express_name"
           label="物流公司"
           rules={[{ required: true, message: "请选择物流公司" }]}
         >
@@ -63,7 +63,7 @@ export const DataModal = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          name="express_code"
+          name="express_no"
           label="运单号"
           rules={[{ required: true, message: "请输入运单号" }]}
         >

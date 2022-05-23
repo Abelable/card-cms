@@ -9,6 +9,11 @@ export interface OperatorOption {
   name: string;
 }
 
+export interface ExpressOption {
+  id: number;
+  name: string;
+}
+
 export interface RegionOption {
   id: number;
   name: string;

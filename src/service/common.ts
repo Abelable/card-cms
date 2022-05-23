@@ -1,6 +1,11 @@
 import { useHttp } from "./http";
 import { useMutation, useQuery } from "react-query";
-import { OperatorOption, RegionOption, WarningSetting } from "types/common";
+import {
+  ExpressOption,
+  OperatorOption,
+  RegionOption,
+  WarningSetting,
+} from "types/common";
 import { useEditDefaultWarningSettingConfig } from "./use-optimistic-options";
 
 export const useImportData = () => {
@@ -56,4 +61,21 @@ export const useUpdateDefaultWarningSetting = () => {
       }),
     useEditDefaultWarningSettingConfig()
   );
+};
+
+export const useExpressOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["express_options"], () =>
+    client("/api/v1/admin/setting/express-pluck")
+  );
+  const expressOptions: ExpressOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      expressOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return expressOptions;
 };
