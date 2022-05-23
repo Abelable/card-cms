@@ -22,7 +22,7 @@ import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
-import { ChannelOption } from "types/product";
+import { ChannelOption, GoodsForm } from "types/product";
 
 export const PublishModal = ({
   agentOptions,
@@ -45,17 +45,45 @@ export const PublishModal = ({
 
   const { mutateAsync, error, isLoading } = useAddGoods(useGoodsListQueryKey());
 
-  const closeModal = () => {
-    form.resetFields();
-    setStep(0);
-    close();
+  const [tempGoodsInfo, setTempGoodsInfo] = useState<Partial<GoodsForm>>();
+
+  const next = () => {
+    form.validateFields().then(() => {
+      const { tags, img, ...rest } = form.getFieldsValue();
+      const sale_point = tags.join();
+      const main_picture = img.length
+        ? img[0].xhr
+          ? JSON.parse(img[0].xhr.response).data.relative_url
+          : img[0].url
+        : "";
+
+      setTempGoodsInfo({
+        sale_point,
+        main_picture,
+        detail,
+        remark,
+        ...rest,
+      });
+      setStep(1);
+    });
   };
 
   const submit = () => {
     form.validateFields().then(async () => {
-      await mutateAsync(cleanObject(form.getFieldsValue()));
+      await mutateAsync(
+        cleanObject({
+          ...tempGoodsInfo,
+          ...form.getFieldsValue(),
+        })
+      );
       setStep(2);
     });
+  };
+
+  const closeModal = () => {
+    form.resetFields();
+    setStep(0);
+    close();
   };
 
   return (
@@ -68,7 +96,7 @@ export const PublishModal = ({
       bodyStyle={{ paddingBottom: 80 }}
       extra={
         step === 0 ? (
-          <Button onClick={() => setStep(1)} type="primary">
+          <Button onClick={next} type="primary">
             下一步
           </Button>
         ) : step === 1 ? (

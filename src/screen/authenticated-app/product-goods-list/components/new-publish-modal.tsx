@@ -264,7 +264,7 @@ export const NewPublishModal = ({
   };
 
   const toThirdStep = () => {
-    form.validateFields().then(async () => {
+    form.validateFields().then(() => {
       const { tags, img, ...rest } = form.getFieldsValue();
       const sale_point = tags.join();
       const main_picture = img.length
