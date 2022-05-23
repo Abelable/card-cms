@@ -1,4 +1,5 @@
-import { Cascader, Form, Input, Modal } from "antd";
+import styled from "@emotion/styled";
+import { Cascader, Form, Input, Modal, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useRegionOptions } from "service/common";
@@ -11,7 +12,6 @@ export const InfoModal = () => {
   const regionOptions = useRegionOptions(3);
   const {
     infoModalOpen,
-    infoDeliverId,
     editingDeliver,
     close,
     isLoading: initLoading,
@@ -116,3 +116,11 @@ export const InfoModal = () => {
     </Modal>
   );
 };
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
