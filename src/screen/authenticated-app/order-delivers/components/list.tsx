@@ -194,9 +194,12 @@ export const List = ({
                 <Link type={"link"} onClick={() => openDetailModal(deliver.id)}>
                   查看详情
                 </Link>
-                <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
-                  标记为生产失败
-                </Link>
+                {!deliver.product_failed_reason ? (
+                  <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
+                    生产失败
+                  </Link>
+                ) : null}
+
                 <Link type={"link"} onClick={() => openDataModal(deliver.id)}>
                   录入生产数据
                 </Link>

@@ -1,4 +1,4 @@
-import { Form, Modal, Select } from "antd";
+import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditDeliversStatus } from "service/order";
@@ -28,11 +28,7 @@ export const FailModal = () => {
 
   return (
     <Modal
-      title={
-        failDeliverIds && failDeliverIds.includes(",")
-          ? "批量标记失败"
-          : "标记为生产失败"
-      }
+      title={"标记为生产失败"}
       visible={failModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
@@ -45,11 +41,7 @@ export const FailModal = () => {
           label="备注原因"
           rules={[{ required: true, message: "请输入具体原因" }]}
         >
-          <Select mode="tags" placeholder="输入后回车生成原因">
-            {["手持照片不清晰", "手持照片不完整"].map((item) => (
-              <Select.Option key={item}>{item}</Select.Option>
-            ))}
-          </Select>
+          <Input placeholder="请输入具体原因" />
         </Form.Item>
       </Form>
     </Modal>
