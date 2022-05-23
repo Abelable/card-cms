@@ -21,9 +21,9 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import {
   useAddChannel,
+  useAddGoods,
   useChannel,
   useEditChannel,
-  useNewPublishGoods,
 } from "service/product";
 import { cleanObject } from "utils";
 import "assets/style/hideLeftBorder.css";
@@ -42,6 +42,8 @@ import { SupplierOption } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useChannelsQueryKey } from "screen/authenticated-app/product-channels/util";
 import { RegionItem } from "types/common";
+import { GoodsForm } from "types/product";
+import { AgentOption } from "types/agent";
 
 const limitOptions = [
   { value: 0, label: "不限制" },
@@ -80,7 +82,9 @@ const halfCycleOptions = [
 
 export const NewPublishModal = ({
   supplierOptions,
+  agentOptions,
 }: {
+  agentOptions: AgentOption[];
   supplierOptions: SupplierOption[];
 }) => {
   const [form] = useForm();
@@ -91,8 +95,7 @@ export const NewPublishModal = ({
   const operatorOptions = useOperatorOptions();
   const [step, setStep] = useState(0);
   const [type, setType] = useState(1);
-  const [productId, setProductId] = useState(undefined);
-  const { data: productInfo } = useChannel(Number(productId));
+
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
 
@@ -102,10 +105,8 @@ export const NewPublishModal = ({
   };
 
   const { newPublishModalOpen, close } = useNewPublishModal();
-
-  const { mutateAsync, error, isLoading } = useNewPublishGoods(
-    useGoodsListQueryKey()
-  );
+  const [productId, setProductId] = useState(undefined);
+  const { data: productInfo } = useChannel(Number(productId));
   const {
     mutateAsync: addProduct,
     error: addProductError,
@@ -116,6 +117,8 @@ export const NewPublishModal = ({
     error: editProductError,
     isLoading: editProductLoading,
   } = useEditChannel(useChannelsQueryKey());
+
+  const [tempGoodsInfo, setTempGoodsInfo] = useState<Partial<GoodsForm>>();
 
   const toSecondStep = () => {
     form.validateFields().then(async () => {
@@ -260,17 +263,46 @@ export const NewPublishModal = ({
     }
   };
 
+  const toThirdStep = () => {
+    form.validateFields().then(async () => {
+      const { tags, img, ...rest } = form.getFieldsValue();
+      const sale_point = tags.join();
+      const main_picture = img.length
+        ? img[0].xhr
+          ? JSON.parse(img[0].xhr.response).data.relative_url
+          : img[0].url
+        : "";
+
+      setTempGoodsInfo({
+        product_id: productInfo?.id,
+        sale_point,
+        main_picture,
+        detail,
+        remark,
+        ...rest,
+      });
+      setStep(2);
+    });
+  };
+
+  const { mutateAsync, error, isLoading } = useAddGoods(useGoodsListQueryKey());
+
+  const submit = () => {
+    form.validateFields().then(async () => {
+      await mutateAsync(
+        cleanObject({
+          ...tempGoodsInfo,
+          ...form.getFieldsValue(),
+        })
+      );
+      setStep(3);
+    });
+  };
+
   const closeModal = () => {
     form.resetFields();
     setStep(0);
     close();
-  };
-
-  const submit = () => {
-    form.validateFields().then(async () => {
-      await mutateAsync(cleanObject(form.getFieldsValue()));
-      setStep(3);
-    });
   };
 
   const saveDefaultWarningSetting = () => {
@@ -329,11 +361,7 @@ export const NewPublishModal = ({
         ) : step === 1 ? (
           <Space>
             <Button onClick={toFirstStep}>上一步</Button>
-            <Button
-              onClick={() => setStep(2)}
-              loading={isLoading}
-              type="primary"
-            >
+            <Button onClick={toThirdStep} type="primary">
               下一步
             </Button>
           </Space>
@@ -826,29 +854,42 @@ export const NewPublishModal = ({
             </>
           ) : step === 2 ? (
             <>
-              <Form form={form} layout="vertical">
-                <Form.Item
-                  name="visible_type"
-                  label="代理商可见设置"
-                  rules={[{ required: true, message: "请选择代理商可见设置" }]}
-                >
-                  <Radio.Group>
-                    <Radio value={1}>仅自己可见</Radio>
-                    <Radio value={2}>全部代理商可见</Radio>
-                    <Radio value={3}>选择代理商可见</Radio>
-                    <Radio value={4}>选择代理商不可见</Radio>
-                  </Radio.Group>
-                </Form.Item>
-                <Form.Item name="agent_id" label="选择代理商">
-                  <Select placeholder="请选择代理商">
-                    {operatorOptions.map((item) => (
-                      <Select.Option key={item.id} value={item.id}>
-                        {item.name}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Form>
+              <Form.Item
+                name="visible_status"
+                label="代理商可见设置"
+                rules={[{ required: true, message: "请选择代理商可见设置" }]}
+              >
+                <Radio.Group>
+                  <Radio value={1}>仅自己可见</Radio>
+                  <Radio value={2}>全部代理商可见</Radio>
+                  <Radio value={3}>选择代理商可见</Radio>
+                  <Radio value={4}>选择代理商不可见</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.visible_status !== currentValues.visible_status
+                }
+              >
+                {({ getFieldValue }) =>
+                  [3, 4].includes(getFieldValue("visible_status")) && (
+                    <Form.Item
+                      name="agent_ids"
+                      label="选择代理商"
+                      rules={[{ required: true, message: "请选择代理商" }]}
+                    >
+                      <Select mode="tags" placeholder="请选择代理商">
+                        {agentOptions.map((item) => (
+                          <Select.Option key={item.id} value={item.id}>
+                            {item.name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  )
+                }
+              </Form.Item>
             </>
           ) : (
             <Result status="success" title="发布成功" />

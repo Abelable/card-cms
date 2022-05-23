@@ -15,12 +15,13 @@ import {
 import { useGoodsListQueryKey, usePublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { usePublishGoods } from "service/product";
+import { useAddGoods } from "service/product";
 import { cleanObject } from "utils";
 import { useState } from "react";
 import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
+import { AgentOption } from "types/agent";
 
 const operatorOptions = [
   { id: 1, name: "移动" },
@@ -28,7 +29,11 @@ const operatorOptions = [
   { id: 3, name: "电信" },
 ];
 
-export const PublishModal = () => {
+export const PublishModal = ({
+  agentOptions,
+}: {
+  agentOptions: AgentOption[];
+}) => {
   const [form] = useForm();
   const [step, setStep] = useState(0);
   const [detail, setDetail] = useState("");
@@ -41,9 +46,7 @@ export const PublishModal = () => {
 
   const { publishModalOpen, close } = usePublishModal();
 
-  const { mutateAsync, error, isLoading } = usePublishGoods(
-    useGoodsListQueryKey()
-  );
+  const { mutateAsync, error, isLoading } = useAddGoods(useGoodsListQueryKey());
 
   const closeModal = () => {
     form.resetFields();

@@ -11,10 +11,12 @@ import { LinkModal } from "./components/link-modal";
 import { PublishModal } from "./components/publish-modal";
 import { NewPublishModal } from "./components/new-publish-modal";
 import { useSupplierOptions } from "service/supplier";
+import { useAgentOptions } from "service/agent";
 
 export const ProductGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
   const supplierOptions = useSupplierOptions();
+  const agentOptions = useAgentOptions();
   const { data, isLoading, error } = useGoodsList(params);
 
   const items: MenuProps["items"] = [
@@ -68,8 +70,11 @@ export const ProductGoodsList = () => {
       <GoodsModal />
       <AgentModal params={params} />
       <LinkModal />
-      <PublishModal />
-      <NewPublishModal supplierOptions={supplierOptions} />
+      <PublishModal agentOptions={agentOptions} />
+      <NewPublishModal
+        supplierOptions={supplierOptions}
+        agentOptions={agentOptions}
+      />
     </Container>
   );
 };
