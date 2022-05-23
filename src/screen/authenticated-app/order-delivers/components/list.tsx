@@ -199,7 +199,6 @@ export const List = ({
                     生产失败
                   </Link>
                 ) : null}
-
                 <Link type={"link"} onClick={() => openDataModal(deliver.id)}>
                   录入生产数据
                 </Link>
