@@ -72,12 +72,24 @@ export const StatusModal = ({
               ))}
             </Select>
           </Form.Item>
+
           <Form.Item
-            name="product_failed_reason"
-            label="备注原因"
-            rules={[{ required: true, message: "请输入具体原因" }]}
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.status !== currentValues.status
+            }
           >
-            <Input placeholder="请输入具体原因" />
+            {({ getFieldValue }) =>
+              getFieldValue("status") === 3 && (
+                <Form.Item
+                  name="product_failed_reason"
+                  label="备注原因"
+                  rules={[{ required: true, message: "请输入具体原因" }]}
+                >
+                  <Input placeholder="请输入具体原因" />
+                </Form.Item>
+              )
+            }
           </Form.Item>
         </Form>
       )}
