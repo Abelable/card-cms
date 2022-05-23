@@ -25,9 +25,9 @@ export const ExportModal = () => {
       onCancel={closeModal}
       footer={
         <>
-          <Button onClick={check}>查看已生成的报表</Button>
-          <Button type={"primary"} onClick={generate}>
-            生成报表
+          <Button onClick={generate}>生成报表</Button>
+          <Button type={"primary"} onClick={check}>
+            查看已生成的报表
           </Button>
         </>
       }
