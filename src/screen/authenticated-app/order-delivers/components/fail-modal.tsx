@@ -1,21 +1,22 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditDeliversStatus } from "service/order";
+import { useFailDeliver } from "service/order";
 import { useFailModal, useOrderDeliversQueryKey } from "../util";
 
 export const FailModal = () => {
   const [form] = useForm();
   const { failModalOpen, failDeliverIds, close } = useFailModal();
-  const { mutateAsync, isLoading, error } = useEditDeliversStatus(
+  const { mutateAsync, isLoading, error } = useFailDeliver(
     useOrderDeliversQueryKey()
   );
 
   const confirm = () => {
     form.validateFields().then(async () => {
+      const { product_failed_reason } = form.getFieldsValue();
       await mutateAsync({
-        id: failDeliverIds || "",
-        ...form.getFieldsValue(),
+        id: failDeliverIds,
+        product_failed_reason,
       });
       closeModal();
     });
@@ -37,7 +38,7 @@ export const FailModal = () => {
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="reason"
+          name="product_failed_reason"
           label="备注原因"
           rules={[{ required: true, message: "请输入具体原因" }]}
         >

@@ -2,6 +2,7 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
+  Deliver,
   DeliversResult,
   DeliversSearchParams,
   ImportsResult,
@@ -65,6 +66,18 @@ export const useOrderStatusOptions = () => {
     );
   }
   return operatorOptions;
+};
+
+export const useFailDeliver = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, product_failed_reason }: Partial<Deliver>) =>
+      client(`/api/v1/admin/order/simple-update/${id}`, {
+        data: { product_failed_reason },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
 };
 
 export const useEditDeliversStatus = (queryKey: QueryKey) => {
