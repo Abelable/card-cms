@@ -225,6 +225,10 @@ export const useDetailModal = () => {
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
+  const { data: editingDeliver, isLoading } = useDeliver(
+    Number(detailDeliverId)
+  );
+
   const open = useCallback(
     (ids: string) => setDetailDeliverId({ detailDeliverId: ids }),
     [setDetailDeliverId]
@@ -238,7 +242,9 @@ export const useDetailModal = () => {
   return {
     detailModalOpen: !!detailDeliverId,
     detailDeliverId,
+    editingDeliver,
     open,
     close,
+    isLoading,
   };
 };

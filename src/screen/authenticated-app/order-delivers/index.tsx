@@ -94,7 +94,7 @@ export const OrderDelivers = () => {
       <DataModal />
       <InfoModal />
       <ExportModal />
-      <DetailModal />
+      <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}

@@ -31,6 +31,8 @@ export interface Deliver {
   source: string;
   outer_order_no: string;
   created_at: string;
+  updated_at: string;
+  agent_id: number;
   product: Channel;
   idcard: string;
   idcard_front_photo: string;
