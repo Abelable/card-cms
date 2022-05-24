@@ -94,9 +94,11 @@ export const ProductModal = ({
         >
           <Input placeholder="请输入上游编码" />
         </Form.Item>
-        <Form.Item name="trigger_mark" label="触点标识名称">
-          <Input placeholder="请输入触点标识名称" />
-        </Form.Item>
+        {editingProductId ? (
+          <Form.Item name="trigger_mark" label="触点标识名称">
+            <Input placeholder="请输入触点标识名称" />
+          </Form.Item>
+        ) : null}
       </Form>
       <Button type="primary" danger>
         检测
