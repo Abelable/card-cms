@@ -1,10 +1,16 @@
 import styled from "@emotion/styled";
-import { Table, TableProps } from "antd";
+import { Button, Table, TableProps } from "antd";
 import { Home, HomeSearchParams } from "types/home";
 import { ErrorBox } from "components/lib";
 import dayjs from "dayjs";
 import { useAddSecondHome } from "service/home";
 import { useHomeQueryKey } from "../util";
+import {
+  MinusOutlined,
+  PlusOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import { useState } from "react";
 
 interface ListProps extends TableProps<Home> {
   params: Partial<HomeSearchParams>;
@@ -12,7 +18,10 @@ interface ListProps extends TableProps<Home> {
 }
 
 export const List = ({ params, error, ...restProps }: ListProps) => {
-  const { mutate: addSecondHome } = useAddSecondHome(useHomeQueryKey());
+  const { mutate: addSecondHome, isLoading } = useAddSecondHome(
+    useHomeQueryKey()
+  );
+  const [recordId, setRecordId] = useState(0);
 
   return (
     <Container>
@@ -21,8 +30,25 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
       <Table
         rowKey={"id"}
         expandable={{
-          onExpand: async (expanded, record) => {
+          expandIcon: ({ expanded, onExpand, record }) =>
+            record.id === recordId && isLoading ? (
+              <Toggle
+                icon={<LoadingOutlined style={{ fontSize: "1.1rem" }} />}
+              />
+            ) : expanded ? (
+              <Toggle
+                icon={<MinusOutlined style={{ fontSize: "1.1rem" }} />}
+                onClick={(e) => onExpand(record, e)}
+              />
+            ) : (
+              <Toggle
+                icon={<PlusOutlined style={{ fontSize: "1.1rem" }} />}
+                onClick={(e) => onExpand(record, e)}
+              />
+            ),
+          onExpand: (expanded, record) => {
             if (expanded && !record.children?.length) {
+              setRecordId(record?.id);
               addSecondHome({
                 date: record.date,
                 agent_id: params.agent_id,
@@ -104,4 +130,12 @@ const Container = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 2.4rem;
+`;
+
+const Toggle = styled(Button)`
+  margin-right: 8px;
+  padding: 0;
+  width: 17px;
+  height: 17px;
+  transform: translateY(-0.22rem);
 `;

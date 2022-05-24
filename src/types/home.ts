@@ -12,6 +12,7 @@ export interface SecondHomeSearchParams {
 }
 
 export interface Home {
+  id: number;
   shop_name: string;
   goods_name: string;
   count: number;
