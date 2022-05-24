@@ -41,17 +41,33 @@ export const useAddSecondHome = (queryKey: QueryKey) => {
         }),
       }),
     {
-      onSuccess: (res: any) => {
-        const list = res.map((item: any, index: number) => {
-          const { id, date, ...rest } = item;
-          return { id: `${id}${index + 1}`, children: [], ...rest };
-        });
-        queryClient.setQueryData(queryKey, (old: any) => ({
-          ...old,
-          list: old.list.map((item: any) =>
-            item.id === res[0].id ? { ...item, children: list } : item
-          ),
-        }));
+      onSuccess: (res: any, params: any) => {
+        console.log("params", params);
+        if (res.length) {
+          const list = res.map((item: any, index: number) => {
+            const { id, date, ...rest } = item;
+            return {
+              id: `${id}${index + 1}`,
+              second_date: date,
+              children: [],
+              ...rest,
+            };
+          });
+          queryClient.setQueryData(queryKey, (old: any) => ({
+            ...old,
+            list: old.list.map((item: any) =>
+              item.date === params.date ? { ...item, children: list } : item
+            ),
+          }));
+        } else {
+          queryClient.setQueryData(queryKey, (old: any) => ({
+            ...old,
+            list: old.list.map((item: any) => {
+              const { children, ...rest } = item;
+              return item.date === params.date ? { ...rest } : item;
+            }),
+          }));
+        }
       },
     }
   );
