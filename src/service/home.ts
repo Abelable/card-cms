@@ -42,7 +42,6 @@ export const useAddSecondHome = (queryKey: QueryKey) => {
       }),
     {
       onSuccess: (res: any, params: any) => {
-        console.log("params", params);
         if (res.length) {
           const list = res.map((item: any, index: number) => {
             const { id, date, ...rest } = item;

@@ -36,10 +36,14 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
                 icon={<LoadingOutlined style={{ fontSize: "1.1rem" }} />}
               />
             ) : expanded ? (
-              <Toggle
-                icon={<MinusOutlined style={{ fontSize: "1.1rem" }} />}
-                onClick={(e) => onExpand(record, e)}
-              />
+              record.children ? (
+                <Toggle
+                  icon={<MinusOutlined style={{ fontSize: "1.1rem" }} />}
+                  onClick={(e) => onExpand(record, e)}
+                />
+              ) : (
+                <Placeholder />
+              )
             ) : (
               <Toggle
                 icon={<PlusOutlined style={{ fontSize: "1.1rem" }} />}
@@ -138,4 +142,11 @@ const Toggle = styled(Button)`
   width: 17px;
   height: 17px;
   transform: translateY(-0.22rem);
+`;
+
+const Placeholder = styled.div`
+  display: inline-block;
+  margin-right: 8px;
+  width: 17px;
+  height: 17px;
 `;
