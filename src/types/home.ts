@@ -12,11 +12,12 @@ export interface SecondHomeSearchParams {
 }
 
 export interface ThirdHomeSearchParams extends SecondHomeSearchParams {
-  id: number;
+  key: string;
 }
 
 export interface Home {
   id: number;
+  key: string;
   agent_name: string;
   goods_name: string;
   count: number;

@@ -24,17 +24,19 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
   const { mutate: addThirdHome, isLoading: thirdLoading } = useAddThirdHome(
     useHomeQueryKey()
   );
-  const [recordId, setRecordId] = useState(0);
+  const [recordKey, setRecordKey] = useState("");
 
   return (
     <Container>
       <Title>数据列表</Title>
       <ErrorBox error={error} />
       <Table
-        rowKey={"id"}
+        rowKey={"key"}
         expandable={{
           expandIcon: ({ expanded, onExpand, record }) =>
-            (record.id === recordId && secondLoading) || thirdLoading ? (
+            record.children &&
+            ((record.key === recordKey && secondLoading) ||
+            (record.key === recordKey && thirdLoading) ? (
               <Toggle
                 icon={<LoadingOutlined style={{ fontSize: "1.1rem" }} />}
               />
@@ -52,10 +54,10 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
                 icon={<PlusOutlined style={{ fontSize: "1.1rem" }} />}
                 onClick={(e) => onExpand(record, e)}
               />
-            ),
+            )),
           onExpand: (expanded, record) => {
             if (expanded && !record.children?.length) {
-              setRecordId(record?.id);
+              setRecordKey(record?.key);
               if (record.agent_name === "*" && record.goods_name === "*") {
                 addSecondHome({
                   date: record.date,
@@ -64,7 +66,7 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
                 });
               } else {
                 addThirdHome({
-                  id: record.id,
+                  key: record.key,
                   date: record.second_date,
                   agent_id: params.agent_id,
                   goods_id: params.goods_id,

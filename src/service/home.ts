@@ -20,7 +20,9 @@ export const useHome = (params: Partial<HomeSearchParams>) => {
         "filter[end_created_at]": params.end_created_at,
       }),
     });
-    const list = res.slice(0, -1).map((item) => ({ ...item, children: [] }));
+    const list = res
+      .slice(0, -1)
+      .map((item) => ({ ...item, key: `order_${item.id}`, children: [] }));
     return {
       list,
       total: res[res.length - 1],
@@ -47,7 +49,7 @@ export const useAddSecondHome = (queryKey: QueryKey) => {
           const list = res.map((item: any, index: number) => {
             const { id, date, ...rest } = item;
             return {
-              id: id * 100 + index,
+              key: `agent_${id}_${index + 1}`,
               second_date: date,
               children: [],
               ...rest,
@@ -92,7 +94,7 @@ export const useAddThirdHome = (queryKey: QueryKey) => {
           const list = res.map((item: any, index: number) => {
             const { id, date, agent_name, ...rest } = item;
             return {
-              id: id * 1000 + index,
+              key: `goods_${id}_${index + 1}`,
               ...rest,
             };
           });
@@ -103,7 +105,7 @@ export const useAddThirdHome = (queryKey: QueryKey) => {
                 ? {
                     ...item,
                     children: item.children.map((_item: any) =>
-                      _item.id === params.id
+                      _item.key === params.key
                         ? { ..._item, children: list }
                         : _item
                     ),
@@ -114,10 +116,18 @@ export const useAddThirdHome = (queryKey: QueryKey) => {
         } else {
           queryClient.setQueryData(queryKey, (old: any) => ({
             ...old,
-            list: old.list.map((item: any) => {
-              const { children, ...rest } = item;
-              return item.date === params.date ? { ...rest } : item;
-            }),
+            list: old.list.map((item: any) =>
+              item.date === params.date
+                ? {
+                    ...item,
+                    children: item.children.map((_item: any) =>
+                      _item.key === params.key
+                        ? { ..._item, children: undefined }
+                        : _item
+                    ),
+                  }
+                : item
+            ),
           }));
         }
       },
