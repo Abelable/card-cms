@@ -2,7 +2,13 @@ export interface HomeSearchParams {
   start_created_at: string;
   end_created_at: string;
   agent_id: number;
-  goods_name: string;
+  goods_id: number;
+}
+
+export interface SecondHomeSearchParams {
+  date: string;
+  agent_id: number;
+  goods_id: number;
 }
 
 export interface Home {
@@ -17,8 +23,10 @@ export interface Home {
   recharged_rate: number;
   transfer_rate: number;
   date: string;
+  children?: Home[];
 }
 
 export interface HomeResult {
-  data: Home[];
+  list: Home[];
+  total: Partial<Home>;
 }

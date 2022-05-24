@@ -1,20 +1,51 @@
 import styled from "@emotion/styled";
 import { Table, TableProps } from "antd";
-import { Home } from "types/home";
+import { Home, HomeSearchParams } from "types/home";
 import { ErrorBox } from "components/lib";
 import dayjs from "dayjs";
+import { useHttp } from "service/http";
+import { cleanObject } from "utils";
+import { useQueryClient } from "react-query";
 
 interface ListProps extends TableProps<Home> {
+  params: Partial<HomeSearchParams>;
   error: Error | unknown;
 }
 
-export const List = ({ error, ...restProps }: ListProps) => {
+export const List = ({ params, error, ...restProps }: ListProps) => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+
   return (
     <Container>
       <Title>数据列表</Title>
       <ErrorBox error={error} />
       <Table
-        rowKey={"date"}
+        rowKey={"id"}
+        expandable={{
+          onExpand: async (expanded, record) => {
+            console.log("expanded", expanded);
+            console.log("record", record);
+            const res = await client("/api/v1/admin/index/sub-agent", {
+              data: cleanObject({
+                "filter[date]": record.date,
+                "filter[agent_id]": params.agent_id,
+                "filter[goods_id]": params.goods_id,
+              }),
+            });
+            console.log(res);
+            const list = res.map((item: any, index: number) => {
+              const { id, date, ...rest } = item;
+              return { id: `${id}${index + 1}`, children: [], ...rest };
+            });
+            queryClient.setQueryData(["home_records", {}], (old: any) => ({
+              ...old,
+              list: old.list.map((item: any) =>
+                item.date === record.date ? { ...item, children: list } : item
+              ),
+            }));
+          },
+        }}
         columns={[
           {
             title: "日期",
@@ -23,11 +54,11 @@ export const List = ({ error, ...restProps }: ListProps) => {
           },
           {
             title: "代理商",
-            render: (value, data) => <span>{data.shop_name || "*"}</span>,
+            dataIndex: "agent_name",
           },
           {
             title: "商品名称",
-            render: (value, data) => <span>{data.goods_name || "*"}</span>,
+            dataIndex: "goods_name",
           },
           {
             title: "订单数",

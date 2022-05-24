@@ -53,18 +53,18 @@ export const SearchPanel = ({
   const clearAgent = () =>
     setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
-  const setGoodsName = (evt: any) => {
+  const setGoods = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        goods_name: "",
+        goods_id: undefined,
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      goods_name: evt.target.value,
+      goods_id: evt.target.value,
     });
   };
 
@@ -81,7 +81,7 @@ export const SearchPanel = ({
       end_created_at:
         temporaryParams.end_created_at || defaultParams.end_created_at,
       agent_id: temporaryParams.agent_id,
-      goods_name: temporaryParams.goods_name,
+      goods_id: temporaryParams.goods_id,
     });
     if (!temporaryParams.start_created_at) {
       setTemporaryParams({
@@ -131,8 +131,8 @@ export const SearchPanel = ({
         <div>商品名称：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.goods_name}
-          onChange={setGoodsName}
+          value={temporaryParams.goods_id}
+          onChange={setGoods}
           placeholder="请输入商品名称"
           allowClear={true}
         />
