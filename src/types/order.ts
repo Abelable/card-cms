@@ -1,5 +1,5 @@
 import { Pagination } from "./common";
-import { Channel } from "./product";
+import { Channel, Goods } from "./product";
 
 export interface OrderStatusOption {
   id: number;
@@ -34,6 +34,7 @@ export interface Deliver {
   updated_at: string;
   agent_id: number;
   product: Channel;
+  goods: Goods;
   idcard: string;
   idcard_front_photo: string;
   idcard_back_photo: string;
@@ -42,6 +43,9 @@ export interface Deliver {
   detail_address: string;
   status: number;
   is_activated: number;
+  activated_at: string;
+  is_recharged: number;
+  first_recharged_at: string;
   recharge_amount: number;
   product_failed_reason: string;
   product_no: string;

@@ -75,11 +75,13 @@ export const DetailModal = ({
                 )?.name
               }
             </Descriptions.Item>
-            <Descriptions.Item label="收获地址">杭州市上城区</Descriptions.Item>
+            <Descriptions.Item label="收获地址">
+              {editingDeliver?.detail_address}
+            </Descriptions.Item>
             <Descriptions.Item label="上游订单号">172172129</Descriptions.Item>
             <Descriptions.Item label="证件姓名">
               <Row>
-                <div>方某某</div>
+                <div>{editingDeliver?.buyer}</div>
                 <Tooltip title="查看证件照片">
                   <Check onClick={() => openPicModal(detailDeliverId)} />
                 </Tooltip>
@@ -87,7 +89,7 @@ export const DetailModal = ({
             </Descriptions.Item>
             <Descriptions.Item> </Descriptions.Item>
             <Descriptions.Item label="证件号码">
-              32002018188198
+              {editingDeliver?.idcard}
             </Descriptions.Item>
           </Descriptions>
 
@@ -99,10 +101,18 @@ export const DetailModal = ({
             size={"small"}
             column={7}
           >
-            <Descriptions.Item label="产品渠道">测试卡</Descriptions.Item>
-            <Descriptions.Item label="产品渠道编码">111111</Descriptions.Item>
-            <Descriptions.Item label="商品名称">移动花卡</Descriptions.Item>
-            <Descriptions.Item label="商品编号">12122</Descriptions.Item>
+            <Descriptions.Item label="产品渠道">
+              {editingDeliver?.product.name}
+            </Descriptions.Item>
+            <Descriptions.Item label="产品渠道编码">
+              {editingDeliver?.product.encoding}
+            </Descriptions.Item>
+            <Descriptions.Item label="商品名称">
+              {editingDeliver?.goods.name}
+            </Descriptions.Item>
+            <Descriptions.Item label="商品编号">
+              {editingDeliver?.goods.encoding}
+            </Descriptions.Item>
             <Descriptions.Item label="归属地">浙江杭州</Descriptions.Item>
             <Descriptions.Item label="购买号码">60</Descriptions.Item>
             <Descriptions.Item label="购买数量">1</Descriptions.Item>
@@ -117,7 +127,7 @@ export const DetailModal = ({
             column={1}
           >
             <Descriptions.Item label="生产备注（失败原因）">
-              2022-04-14系统身份证号错误
+              {editingDeliver?.product_failed_reason}
             </Descriptions.Item>
           </Descriptions>
 
@@ -129,16 +139,26 @@ export const DetailModal = ({
             size={"small"}
             column={7}
           >
-            <Descriptions.Item label="物流公司">申通快递</Descriptions.Item>
-            <Descriptions.Item label="物流单号">111111</Descriptions.Item>
-            <Descriptions.Item label="生产号码">17121021</Descriptions.Item>
-            <Descriptions.Item label="激活状态">未激活</Descriptions.Item>
-            <Descriptions.Item label="激活时间">
-              2022-05-01 01:38:05
+            <Descriptions.Item label="物流公司">
+              {editingDeliver?.express_name}
             </Descriptions.Item>
-            <Descriptions.Item label="充值状态">已充值</Descriptions.Item>
+            <Descriptions.Item label="物流单号">
+              {editingDeliver?.express_no}
+            </Descriptions.Item>
+            <Descriptions.Item label="生产号码">
+              {editingDeliver?.product_no}
+            </Descriptions.Item>
+            <Descriptions.Item label="激活状态">
+              {editingDeliver?.is_activated === 1 ? "已激活" : "未激活"}
+            </Descriptions.Item>
+            <Descriptions.Item label="激活时间">
+              {editingDeliver?.activated_at || ""}
+            </Descriptions.Item>
+            <Descriptions.Item label="充值状态">
+              {editingDeliver?.is_recharged === 1 ? "已充值" : "未充值"}
+            </Descriptions.Item>
             <Descriptions.Item label="充值时间">
-              2022-05-01 01:38:05
+              {editingDeliver?.first_recharged_at}
             </Descriptions.Item>
           </Descriptions>
 
