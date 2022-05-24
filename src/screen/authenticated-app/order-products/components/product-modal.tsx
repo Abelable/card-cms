@@ -100,9 +100,7 @@ export const ProductModal = ({
           </Form.Item>
         ) : null}
       </Form>
-      <Button type="primary" danger>
-        检测
-      </Button>
+      <Button type="primary">检测</Button>
       <div>未设置过自动生产，点确定设置吧</div>
     </Modal>
   );
