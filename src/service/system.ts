@@ -36,7 +36,7 @@ export const useEditBlack = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: Partial<BlackItem>) =>
-      client(`/api/v1/admin/product/update/${id}`, {
+      client(`/api/v1/admin/blacklist/update/${id}`, {
         data: params,
         method: "POST",
       }),
@@ -47,8 +47,8 @@ export const useEditBlack = (queryKey: QueryKey) => {
 export const useDeleteBlack = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (id: string) =>
-      client(`/api/v1/admin/product/destroy/${id}`, {
+    (id: number) =>
+      client(`/api/v1/admin/blacklist/destroy/${id}`, {
         method: "POST",
       }),
     useDeleteConfig(queryKey)

@@ -2,16 +2,18 @@ import styled from "@emotion/styled";
 import {
   Button,
   Divider,
+  Modal,
   Table,
   TablePaginationConfig,
   TableProps,
   Tooltip,
 } from "antd";
-import { ErrorBox, Row } from "components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownloadOutlined } from "@ant-design/icons";
-import { useBlackModal } from "../util";
+import { useBlacklistQueryKey, useBlackModal } from "../util";
 import { FileUpload } from "components/file-upload";
 import type { BlacklistSearchParams, BlackItem } from "types/system";
+import { useDeleteBlack } from "service/system";
 
 interface ListProps extends TableProps<BlackItem> {
   params: Partial<BlacklistSearchParams>;
@@ -21,12 +23,23 @@ interface ListProps extends TableProps<BlackItem> {
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const { open } = useBlackModal();
+  const { mutate: deleteBlack } = useDeleteBlack(useBlacklistQueryKey());
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
       page: pagination.current,
       per_page: pagination.pageSize,
     });
+
+  const confirmDelete = (id: number) => {
+    Modal.confirm({
+      title: "确定删除该黑名单吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => deleteBlack(id),
+    });
+  };
 
   return (
     <Container>
@@ -71,6 +84,17 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           {
             title: "联系电话",
             dataIndex: "phone",
+          },
+          {
+            title: "操作",
+            render: (value, blackItem) => (
+              <ButtonNoPadding
+                type={"link"}
+                onClick={() => confirmDelete(blackItem.id)}
+              >
+                删除
+              </ButtonNoPadding>
+            ),
           },
         ]}
         onChange={setPagination}
