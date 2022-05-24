@@ -94,7 +94,7 @@ export const ProductModal = ({
         >
           <Input placeholder="请输入上游编码" />
         </Form.Item>
-        <Form.Item name="contact_name" label="触点标识名称">
+        <Form.Item name="trigger_mark" label="触点标识名称">
           <Input placeholder="请输入触点标识名称" />
         </Form.Item>
       </Form>

@@ -79,7 +79,7 @@ export interface Product {
   supplier_product_encoding: string;
   product_id: number;
   product_encoding: string;
-  contact_name: string;
+  trigger_mark: string;
   created_at: string;
 }
 

@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { useProducts } from "service/order";
 import { toNumber } from "utils";
 import { ProductModal } from "./components/product-modal";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 import { useProductsSearchParams } from "./util";
+import { useProducts } from "service/order";
 import { useSupplierOptions } from "service/supplier";
 import { useChannelOptions } from "service/product";
 
