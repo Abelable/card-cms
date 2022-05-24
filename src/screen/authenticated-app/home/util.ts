@@ -7,7 +7,7 @@ export const useHomeSearchParams = () => {
     "start_created_at",
     "end_created_at",
     "agent_id",
-    "goods_name",
+    "goods_id",
   ]);
   return [
     // useMemo(() => {
@@ -23,4 +23,9 @@ export const useHomeSearchParams = () => {
     useMemo(() => params, [params]),
     setParams,
   ] as const;
+};
+
+export const useHomeQueryKey = () => {
+  const [params] = useHomeSearchParams();
+  return ["home_records", params];
 };

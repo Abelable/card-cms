@@ -1,7 +1,12 @@
-import { useQuery } from "react-query";
+import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { useHttp } from "./http";
 import { cleanObject } from "utils";
-import { Home, HomeResult, HomeSearchParams } from "types/home";
+import {
+  Home,
+  HomeResult,
+  HomeSearchParams,
+  SecondHomeSearchParams,
+} from "types/home";
 
 export const useHome = (params: Partial<HomeSearchParams>) => {
   const client = useHttp();
@@ -20,6 +25,36 @@ export const useHome = (params: Partial<HomeSearchParams>) => {
       total: res[res.length - 1],
     };
   });
+};
+
+export const useAddSecondHome = (queryKey: QueryKey) => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (params: Partial<SecondHomeSearchParams>) =>
+      client("/api/v1/admin/index/sub-agent", {
+        data: cleanObject({
+          "filter[date]": params.date,
+          "filter[agent_id]": params.agent_id,
+          "filter[goods_id]": params.goods_id,
+        }),
+      }),
+    {
+      onSuccess: (res: any) => {
+        const list = res.map((item: any, index: number) => {
+          const { id, date, ...rest } = item;
+          return { id: `${id}${index + 1}`, children: [], ...rest };
+        });
+        queryClient.setQueryData(queryKey, (old: any) => ({
+          ...old,
+          list: old.list.map((item: any) =>
+            item.id === res[0].id ? { ...item, children: list } : item
+          ),
+        }));
+      },
+    }
+  );
 };
 
 export const useExportHome = () => {

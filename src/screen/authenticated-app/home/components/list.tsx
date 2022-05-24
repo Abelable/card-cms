@@ -3,9 +3,8 @@ import { Table, TableProps } from "antd";
 import { Home, HomeSearchParams } from "types/home";
 import { ErrorBox } from "components/lib";
 import dayjs from "dayjs";
-import { useHttp } from "service/http";
-import { cleanObject } from "utils";
-import { useQueryClient } from "react-query";
+import { useAddSecondHome } from "service/home";
+import { useHomeQueryKey } from "../util";
 
 interface ListProps extends TableProps<Home> {
   params: Partial<HomeSearchParams>;
@@ -13,8 +12,7 @@ interface ListProps extends TableProps<Home> {
 }
 
 export const List = ({ params, error, ...restProps }: ListProps) => {
-  const client = useHttp();
-  const queryClient = useQueryClient();
+  const { mutate: addSecondHome } = useAddSecondHome(useHomeQueryKey());
 
   return (
     <Container>
@@ -24,26 +22,13 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
         rowKey={"id"}
         expandable={{
           onExpand: async (expanded, record) => {
-            console.log("expanded", expanded);
-            console.log("record", record);
-            const res = await client("/api/v1/admin/index/sub-agent", {
-              data: cleanObject({
-                "filter[date]": record.date,
-                "filter[agent_id]": params.agent_id,
-                "filter[goods_id]": params.goods_id,
-              }),
-            });
-            console.log(res);
-            const list = res.map((item: any, index: number) => {
-              const { id, date, ...rest } = item;
-              return { id: `${id}${index + 1}`, children: [], ...rest };
-            });
-            queryClient.setQueryData(["home_records", {}], (old: any) => ({
-              ...old,
-              list: old.list.map((item: any) =>
-                item.date === record.date ? { ...item, children: list } : item
-              ),
-            }));
+            if (expanded && !record.children?.length) {
+              addSecondHome({
+                date: record.date,
+                agent_id: params.agent_id,
+                goods_id: params.goods_id,
+              });
+            }
           },
         }}
         columns={[
