@@ -6,6 +6,7 @@ import {
   HomeResult,
   HomeSearchParams,
   SecondHomeSearchParams,
+  ThirdHomeSearchParams,
 } from "types/home";
 
 export const useHome = (params: Partial<HomeSearchParams>) => {
@@ -46,7 +47,7 @@ export const useAddSecondHome = (queryKey: QueryKey) => {
           const list = res.map((item: any, index: number) => {
             const { id, date, ...rest } = item;
             return {
-              id: `${id}${index + 1}`,
+              id: id * 100 + index,
               second_date: date,
               children: [],
               ...rest,
@@ -56,6 +57,58 @@ export const useAddSecondHome = (queryKey: QueryKey) => {
             ...old,
             list: old.list.map((item: any) =>
               item.date === params.date ? { ...item, children: list } : item
+            ),
+          }));
+        } else {
+          queryClient.setQueryData(queryKey, (old: any) => ({
+            ...old,
+            list: old.list.map((item: any) => {
+              const { children, ...rest } = item;
+              return item.date === params.date ? { ...rest } : item;
+            }),
+          }));
+        }
+      },
+    }
+  );
+};
+
+export const useAddThirdHome = (queryKey: QueryKey) => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (params: Partial<ThirdHomeSearchParams>) =>
+      client("/api/v1/admin/index/sub-goods", {
+        data: cleanObject({
+          "filter[date]": params.date,
+          "filter[agent_id]": params.agent_id,
+          "filter[goods_id]": params.goods_id,
+        }),
+      }),
+    {
+      onSuccess: (res: any, params: any) => {
+        if (res.length) {
+          const list = res.map((item: any, index: number) => {
+            const { id, date, agent_name, ...rest } = item;
+            return {
+              id: id * 1000 + index,
+              ...rest,
+            };
+          });
+          queryClient.setQueryData(queryKey, (old: any) => ({
+            ...old,
+            list: old.list.map((item: any) =>
+              item.date === params.date
+                ? {
+                    ...item,
+                    children: item.children.map((_item: any) =>
+                      _item.id === params.id
+                        ? { ..._item, children: list }
+                        : _item
+                    ),
+                  }
+                : item
             ),
           }));
         } else {

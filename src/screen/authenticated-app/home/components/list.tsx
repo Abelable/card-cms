@@ -3,7 +3,7 @@ import { Button, Table, TableProps } from "antd";
 import { Home, HomeSearchParams } from "types/home";
 import { ErrorBox } from "components/lib";
 import dayjs from "dayjs";
-import { useAddSecondHome } from "service/home";
+import { useAddSecondHome, useAddThirdHome } from "service/home";
 import { useHomeQueryKey } from "../util";
 import {
   MinusOutlined,
@@ -18,7 +18,10 @@ interface ListProps extends TableProps<Home> {
 }
 
 export const List = ({ params, error, ...restProps }: ListProps) => {
-  const { mutate: addSecondHome, isLoading } = useAddSecondHome(
+  const { mutate: addSecondHome, isLoading: secondLoading } = useAddSecondHome(
+    useHomeQueryKey()
+  );
+  const { mutate: addThirdHome, isLoading: thirdLoading } = useAddThirdHome(
     useHomeQueryKey()
   );
   const [recordId, setRecordId] = useState(0);
@@ -31,7 +34,7 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
         rowKey={"id"}
         expandable={{
           expandIcon: ({ expanded, onExpand, record }) =>
-            record.id === recordId && isLoading ? (
+            (record.id === recordId && secondLoading) || thirdLoading ? (
               <Toggle
                 icon={<LoadingOutlined style={{ fontSize: "1.1rem" }} />}
               />
@@ -53,11 +56,20 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
           onExpand: (expanded, record) => {
             if (expanded && !record.children?.length) {
               setRecordId(record?.id);
-              addSecondHome({
-                date: record.date,
-                agent_id: params.agent_id,
-                goods_id: params.goods_id,
-              });
+              if (record.agent_name === "*" && record.goods_name === "*") {
+                addSecondHome({
+                  date: record.date,
+                  agent_id: params.agent_id,
+                  goods_id: params.goods_id,
+                });
+              } else {
+                addThirdHome({
+                  id: record.id,
+                  date: record.second_date,
+                  agent_id: params.agent_id,
+                  goods_id: params.goods_id,
+                });
+              }
             }
           },
         }}

@@ -11,9 +11,13 @@ export interface SecondHomeSearchParams {
   goods_id: number;
 }
 
+export interface ThirdHomeSearchParams extends SecondHomeSearchParams {
+  id: number;
+}
+
 export interface Home {
   id: number;
-  shop_name: string;
+  agent_name: string;
   goods_name: string;
   count: number;
   shipped_count: number;
@@ -23,7 +27,8 @@ export interface Home {
   recharged_count: number;
   recharged_rate: number;
   transfer_rate: number;
-  date: string;
+  date?: string;
+  second_date?: string;
   children?: Home[];
 }
 
