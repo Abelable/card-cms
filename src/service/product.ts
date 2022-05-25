@@ -13,6 +13,7 @@ import {
   GoodsForm,
   GoodsListResult,
   GoodsListSearchParams,
+  GoodsOption,
 } from "types/product";
 import {
   useAddConfig,
@@ -264,4 +265,21 @@ export const useGoodsExtension = (id?: number) => {
       enabled: Boolean(id),
     }
   );
+};
+
+export const useGoodsOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["goods_options"], () =>
+    client("/api/v1/admin/goods/pluck")
+  );
+  const goodsOptions: GoodsOption[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      goodsOptions.push({
+        id: Number(item),
+        name: res.data[item],
+      })
+    );
+  }
+  return goodsOptions;
 };

@@ -143,3 +143,8 @@ export interface AgentsSearchParams {
   per_page: number;
   page: number;
 }
+
+export interface GoodsOption {
+  id: number;
+  name: string;
+}

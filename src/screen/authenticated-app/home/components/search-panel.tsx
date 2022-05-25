@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, DatePicker, Divider, Input, Select } from "antd";
+import { Button, DatePicker, Divider, Select } from "antd";
 import { Row } from "components/lib";
 import { HomeSearchParams } from "types/home";
 import moment from "moment";
@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
 import dayjs from "dayjs";
 import { useExportHome } from "service/home";
+import { useGoodsOptions } from "service/product";
 
 export interface SearchPanelProps {
   agentOptions: AgentOption[];
@@ -25,9 +26,10 @@ export const SearchPanel = ({
     start_created_at: dayjs(date).format("YYYY-MM-DD"),
     end_created_at: dayjs().format("YYYY-MM-DD"),
     agent_id: undefined,
-    goods_name: "",
+    goods_id: undefined,
   } as Partial<HomeSearchParams>;
 
+  const goodsOptions = useGoodsOptions();
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<HomeSearchParams>>(defaultParams);
 
@@ -53,20 +55,10 @@ export const SearchPanel = ({
   const clearAgent = () =>
     setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
-  const setGoods = (evt: any) => {
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        goods_id: undefined,
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      goods_id: evt.target.value,
-    });
-  };
+  const setGoods = (goods_id: number) =>
+    setTemporaryParams({ ...temporaryParams, goods_id });
+  const clearGoods = () =>
+    setTemporaryParams({ ...temporaryParams, goods_id: undefined });
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -111,7 +103,7 @@ export const SearchPanel = ({
         />
       </Item>
       <Item>
-        <div>代理商店铺名称：</div>
+        <div>代理商店铺：</div>
         <Select
           style={{ width: "20rem" }}
           value={temporaryParams.agent_id}
@@ -134,14 +126,27 @@ export const SearchPanel = ({
         </Select>
       </Item>
       <Item>
-        <div>商品名称：</div>
-        <Input
+        <div>商品：</div>
+        <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.goods_id}
-          onChange={setGoods}
-          placeholder="请输入商品名称"
+          value={temporaryParams.agent_id}
           allowClear={true}
-        />
+          onSelect={setGoods}
+          onClear={clearGoods}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+          placeholder="请选择商品"
+        >
+          {goodsOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
