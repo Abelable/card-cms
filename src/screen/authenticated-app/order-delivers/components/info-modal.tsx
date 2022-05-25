@@ -106,17 +106,17 @@ export const InfoModal = () => {
           <Form.Item label="手动填写" tooltip="没找到？手动填写">
             <Row gutter={16}>
               <Col span={8}>
-                <Form.Item name="province">
+                <Form.Item name="province" style={{ marginBottom: 0 }}>
                   <Input placeholder="省" />
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <Form.Item name="city">
+                <Form.Item name="city" style={{ marginBottom: 0 }}>
                   <Input placeholder="市" />
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <Form.Item name="area">
+                <Form.Item name="area" style={{ marginBottom: 0 }}>
                   <Input placeholder="区" />
                 </Form.Item>
               </Col>
@@ -141,8 +141,4 @@ const Loading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const Tips = styled.div`
-  color: #1890ff;
 `;
