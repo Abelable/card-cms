@@ -12,6 +12,7 @@ export const RecordModal = () => {
   return (
     <Modal
       title={"操作记录"}
+      width={800}
       visible={recordModalOpen}
       onCancel={closeModal}
       footer={null}
@@ -21,11 +22,19 @@ export const RecordModal = () => {
           <Spin size={"large"} />
         </Loading>
       ) : (
-        <Descriptions size={"small"} column={1}>
-          {editingDeliver?.operation_logs.map((item, index) => (
-            <Descriptions.Item key={index}>{item.content}</Descriptions.Item>
-          ))}
-        </Descriptions>
+        <>
+          {editingDeliver?.operation_logs.length ? (
+            <Descriptions size={"small"} column={1}>
+              {editingDeliver?.operation_logs.map((item, index) => (
+                <Descriptions.Item key={index}>
+                  {item.content}
+                </Descriptions.Item>
+              ))}
+            </Descriptions>
+          ) : (
+            <>暂无记录</>
+          )}
+        </>
       )}
     </Modal>
   );
