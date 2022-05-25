@@ -143,5 +143,8 @@ export const useExportHome = () => {
         is_export: 1,
         ...params,
       }),
+      headers: {
+        responseType: "arraybuffer",
+      },
     });
 };

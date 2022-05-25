@@ -38,14 +38,26 @@ export const http = async (
   }
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
-      const result = await response.json();
-      if (result.code === 401) {
-        await auth.logout();
-        window.location.reload();
-        return Promise.reject({ message: "请重新登录" });
+      if (config.headers.responseType === "arraybuffer") {
+        const result = await response.blob();
+        const url = window.URL.createObjectURL(result);
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "excel.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        const result = await response.json();
+        if (result.code === 401) {
+          await auth.logout();
+          window.location.reload();
+          return Promise.reject({ message: "请重新登录" });
+        }
+        if ([200, 201, 204].includes(result.code)) return result.data;
+        else return Promise.reject(result);
       }
-      if ([200, 201, 204].includes(result.code)) return result.data;
-      else return Promise.reject(result);
     } else return Promise.reject({ message: response.statusText });
   });
 };
