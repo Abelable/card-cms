@@ -35,7 +35,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         <h3>导入记录</h3>
         <Row gap>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload name="导入订单" />
+            <FileUpload scene={3} name="导入订单" />
           </div>
           <Tooltip title="下载订单模版">
             <Button
@@ -53,7 +53,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             <Question />
           </Tooltip>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload name="上传照片" />
+            <FileUpload scene={4} name="上传照片" />
           </div>
           <Tooltip title="下载照片模版">
             <Button

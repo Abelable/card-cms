@@ -50,7 +50,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         <h3>黑名单列表</h3>
         <Row gap>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload name="上传文件" />
+            <FileUpload scene={5} name="上传文件" />
           </div>
           <Tooltip title="下载模版">
             <Button

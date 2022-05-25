@@ -79,7 +79,7 @@ export const List = ({
             type={"vertical"}
           />
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload name="导入生产数据" />
+            <FileUpload scene={1} name="导入生产数据" />
           </div>
           <Tooltip title="下载生产模版">
             <Button
@@ -94,7 +94,7 @@ export const List = ({
             type={"vertical"}
           />
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload name="导入激活数据" />
+            <FileUpload scene={2} name="导入激活数据" />
           </div>
           <Tooltip title="下载激活模版">
             <Button

@@ -72,10 +72,10 @@ export const useExpressOptions = () => {
 
 export const useDownloadTemplate = () => {
   const client = useHttp();
-  return (type: number) => {
+  return (scene: number) => {
     client("/api/v1/admin/setting/template-download-urls").then((res) => {
       let url = "";
-      switch (type) {
+      switch (scene) {
         case 1:
           url = res["import_production_data"];
           break;
