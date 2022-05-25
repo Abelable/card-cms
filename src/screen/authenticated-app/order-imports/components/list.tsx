@@ -58,33 +58,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           <Tooltip title="下载照片模版">
             <Button
               onClick={() => downloadTemplate(4)}
+              style={{ marginRight: 0 }}
               size="small"
               shape="circle"
               icon={<DownloadOutlined />}
             />
           </Tooltip>
-          <Divider
-            style={{ height: "3rem", marginLeft: 0 }}
-            type={"vertical"}
-          />
-          <div style={{ marginRight: "1rem" }}>
-            <FileUpload name="导入拼多多证件" />
-          </div>
-          <Tooltip title="下载拼多多模版">
-            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
-          </Tooltip>
-          <Divider
-            style={{ height: "3rem", marginLeft: 0 }}
-            type={"vertical"}
-          />
-          <FileUpload name="导入天猫信息" />
-          <Divider
-            style={{ height: "3rem", marginLeft: 0 }}
-            type={"vertical"}
-          />
-          <div style={{ marginRight: 0 }}>
-            <FileUpload name="导入有赞信息" />
-          </div>
         </Row>
       </Header>
       <ErrorBox error={error} />
