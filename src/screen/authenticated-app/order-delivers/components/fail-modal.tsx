@@ -16,7 +16,6 @@ export const FailModal = ({
 }) => {
   const [form] = useForm();
   const { data: failReasons } = useFailReasons();
-  console.log(failReasons);
   const { failModalOpen, failDeliverIds, close } = useFailModal();
   const { mutateAsync, isLoading, error } = useEditDelivers(
     useOrderDeliversQueryKey()
@@ -65,7 +64,7 @@ export const FailModal = ({
           label="快速原因"
           rules={[{ required: true, message: "请输入具体原因" }]}
         >
-          {failReasons.map((item: string, index: number) => (
+          {failReasons?.map((item: string, index: number) => (
             <CustomTags key={index} onClick={() => select(item)}>
               {item}
             </CustomTags>
