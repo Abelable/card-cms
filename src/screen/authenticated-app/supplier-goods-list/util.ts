@@ -14,7 +14,7 @@ export const useGoodsListSearchParams = () => {
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
         supplier_id: Number(params.supplier_id) || undefined,
-        goods_name: params.goods_name || "",
+        goods_name: params.goods_name || undefined,
       }),
       [params]
     ),
