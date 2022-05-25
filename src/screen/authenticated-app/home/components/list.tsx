@@ -14,10 +14,11 @@ import { useState } from "react";
 
 interface ListProps extends TableProps<Home> {
   params: Partial<HomeSearchParams>;
+  total: Partial<Home> | undefined;
   error: Error | unknown;
 }
 
-export const List = ({ params, error, ...restProps }: ListProps) => {
+export const List = ({ params, total, error, ...restProps }: ListProps) => {
   const { mutate: addSecondHome, isLoading: secondLoading } = useAddSecondHome(
     useHomeQueryKey()
   );
@@ -134,6 +135,35 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
             sorter: (a, b) => Number(a.transfer_rate) - Number(b.transfer_rate),
           },
         ]}
+        summary={() => (
+          <Table.Summary.Row style={{ fontWeight: 600, background: "#fafafa" }}>
+            <Table.Summary.Cell index={0}>合计</Table.Summary.Cell>
+            <Table.Summary.Cell index={1}></Table.Summary.Cell>
+            <Table.Summary.Cell index={2}></Table.Summary.Cell>
+            <Table.Summary.Cell index={3}>{total?.count}</Table.Summary.Cell>
+            <Table.Summary.Cell index={4}>
+              {total?.shipped_count}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={5}>
+              {total?.activated_count}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={6}>
+              {total?.shipped_rate}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={7}>
+              {total?.activated_rate}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={8}>
+              {total?.recharged_count}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={9}>
+              {total?.recharged_rate}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={10}>
+              {total?.transfer_rate}
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        )}
         {...restProps}
         pagination={false}
       />

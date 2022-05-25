@@ -23,6 +23,7 @@ export const Home = () => {
           params={params}
           error={error}
           dataSource={data?.list}
+          total={data?.total}
           loading={isLoading}
         />
       </Main>
