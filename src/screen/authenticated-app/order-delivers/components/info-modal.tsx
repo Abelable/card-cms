@@ -65,7 +65,7 @@ export const InfoModal = () => {
       ) : (
         <Form form={form} layout="vertical">
           <Form.Item
-            name="buyer"
+            name="receiver"
             label="收货人姓名"
             rules={[{ required: true, message: "请输入收货人姓名" }]}
           >

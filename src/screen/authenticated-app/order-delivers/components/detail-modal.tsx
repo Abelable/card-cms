@@ -56,7 +56,7 @@ export const DetailModal = ({
               {editingDeliver?.source}
             </Descriptions.Item>
             <Descriptions.Item label="收货人">
-              {editingDeliver?.buyer}
+              {editingDeliver?.receiver}
             </Descriptions.Item>
             <Descriptions.Item label="分销商">
               {
