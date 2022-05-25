@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 const breadcrumbNameMap: { [key: string]: string } = {
   "/home": "首页",
   "/suppliers": "我的供应商",
-  "/suppliers/goods_list": "查看供应商商品",
+  "/suppliers/goods_list": "查看供应商产品",
   "/agents": "我的代理商",
   "/agents/goods_list": "查看代理商商品",
   "/product": "产品管理中心",
