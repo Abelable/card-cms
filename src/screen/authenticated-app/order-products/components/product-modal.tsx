@@ -1,4 +1,4 @@
-import { Form, Modal, Select, Button, Input, Alert, message } from "antd";
+import { Form, Modal, Select, Button, Input, Alert } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddProduct, useEditProduct } from "service/order";
