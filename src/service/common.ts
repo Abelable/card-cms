@@ -69,3 +69,30 @@ export const useExpressOptions = () => {
   }
   return expressOptions;
 };
+
+export const useDownloadTemplate = () => {
+  const client = useHttp();
+  return (type: number) => {
+    client("/api/v1/admin/setting/template-download-urls").then((res) => {
+      let url = "";
+      switch (type) {
+        case 1:
+          url = res["import_production_data"];
+          break;
+        case 2:
+          url = res["import_activation_data"];
+          break;
+        case 3:
+          url = res["import_order"];
+          break;
+        case 4:
+          url = res["import_order_photo_zip"];
+          break;
+        case 5:
+          url = res["import_blacklist"];
+          break;
+      }
+      window.location.href = url;
+    });
+  };
+};

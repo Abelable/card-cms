@@ -14,6 +14,7 @@ import { useBlacklistQueryKey, useBlackModal } from "../util";
 import { FileUpload } from "components/file-upload";
 import type { BlacklistSearchParams, BlackItem } from "types/system";
 import { useDeleteBlack } from "service/system";
+import { useDownloadTemplate } from "service/common";
 
 interface ListProps extends TableProps<BlackItem> {
   params: Partial<BlacklistSearchParams>;
@@ -24,6 +25,8 @@ interface ListProps extends TableProps<BlackItem> {
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const { open } = useBlackModal();
   const { mutate: deleteBlack } = useDeleteBlack(useBlacklistQueryKey());
+  const downloadTemplate = useDownloadTemplate();
+
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -50,7 +53,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             <FileUpload name="上传文件" />
           </div>
           <Tooltip title="下载模版">
-            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+            <Button
+              onClick={() => downloadTemplate(5)}
+              size="small"
+              shape="circle"
+              icon={<DownloadOutlined />}
+            />
           </Tooltip>
           <Divider
             style={{ height: "3rem", marginLeft: 0 }}
