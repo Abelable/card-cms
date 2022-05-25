@@ -22,6 +22,7 @@ import { FileUpload } from "components/file-upload";
 import {
   useDataModal,
   useDetailModal,
+  useExportProductModal,
   useFailModal,
   useInfoModal,
   usePicModal,
@@ -50,6 +51,7 @@ export const List = ({
       page: pagination.current,
       per_page: pagination.pageSize,
     });
+  const { open: openExportProductModal } = useExportProductModal();
   const { open: openPicModal } = usePicModal();
   const { open: openRecordModal } = useRecordModal();
   const { startEdit: editStatus } = useStatusModal();
@@ -67,7 +69,9 @@ export const List = ({
       <Header between={true}>
         <h3>订单生产列表</h3>
         <Row gap>
-          <Button type={"primary"}>导出生产</Button>
+          <Button type={"primary"} onClick={() => openExportProductModal()}>
+            导出生产
+          </Button>
           <Divider
             style={{ height: "3rem", marginLeft: 0 }}
             type={"vertical"}

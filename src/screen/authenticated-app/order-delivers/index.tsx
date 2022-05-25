@@ -24,6 +24,7 @@ import { DataModal } from "./components/data-modal";
 import { InfoModal } from "./components/info-modal";
 import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
+import { ExportProductModal } from "./components/export-product-modal";
 
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -94,6 +95,7 @@ export const OrderDelivers = () => {
       <DataModal />
       <InfoModal />
       <ExportModal />
+      <ExportProductModal />
       <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer
         visible={!!selectedRowKeys.length}

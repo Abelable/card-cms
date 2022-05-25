@@ -1,14 +1,14 @@
 import { Button, Modal } from "antd";
-import { useExportModal } from "../util";
+import { useExportProductModal } from "../util";
 
-export const ExportModal = () => {
-  const { exportModalOpen, close } = useExportModal();
+export const ExportProductModal = () => {
+  const { exportProducModalOpen, close } = useExportProductModal();
 
-  const check = () => {
+  const exportFilter = () => {
     closeModal();
   };
 
-  const generate = () => {
+  const exportAll = () => {
     closeModal();
   };
 
@@ -19,13 +19,13 @@ export const ExportModal = () => {
   return (
     <Modal
       title={"导出生产"}
-      visible={exportModalOpen}
+      visible={exportProducModalOpen}
       onCancel={closeModal}
       footer={
         <>
-          <Button onClick={generate}>生成报表</Button>
-          <Button type={"primary"} onClick={check}>
-            查看已生成的报表
+          <Button onClick={exportFilter}>按条件导出生产</Button>
+          <Button type={"primary"} onClick={exportAll}>
+            导出全部待生产
           </Button>
         </>
       }

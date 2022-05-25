@@ -223,6 +223,28 @@ export const useExportModal = () => {
   };
 };
 
+export const useExportProductModal = () => {
+  const [{ exportProductModalVisible }, setExportProductModalVisible] =
+    useUrlQueryParams(["exportProductModalVisible"]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    () => setExportProductModalVisible({ exportProductModalVisible: true }),
+    [setExportProductModalVisible]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ exportProductModalVisible: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    exportProducModalOpen: exportProductModalVisible === "true",
+    open,
+    close,
+  };
+};
+
 export const useDetailModal = () => {
   const [{ detailDeliverId }, setDetailDeliverId] = useUrlQueryParams([
     "detailDeliverId",
