@@ -169,3 +169,24 @@ export const useTestConfig = (params: Partial<Product>) => {
     method: "POST",
   });
 };
+
+export const useExportOrderProduct = () => {
+  const client = useHttp();
+  return ({
+    agentId,
+    encodings,
+  }: {
+    agentId?: number | undefined;
+    encodings?: string[] | undefined;
+  }) =>
+    client("/api/v1/admin/order/export-product", {
+      data: cleanObject({
+        "filter[order.agent_id]": agentId,
+        "filter[product-encoding]": encodings,
+      }),
+      method: "POST",
+      headers: {
+        responseType: "arraybuffer",
+      },
+    });
+};

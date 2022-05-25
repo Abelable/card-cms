@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Row } from "components/lib";
 import { useAgentOptions } from "service/agent";
 import { useChannelEncodingOptions } from "service/product";
+import { useExportOrderProduct } from "service/order";
 
 export const ExportProductModal = () => {
   const { exportProducModalOpen, close } = useExportProductModal();
@@ -15,17 +16,19 @@ export const ExportProductModal = () => {
   const [productEncodings, setProductEncodings] = useState<
     string[] | undefined
   >(undefined);
+  const exportOrderProduct = useExportOrderProduct();
 
   const exportFilter = () => {
     if (type === 1) {
-      console.log(agentId);
+      exportOrderProduct({ agentId });
     } else {
-      console.log(productEncodings);
+      exportOrderProduct({ encodings: productEncodings });
     }
-    // closeModal();
+    closeModal();
   };
 
   const exportAll = () => {
+    exportOrderProduct({});
     closeModal();
   };
 
