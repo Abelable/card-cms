@@ -68,7 +68,7 @@ export const List = ({ params, error, ...restProps }: ListProps) => {
                 addThirdHome({
                   key: record.key,
                   date: record.second_date,
-                  agent_id: params.agent_id,
+                  agent_id: record.agent_id,
                   goods_id: params.goods_id,
                 });
               }

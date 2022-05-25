@@ -10,17 +10,16 @@ export const useHomeSearchParams = () => {
     "goods_id",
   ]);
   return [
-    // useMemo(() => {
-    //   const date = new Date();
-    //   date.setDate(date.getDate() - 6);
-    //   return {
-    //     start_created_at:
-    //       params.start_created_at || dayjs(date).format("YYYY-MM-DD"),
-    //     end_created_at: params.start_created_at || dayjs().format("YYYY-MM-DD"),
-    //     ...params,
-    //   };
-    // }, [params]),
-    useMemo(() => params, [params]),
+    useMemo(() => {
+      const date = new Date();
+      date.setDate(date.getDate() - 6);
+      const { start_created_at, end_created_at, ...rest } = params;
+      return {
+        start_created_at: start_created_at || dayjs(date).format("YYYY-MM-DD"),
+        end_created_at: end_created_at || dayjs().format("YYYY-MM-DD"),
+        ...rest,
+      };
+    }, [params]),
     setParams,
   ] as const;
 };

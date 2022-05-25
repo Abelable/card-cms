@@ -18,6 +18,7 @@ export interface ThirdHomeSearchParams extends SecondHomeSearchParams {
 export interface Home {
   id: number;
   key: string;
+  agent_id?: number;
   agent_name: string;
   goods_name: string;
   count: number;
