@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { useExportChannels } from "service/product";
+import { useChannelOptions, useExportChannels } from "service/product";
 import type { ChannelsSearchParams } from "types/product";
 import type { SupplierOption } from "types/supplier";
 
@@ -18,30 +18,22 @@ export const SearchPanel = ({
   setParams,
 }: SearchPanelProps) => {
   const defaultParams = {
-    goods_name: "",
+    goods_name: undefined,
     goods_code: "",
     supplier_id: undefined,
   } as Partial<ChannelsSearchParams>;
+
+  const channelOptions = useChannelOptions();
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<ChannelsSearchParams>>(params);
 
   const exportChannels = useExportChannels();
 
-  const setGoodsName = (evt: any) => {
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        goods_name: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      goods_name: evt.target.value,
-    });
-  };
+  const setGoodsName = (goods_name: string) =>
+    setTemporaryParams({ ...temporaryParams, goods_name });
+  const clearGoodsName = () =>
+    setTemporaryParams({ ...temporaryParams, goods_name: undefined });
 
   const setGoodsCode = (evt: any) => {
     // onInputClear
@@ -74,13 +66,26 @@ export const SearchPanel = ({
       <Row gap={true}>
         <Row>
           <div>产品名称：</div>
-          <Input
+          <Select
             style={{ width: "20rem" }}
             value={temporaryParams.goods_name}
-            onChange={setGoodsName}
-            placeholder="请输入产品名称"
             allowClear={true}
-          />
+            onSelect={setGoodsName}
+            onClear={clearGoodsName}
+            showSearch
+            filterOption={(input, option) =>
+              (option!.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
+            placeholder="请选择产品"
+          >
+            {channelOptions.map(({ id, name }) => (
+              <Select.Option key={id} value={name}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
         </Row>
         <Row>
           <div>产品编码：</div>
@@ -100,6 +105,12 @@ export const SearchPanel = ({
             allowClear={true}
             onSelect={setSupplier}
             onClear={clearSupplier}
+            showSearch
+            filterOption={(input, option) =>
+              (option!.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
             placeholder="请选择供应商"
           >
             {supplierOptions.map(({ id, name }) => (

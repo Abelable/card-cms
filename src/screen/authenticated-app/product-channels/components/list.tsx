@@ -135,7 +135,7 @@ export const List = ({
                     >
                       {modeOptions.find(
                         (item) => item.value === channel.is_auto_product
-                      )?.name || "选择等级名称"}
+                      )?.name || "选择生产方式"}
                       <DownOutlined />
                     </ButtonNoPadding>
                   </Dropdown>

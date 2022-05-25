@@ -44,6 +44,12 @@ export const SearchPanel = ({
             allowClear={true}
             onSelect={setSupplier}
             onClear={clearSupplier}
+            showSearch
+            filterOption={(input, option) =>
+              (option!.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
             placeholder="请选择供应商"
           >
             {supplierOptions.map(({ id, name }) => (
