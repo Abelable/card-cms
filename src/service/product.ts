@@ -52,6 +52,9 @@ export const useExportChannels = () => {
         page,
         per_page,
       }),
+      headers: {
+        responseType: "arraybuffer",
+      },
     });
   };
 };
