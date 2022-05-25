@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Cascader, Form, Input, Modal, Spin } from "antd";
+import { Cascader, Col, Form, Input, Modal, Row, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useRegionOptions } from "service/common";
@@ -103,6 +103,25 @@ export const InfoModal = () => {
               placeholder="请选择收货地址"
             />
           </Form.Item>
+          <Form.Item label="手动填写" tooltip="没找到？手动填写">
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item name="province">
+                  <Input placeholder="省" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name="city">
+                  <Input placeholder="市" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name="area">
+                  <Input placeholder="区" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form.Item>
           <Form.Item
             name="detail_address"
             label="详细地址"
@@ -122,4 +141,8 @@ const Loading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const Tips = styled.div`
+  color: #1890ff;
 `;
