@@ -161,3 +161,11 @@ export const useImports = (params: Partial<ImportsSearchParams>) => {
     })
   );
 };
+
+export const useTestConfig = (params: Partial<Product>) => {
+  const client = useHttp();
+  return client("/api/v1/admin/supplier-product/check", {
+    data: params,
+    method: "POST",
+  });
+};

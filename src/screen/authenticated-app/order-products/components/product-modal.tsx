@@ -1,4 +1,4 @@
-import { Form, Modal, Select, Button, Input } from "antd";
+import { Form, Modal, Select, Button, Input, Alert, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddProduct, useEditProduct } from "service/order";
@@ -6,6 +6,9 @@ import { Product } from "types/order";
 import { SupplierOption } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useProductsQueryKey, useProductModal } from "../util";
+import styled from "@emotion/styled";
+import { useHttp } from "service/http";
+import { useState } from "react";
 
 export const ProductModal = ({
   supplierOptions,
@@ -14,6 +17,9 @@ export const ProductModal = ({
   supplierOptions: SupplierOption[];
   products: Product[];
 }) => {
+  const client = useHttp();
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const [form] = useForm();
   const { productModalOpen, editingProductId, close } = useProductModal();
   const product =
@@ -35,6 +41,20 @@ export const ProductModal = ({
     }
   }, [product, form]);
 
+  const test = () => {
+    form.validateFields().then(async () => {
+      try {
+        const res = await client("/api/v1/admin/supplier-product/check", {
+          data: form.getFieldsValue(),
+          method: "POST",
+        });
+        setSuccessMsg(res.message);
+      } catch (error: any) {
+        setErrMsg(error.message);
+      }
+    });
+  };
+
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
@@ -47,6 +67,8 @@ export const ProductModal = ({
 
   const closeModal = () => {
     form.resetFields();
+    setSuccessMsg("");
+    setErrMsg("");
     close();
   };
 
@@ -94,14 +116,23 @@ export const ProductModal = ({
         >
           <Input placeholder="请输入上游编码" />
         </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={test}>
+            检测
+          </Button>
+          {successMsg && <Tips message={successMsg} type="success" />}
+          {errMsg && <Tips message={errMsg} type="error" />}
+        </Form.Item>
         {editingProductId ? (
           <Form.Item name="trigger_mark" label="触点标识名称">
             <Input placeholder="请输入触点标识名称" />
           </Form.Item>
         ) : null}
       </Form>
-      <Button type="primary">检测</Button>
-      <div>未设置过自动生产，点确定设置吧</div>
     </Modal>
   );
 };
+
+const Tips = styled(Alert)`
+  margin-top: 1.2rem;
+`;
