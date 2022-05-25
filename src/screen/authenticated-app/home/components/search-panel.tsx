@@ -118,6 +118,12 @@ export const SearchPanel = ({
           allowClear={true}
           onSelect={setAgent}
           onClear={clearAgent}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
           placeholder="请选择代理商"
         >
           {agentOptions.map(({ id, name }) => (
