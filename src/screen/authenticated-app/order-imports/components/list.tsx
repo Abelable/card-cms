@@ -12,6 +12,7 @@ import { ErrorBox, Row } from "components/lib";
 import dayjs from "dayjs";
 import { DownloadOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { ImportsSearchParams, Import } from "types/order";
+import { useDownloadTemplate } from "service/common";
 
 interface ListProps extends TableProps<Import> {
   params: Partial<ImportsSearchParams>;
@@ -26,6 +27,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       page: pagination.current,
       per_page: pagination.pageSize,
     });
+  const downloadTemplate = useDownloadTemplate();
 
   return (
     <Container>
@@ -36,7 +38,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             <FileUpload name="导入订单" />
           </div>
           <Tooltip title="下载订单模版">
-            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+            <Button
+              onClick={() => downloadTemplate(3)}
+              size="small"
+              shape="circle"
+              icon={<DownloadOutlined />}
+            />
           </Tooltip>
           <Divider
             style={{ height: "3rem", marginLeft: 0 }}
@@ -49,7 +56,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             <FileUpload name="上传照片" />
           </div>
           <Tooltip title="下载照片模版">
-            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+            <Button
+              onClick={() => downloadTemplate(4)}
+              size="small"
+              shape="circle"
+              icon={<DownloadOutlined />}
+            />
           </Tooltip>
           <Divider
             style={{ height: "3rem", marginLeft: 0 }}

@@ -29,6 +29,7 @@ import {
   useRecordModal,
   useStatusModal,
 } from "../util";
+import { useDownloadTemplate } from "service/common";
 
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
   selectedRowKeys: React.Key[];
@@ -45,6 +46,7 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const downloadTemplate = useDownloadTemplate();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -80,7 +82,12 @@ export const List = ({
             <FileUpload name="导入生产数据" />
           </div>
           <Tooltip title="下载生产模版">
-            <Button size="small" shape="circle" icon={<DownloadOutlined />} />
+            <Button
+              onClick={() => downloadTemplate(1)}
+              size="small"
+              shape="circle"
+              icon={<DownloadOutlined />}
+            />
           </Tooltip>
           <Divider
             style={{ height: "3rem", marginLeft: 0 }}
@@ -91,6 +98,7 @@ export const List = ({
           </div>
           <Tooltip title="下载激活模版">
             <Button
+              onClick={() => downloadTemplate(2)}
               style={{ marginRight: 0 }}
               size="small"
               shape="circle"
