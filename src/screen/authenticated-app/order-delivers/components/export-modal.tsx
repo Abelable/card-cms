@@ -1,14 +1,22 @@
 import { Button, Modal } from "antd";
+import { useExportDelivers } from "service/order";
+import { DeliversSearchParams } from "types/order";
 import { useExportModal } from "../util";
 
-export const ExportModal = () => {
+export const ExportModal = ({
+  params,
+}: {
+  params: Partial<DeliversSearchParams>;
+}) => {
   const { exportModalOpen, close } = useExportModal();
+  const exportDelivers = useExportDelivers();
 
-  const check = () => {
+  const generate = () => {
+    exportDelivers(params);
     closeModal();
   };
 
-  const generate = () => {
+  const check = () => {
     closeModal();
   };
 

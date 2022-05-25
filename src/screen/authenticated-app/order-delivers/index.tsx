@@ -94,7 +94,7 @@ export const OrderDelivers = () => {
       />
       <DataModal />
       <InfoModal />
-      <ExportModal />
+      <ExportModal params={params} />
       <ExportProductModal />
       <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer

@@ -141,7 +141,10 @@ export const useExportHome = () => {
     client("/api/v1/admin/index/index", {
       data: cleanObject({
         is_export: 1,
-        ...params,
+        "filter[agent_id]": params.agent_id,
+        "filter[goods_id]": params.goods_id,
+        "filter[start_created_at]": params.start_created_at,
+        "filter[end_created_at]": params.end_created_at,
       }),
       headers: {
         responseType: "arraybuffer",
