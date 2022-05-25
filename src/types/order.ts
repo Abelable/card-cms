@@ -54,6 +54,7 @@ export interface Deliver {
   province_id: number;
   city_id: number;
   area_id: number;
+  operation_logs: { content: string }[];
 }
 
 export interface DeliversResult {

@@ -120,6 +120,9 @@ export const useRecordModal = () => {
     "showRecordDeliverId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
+  const { data: editingDeliver, isLoading } = useDeliver(
+    Number(showRecordDeliverId)
+  );
 
   const open = useCallback(
     (ids: string) => setShowRecordDeliverId({ showRecordDeliverId: ids }),
@@ -134,8 +137,10 @@ export const useRecordModal = () => {
   return {
     recordModalOpen: !!showRecordDeliverId,
     showRecordDeliverId,
+    editingDeliver,
     open,
     close,
+    isLoading,
   };
 };
 
