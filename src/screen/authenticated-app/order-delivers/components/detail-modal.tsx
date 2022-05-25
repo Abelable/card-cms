@@ -127,7 +127,7 @@ export const DetailModal = ({
             column={1}
           >
             <Descriptions.Item label="生产备注（失败原因）">
-              {editingDeliver?.product_failed_reason}
+              {editingDeliver?.product_failed_reason || "暂无"}
             </Descriptions.Item>
           </Descriptions>
 
@@ -168,18 +168,9 @@ export const DetailModal = ({
             size={"small"}
             column={1}
           >
-            <Descriptions.Item>
-              2022-05-01 01:38:05订单初审：身份证号码错误
-            </Descriptions.Item>
-            <Descriptions.Item>
-              2022-05-01 01:38:05订单初审：身份证号码错误
-            </Descriptions.Item>
-            <Descriptions.Item>
-              2022-05-01 01:38:05订单初审：身份证号码错误
-            </Descriptions.Item>
-            <Descriptions.Item>
-              2022-05-01 01:38:05订单初审：身份证号码错误
-            </Descriptions.Item>
+            {editingDeliver?.operation_logs.map((item, index) => (
+              <Descriptions.Item key={index}>{item.content}</Descriptions.Item>
+            ))}
           </Descriptions>
         </>
       )}
