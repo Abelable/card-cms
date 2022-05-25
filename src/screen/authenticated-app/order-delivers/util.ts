@@ -201,24 +201,23 @@ export const useInfoModal = () => {
 };
 
 export const useExportModal = () => {
-  const [{ exportDeliverId }, setExportDeliverId] = useUrlQueryParams([
-    "exportDeliverId",
+  const [{ exportModalVisible }, setExportModalVisible] = useUrlQueryParams([
+    "exportModalVisible",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setExportDeliverId({ exportDeliverId: "1" }),
-    [setExportDeliverId]
+    () => setExportModalVisible({ exportModalVisible: true }),
+    [setExportModalVisible]
   );
 
   const close = useCallback(
-    () => setUrlParams({ exportDeliverId: "" }),
+    () => setUrlParams({ exportModalVisible: "" }),
     [setUrlParams]
   );
 
   return {
-    exportModalOpen: !!exportDeliverId,
-    exportDeliverId,
+    exportModalOpen: exportModalVisible === "true",
     open,
     close,
   };

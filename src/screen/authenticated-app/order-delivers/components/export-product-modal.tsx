@@ -18,7 +18,7 @@ export const ExportModal = () => {
 
   return (
     <Modal
-      title={"为了给您提供更好的查询性能以及体检"}
+      title={"导出生产"}
       visible={exportModalOpen}
       onCancel={closeModal}
       footer={

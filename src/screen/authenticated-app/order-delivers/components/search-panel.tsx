@@ -436,8 +436,6 @@ export const SearchPanel = ({
           查询
         </Button>
         <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
-        <Button type={"primary"}>导出生产</Button>
-        <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
         <Button
           style={{ marginRight: 0 }}
           onClick={() => openExportModal()}

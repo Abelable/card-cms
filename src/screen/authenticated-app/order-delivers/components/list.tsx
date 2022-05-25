@@ -67,6 +67,11 @@ export const List = ({
       <Header between={true}>
         <h3>订单生产列表</h3>
         <Row gap>
+          <Button type={"primary"}>导出生产</Button>
+          <Divider
+            style={{ height: "3rem", marginLeft: 0 }}
+            type={"vertical"}
+          />
           <div style={{ marginRight: "1rem" }}>
             <FileUpload name="导入生产数据" />
           </div>
