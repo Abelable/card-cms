@@ -3,16 +3,6 @@ import { useMutation, useQuery } from "react-query";
 import { OperatorOption, RegionOption, WarningSetting } from "types/common";
 import { useEditDefaultWarningSettingConfig } from "./use-optimistic-options";
 
-export const useImportData = () => {
-  const client = useHttp();
-  return useMutation(({ excel_file }: { excel_file: any }) =>
-    client("/api/admin/enter-apply/personal-import", {
-      data: { excel_file },
-      method: "POST",
-    })
-  );
-};
-
 export const useOperatorOptions = () => {
   const client = useHttp();
   const res = useQuery(["operator_options"], () =>
