@@ -283,3 +283,10 @@ export const useGoodsOptions = () => {
   }
   return goodsOptions;
 };
+
+export const useFailReasons = () => {
+  const client = useHttp();
+  return useQuery(["fail_reasons"], () =>
+    client("/api/v1/admin/setting/product-failed-reasons")
+  );
+};
