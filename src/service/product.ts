@@ -147,6 +147,23 @@ export const useChannelOptions = () => {
   return channelOptions;
 };
 
+export const useChannelEncodingOptions = () => {
+  const client = useHttp();
+  const res = useQuery(["channel_options"], () =>
+    client("/api/v1/admin/product/pluck-encoding")
+  );
+  const channelOptions: { encoding: string; name: string }[] = [];
+  if (res.data) {
+    Object.keys(res.data).forEach((item) =>
+      channelOptions.push({
+        encoding: item,
+        name: res.data[item],
+      })
+    );
+  }
+  return channelOptions;
+};
+
 export const useChannelGoodsList = (
   params: Partial<ChannelGoodsListSearchParams>
 ) => {
