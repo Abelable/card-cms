@@ -129,7 +129,7 @@ export const SearchPanel = ({
         <div>商品名称：</div>
         <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.agent_id}
+          value={temporaryParams.goods_id}
           allowClear={true}
           onSelect={setGoods}
           onClear={clearGoods}
