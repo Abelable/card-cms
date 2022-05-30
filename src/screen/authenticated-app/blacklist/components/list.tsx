@@ -15,6 +15,8 @@ import { FileUpload } from "components/file-upload";
 import type { BlacklistSearchParams, BlackItem } from "types/system";
 import { useDeleteBlack } from "service/system";
 import { useDownloadTemplate } from "service/common";
+import { UploadChangeParam } from "antd/lib/upload";
+import { UploadFile } from "antd/lib/upload/interface";
 
 interface ListProps extends TableProps<BlackItem> {
   params: Partial<BlacklistSearchParams>;
@@ -26,6 +28,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const { open } = useBlackModal();
   const { mutate: deleteBlack } = useDeleteBlack(useBlacklistQueryKey());
   const downloadTemplate = useDownloadTemplate();
+
+  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) =>
+    info.file.status === "done" && setParams({ ...params });
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -50,7 +55,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         <h3>黑名单列表</h3>
         <Row gap>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={5} name="上传文件" />
+            <FileUpload scene={5} name="上传文件" onChange={handleSuccess} />
           </div>
           <Tooltip title="下载模版">
             <Button

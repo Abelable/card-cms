@@ -38,6 +38,11 @@ export const FileUpload = ({ scene, name, ...restProps }: FileUploadType) => {
         nonce: initNonce(),
       }}
       name={scene === 4 ? "zip" : "excel"}
+      accept={
+        scene === 4
+          ? "application/zip"
+          : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      }
       maxCount={1}
       showUploadList={false}
       {...restProps}
