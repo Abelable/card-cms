@@ -25,11 +25,15 @@ import {
   useExportProductModal,
   useFailModal,
   useInfoModal,
+  useOrderDeliversQueryKey,
   usePicModal,
   useRecordModal,
   useStatusModal,
 } from "../util";
 import { useDownloadTemplate } from "service/common";
+import { UploadChangeParam } from "antd/lib/upload";
+import { UploadFile } from "antd/lib/upload/interface";
+import { useQueryClient } from "react-query";
 
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
   selectedRowKeys: React.Key[];
@@ -66,6 +70,11 @@ export const List = ({
     message.success("复制成功");
   };
 
+  const queryClient = useQueryClient();
+  const queryKey = useOrderDeliversQueryKey();
+  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) =>
+    info.file.status === "done" && queryClient.invalidateQueries(queryKey);
+
   return (
     <Container>
       <Header between={true}>
@@ -79,7 +88,11 @@ export const List = ({
             type={"vertical"}
           />
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={1} name="导入生产数据" />
+            <FileUpload
+              scene={1}
+              name="导入生产数据"
+              onChange={handleSuccess}
+            />
           </div>
           <Tooltip title="下载生产模版">
             <Button
@@ -94,7 +107,11 @@ export const List = ({
             type={"vertical"}
           />
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={2} name="导入激活数据" />
+            <FileUpload
+              scene={2}
+              name="导入激活数据"
+              onChange={handleSuccess}
+            />
           </div>
           <Tooltip title="下载激活模版">
             <Button
