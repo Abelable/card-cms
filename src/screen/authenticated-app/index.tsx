@@ -201,18 +201,19 @@ const User = () => {
   const { data: userInfo } = useUserInfo();
   const { logout } = useAuth();
 
+  const items: MenuProps["items"] = [
+    {
+      label: (
+        <Button type={"link"} onClick={logout}>
+          登出
+        </Button>
+      ),
+      key: "logout",
+    },
+  ];
+
   return (
-    <Dropdown
-      overlay={
-        <Menu>
-          <Menu.Item key={"logout"}>
-            <Button type={"link"} onClick={logout}>
-              登出
-            </Button>
-          </Menu.Item>
-        </Menu>
-      }
-    >
+    <Dropdown overlay={<Menu items={items} />}>
       <UserInner>
         <div style={{ lineHeight: 1.5, marginRight: "1rem" }}>
           <div>欢迎您！</div>
