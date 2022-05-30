@@ -4,7 +4,6 @@ import { useReportForms } from "service/order";
 
 export const OrderReportForms = () => {
   const { data, isLoading, error } = useReportForms();
-  console.log(data);
 
   return (
     <Container>

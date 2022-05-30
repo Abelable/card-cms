@@ -1,4 +1,6 @@
 import { Button, Modal } from "antd";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useExportDelivers } from "service/order";
 import { DeliversSearchParams } from "types/order";
 import { useExportModal } from "../util";
@@ -8,17 +10,18 @@ export const ExportModal = ({
 }: {
   params: Partial<DeliversSearchParams>;
 }) => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { exportModalOpen, close } = useExportModal();
   const exportDelivers = useExportDelivers();
 
-  const generate = () => {
-    exportDelivers(params);
-    closeModal();
+  const generate = async () => {
+    setIsLoading(true);
+    await exportDelivers(params);
+    setIsLoading(false);
   };
 
-  const check = () => {
-    closeModal();
-  };
+  const check = () => navigate("/order/deliver/report_forms");
 
   const closeModal = () => {
     close();
@@ -31,7 +34,9 @@ export const ExportModal = ({
       onCancel={closeModal}
       footer={
         <>
-          <Button onClick={generate}>生成报表</Button>
+          <Button loading={isLoading} onClick={generate}>
+            生成报表
+          </Button>
           <Button type={"primary"} onClick={check}>
             查看已生成的报表
           </Button>

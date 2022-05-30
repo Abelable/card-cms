@@ -57,9 +57,8 @@ export const useExportDelivers = () => {
   const client = useHttp();
   return (params: Partial<DeliversSearchParams>) => {
     const { page, per_page, ...restParams } = params;
-    return client("/api/v1/admin/index/index", {
+    return client("/api/v1/admin/order-export/store", {
       data: cleanObject({
-        is_export: 1,
         "filter[product.name]": restParams.product_name,
         "filter[product.code]": restParams.product_code,
         "filter[order.id]": restParams.order_id,
@@ -83,9 +82,7 @@ export const useExportDelivers = () => {
         page,
         per_page,
       }),
-      headers: {
-        responseType: "arraybuffer",
-      },
+      method: "POST",
     });
   };
 };
