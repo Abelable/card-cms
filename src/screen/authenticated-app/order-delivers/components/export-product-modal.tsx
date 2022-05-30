@@ -61,6 +61,7 @@ export const ExportProductModal = () => {
             <Space direction="vertical">
               <Radio value={1}>
                 <Form.Item
+                  labelCol={{ span: 7 }}
                   name="agentId"
                   label="选择代理商导出"
                   style={{ marginBottom: 10 }}
@@ -84,7 +85,11 @@ export const ExportProductModal = () => {
                 </Form.Item>
               </Radio>
               <Radio value={2}>
-                <Form.Item name="encodings" label="选择产品编码导出">
+                <Form.Item
+                  labelCol={{ span: 7 }}
+                  name="encodings"
+                  label="选择产品编码导出"
+                >
                   <Select
                     onClick={(e) => e.preventDefault()}
                     mode="tags"
