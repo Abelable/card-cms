@@ -5,6 +5,7 @@ import {
   Dropdown,
   Menu,
   MenuProps,
+  message,
   Modal,
   Table,
   TablePaginationConfig,
@@ -188,7 +189,7 @@ const More = ({ channel }: { channel: Channel }) => {
   const link = (id: number) =>
     navigate(`/product/channels/goods_list?product_id=${id}`);
   const { startEdit } = useChannelModal();
-  const { mutate: downChannel } = useDownChannel(useChannelsQueryKey());
+  const { mutateAsync: downChannel } = useDownChannel(useChannelsQueryKey());
 
   const confirmDownChannel = (id: number) => {
     Modal.confirm({
@@ -196,7 +197,13 @@ const More = ({ channel }: { channel: Channel }) => {
       content: "点击确定下架",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => downChannel(String(id)),
+      onOk: async () => {
+        try {
+          await downChannel(String(id));
+        } catch (error: any) {
+          message.error(error.message);
+        }
+      },
     });
   };
 
