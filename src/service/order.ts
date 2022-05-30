@@ -132,10 +132,10 @@ export const useEditDeliverSimple = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, status, remark }: Partial<Deliver>) =>
       client(`/api/v1/admin/order/simple-update/${id}`, {
-        data: {
+        data: cleanObject({
           status,
           remark,
-        },
+        }),
         method: "POST",
       }),
     useEditConfig(queryKey)
