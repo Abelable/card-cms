@@ -66,7 +66,7 @@ export const List = ({
   const confirmDownGoods = (id: number) => {
     Modal.confirm({
       title: "确定下架该商品吗？",
-      content: "点击确定下架",
+      content: "下架此商品，分销此商品的分销商，也会强制下架此商品，是否继续？",
       okText: "确定",
       cancelText: "取消",
       onOk: () => downGoods(id),
