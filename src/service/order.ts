@@ -11,6 +11,7 @@ import {
   Product,
   ProductsResult,
   ProductsSearchParams,
+  ReportForm,
 } from "types/order";
 import {
   useAddConfig,
@@ -228,4 +229,11 @@ export const useExportOrderProduct = () => {
         responseType: "arraybuffer",
       },
     });
+};
+
+export const useReportForms = () => {
+  const client = useHttp();
+  return useQuery<ReportForm[]>(["report_forms"], () =>
+    client("/api/v1/admin/order-export/index")
+  );
 };

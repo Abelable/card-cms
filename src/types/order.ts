@@ -112,3 +112,14 @@ export interface ImportsResult {
   data: Import[];
   meta: { pagination: Pagination };
 }
+
+export interface ReportForm {
+  created_by: { name: string };
+  created_at: string;
+  file: string;
+  start_created_at: string;
+  source: string;
+  status: string;
+  refund_status: string;
+  activate_status: string;
+}

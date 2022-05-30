@@ -20,6 +20,7 @@ import { OrderProducts } from "./order-products";
 import { OrderImports } from "./order-imports";
 import { Blacklist } from "./blacklist";
 import { OrderDelivers } from "./order-delivers";
+import { OrderReportForms } from "./order-report-forms";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -73,6 +74,10 @@ export const AuthenticatedApp = () => {
                 element={<ProductGoodsAgents />}
               />
               <Route path="order/deliver" element={<OrderDelivers />} />
+              <Route
+                path="order/deliver/report_forms"
+                element={<OrderReportForms />}
+              />
               <Route path="order/configure" element={<OrderProducts />} />
               <Route path="order/import" element={<OrderImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />
