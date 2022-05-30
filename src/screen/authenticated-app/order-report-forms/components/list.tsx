@@ -10,6 +10,8 @@ interface ListProps {
 }
 
 export const List = ({ data, isLoading, error }: ListProps) => {
+  const donwload = (url: string) => (window.location.href = url);
+
   return (
     <Container>
       <Header>
@@ -31,7 +33,9 @@ export const List = ({ data, isLoading, error }: ListProps) => {
                 <ItemHeader>
                   <div>操作人：{item.created_by.name}</div>
                   <div>生成时间：{item.created_at}</div>
-                  <Button type={"primary"}>下载数据</Button>
+                  <Button type={"primary"} onClick={() => donwload(item.file)}>
+                    下载数据
+                  </Button>
                 </ItemHeader>
               }
             >
