@@ -171,13 +171,11 @@ const More = ({ agent }: { agent: Agent }) => {
 
   const items: MenuProps["items"] = [
     {
-      label: <span onClick={() => link(agent.id)}>查看分销商品</span>,
+      label: <div onClick={() => link(agent.id)}>查看分销商品</div>,
       key: "link",
     },
     {
-      label: (
-        <span onClick={() => confirmDeleteAgent(agent.id)}>删除代理商</span>
-      ),
+      label: <div onClick={() => confirmDeleteAgent(agent.id)}>删除代理商</div>,
       key: "delete",
     },
   ];

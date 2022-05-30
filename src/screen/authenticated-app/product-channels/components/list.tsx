@@ -209,15 +209,15 @@ const More = ({ channel }: { channel: Channel }) => {
 
   const items: MenuProps["items"] = [
     {
-      label: <span onClick={() => startEdit(String(channel.id))}>编辑</span>,
+      label: <div onClick={() => startEdit(String(channel.id))}>编辑</div>,
       key: "edit",
     },
     {
-      label: <span onClick={() => confirmDownChannel(channel.id)}>下架</span>,
+      label: <div onClick={() => confirmDownChannel(channel.id)}>下架</div>,
       key: "down",
     },
     {
-      label: <span onClick={() => link(channel.id)}>查看关联商品</span>,
+      label: <div onClick={() => link(channel.id)}>查看关联商品</div>,
       key: "link",
     },
   ];

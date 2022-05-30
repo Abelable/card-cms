@@ -23,17 +23,17 @@ export const ProductChannels = () => {
   const items: MenuProps["items"] = [
     {
       label: (
-        <span onClick={() => setParams({ ...params, is_removed: "0" })}>
+        <div onClick={() => setParams({ ...params, is_removed: "0" })}>
           产品渠道中心
-        </span>
+        </div>
       ),
       key: "0",
     },
     {
       label: (
-        <span onClick={() => setParams({ ...params, is_removed: "1" })}>
+        <div onClick={() => setParams({ ...params, is_removed: "1" })}>
           已下架的产品
-        </span>
+        </div>
       ),
       key: "1",
     },

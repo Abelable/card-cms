@@ -113,11 +113,11 @@ const More = ({ id }: { id: number }) => {
 
   const items: MenuProps["items"] = [
     {
-      label: <span onClick={() => startEdit(String(id))}>编辑</span>,
+      label: <div onClick={() => startEdit(String(id))}>编辑</div>,
       key: "edit",
     },
     {
-      label: <span onClick={() => confirmDeleteProduct(String(id))}>删除</span>,
+      label: <div onClick={() => confirmDeleteProduct(String(id))}>删除</div>,
       key: "delete",
     },
   ];
