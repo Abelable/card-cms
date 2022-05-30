@@ -22,5 +22,5 @@ export const useImportsSearchParams = () => {
 
 export const useImportsQueryKey = () => {
   const [params] = useImportsSearchParams();
-  return ["orderImports", params];
+  return ["order_imports", params];
 };

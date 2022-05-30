@@ -13,6 +13,10 @@ import dayjs from "dayjs";
 import { DownloadOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { ImportsSearchParams, Import } from "types/order";
 import { useDownloadTemplate } from "service/common";
+import { UploadChangeParam } from "antd/lib/upload";
+import { UploadFile } from "antd/lib/upload/interface";
+import { useQueryClient } from "react-query";
+import { useImportsQueryKey } from "../util";
 
 interface ListProps extends TableProps<Import> {
   params: Partial<ImportsSearchParams>;
@@ -29,13 +33,18 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     });
   const downloadTemplate = useDownloadTemplate();
 
+  const queryClient = useQueryClient();
+  const queryKey = useImportsQueryKey();
+  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) =>
+    info.file.status === "done" && queryClient.invalidateQueries(queryKey);
+
   return (
     <Container>
       <Header between={true}>
         <h3>导入记录</h3>
         <Row gap>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={3} name="导入订单" />
+            <FileUpload scene={3} name="导入订单" onChange={handleSuccess} />
           </div>
           <Tooltip title="下载订单模版">
             <Button
@@ -53,7 +62,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             <Question />
           </Tooltip>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={4} name="上传照片" />
+            <FileUpload scene={4} name="上传照片" onChange={handleSuccess} />
           </div>
           <Tooltip title="下载照片模版">
             <Button

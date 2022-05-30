@@ -190,7 +190,7 @@ export const useDeleteProduct = (queryKey: QueryKey) => {
 
 export const useImports = (params: Partial<ImportsSearchParams>) => {
   const client = useHttp();
-  return useQuery<ImportsResult>(["imports", params], () =>
+  return useQuery<ImportsResult>(["order_imports", params], () =>
     client("/api/v1/admin/order-import/index", {
       data: params,
     })
