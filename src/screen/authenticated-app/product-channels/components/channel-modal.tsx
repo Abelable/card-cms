@@ -99,31 +99,61 @@ export const ChannelModal = ({
   };
   const submit = () => {
     form.validateFields().then(async () => {
-      const { ownership, non_shipping_region, ...rest } = form.getFieldsValue();
+      const {
+        ownership,
+        non_shipping_region,
+        default_phone_repeated_prewarn_num,
+        default_phone_repeated_prewarn_num_check_period,
+        default_address_repeated_prewarn_num,
+        default_address_repeated_prewarn_num_check_period,
+        phone_repeated_prewarn_num,
+        phone_repeated_prewarn_num_check_period,
+        address_repeated_prewarn_num,
+        address_repeated_prewarn_num_check_period,
+        ...rest
+      } = form.getFieldsValue();
 
       const dont_ship_addresses: RegionItem[] = [];
-      non_shipping_region.forEach((item: number[]) => {
-        if (item.length === 1) {
-          regionOptions
-            ?.find((province) => province.id === item[0])
-            ?.children?.forEach((city) => {
-              dont_ship_addresses.push({
-                province_id: item[0],
-                city_id: city.id,
+      if (non_shipping_region) {
+        non_shipping_region.forEach((item: number[]) => {
+          if (item.length === 1) {
+            regionOptions
+              ?.find((province) => province.id === item[0])
+              ?.children?.forEach((city) => {
+                dont_ship_addresses.push({
+                  province_id: item[0],
+                  city_id: city.id,
+                });
               });
+          } else {
+            dont_ship_addresses.push({
+              province_id: item[0],
+              city_id: item[1],
             });
-        } else {
-          dont_ship_addresses.push({
-            province_id: item[0],
-            city_id: item[1],
-          });
-        }
-      });
+          }
+        });
+      }
 
       await mutateAsync(
         cleanObject({
           ...editingChannel,
           is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+          phone_repeated_prewarn_num:
+            type === 1
+              ? default_phone_repeated_prewarn_num
+              : phone_repeated_prewarn_num,
+          phone_repeated_prewarn_num_check_period:
+            type === 1
+              ? default_phone_repeated_prewarn_num_check_period
+              : phone_repeated_prewarn_num_check_period,
+          address_repeated_prewarn_num:
+            type === 1
+              ? default_address_repeated_prewarn_num
+              : address_repeated_prewarn_num,
+          address_repeated_prewarn_num_check_period:
+            type === 1
+              ? default_address_repeated_prewarn_num_check_period
+              : address_repeated_prewarn_num_check_period,
           province_id: ownership[0],
           city_id: ownership[1],
           dont_ship_addresses,
