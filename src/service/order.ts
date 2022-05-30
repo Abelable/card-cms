@@ -212,9 +212,11 @@ export const useExportOrderProduct = () => {
   return ({
     agentId,
     encodings,
+    password,
   }: {
     agentId?: number | undefined;
     encodings?: string[] | undefined;
+    password: string;
   }) =>
     client("/api/v1/admin/order/export-product", {
       data: cleanObject({

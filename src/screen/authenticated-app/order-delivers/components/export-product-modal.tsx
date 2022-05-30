@@ -1,4 +1,4 @@
-import { Button, Modal, Radio, Select, Space } from "antd";
+import { Button, Form, Input, Modal, Radio, Select, Space } from "antd";
 import { useExportProductModal } from "../util";
 import styled from "@emotion/styled";
 import { useState } from "react";
@@ -6,8 +6,10 @@ import { Row } from "components/lib";
 import { useAgentOptions } from "service/agent";
 import { useChannelEncodingOptions } from "service/product";
 import { useExportOrderProduct } from "service/order";
+import { useForm } from "antd/lib/form/Form";
 
 export const ExportProductModal = () => {
+  const [form] = useForm();
   const { exportProducModalOpen, close } = useExportProductModal();
   const agentOptions = useAgentOptions();
   const channelOptions = useChannelEncodingOptions();
@@ -20,15 +22,15 @@ export const ExportProductModal = () => {
 
   const exportFilter = () => {
     if (type === 1) {
-      exportOrderProduct({ agentId });
+      // exportOrderProduct({ agentId });
     } else {
-      exportOrderProduct({ encodings: productEncodings });
+      // exportOrderProduct({ encodings: productEncodings });
     }
     closeModal();
   };
 
   const exportAll = () => {
-    exportOrderProduct({});
+    // exportOrderProduct({});
     closeModal();
   };
 
@@ -53,67 +55,68 @@ export const ExportProductModal = () => {
         </>
       }
     >
-      <Radio.Group value={type} onChange={(e: any) => setType(e.target.value)}>
-        <Space direction="vertical">
-          <Radio value={1}>
-            <Row>
-              <Title>选择代理商导出</Title>
-              <Select
-                style={{ width: "31rem" }}
-                value={agentId}
-                allowClear={true}
-                onSelect={(id: number) => setAgentId(id)}
-                onClear={() => setAgentId(undefined)}
-                showSearch
-                filterOption={(input, option) =>
-                  (option!.children as unknown as string)
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                placeholder="请选择代理商"
-              >
-                {agentOptions.map(({ id, name }) => (
-                  <Select.Option key={id} value={id}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Row>
-          </Radio>
-          <Radio value={2}>
-            <Row onClick={(e) => e.preventDefault()}>
-              <Title>选择产品编码导出</Title>
-              <Select
-                mode="tags"
-                style={{ width: "31rem" }}
-                value={productEncodings}
-                allowClear={true}
-                onChange={(encodings: string[]) =>
-                  setProductEncodings(encodings)
-                }
-                onClear={() => setProductEncodings(undefined)}
-                showSearch
-                filterOption={(input, option) =>
-                  (option!.children as unknown as string)
-                    .toLowerCase()
-                    .includes(input.toLowerCase())
-                }
-                placeholder="请选择产品编码"
-              >
-                {channelOptions.map(({ encoding, name }) => (
-                  <Select.Option key={encoding} value={encoding}>
-                    {encoding}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Row>
-          </Radio>
-        </Space>
-      </Radio.Group>
+      <Form
+        initialValues={{
+          type: 1,
+        }}
+        form={form}
+      >
+        <Form.Item name="type">
+          <Radio.Group>
+            <Space direction="vertical">
+              <Radio value={1}>
+                <Form.Item
+                  name="agentId"
+                  label="选择代理商导出"
+                  style={{ marginBottom: 10 }}
+                >
+                  <Select
+                    style={{ width: "31rem" }}
+                    showSearch
+                    filterOption={(input, option) =>
+                      (option!.children as unknown as string)
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    placeholder="请选择代理商"
+                  >
+                    {agentOptions.map(({ id, name }) => (
+                      <Select.Option key={id} value={id}>
+                        {name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Radio>
+              <Radio value={2}>
+                <Form.Item name="encodings" label="选择产品编码导出">
+                  <Select
+                    onClick={(e) => e.preventDefault()}
+                    mode="tags"
+                    style={{ width: "31rem" }}
+                    showSearch
+                    filterOption={(input, option) =>
+                      (option!.children as unknown as string)
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    placeholder="请选择产品编码"
+                  >
+                    {channelOptions.map(({ encoding, name }) => (
+                      <Select.Option key={encoding} value={encoding}>
+                        {encoding}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Radio>
+            </Space>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item name="password" label="导出密码" required>
+          <Input placeholder="请输入导出密码" />
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };
-
-const Title = styled.div`
-  width: 13rem;
-`;
