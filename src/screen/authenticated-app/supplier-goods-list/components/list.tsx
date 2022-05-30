@@ -48,7 +48,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             ),
           },
           {
-            title: "注册时间",
+            title: "创建时间",
             dataIndex: "created_at",
             sorter: (a, b) =>
               dayjs(a.created_at).valueOf() - dayjs(b.created_at).valueOf(),
