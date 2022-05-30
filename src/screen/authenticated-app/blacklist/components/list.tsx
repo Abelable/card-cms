@@ -17,6 +17,7 @@ import { useDeleteBlack } from "service/system";
 import { useDownloadTemplate } from "service/common";
 import { UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
+import { useQueryClient } from "react-query";
 
 interface ListProps extends TableProps<BlackItem> {
   params: Partial<BlacklistSearchParams>;
@@ -26,11 +27,12 @@ interface ListProps extends TableProps<BlackItem> {
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const { open } = useBlackModal();
-  const { mutate: deleteBlack } = useDeleteBlack(useBlacklistQueryKey());
+  const queryClient = useQueryClient();
+  const queryKey = useBlacklistQueryKey();
+  const { mutate: deleteBlack } = useDeleteBlack(queryKey);
   const downloadTemplate = useDownloadTemplate();
-
   const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) =>
-    info.file.status === "done" && setParams({ ...params });
+    info.file.status === "done" && queryClient.invalidateQueries(queryKey);
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
