@@ -1,8 +1,5 @@
 import { Button, Form, Input, Modal, Radio, Select, Space } from "antd";
 import { useExportProductModal } from "../util";
-import styled from "@emotion/styled";
-import { useState } from "react";
-import { Row } from "components/lib";
 import { useAgentOptions } from "service/agent";
 import { useChannelEncodingOptions } from "service/product";
 import { useExportOrderProduct } from "service/order";
@@ -13,31 +10,29 @@ export const ExportProductModal = () => {
   const { exportProducModalOpen, close } = useExportProductModal();
   const agentOptions = useAgentOptions();
   const channelOptions = useChannelEncodingOptions();
-  const [type, setType] = useState(1);
-  const [agentId, setAgentId] = useState<number | undefined>(undefined);
-  const [productEncodings, setProductEncodings] = useState<
-    string[] | undefined
-  >(undefined);
   const exportOrderProduct = useExportOrderProduct();
 
   const exportFilter = () => {
-    if (type === 1) {
-      // exportOrderProduct({ agentId });
-    } else {
-      // exportOrderProduct({ encodings: productEncodings });
-    }
-    closeModal();
+    form.validateFields().then(async () => {
+      const { type, agentId, encodings, password } = form.getFieldsValue();
+      if (type === 1) {
+        exportOrderProduct({ agentId, password });
+      } else {
+        exportOrderProduct({ encodings, password });
+      }
+      closeModal();
+    });
   };
 
   const exportAll = () => {
-    // exportOrderProduct({});
-    closeModal();
+    form.validateFields().then(async () => {
+      exportOrderProduct({ password: form.getFieldsValue() });
+      closeModal();
+    });
   };
 
   const closeModal = () => {
-    setType(1);
-    setAgentId(undefined);
-    setProductEncodings(undefined);
+    form.resetFields();
     close();
   };
 
