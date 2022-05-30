@@ -16,6 +16,7 @@ export const Uploader = (props: UploaderProps) => {
   return (
     <>
       <Upload
+        accept="image/*"
         action={`${process.env.REACT_APP_API_URL}/api/v1/admin/upload/image`}
         headers={{
           Authorization: `Bearer ${token}`,
