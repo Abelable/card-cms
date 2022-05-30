@@ -101,7 +101,11 @@ export const List = ({
             {goods.sale_point ? (
               goods.sale_point
                 .split(",")
-                .map((item, index) => <Tag key={index}>{item}</Tag>)
+                .map((item, index) => (
+                  <Tag key={index}>
+                    {item.length > 6 ? `${item.slice(0, 6)}...` : item}
+                  </Tag>
+                ))
             ) : (
               <></>
             )}
