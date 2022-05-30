@@ -127,14 +127,22 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditDeliverData = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, product_no, express_name, express_no }: Partial<Deliver>) =>
+      client(`/api/v1/admin/order/update-product/${id}`, {
+        data: { product_no, express_name, express_no },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useEditDelivers = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: {
-      ids: string[];
-      status: number;
-      product_failed_reason?: string;
-    }) =>
+    (params: { ids: string[]; status: number; remark?: string }) =>
       client("/api/v1/admin/order/batch-simple-update", {
         data: params,
         method: "POST",

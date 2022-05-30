@@ -49,6 +49,7 @@ export interface Deliver {
   first_recharged_at: string;
   recharge_amount: number;
   product_failed_reason: string;
+  remark: string;
   product_no: string;
   express_name: string;
   express_no: string;

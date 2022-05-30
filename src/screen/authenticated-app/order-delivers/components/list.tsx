@@ -214,7 +214,9 @@ export const List = ({
           },
           {
             title: "失败原因",
-            dataIndex: "product_failed_reason",
+            render: (value, deliver) => (
+              <>{deliver.product_failed_reason || deliver.remark}</>
+            ),
           },
           {
             title: "生产信息",
@@ -233,7 +235,7 @@ export const List = ({
                 <Link type={"link"} onClick={() => openDetailModal(deliver.id)}>
                   查看详情
                 </Link>
-                {!deliver.product_failed_reason ? (
+                {deliver.status !== 3 ? (
                   <Link type={"link"} onClick={() => failDeliver(deliver.id)}>
                     生产失败
                   </Link>

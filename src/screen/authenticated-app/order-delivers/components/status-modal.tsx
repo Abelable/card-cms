@@ -82,7 +82,7 @@ export const StatusModal = ({
             {({ getFieldValue }) =>
               getFieldValue("status") === 3 && (
                 <Form.Item
-                  name="product_failed_reason"
+                  name="remark"
                   label="备注原因"
                   rules={[{ required: true, message: "请输入具体原因" }]}
                 >

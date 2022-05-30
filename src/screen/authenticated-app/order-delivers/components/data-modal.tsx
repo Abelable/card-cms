@@ -1,7 +1,7 @@
 import { Form, Input, Modal, Select, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditDeliver } from "service/order";
+import { useEditDeliverData } from "service/order";
 import { useDataModal, useOrderDeliversQueryKey } from "../util";
 import { useExpressOptions } from "service/common";
 import useDeepCompareEffect from "use-deep-compare-effect";
@@ -16,7 +16,7 @@ export const DataModal = () => {
     close,
     isLoading: initLoading,
   } = useDataModal();
-  const { mutateAsync, isLoading, error } = useEditDeliver(
+  const { mutateAsync, isLoading, error } = useEditDeliverData(
     useOrderDeliversQueryKey()
   );
 

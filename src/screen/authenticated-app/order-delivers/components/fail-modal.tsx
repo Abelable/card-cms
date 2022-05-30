@@ -21,16 +21,15 @@ export const FailModal = ({
     useOrderDeliversQueryKey()
   );
 
-  const select = (product_failed_reason: string) =>
-    form.setFieldsValue({ product_failed_reason });
+  const select = (remark: string) => form.setFieldsValue({ remark });
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { product_failed_reason } = form.getFieldsValue();
+      const { remark } = form.getFieldsValue();
       await mutateAsync({
         ids: failDeliverIds.split(","),
         status: 3,
-        product_failed_reason,
+        remark,
       });
       setSelectedRowKeys([]);
       closeModal();
@@ -54,7 +53,7 @@ export const FailModal = ({
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="product_failed_reason"
+          name="remark"
           label="备注原因"
           rules={[{ required: true, message: "请输入具体原因" }]}
         >
