@@ -130,7 +130,7 @@ export const AgentModal = ({ agents }: { agents: Agent[] }) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="activation_days"
+              name="activate_effective_day"
               label="激活状态回传的有效天数（自订单创建时起）"
             >
               <InputNumber
@@ -141,7 +141,7 @@ export const AgentModal = ({ agents }: { agents: Agent[] }) => {
           </Col>
           <Col span={12}>
             <Form.Item
-              name="recharge_days"
+              name="recharge_effective_day"
               label="充值金额回传的有效天数（自订单创建时起）"
             >
               <InputNumber

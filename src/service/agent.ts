@@ -40,7 +40,7 @@ export const useEditAgent = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: Partial<Agent>) =>
-      client(`/api/v1/admin/agent/update/${id}`, {
+      client(`/api/v1/admin/agent/simple-update/${id}`, {
         data: params,
         method: "POST",
       }),

@@ -17,7 +17,8 @@ export const AgentActivationModal = ({ agents }: { agents: Agent[] }) => {
   const { mutateAsync, isLoading, error } = useEditAgent(useAgentsQueryKey());
 
   useDeepCompareEffect(() => {
-    if (agent) form.setFieldsValue({ activation_days: agent.activation_days });
+    if (agent)
+      form.setFieldsValue({ activation_days: agent.activate_effective_day });
   }, [agent, form]);
 
   const confirm = () => {
@@ -48,7 +49,7 @@ export const AgentActivationModal = ({ agents }: { agents: Agent[] }) => {
     >
       <ErrorBox error={error} />
       <Form form={form}>
-        <Form.Item name="activation_days" label="有效天数">
+        <Form.Item name="activate_effective_day" label="有效天数">
           <InputNumber style={{ width: "100%" }} placeholder="请输入有效天数" />
         </Form.Item>
       </Form>

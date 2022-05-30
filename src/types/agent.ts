@@ -14,8 +14,8 @@ export interface Agent {
   contact: string;
   phone: string;
   email: string;
-  activation_days: number | undefined;
-  recharge_days: number | undefined;
+  activate_effective_day: number | undefined;
+  recharge_effective_day: number | undefined;
   created_at: string;
   updated_at: string;
 }
