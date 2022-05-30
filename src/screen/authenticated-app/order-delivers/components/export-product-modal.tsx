@@ -97,7 +97,7 @@ export const ExportProductModal = () => {
                     }
                     placeholder="请选择产品编码"
                   >
-                    {channelOptions.map(({ encoding, name }) => (
+                    {channelOptions.map(({ encoding }) => (
                       <Select.Option key={encoding} value={encoding}>
                         {encoding}
                       </Select.Option>
