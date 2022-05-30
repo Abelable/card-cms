@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Descriptions, Spin } from "antd";
+import { Descriptions, Spin, Button } from "antd";
 import { ErrorBox, Row } from "components/lib";
 import { ReportForm } from "types/order";
 
@@ -23,14 +23,35 @@ export const List = ({ data, isLoading, error }: ListProps) => {
       ) : (
         <>
           {data.map((item, index) => (
-            <Item
+            <Descriptions
+              style={{ marginBottom: "2.4rem", border: "1px solid #f2f2f2" }}
+              key={index}
               column={2}
               title={
-                <Row>
+                <ItemHeader>
                   <div>操作人：{item.created_by.name}</div>
-                </Row>
+                  <div>生成时间：{item.created_at}</div>
+                  <Button type={"primary"}>下载数据</Button>
+                </ItemHeader>
               }
-            ></Item>
+            >
+              <Descriptions.Item label={<Label>平台创建时间</Label>}>
+                {item?.start_created_at}
+              </Descriptions.Item>
+              <Descriptions.Item> </Descriptions.Item>
+              <Descriptions.Item label={<Label>订单来源</Label>}>
+                {item?.source || "暂无"}
+              </Descriptions.Item>
+              <Descriptions.Item label={<Label>订单状态</Label>}>
+                {item?.status || "暂无"}
+              </Descriptions.Item>
+              <Descriptions.Item label={<Label>退款状态</Label>}>
+                {item?.refund_status || "暂无"}
+              </Descriptions.Item>
+              <Descriptions.Item label={<Label>激活状态</Label>}>
+                {item?.activate_status || "暂无"}
+              </Descriptions.Item>
+            </Descriptions>
           ))}
         </>
       )}
@@ -55,17 +76,16 @@ const Loading = styled.div`
   justify-content: center;
 `;
 
-const Item = styled(Descriptions)`
-  margin-bottom: 2.4rem;
-  border: 1px solid #f9f9f9;
-`;
 const ItemHeader = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 2.4rem;
-  height: 0.8rem;
-  background: #d1d1d1;
+  height: 6rem;
+  font-size: 1.4rem;
+  background: #f1f1f1;
 `;
-const ItemContent = styled.div`
-  padding: 2.4rem;
+
+const Label = styled.div`
+  margin-left: 2.4rem;
 `;
