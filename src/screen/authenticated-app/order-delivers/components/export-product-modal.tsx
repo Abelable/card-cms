@@ -26,7 +26,7 @@ export const ExportProductModal = () => {
 
   const exportAll = () => {
     form.validateFields().then(async () => {
-      exportOrderProduct({ password: form.getFieldsValue() });
+      exportOrderProduct({ password: form.getFieldsValue().password });
       closeModal();
     });
   };
@@ -56,7 +56,7 @@ export const ExportProductModal = () => {
         }}
         form={form}
       >
-        <Form.Item name="type">
+        <Form.Item name="type" style={{ marginBottom: 10 }}>
           <Radio.Group>
             <Space direction="vertical">
               <Radio value={1}>
@@ -67,7 +67,7 @@ export const ExportProductModal = () => {
                   style={{ marginBottom: 10 }}
                 >
                   <Select
-                    style={{ width: "31rem" }}
+                    style={{ width: "32rem" }}
                     showSearch
                     filterOption={(input, option) =>
                       (option!.children as unknown as string)
@@ -93,7 +93,7 @@ export const ExportProductModal = () => {
                   <Select
                     onClick={(e) => e.preventDefault()}
                     mode="tags"
-                    style={{ width: "31rem" }}
+                    style={{ width: "32rem" }}
                     showSearch
                     filterOption={(input, option) =>
                       (option!.children as unknown as string)
@@ -113,7 +113,11 @@ export const ExportProductModal = () => {
             </Space>
           </Radio.Group>
         </Form.Item>
-        <Form.Item name="password" label="导出密码" required>
+        <Form.Item
+          name="password"
+          label="导出密码"
+          rules={[{ required: true, message: "请输入导出密码" }]}
+        >
           <Input placeholder="请输入导出密码" />
         </Form.Item>
       </Form>
