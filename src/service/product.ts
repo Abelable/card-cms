@@ -199,7 +199,7 @@ export const useGoodsList = (params: Partial<GoodsListSearchParams>) => {
         "filter[product.ship_city_id]": rest.ship_city_id,
         "filter[product.province_id]": rest.province_id,
         "filter[product.city_id]": rest.city_id,
-        is_removed: rest.is_removed,
+        "filter[goods.is_removed]": rest.is_removed,
         page,
         per_page,
       }),
