@@ -19,12 +19,7 @@ import {
 import { useGoodsListQueryKey, useNewPublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import {
-  useAddChannel,
-  useAddGoods,
-  useChannel,
-  useEditChannel,
-} from "service/product";
+import { useAddChannel, useAddGoods, useEditChannel } from "service/product";
 import { cleanObject } from "utils";
 import "assets/style/hideLeftBorder.css";
 import { useState } from "react";
@@ -42,7 +37,7 @@ import { SupplierOption } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useChannelsQueryKey } from "screen/authenticated-app/product-channels/util";
 import { RegionItem } from "types/common";
-import { GoodsForm } from "types/product";
+import { ChannelForm, GoodsForm } from "types/product";
 import { AgentOption } from "types/agent";
 
 const limitOptions = [
@@ -105,9 +100,9 @@ export const NewPublishModal = ({
   };
 
   const { newPublishModalOpen, close } = useNewPublishModal();
-  const [productId, setProductId] = useState(undefined);
-  const [productName, setProductName] = useState("");
-  const { data: productInfo } = useChannel(Number(productId));
+  const [productInfo, setProductInfo] = useState<
+    Partial<ChannelForm> | undefined
+  >(undefined);
   const {
     mutateAsync: addProduct,
     error: addProductError,
@@ -158,33 +153,33 @@ export const NewPublishModal = ({
         });
       }
 
-      if (productId) {
-        await editProduct(
-          cleanObject({
-            ...productInfo,
-            is_used_global_prewarn_setting: type === 1 ? 1 : 0,
-            phone_repeated_prewarn_num:
-              type === 1
-                ? default_phone_repeated_prewarn_num
-                : phone_repeated_prewarn_num,
-            phone_repeated_prewarn_num_check_period:
-              type === 1
-                ? default_phone_repeated_prewarn_num_check_period
-                : phone_repeated_prewarn_num_check_period,
-            address_repeated_prewarn_num:
-              type === 1
-                ? default_address_repeated_prewarn_num
-                : address_repeated_prewarn_num,
-            address_repeated_prewarn_num_check_period:
-              type === 1
-                ? default_address_repeated_prewarn_num_check_period
-                : address_repeated_prewarn_num_check_period,
-            province_id: ownership[0],
-            city_id: ownership[1],
-            dont_ship_addresses,
-            ...rest,
-          })
-        );
+      if (productInfo) {
+        const editProductInfo = {
+          ...productInfo,
+          is_used_global_prewarn_setting: type === 1 ? 1 : 0,
+          phone_repeated_prewarn_num:
+            type === 1
+              ? default_phone_repeated_prewarn_num
+              : phone_repeated_prewarn_num,
+          phone_repeated_prewarn_num_check_period:
+            type === 1
+              ? default_phone_repeated_prewarn_num_check_period
+              : phone_repeated_prewarn_num_check_period,
+          address_repeated_prewarn_num:
+            type === 1
+              ? default_address_repeated_prewarn_num
+              : address_repeated_prewarn_num,
+          address_repeated_prewarn_num_check_period:
+            type === 1
+              ? default_address_repeated_prewarn_num_check_period
+              : address_repeated_prewarn_num_check_period,
+          province_id: ownership[0],
+          city_id: ownership[1],
+          dont_ship_addresses,
+          ...rest,
+        };
+        setProductInfo(editProductInfo);
+        await editProduct(cleanObject(editProductInfo));
       } else {
         const res = await addProduct(
           cleanObject({
@@ -211,8 +206,7 @@ export const NewPublishModal = ({
             ...rest,
           })
         );
-        setProductId(res.id);
-        setProductName(res.name);
+        setProductInfo(res);
       }
       setStep(1);
     });
@@ -232,18 +226,20 @@ export const NewPublishModal = ({
 
       // 处理不发货地区
       const non_shipping_region_obj: { [key: string]: number[][] } = {};
-      dont_ship_addresses.forEach((item) => {
-        if (!non_shipping_region_obj[`${item.province_id}`]) {
-          non_shipping_region_obj[`${item.province_id}`] = [
-            [item.province_id, item.city_id],
-          ];
-        } else {
-          non_shipping_region_obj[`${item.province_id}`].push([
-            item.province_id,
-            item.city_id,
-          ]);
-        }
-      });
+      if (dont_ship_addresses) {
+        dont_ship_addresses.forEach((item) => {
+          if (!non_shipping_region_obj[`${item.province_id}`]) {
+            non_shipping_region_obj[`${item.province_id}`] = [
+              [item.province_id, item.city_id],
+            ];
+          } else {
+            non_shipping_region_obj[`${item.province_id}`].push([
+              item.province_id,
+              item.city_id,
+            ]);
+          }
+        });
+      }
       let non_shipping_region: number[][] = [];
       Object.keys(non_shipping_region_obj).forEach((key) => {
         if (
@@ -795,7 +791,7 @@ export const NewPublishModal = ({
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item required label="选择基础产品">
-                    <Select defaultValue={productName} disabled />
+                    <Select defaultValue={productInfo?.name} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -835,11 +831,8 @@ export const NewPublishModal = ({
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item
-                name="is_required_upload_picture"
-                label="销售页上传照片"
-              >
-                <Radio.Group>
+              <Form.Item label="销售页上传照片">
+                <Radio.Group value={productInfo?.is_required_idphoto} disabled>
                   <Radio value={0}>无需上传</Radio>
                   <Radio value={1}>需要上传</Radio>
                 </Radio.Group>
