@@ -97,7 +97,14 @@ export const List = ({
         <div style={{ display: "flex" }}>
           <Image width={90} height={90} src={goods.main_picture} />
           <GoodsInfoWrap>
-            <div>{goods.name}</div>
+            <div>
+              <ButtonNoPadding
+                type={"link"}
+                onClick={() => startEdit(String(goods.id))}
+              >
+                {goods.name}
+              </ButtonNoPadding>
+            </div>
             {goods.sale_point ? (
               goods.sale_point
                 .split(",")
