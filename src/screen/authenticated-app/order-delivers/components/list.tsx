@@ -127,6 +127,7 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         rowSelection={{
           type: "checkbox",
           selectedRowKeys,
@@ -136,6 +137,8 @@ export const List = ({
         columns={[
           {
             title: "订单信息",
+            fixed: "left",
+            width: "29rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Row>
@@ -165,6 +168,7 @@ export const List = ({
           },
           {
             title: "产品信息",
+            width: "20rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <div>产品名称：{deliver.product?.name}</div>
@@ -174,6 +178,7 @@ export const List = ({
           },
           {
             title: "证件信息&收货信息",
+            width: "30rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Row>
@@ -193,6 +198,7 @@ export const List = ({
           },
           {
             title: "订单状态",
+            width: "18rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <div>
@@ -214,12 +220,14 @@ export const List = ({
           },
           {
             title: "失败原因",
+            width: "20rem",
             render: (value, deliver) => (
               <>{deliver.product_failed_reason || deliver.remark}</>
             ),
           },
           {
             title: "生产信息",
+            width: "30rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <div>生产号码：{deliver.product_no}</div>
@@ -230,6 +238,8 @@ export const List = ({
           },
           {
             title: "操作",
+            fixed: "right",
+            width: "12rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Link type={"link"} onClick={() => openDetailModal(deliver.id)}>
