@@ -50,8 +50,8 @@ export const PublishModal = ({
   const next = () => {
     form.validateFields().then(() => {
       const { tags, img, ...rest } = form.getFieldsValue();
-      const sale_point = tags.join();
-      const main_picture = img.length
+      const sale_point = tags ? tags.join() : "";
+      const main_picture = img
         ? img[0].xhr
           ? JSON.parse(img[0].xhr.response).data.relative_url
           : img[0].url
@@ -228,7 +228,7 @@ export const PublishModal = ({
                     >
                       <Select mode="tags" placeholder="请选择代理商">
                         {agentOptions.map((item) => (
-                          <Select.Option key={item.id} value={item.id}>
+                          <Select.Option key={item.id} value={`${item.id}`}>
                             {item.name}
                           </Select.Option>
                         ))}

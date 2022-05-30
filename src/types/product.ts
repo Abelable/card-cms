@@ -105,7 +105,7 @@ export interface GoodsForm {
   remark: string;
   visible_status: number;
   agents: GoodsAgent[];
-  agent_ids: number[];
+  agent_ids: string[];
   is_removed: number;
   is_forced_sync: number;
 }

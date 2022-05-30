@@ -106,6 +106,7 @@ export const NewPublishModal = ({
 
   const { newPublishModalOpen, close } = useNewPublishModal();
   const [productId, setProductId] = useState(undefined);
+  const [productName, setProductName] = useState("");
   const { data: productInfo } = useChannel(Number(productId));
   const {
     mutateAsync: addProduct,
@@ -137,23 +138,25 @@ export const NewPublishModal = ({
       } = form.getFieldsValue();
 
       const dont_ship_addresses: RegionItem[] = [];
-      non_shipping_region.forEach((item: number[]) => {
-        if (item.length === 1) {
-          regionOptions
-            ?.find((province) => province.id === item[0])
-            ?.children?.forEach((city) => {
-              dont_ship_addresses.push({
-                province_id: item[0],
-                city_id: city.id,
+      if (non_shipping_region) {
+        non_shipping_region.forEach((item: number[]) => {
+          if (item.length === 1) {
+            regionOptions
+              ?.find((province) => province.id === item[0])
+              ?.children?.forEach((city) => {
+                dont_ship_addresses.push({
+                  province_id: item[0],
+                  city_id: city.id,
+                });
               });
+          } else {
+            dont_ship_addresses.push({
+              province_id: item[0],
+              city_id: item[1],
             });
-        } else {
-          dont_ship_addresses.push({
-            province_id: item[0],
-            city_id: item[1],
-          });
-        }
-      });
+          }
+        });
+      }
 
       if (productId) {
         await editProduct(
@@ -209,6 +212,7 @@ export const NewPublishModal = ({
           })
         );
         setProductId(res.id);
+        setProductName(res.name);
       }
       setStep(1);
     });
@@ -265,9 +269,10 @@ export const NewPublishModal = ({
 
   const toThirdStep = () => {
     form.validateFields().then(() => {
-      const { tags, img, ...rest } = form.getFieldsValue();
-      const sale_point = tags.join();
-      const main_picture = img.length
+      const { tags, img, goods_encoding, goods_name, ...rest } =
+        form.getFieldsValue();
+      const sale_point = tags ? tags.join() : "";
+      const main_picture = img
         ? img[0].xhr
           ? JSON.parse(img[0].xhr.response).data.relative_url
           : img[0].url
@@ -275,6 +280,8 @@ export const NewPublishModal = ({
 
       setTempGoodsInfo({
         product_id: productInfo?.id,
+        encoding: goods_encoding,
+        name: goods_name,
         sale_point,
         main_picture,
         detail,
@@ -788,7 +795,7 @@ export const NewPublishModal = ({
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item required label="选择基础产品">
-                    <Select defaultValue={productInfo?.name} disabled />
+                    <Select defaultValue={productName} disabled />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -881,7 +888,7 @@ export const NewPublishModal = ({
                     >
                       <Select mode="tags" placeholder="请选择代理商">
                         {agentOptions.map((item) => (
-                          <Select.Option key={item.id} value={item.id}>
+                          <Select.Option key={item.id} value={`${item.id}`}>
                             {item.name}
                           </Select.Option>
                         ))}

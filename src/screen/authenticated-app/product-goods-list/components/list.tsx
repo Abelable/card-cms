@@ -127,13 +127,13 @@ export const List = ({
         <>
           <div>
             供应商：
-            {
-              supplierOptions.find(
-                (item) => item.id === goods.product.supplier_id
-              )?.name
-            }
+            {goods.product
+              ? supplierOptions.find(
+                  (item) => item.id === goods.product.supplier_id
+                )?.name
+              : ""}
           </div>
-          <div>产品：{goods.product.name}</div>
+          <div>产品：{goods.product ? goods.product.name : ""}</div>
         </>
       ),
     },
