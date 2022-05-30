@@ -14,6 +14,7 @@ import {
   GoodsListResult,
   GoodsListSearchParams,
   GoodsOption,
+  ProductOption,
 } from "types/product";
 import {
   useAddConfig,
@@ -146,6 +147,15 @@ export const useChannelOptions = () => {
     );
   }
   return channelOptions;
+};
+
+export const useProductOptions = () => {
+  const client = useHttp();
+  return useQuery<ProductOption[]>(["product_options"], () =>
+    client("/api/v1/admin/product/simple-index", {
+      data: { "filter[name]": "产品" },
+    })
+  );
 };
 
 export const useChannelEncodingOptions = () => {

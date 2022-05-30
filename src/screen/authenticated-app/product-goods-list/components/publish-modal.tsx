@@ -15,23 +15,22 @@ import {
 import { useGoodsListQueryKey, usePublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddGoods } from "service/product";
+import { useAddGoods, useProductOptions } from "service/product";
 import { cleanObject } from "utils";
 import { useState } from "react";
 import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
-import { ChannelOption, GoodsForm } from "types/product";
+import { GoodsForm } from "types/product";
 
 export const PublishModal = ({
   agentOptions,
-  channelOptions,
 }: {
   agentOptions: AgentOption[];
-  channelOptions: ChannelOption[];
 }) => {
   const [form] = useForm();
+  const { data: productOptions } = useProductOptions();
   const [step, setStep] = useState(0);
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
@@ -130,7 +129,7 @@ export const PublishModal = ({
                     rules={[{ required: true, message: "请选择基础产品" }]}
                   >
                     <Select placeholder="请选择基础产品">
-                      {channelOptions.map(({ id, name }) => (
+                      {productOptions?.map(({ id, name }) => (
                         <Select.Option key={id} value={id}>
                           {name}
                         </Select.Option>
@@ -176,13 +175,26 @@ export const PublishModal = ({
                 </Col>
               </Row>
               <Form.Item
-                name="is_required_upload_picture"
-                label="销售页上传照片"
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.product_id !== currentValues.product_id
+                }
               >
-                <Radio.Group>
-                  <Radio value={0}>无需上传</Radio>
-                  <Radio value={1}>需要上传</Radio>
-                </Radio.Group>
+                {({ getFieldValue }) => (
+                  <Form.Item label="销售页上传照片">
+                    <Radio.Group
+                      value={
+                        productOptions?.find(
+                          (item) => item.id === getFieldValue("product_id")
+                        )?.is_required_idphoto
+                      }
+                      disabled
+                    >
+                      <Radio value={0}>无需上传</Radio>
+                      <Radio value={1}>需要上传</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                )}
               </Form.Item>
               <Form.Item
                 name="img"

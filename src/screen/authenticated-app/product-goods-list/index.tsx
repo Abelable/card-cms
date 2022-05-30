@@ -71,10 +71,7 @@ export const ProductGoodsList = () => {
       <GoodsModal channelOptions={channelOptions} />
       <AgentModal params={params} />
       <LinkModal />
-      <PublishModal
-        agentOptions={agentOptions}
-        channelOptions={channelOptions}
-      />
+      <PublishModal agentOptions={agentOptions} />
       <NewPublishModal
         supplierOptions={supplierOptions}
         agentOptions={agentOptions}

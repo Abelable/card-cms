@@ -148,3 +148,9 @@ export interface GoodsOption {
   id: number;
   name: string;
 }
+
+export interface ProductOption {
+  id: number;
+  name: string;
+  is_required_idphoto: number;
+}
