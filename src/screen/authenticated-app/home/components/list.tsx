@@ -33,6 +33,7 @@ export const List = ({ params, total, error, ...restProps }: ListProps) => {
       <ErrorBox error={error} />
       <Table
         rowKey={"key"}
+        scroll={{ x: 1500 }}
         expandable={{
           expandIcon: ({ expanded, onExpand, record }) =>
             record.children &&
@@ -80,15 +81,18 @@ export const List = ({ params, total, error, ...restProps }: ListProps) => {
           {
             title: "日期",
             dataIndex: "date",
+            width: "20rem",
             sorter: (a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf(),
           },
           {
             title: "代理商",
             dataIndex: "agent_name",
+            width: "20rem",
           },
           {
             title: "商品名称",
             dataIndex: "goods_name",
+            width: "20rem",
           },
           {
             title: "订单数",
