@@ -127,6 +127,21 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   );
 };
 
+export const useEditDeliverSimple = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, status, remark }: Partial<Deliver>) =>
+      client(`/api/v1/admin/order/simple-update/${id}`, {
+        data: {
+          status,
+          remark,
+        },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useEditDeliverData = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(

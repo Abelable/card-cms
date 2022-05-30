@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Form, Input, Modal, Select, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditDeliver } from "service/order";
+import { useEditDeliverSimple } from "service/order";
 import { OrderStatusOption } from "types/order";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useStatusModal, useOrderDeliversQueryKey } from "../util";
@@ -19,7 +19,7 @@ export const StatusModal = ({
     close,
     isLoading: initLoading,
   } = useStatusModal();
-  const { mutateAsync, isLoading, error } = useEditDeliver(
+  const { mutateAsync, isLoading, error } = useEditDeliverSimple(
     useOrderDeliversQueryKey()
   );
 
