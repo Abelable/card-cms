@@ -54,6 +54,7 @@ export const useExportChannels = () => {
       }),
       headers: {
         responseType: "arraybuffer",
+        fileName: "product",
       },
     });
   };

@@ -19,6 +19,7 @@ export const ExportModal = ({
     setIsLoading(true);
     await exportDelivers(params);
     setIsLoading(false);
+    navigate("/order/deliver/report_forms");
   };
 
   const check = () => navigate("/order/deliver/report_forms");

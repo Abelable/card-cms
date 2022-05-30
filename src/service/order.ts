@@ -220,10 +220,12 @@ export const useExportOrderProduct = () => {
       data: cleanObject({
         "filter[order.agent_id]": agentId,
         "filter[product-encoding]": encodings,
+        password,
       }),
       method: "POST",
       headers: {
         responseType: "arraybuffer",
+        fileName: "order",
       },
     });
 };
