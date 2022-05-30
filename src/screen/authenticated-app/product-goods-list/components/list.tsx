@@ -93,26 +93,25 @@ export const List = ({
     },
     {
       title: "商品名称",
+      width: "40rem",
       render: (value, goods) => (
-        <div style={{ display: "flex" }}>
-          <Image width={90} height={90} src={goods.main_picture} />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Image
+            width={90}
+            height={90}
+            src={
+              goods.main_picture ||
+              "https://91haoka.cn/91haoka_platform/static/img/kenan.837a3f3.jpg"
+            }
+          />
           <GoodsInfoWrap>
-            <div>
-              <ButtonNoPadding
-                type={"link"}
-                onClick={() => startEdit(String(goods.id))}
-              >
-                {goods.name}
-              </ButtonNoPadding>
-            </div>
+            <Link onClick={() => startEdit(String(goods.id))}>
+              {goods.name}
+            </Link>
             {goods.sale_point ? (
               goods.sale_point
                 .split(",")
-                .map((item, index) => (
-                  <Tag key={index}>
-                    {item.length > 6 ? `${item.slice(0, 6)}...` : item}
-                  </Tag>
-                ))
+                .map((item, index) => <Tag key={index}>{item}</Tag>)
             ) : (
               <></>
             )}
@@ -123,7 +122,7 @@ export const List = ({
       ),
     },
     {
-      title: "供应商&商品",
+      title: "供应商&产品",
       render: (value, goods) => (
         <>
           <div>
@@ -134,7 +133,7 @@ export const List = ({
               )?.name
             }
           </div>
-          <div>商品：{goods.product.name}</div>
+          <div>产品：{goods.product.name}</div>
         </>
       ),
     },
@@ -246,7 +245,7 @@ export const List = ({
               type={"primary"}
               onClick={openPublishModal}
             >
-              基于已有商品渠道发布商品
+              基于已有产品渠道发布商品
             </Button>
           </Row>
         ) : null}
@@ -278,5 +277,9 @@ const Header = styled(Row)`
 const GoodsInfoWrap = styled.div`
   margin-left: 2rem;
   flex: 1;
-  height: 80px;
+`;
+
+const Link = styled.div`
+  color: #1890ff;
+  cursor: pointer;
 `;
