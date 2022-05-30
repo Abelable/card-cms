@@ -100,7 +100,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "激活状态回传的有效天数（订单创建时起）",
-            dataIndex: "activation_days",
+            dataIndex: "activate_effective_day",
             render: (value, agent) => (
               <Edit onClick={() => startEditingActivation(String(agent.id))}>
                 <span>{value || 0}天</span>
@@ -113,7 +113,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "充值金额回传的有效天数（订单创建时起）",
-            dataIndex: "recharge_days",
+            dataIndex: "recharge_effective_day",
             render: (value, agent) => (
               <Edit onClick={() => startEditingRecharge(String(agent.id))}>
                 <span>{value || 0}天</span>

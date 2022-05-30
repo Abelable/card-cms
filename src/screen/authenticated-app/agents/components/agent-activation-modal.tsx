@@ -18,16 +18,18 @@ export const AgentActivationModal = ({ agents }: { agents: Agent[] }) => {
 
   useDeepCompareEffect(() => {
     if (agent)
-      form.setFieldsValue({ activation_days: agent.activate_effective_day });
+      form.setFieldsValue({
+        activate_effective_day: agent.activate_effective_day,
+      });
   }, [agent, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { activation_days } = form.getFieldsValue();
+      const { activate_effective_day } = form.getFieldsValue();
       await mutateAsync(
         cleanObject({
           id: agentIdOfEditingActivation || "",
-          activation_days,
+          activate_effective_day,
         })
       );
       closeModal();

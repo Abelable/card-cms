@@ -18,16 +18,18 @@ export const AgentRechargeModal = ({ agents }: { agents: Agent[] }) => {
 
   useDeepCompareEffect(() => {
     if (agent)
-      form.setFieldsValue({ recharge_days: agent.recharge_effective_day });
+      form.setFieldsValue({
+        recharge_effective_day: agent.recharge_effective_day,
+      });
   }, [agent, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { recharge_days } = form.getFieldsValue();
+      const { recharge_effective_day } = form.getFieldsValue();
       await mutateAsync(
         cleanObject({
           id: agentIdOfEditingRecharge || "",
-          recharge_days,
+          recharge_effective_day,
         })
       );
       closeModal();
