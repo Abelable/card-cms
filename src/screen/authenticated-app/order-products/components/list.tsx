@@ -13,9 +13,9 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { useProductsQueryKey, useProductModal } from "../util";
-import { Product } from "types/order";
 import { useDeleteProduct } from "service/order";
-import { ChannelOption } from "types/product";
+import type { Product } from "types/order";
+import type { ChannelOption } from "types/product";
 
 interface ListProps
   extends TableProps<Product>,
