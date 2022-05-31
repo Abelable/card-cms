@@ -1,14 +1,14 @@
 import { Form, Modal, Select, Button, Input, Alert } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddProduct, useEditProduct } from "service/order";
-import { Product } from "types/order";
-import { SupplierOption } from "types/supplier";
+import { useState } from "react";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useProductsQueryKey, useProductModal } from "../util";
 import styled from "@emotion/styled";
 import { useHttp } from "service/http";
-import { useState } from "react";
+import { useAddProduct, useEditProduct } from "service/order";
+import { useProductsQueryKey, useProductModal } from "../util";
+import type { Product } from "types/order";
+import type { SupplierOption } from "types/supplier";
 
 export const ProductModal = ({
   supplierOptions,
