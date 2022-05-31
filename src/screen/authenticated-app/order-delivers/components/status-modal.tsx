@@ -3,9 +3,9 @@ import { Form, Input, Modal, Select, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useEditDeliverSimple } from "service/order";
-import { OrderStatusOption } from "types/order";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useStatusModal, useOrderDeliversQueryKey } from "../util";
+import type { OrderStatusOption } from "types/order";
 
 export const StatusModal = ({
   orderStatusOptions,
