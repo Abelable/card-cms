@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import dayjs from "dayjs";
 import {
   Button,
   Dropdown,
@@ -12,21 +11,22 @@ import {
   TableProps,
 } from "antd";
 import { SearchPanelProps } from "./search-panel";
-import { Channel, modeOption } from "types/product";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router";
+import dayjs from "dayjs";
 import {
   useDownChannel,
   useEditChannelMode,
   useUpChannel,
 } from "service/product";
 import { useChannelModal, useChannelsQueryKey } from "../util";
-import { useNavigate } from "react-router";
-import { OperatorOption } from "types/common";
+import type { OperatorOption } from "types/common";
+import type { Channel, modeOption } from "types/product";
 
 interface ListProps
   extends TableProps<Channel>,
-    Omit<SearchPanelProps, "supplierOptions"> {
+    Omit<SearchPanelProps, "supplierOptions" | "channelOptions"> {
   operatorOptions: OperatorOption[];
   modeOptions: modeOption[];
   error: Error | unknown;

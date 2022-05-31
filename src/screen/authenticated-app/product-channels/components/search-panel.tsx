@@ -2,17 +2,19 @@ import { useState } from "react";
 import { Button, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { useChannelOptions, useExportChannels } from "service/product";
-import type { ChannelsSearchParams } from "types/product";
+import type { ChannelOption, ChannelsSearchParams } from "types/product";
 import type { SupplierOption } from "types/supplier";
+import { useExportChannels } from "service/product";
 
 export interface SearchPanelProps {
+  channelOptions: ChannelOption[] | undefined;
   supplierOptions: SupplierOption[];
   params: Partial<ChannelsSearchParams>;
   setParams: (params: Partial<ChannelsSearchParams>) => void;
 }
 
 export const SearchPanel = ({
+  channelOptions,
   supplierOptions,
   params,
   setParams,
@@ -23,11 +25,8 @@ export const SearchPanel = ({
     supplier_id: undefined,
   } as Partial<ChannelsSearchParams>;
 
-  const channelOptions = useChannelOptions();
-
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<ChannelsSearchParams>>(params);
-
   const exportChannels = useExportChannels();
 
   const setGoodsName = (goods_name: string) =>
@@ -80,7 +79,7 @@ export const SearchPanel = ({
             }
             placeholder="请选择产品"
           >
-            {channelOptions.map(({ id, name }) => (
+            {channelOptions?.map(({ id, name }) => (
               <Select.Option key={id} value={name}>
                 {name}
               </Select.Option>

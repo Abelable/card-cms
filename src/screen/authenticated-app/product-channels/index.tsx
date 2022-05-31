@@ -1,17 +1,17 @@
-import { toNumber } from "utils";
-import { useChannels } from "service/product";
-import { useChannelsSearchParams } from "./util";
-import { SearchPanel } from "./components/search-panel";
-import { List } from "./components/list";
 import styled from "@emotion/styled";
 import { Menu, MenuProps } from "antd";
 import { ChannelModal } from "./components/channel-modal";
+import { SearchPanel } from "./components/search-panel";
+import { List } from "./components/list";
+import { toNumber } from "utils";
+import { useChannelsSearchParams } from "./util";
 import {
   useOperatorOptions,
   useDefaultWarningSetting,
   useRegionOptions,
 } from "service/common";
 import { useSupplierOptions } from "service/supplier";
+import { useChannels, useChannelOptions } from "service/product";
 
 const modeOptions = [
   { name: "手动生产", value: 0 },
@@ -21,6 +21,7 @@ const modeOptions = [
 export const ProductChannels = () => {
   const operatorOptions = useOperatorOptions();
   const supplierOptions = useSupplierOptions();
+  const channelOptions = useChannelOptions();
   const { data: regionOptions } = useRegionOptions();
   const { data: defaultWarningSetting } = useDefaultWarningSetting();
   const [params, setParams] = useChannelsSearchParams();
@@ -56,6 +57,7 @@ export const ProductChannels = () => {
       </TypeMenu>
       <Main>
         <SearchPanel
+          channelOptions={channelOptions}
           supplierOptions={supplierOptions}
           params={params}
           setParams={setParams}
