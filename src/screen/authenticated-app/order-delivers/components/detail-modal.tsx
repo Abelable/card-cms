@@ -3,17 +3,18 @@ import { useDetailModal, usePicModal } from "../util";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import { IdcardOutlined } from "@ant-design/icons";
-import { useAgentOptions } from "service/agent";
 import { OrderStatusOption } from "types/order";
+import { AgentOption } from "types/agent";
 
 export const DetailModal = ({
+  agentOptions,
   orderStatusOptions,
 }: {
+  agentOptions: AgentOption[];
   orderStatusOptions: OrderStatusOption[];
 }) => {
   const { detailModalOpen, detailDeliverId, editingDeliver, close, isLoading } =
     useDetailModal();
-  const agentOptions = useAgentOptions();
   const { open: openPicModal } = usePicModal();
 
   const closeModal = () => {

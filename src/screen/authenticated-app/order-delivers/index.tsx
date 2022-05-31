@@ -25,11 +25,13 @@ import { InfoModal } from "./components/info-modal";
 import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
 import { ExportProductModal } from "./components/export-product-modal";
+import { useAgentOptions } from "service/agent";
 
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
   const orderStatusOptions = useOrderStatusOptions();
+  const agentOptions = useAgentOptions();
   const { data, isLoading, error } = useDelivers(params);
   const { mutateAsync: editDelivers } = useEditDelivers(
     useOrderDeliversQueryKey()
@@ -96,7 +98,10 @@ export const OrderDelivers = () => {
       <InfoModal />
       <ExportModal params={params} />
       <ExportProductModal />
-      <DetailModal orderStatusOptions={orderStatusOptions} />
+      <DetailModal
+        agentOptions={agentOptions}
+        orderStatusOptions={orderStatusOptions}
+      />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}
