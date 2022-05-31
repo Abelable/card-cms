@@ -2,8 +2,8 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useExportDelivers } from "service/order";
-import { DeliversSearchParams } from "types/order";
 import { useExportModal } from "../util";
+import type { DeliversSearchParams } from "types/order";
 
 export const ExportModal = ({
   params,
