@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
-import { ProductsSearchParams } from "types/order";
-import { SupplierOption } from "types/supplier";
+import type { ProductsSearchParams } from "types/order";
+import type { SupplierOption } from "types/supplier";
 
 export interface SearchPanelProps {
   supplierOptions: SupplierOption[];
