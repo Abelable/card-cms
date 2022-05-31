@@ -116,7 +116,7 @@ export interface ImportsResult {
 }
 
 export interface ReportForm {
-  created_by: { name: string };
+  created_by: { username: string };
   created_at: string;
   file: string;
   start_created_at: string;

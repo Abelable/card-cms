@@ -32,7 +32,7 @@ export const List = ({ data, isLoading, error }: ListProps) => {
                 column={2}
                 title={
                   <ItemHeader>
-                    <div>操作人：{item.created_by.name}</div>
+                    <div>操作人：{item.created_by.username}</div>
                     <div>生成时间：{item.created_at}</div>
                     <Button
                       type={"primary"}
