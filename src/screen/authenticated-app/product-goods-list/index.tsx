@@ -1,15 +1,20 @@
-import { toNumber } from "utils";
-import { useChannelOptions, useGoodsList } from "service/product";
-import { useGoodsListSearchParams } from "./util";
+import { Menu, MenuProps } from "antd";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
-import styled from "@emotion/styled";
-import { Menu, MenuProps } from "antd";
 import { GoodsModal } from "./components/goods-modal";
 import { AgentModal } from "./components/agent-modal";
 import { LinkModal } from "./components/link-modal";
 import { PublishModal } from "./components/publish-modal";
 import { NewPublishModal } from "./components/new-publish-modal";
+import styled from "@emotion/styled";
+
+import { toNumber } from "utils";
+import { useGoodsListSearchParams } from "./util";
+import {
+  useChannelOptions,
+  useGoodsList,
+  useProductOptions,
+} from "service/product";
 import { useSupplierOptions } from "service/supplier";
 import { useAgentOptions } from "service/agent";
 
@@ -18,6 +23,7 @@ export const ProductGoodsList = () => {
   const supplierOptions = useSupplierOptions();
   const agentOptions = useAgentOptions();
   const channelOptions = useChannelOptions();
+  const { data: productOptions } = useProductOptions();
   const { data, isLoading, error } = useGoodsList(params);
 
   const items: MenuProps["items"] = [
@@ -71,7 +77,10 @@ export const ProductGoodsList = () => {
       <GoodsModal channelOptions={channelOptions} />
       <AgentModal params={params} />
       <LinkModal />
-      <PublishModal agentOptions={agentOptions} />
+      <PublishModal
+        productOptions={productOptions}
+        agentOptions={agentOptions}
+      />
       <NewPublishModal
         supplierOptions={supplierOptions}
         agentOptions={agentOptions}

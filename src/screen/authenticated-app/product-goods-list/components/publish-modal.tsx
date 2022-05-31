@@ -15,22 +15,23 @@ import {
 import { useGoodsListQueryKey, usePublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddGoods, useProductOptions } from "service/product";
+import { useAddGoods } from "service/product";
 import { cleanObject } from "utils";
 import { useState } from "react";
 import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
 import styled from "@emotion/styled";
-import { AgentOption } from "types/agent";
-import { GoodsForm } from "types/product";
+import type { AgentOption } from "types/agent";
+import type { GoodsForm, ProductOption } from "types/product";
 
 export const PublishModal = ({
+  productOptions,
   agentOptions,
 }: {
+  productOptions: ProductOption[] | undefined;
   agentOptions: AgentOption[];
 }) => {
   const [form] = useForm();
-  const { data: productOptions } = useProductOptions();
   const [step, setStep] = useState(0);
   const [detail, setDetail] = useState("");
   const [remark, setRemark] = useState("");
