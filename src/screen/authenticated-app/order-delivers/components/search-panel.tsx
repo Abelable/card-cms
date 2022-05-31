@@ -217,6 +217,11 @@ export const SearchPanel = ({
   const clearAgent = () =>
     setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
+  const setTimeType = (time_type: number) =>
+    setTemporaryParams({ ...temporaryParams, time_type });
+  const clearTimeType = () =>
+    setTemporaryParams({ ...temporaryParams, time_type: undefined });
+
   const setDates = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
       ...temporaryParams,
@@ -402,8 +407,8 @@ export const SearchPanel = ({
             style={{ width: "14rem" }}
             value={temporaryParams.time_type}
             allowClear={true}
-            onSelect={setAgent}
-            onClear={clearAgent}
+            onSelect={setTimeType}
+            onClear={clearTimeType}
             placeholder="请选择时间类型"
           >
             {timeTypeOptions.map(({ name, value }) => (
