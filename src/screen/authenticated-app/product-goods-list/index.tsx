@@ -17,9 +17,12 @@ import {
 } from "service/product";
 import { useSupplierOptions } from "service/supplier";
 import { useAgentOptions } from "service/agent";
+import { useOperatorOptions, useRegionOptions } from "service/common";
 
 export const ProductGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
+  const operatorOptions = useOperatorOptions();
+  const { data: regionOptions } = useRegionOptions();
   const supplierOptions = useSupplierOptions();
   const agentOptions = useAgentOptions();
   const channelOptions = useChannelOptions();
@@ -56,6 +59,8 @@ export const ProductGoodsList = () => {
       </TypeMenu>
       <Main>
         <SearchPanel
+          operatorOptions={operatorOptions}
+          regionOptions={regionOptions}
           supplierOptions={supplierOptions}
           params={params}
           setParams={setParams}

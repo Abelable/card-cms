@@ -3,16 +3,20 @@ import { Button, Cascader, Input, Select } from "antd";
 import { Row } from "components/lib";
 import { GoodsListSearchParams } from "types/product";
 import styled from "@emotion/styled";
-import { SupplierOption } from "types/supplier";
-import { useOperatorOptions, useRegionOptions } from "service/common";
+import type { SupplierOption } from "types/supplier";
+import type { OperatorOption, RegionOption } from "types/common";
 
 export interface SearchPanelProps {
+  operatorOptions: OperatorOption[];
+  regionOptions: RegionOption[] | undefined;
   supplierOptions: SupplierOption[];
   params: Partial<GoodsListSearchParams>;
   setParams: (params: Partial<GoodsListSearchParams>) => void;
 }
 
 export const SearchPanel = ({
+  operatorOptions,
+  regionOptions,
   supplierOptions,
   params,
   setParams,
@@ -31,9 +35,6 @@ export const SearchPanel = ({
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<GoodsListSearchParams>>(params);
-
-  const operatorOptions = useOperatorOptions();
-  const { data: regionOptions } = useRegionOptions();
 
   const setGoodsName = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {

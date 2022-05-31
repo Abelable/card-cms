@@ -23,7 +23,9 @@ import { useDeleteGoods, useDownGoods, useUpGoods } from "service/product";
 import type { ColumnsType } from "antd/lib/table";
 import type { Goods } from "types/product";
 
-interface ListProps extends TableProps<Goods>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Goods>,
+    Omit<SearchPanelProps, "operatorOptions" | "regionOptions"> {
   error: Error | unknown;
 }
 
