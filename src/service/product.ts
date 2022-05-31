@@ -3,6 +3,7 @@ import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
   Channel,
+  ChannelEncodingOption,
   ChannelForm,
   ChannelGoodsListResult,
   ChannelGoodsListSearchParams,
@@ -161,7 +162,7 @@ export const useChannelEncodingOptions = () => {
   const res = useQuery(["channel_options"], () =>
     client("/api/v1/admin/product/pluck-encoding")
   );
-  const channelOptions: { encoding: string; name: string }[] = [];
+  const channelOptions: ChannelEncodingOption[] = [];
   if (res.data) {
     Object.keys(res.data).forEach((item) =>
       channelOptions.push({

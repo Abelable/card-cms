@@ -154,3 +154,8 @@ export interface ProductOption {
   name: string;
   is_required_idphoto: number;
 }
+
+export interface ChannelEncodingOption {
+  encoding: string;
+  name: string;
+}

@@ -2,14 +2,15 @@ import { Button, Form, Input, Modal, Radio, Select, Space } from "antd";
 import { useExportProductModal } from "../util";
 import { useExportOrderProduct } from "service/order";
 import { useForm } from "antd/lib/form/Form";
-import { AgentOption } from "types/agent";
+import type { AgentOption } from "types/agent";
+import type { ChannelEncodingOption } from "types/product";
 
 export const ExportProductModal = ({
   agentOptions,
   channelEncodingOptions,
 }: {
   agentOptions: AgentOption[];
-  channelEncodingOptions: { encoding: string; name: string }[];
+  channelEncodingOptions: ChannelEncodingOption[];
 }) => {
   const [form] = useForm();
   const { exportProducModalOpen, close } = useExportProductModal();
