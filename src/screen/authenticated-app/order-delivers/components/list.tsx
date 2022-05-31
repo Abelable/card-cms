@@ -35,7 +35,9 @@ import type { UploadChangeParam } from "antd/lib/upload";
 import type { UploadFile } from "antd/lib/upload/interface";
 import type { Deliver } from "types/order";
 
-interface ListProps extends TableProps<Deliver>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Deliver>,
+    Omit<SearchPanelProps, "agentOptions"> {
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;

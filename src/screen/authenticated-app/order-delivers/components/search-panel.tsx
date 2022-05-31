@@ -5,8 +5,10 @@ import styled from "@emotion/styled";
 import moment from "moment";
 import { useExportModal } from "../util";
 import type { DeliversSearchParams, OrderStatusOption } from "types/order";
+import type { AgentOption } from "types/agent";
 
 export interface SearchPanelProps {
+  agentOptions: AgentOption[];
   orderStatusOptions: OrderStatusOption[];
   params: Partial<DeliversSearchParams>;
   setParams: (params: Partial<DeliversSearchParams>) => void;
@@ -20,17 +22,13 @@ const activateOptions = [
   { name: "未激活", value: 0 },
   { name: "已激活", value: 1 },
 ];
-const agentOptions = [
-  { id: 1, name: "联通" },
-  { id: 1, name: "电信" },
-  { id: 1, name: "移动" },
-];
 const timeTypeOptions = [
   { name: "平台创建时间", value: 1 },
   { name: "订单激活时间", value: 2 },
 ];
 
 export const SearchPanel = ({
+  agentOptions,
   orderStatusOptions,
   params,
   setParams,
