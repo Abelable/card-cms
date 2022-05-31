@@ -120,7 +120,7 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...rest }: Partial<Deliver>) =>
       client(`/api/v1/admin/order/update/${id}`, {
-        data: rest,
+        data: cleanObject({ ...rest }),
         method: "POST",
       }),
     useEditConfig(queryKey)
@@ -159,7 +159,7 @@ export const useEditDelivers = (queryKey: QueryKey) => {
   return useMutation(
     (params: { ids: string[]; status: number; remark?: string }) =>
       client("/api/v1/admin/order/batch-simple-update", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditDeliversConfig(queryKey)
@@ -181,7 +181,7 @@ export const useAddProduct = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<Product>) =>
       client("/api/v1/admin/supplier-product/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -193,7 +193,7 @@ export const useEditProduct = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...params }: Partial<Product>) =>
       client(`/api/v1/admin/supplier-product/update/${id}`, {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditConfig(queryKey)
@@ -215,7 +215,7 @@ export const useImports = (params: Partial<ImportsSearchParams>) => {
   const client = useHttp();
   return useQuery<ImportsResult>(["order_imports", params], () =>
     client("/api/v1/admin/order-import/index", {
-      data: params,
+      data: cleanObject({ ...params }),
     })
   );
 };
@@ -223,7 +223,7 @@ export const useImports = (params: Partial<ImportsSearchParams>) => {
 export const useTestConfig = (params: Partial<Product>) => {
   const client = useHttp();
   return client("/api/v1/admin/supplier-product/check", {
-    data: params,
+    data: cleanObject({ ...params }),
     method: "POST",
   });
 };

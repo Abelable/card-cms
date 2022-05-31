@@ -10,12 +10,13 @@ import {
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
+import { cleanObject } from "utils";
 
 export const useBlacklist = (params: Partial<BlacklistSearchParams>) => {
   const client = useHttp();
   return useQuery<BlacklistResult>(["blacklist", params], () =>
     client("/api/v1/admin/blacklist/index", {
-      data: params,
+      data: cleanObject({ ...params }),
     })
   );
 };
@@ -25,7 +26,7 @@ export const useAddBlack = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<BlackItem>) =>
       client("/api/v1/admin/blacklist/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -37,7 +38,7 @@ export const useEditBlack = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...params }: Partial<BlackItem>) =>
       client(`/api/v1/admin/blacklist/update/${id}`, {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditConfig(queryKey)

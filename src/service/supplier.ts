@@ -15,7 +15,7 @@ export const useSuppliers = (params: Partial<SuppliersSearchParams>) => {
   const client = useHttp();
   return useQuery<SuppliersResult>(["suppliers", params], () =>
     client("/api/v1/admin/supplier/index", {
-      data: params,
+      data: cleanObject({ ...params }),
     })
   );
 };
@@ -25,7 +25,7 @@ export const useAddSupplier = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<Supplier>) =>
       client("/api/v1/admin/supplier/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -37,7 +37,7 @@ export const useEditSupplier = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...params }: Partial<Supplier>) =>
       client(`/api/v1/admin/supplier/update/${id}`, {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditConfig(queryKey)

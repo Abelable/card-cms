@@ -19,7 +19,7 @@ export const useAgents = (params: Partial<AgentsSearchParams>) => {
   const client = useHttp();
   return useQuery<AgentsResult>(["agents", params], () =>
     client("/api/v1/admin/agent/index", {
-      data: params,
+      data: cleanObject({ ...params }),
     })
   );
 };
@@ -29,7 +29,7 @@ export const useAddAgent = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<Agent>) =>
       client("/api/v1/admin/agent/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -41,7 +41,7 @@ export const useEditAgent = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...params }: Partial<Agent>) =>
       client(`/api/v1/admin/agent/simple-update/${id}`, {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditConfig(queryKey)

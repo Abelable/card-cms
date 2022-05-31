@@ -78,7 +78,7 @@ export const useAddChannel = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<Channel>) =>
       client("/api/v1/admin/product/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useAddConfig(queryKey)
@@ -90,7 +90,7 @@ export const useEditChannel = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...params }: Partial<Channel>) =>
       client(`/api/v1/admin/product/update/${id}`, {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditConfig(queryKey)
@@ -232,7 +232,7 @@ export const useAddGoods = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<Goods>) =>
       client("/api/v1/admin/goods/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useAddConfig(queryKey)
