@@ -73,7 +73,7 @@ export const AuthenticatedApp = () => {
               />
               <Route path="product/sales" element={<ProductGoodsList />} />
               <Route
-                path="product/sales/agents"
+                path="product/sales/agent"
                 element={<ProductGoodsAgents />}
               />
               <Route path="order/deliver" element={<OrderDelivers />} />

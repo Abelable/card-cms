@@ -40,7 +40,7 @@ export const List = ({
   const linkToChannels = (id: number) =>
     navigate(`/product/channels?editingChannelId=${id}`);
   const linkToAgents = (id: number) =>
-    navigate(`/product/sales/agents?goods_id=${id}`);
+    navigate(`/product/sales/agent?goods_id=${id}`);
   const { startEdit } = useGoodsModal();
   const { startEdit: editAgent } = useAgentModal();
   const { startEdit: checkLink } = useLinkModal();

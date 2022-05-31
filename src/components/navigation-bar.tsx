@@ -12,7 +12,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/product/channels": "产品渠道管理",
   "/product/channels/goods_list": "关联商品",
   "/product/sales": "在售商品管理",
-  "/product/sales/agents": "查看代理商",
+  "/product/sales/agent": "查看代理商",
   "/order": "订单管理中心",
   "/order/deliver": "生产发货",
   "/order/deliver/report_forms": "导出订单",
