@@ -2,14 +2,17 @@ import styled from "@emotion/styled";
 import { Cascader, Col, Form, Input, Modal, Row, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useRegionOptions } from "service/common";
-import { useEditDeliver } from "service/order";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import { useEditDeliver } from "service/order";
 import { useInfoModal, useOrderDeliversQueryKey } from "../util";
+import type { RegionOption } from "types/common";
 
-export const InfoModal = () => {
+export const InfoModal = ({
+  regionOptions,
+}: {
+  regionOptions: RegionOption[] | undefined;
+}) => {
   const [form] = useForm();
-  const { data: regionOptions } = useRegionOptions(3);
   const {
     infoModalOpen,
     editingDeliver,
