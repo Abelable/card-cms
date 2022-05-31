@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { Button, Select } from "antd";
 import { Row } from "components/lib";
-import { GoodsListSearchParams } from "types/supplier";
 import styled from "@emotion/styled";
-import { useSupplierOptions } from "service/supplier";
-import { useChannelOptions } from "service/product";
+import type { GoodsListSearchParams, SupplierOption } from "types/supplier";
+import type { ChannelOption } from "types/product";
 
 export interface SearchPanelProps {
+  channelOptions: ChannelOption[];
+  supplierOptions: SupplierOption[];
   params: Partial<GoodsListSearchParams>;
   setParams: (params: Partial<GoodsListSearchParams>) => void;
 }
 
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  channelOptions,
+  supplierOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
     goods_name: undefined,
     supplier_id: undefined,
   } as Partial<GoodsListSearchParams>;
-  const channelOptions = useChannelOptions();
-  const supplierOptions = useSupplierOptions();
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<GoodsListSearchParams>>(params);

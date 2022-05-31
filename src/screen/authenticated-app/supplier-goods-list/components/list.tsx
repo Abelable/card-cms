@@ -1,17 +1,25 @@
 import styled from "@emotion/styled";
-import dayjs from "dayjs";
+import { ErrorBox } from "components/lib";
 import { Table, TablePaginationConfig, TableProps } from "antd";
 import { SearchPanelProps } from "./search-panel";
-import { Goods } from "types/supplier";
-import { ErrorBox } from "components/lib";
-import { useOperatorOptions } from "service/common";
+import dayjs from "dayjs";
+import type { OperatorOption } from "types/common";
+import type { Goods } from "types/supplier";
 
-interface ListProps extends TableProps<Goods>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Goods>,
+    Omit<SearchPanelProps, "channelOptions" | "supplierOptions"> {
+  operatorOptions: OperatorOption[];
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const operatorOptions = useOperatorOptions();
+export const List = ({
+  operatorOptions,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,

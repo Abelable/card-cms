@@ -1,20 +1,30 @@
-import { toNumber } from "utils";
-import { useGoodsList } from "service/supplier";
-import { useGoodsListSearchParams } from "./util";
-
+import styled from "@emotion/styled";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
-import styled from "@emotion/styled";
+import { toNumber } from "utils";
+import { useGoodsListSearchParams } from "./util";
+import { useGoodsList, useSupplierOptions } from "service/supplier";
+import { useChannelOptions } from "service/product";
+import { useOperatorOptions } from "service/common";
 
 export const SupplierGoodsList = () => {
   const [params, setParams] = useGoodsListSearchParams();
   const { data, isLoading, error } = useGoodsList(params);
+  const channelOptions = useChannelOptions();
+  const supplierOptions = useSupplierOptions();
+  const operatorOptions = useOperatorOptions();
 
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          channelOptions={channelOptions}
+          supplierOptions={supplierOptions}
+          params={params}
+          setParams={setParams}
+        />
         <List
+          operatorOptions={operatorOptions}
           error={error}
           params={params}
           setParams={setParams}
