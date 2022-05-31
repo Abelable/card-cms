@@ -883,7 +883,7 @@ export const NewPublishModal = ({
                     >
                       <Select mode="tags" placeholder="请选择代理商">
                         {agentOptions.map((item) => (
-                          <Select.Option key={item.id} value={`${item.id}`}>
+                          <Select.Option key={item.id} value={item.id}>
                             {item.name}
                           </Select.Option>
                         ))}
