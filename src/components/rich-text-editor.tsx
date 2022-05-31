@@ -68,6 +68,9 @@ export const RichTextEditor = ({
 };
 
 const Editor = styled(ReactQuill)`
+  > .ql-toolbar.ql-snow:nth-child(2) {
+    display: none;
+  }
   > .ql-container.ql-snow {
     min-height: 30rem;
   }
