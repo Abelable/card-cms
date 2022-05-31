@@ -140,13 +140,13 @@ export const List = ({
           {
             title: "订单信息",
             fixed: "left",
-            width: "29rem",
+            width: "30rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Row>
-                  <div>订单id：{deliver.id}</div>
+                  <div>订单id：{deliver.order_no}</div>
                   <Copy
-                    onClick={() => copyInfo(deliver.id)}
+                    onClick={() => copyInfo(deliver.order_no)}
                     style={{ color: "#1890ff" }}
                   />
                 </Row>

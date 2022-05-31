@@ -28,6 +28,7 @@ export interface DeliversSearchParams {
 
 export interface Deliver {
   id: string;
+  order_no: string;
   source: string;
   outer_order_no: string;
   created_at: string;
