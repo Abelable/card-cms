@@ -35,7 +35,14 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             title: "商品名称",
             render: (value, goods) => (
               <div style={{ display: "flex" }}>
-                <Image width={80} height={80} src={goods.main_picture} />
+                <Image
+                  width={80}
+                  height={80}
+                  src={
+                    goods.main_picture ||
+                    "https://91haoka.cn/91haoka_platform/static/img/kenan.837a3f3.jpg"
+                  }
+                />
                 <GoodsInfoWrap>
                   <div style={{ marginBottom: "1rem" }}>{goods.name}</div>
                   {goods.sale_point ? (
