@@ -2,6 +2,7 @@ import { useAuth } from "context/auth-context";
 import * as auth from "./auth";
 import qs from "qs";
 import { useCallback } from "react";
+import { message } from "antd";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -39,6 +40,10 @@ export const http = async (
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
       if (config.headers.responseType === "arraybuffer") {
+        if (!response.headers.get("X-File-Name")) {
+          message.error("文件导出失败");
+          return;
+        }
         const result = await response.blob();
         const url = window.URL.createObjectURL(result);
         const link = document.createElement("a");
