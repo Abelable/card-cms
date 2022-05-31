@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, DatePicker, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
-import { DeliversSearchParams, OrderStatusOption } from "types/order";
 import styled from "@emotion/styled";
 import moment from "moment";
 import { useExportModal } from "../util";
+import type { DeliversSearchParams, OrderStatusOption } from "types/order";
 
 export interface SearchPanelProps {
   orderStatusOptions: OrderStatusOption[];
