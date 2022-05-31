@@ -14,16 +14,16 @@ import {
   Space,
   Spin,
 } from "antd";
-import { useChannelModal, useChannelsQueryKey } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddChannel, useEditChannel } from "service/product";
-import useDeepCompareEffect from "use-deep-compare-effect";
-import { cleanObject } from "utils";
+import { Row as CustomRow } from "components/lib";
 import styled from "@emotion/styled";
 import "assets/style/hideLeftBorder.css";
-import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import { useChannelModal, useChannelsQueryKey } from "../util";
+import { cleanObject } from "utils";
+import { useAddChannel, useEditChannel } from "service/product";
 import { useUpdateDefaultWarningSetting } from "service/common";
 import type {
   OperatorOption,
