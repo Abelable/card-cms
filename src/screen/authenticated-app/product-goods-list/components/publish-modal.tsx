@@ -83,6 +83,8 @@ export const PublishModal = ({
   const closeModal = () => {
     form.resetFields();
     setStep(0);
+    setDetail("");
+    setRemark("");
     close();
   };
 

@@ -307,6 +307,8 @@ export const NewPublishModal = ({
   const closeModal = () => {
     form.resetFields();
     setStep(0);
+    setDetail("");
+    setRemark("");
     close();
   };
 
