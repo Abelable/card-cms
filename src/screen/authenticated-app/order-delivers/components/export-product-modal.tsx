@@ -1,15 +1,18 @@
 import { Button, Form, Input, Modal, Radio, Select, Space } from "antd";
 import { useExportProductModal } from "../util";
-import { useAgentOptions } from "service/agent";
-import { useChannelEncodingOptions } from "service/product";
 import { useExportOrderProduct } from "service/order";
 import { useForm } from "antd/lib/form/Form";
+import { AgentOption } from "types/agent";
 
-export const ExportProductModal = () => {
+export const ExportProductModal = ({
+  agentOptions,
+  channelEncodingOptions,
+}: {
+  agentOptions: AgentOption[];
+  channelEncodingOptions: { encoding: string; name: string }[];
+}) => {
   const [form] = useForm();
   const { exportProducModalOpen, close } = useExportProductModal();
-  const agentOptions = useAgentOptions();
-  const channelOptions = useChannelEncodingOptions();
   const exportOrderProduct = useExportOrderProduct();
 
   const exportFilter = () => {
@@ -102,7 +105,7 @@ export const ExportProductModal = () => {
                     }
                     placeholder="请选择产品编码"
                   >
-                    {channelOptions.map(({ encoding }) => (
+                    {channelEncodingOptions.map(({ encoding }) => (
                       <Select.Option key={encoding} value={encoding}>
                         {encoding}
                       </Select.Option>

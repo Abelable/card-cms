@@ -26,12 +26,14 @@ import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
 import { ExportProductModal } from "./components/export-product-modal";
 import { useAgentOptions } from "service/agent";
+import { useChannelEncodingOptions } from "service/product";
 
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderDeliversSearchParams();
   const orderStatusOptions = useOrderStatusOptions();
   const agentOptions = useAgentOptions();
+  const channelEncodingOptions = useChannelEncodingOptions();
   const { data, isLoading, error } = useDelivers(params);
   const { mutateAsync: editDelivers } = useEditDelivers(
     useOrderDeliversQueryKey()
@@ -97,7 +99,10 @@ export const OrderDelivers = () => {
       <DataModal />
       <InfoModal />
       <ExportModal params={params} />
-      <ExportProductModal />
+      <ExportProductModal
+        agentOptions={agentOptions}
+        channelEncodingOptions={channelEncodingOptions}
+      />
       <DetailModal
         agentOptions={agentOptions}
         orderStatusOptions={orderStatusOptions}
