@@ -3,17 +3,18 @@ import { Form, Modal, Radio, Select, Button, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useAgentOptions } from "service/agent";
 import { useEditGoods, useUpGoods } from "service/product";
 import { useGoodsListQueryKey, useAgentModal } from "../util";
 import type { GoodsListSearchParams } from "types/product";
+import { AgentOption } from "types/agent";
 
 export const AgentModal = ({
+  agentOptions,
   params,
 }: {
+  agentOptions: AgentOption[];
   params: Partial<GoodsListSearchParams>;
 }) => {
-  const agentOptions = useAgentOptions();
   const [form] = useForm();
   const {
     agentModalOpen,

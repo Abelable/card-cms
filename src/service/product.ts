@@ -244,7 +244,7 @@ export const useEditGoods = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...params }: Partial<Goods>) =>
       client(`/api/v1/admin/goods/update/${id}`, {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
     useEditConfig(queryKey)

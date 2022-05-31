@@ -80,7 +80,7 @@ export const ProductGoodsList = () => {
         />
       </Main>
       <GoodsModal channelOptions={channelOptions} />
-      <AgentModal params={params} />
+      <AgentModal agentOptions={agentOptions} params={params} />
       <LinkModal />
       <PublishModal
         productOptions={productOptions}
