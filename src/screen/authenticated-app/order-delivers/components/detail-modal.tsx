@@ -1,10 +1,10 @@
 import { Descriptions, Drawer, Spin, Tooltip } from "antd";
-import { useDetailModal, usePicModal } from "../util";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import { IdcardOutlined } from "@ant-design/icons";
-import { OrderStatusOption } from "types/order";
-import { AgentOption } from "types/agent";
+import { useDetailModal, usePicModal } from "../util";
+import type { OrderStatusOption } from "types/order";
+import type { AgentOption } from "types/agent";
 
 export const DetailModal = ({
   agentOptions,
