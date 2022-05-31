@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import { Cascader, Col, Form, Input, Modal, Row, Spin } from "antd";
+import { Cascader, Col, Form, Input, message, Modal, Row, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { ErrorBox } from "components/lib";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useEditDeliver } from "service/order";
 import { useInfoModal, useOrderDeliversQueryKey } from "../util";
@@ -19,9 +18,7 @@ export const InfoModal = ({
     close,
     isLoading: initLoading,
   } = useInfoModal();
-  const { mutateAsync, isLoading, error } = useEditDeliver(
-    useOrderDeliversQueryKey()
-  );
+  const { mutateAsync, isLoading } = useEditDeliver(useOrderDeliversQueryKey());
 
   useDeepCompareEffect(() => {
     if (editingDeliver) {
@@ -36,14 +33,18 @@ export const InfoModal = ({
   const confirm = () => {
     form.validateFields().then(async () => {
       const { address_region, ...rest } = form.getFieldsValue();
-      await mutateAsync({
-        ...editingDeliver,
-        province_id: address_region[0],
-        city_id: address_region[1],
-        area_id: address_region[2],
-        ...rest,
-      });
-      closeModal();
+      try {
+        await mutateAsync({
+          ...editingDeliver,
+          province_id: address_region[0],
+          city_id: address_region[1],
+          area_id: address_region[2],
+          ...rest,
+        });
+        closeModal();
+      } catch (error: any) {
+        message.error(error.message);
+      }
     });
   };
 
@@ -60,7 +61,6 @@ export const InfoModal = ({
       onOk={confirm}
       onCancel={closeModal}
     >
-      <ErrorBox error={error} />
       {initLoading ? (
         <Loading>
           <Spin size={"large"} />
