@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Descriptions, Modal, Spin } from "antd";
+import { Descriptions, Empty, Modal, Spin } from "antd";
 import { useRecordModal } from "../util";
 
 export const RecordModal = () => {
@@ -32,7 +32,7 @@ export const RecordModal = () => {
               ))}
             </Descriptions>
           ) : (
-            <>暂无记录</>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           )}
         </>
       )}
