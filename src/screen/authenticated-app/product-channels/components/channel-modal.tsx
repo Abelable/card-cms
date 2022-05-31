@@ -24,13 +24,14 @@ import styled from "@emotion/styled";
 import "assets/style/hideLeftBorder.css";
 import { Row as CustomRow } from "components/lib";
 import { useState } from "react";
-import { OperatorOption, RegionItem } from "types/common";
-import { SupplierOption } from "types/supplier";
-import {
-  useDefaultWarningSetting,
-  useRegionOptions,
-  useUpdateDefaultWarningSetting,
-} from "service/common";
+import { useUpdateDefaultWarningSetting } from "service/common";
+import type {
+  OperatorOption,
+  RegionItem,
+  RegionOption,
+  WarningSetting,
+} from "types/common";
+import type { SupplierOption } from "types/supplier";
 
 const limitOptions = [
   { value: 0, label: "不限制" },
@@ -68,14 +69,16 @@ const halfCycleOptions = [
 ];
 
 export const ChannelModal = ({
+  regionOptions,
+  defaultWarningSetting,
   operatorOptions,
   supplierOptions,
 }: {
+  regionOptions: RegionOption[] | undefined;
+  defaultWarningSetting: WarningSetting | undefined;
   operatorOptions: OperatorOption[];
   supplierOptions: SupplierOption[];
 }) => {
-  const { data: regionOptions } = useRegionOptions();
-  const { data: defaultWarningSetting } = useDefaultWarningSetting();
   const [form] = useForm();
   const [type, setType] = useState(1);
   const {

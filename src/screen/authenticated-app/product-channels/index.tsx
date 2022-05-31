@@ -6,7 +6,11 @@ import { List } from "./components/list";
 import styled from "@emotion/styled";
 import { Menu, MenuProps } from "antd";
 import { ChannelModal } from "./components/channel-modal";
-import { useOperatorOptions } from "service/common";
+import {
+  useOperatorOptions,
+  useDefaultWarningSetting,
+  useRegionOptions,
+} from "service/common";
 import { useSupplierOptions } from "service/supplier";
 
 const modeOptions = [
@@ -17,6 +21,8 @@ const modeOptions = [
 export const ProductChannels = () => {
   const operatorOptions = useOperatorOptions();
   const supplierOptions = useSupplierOptions();
+  const { data: regionOptions } = useRegionOptions();
+  const { data: defaultWarningSetting } = useDefaultWarningSetting();
   const [params, setParams] = useChannelsSearchParams();
   const { data, isLoading, error } = useChannels(params);
 
@@ -70,6 +76,8 @@ export const ProductChannels = () => {
         />
       </Main>
       <ChannelModal
+        regionOptions={regionOptions}
+        defaultWarningSetting={defaultWarningSetting}
         operatorOptions={operatorOptions}
         supplierOptions={supplierOptions}
       />
