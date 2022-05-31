@@ -39,9 +39,12 @@ import {
   UserDeleteOutlined,
 } from "@ant-design/icons";
 import logo from "assets/images/logo.png";
+import { UserInfo } from "types/auth";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { data: userInfo } = useUserInfo();
+  const { logout } = useAuth();
 
   return (
     <Router>
@@ -50,7 +53,7 @@ export const AuthenticatedApp = () => {
         <Layout>
           <Header>
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
-            <User />
+            <User userInfo={userInfo} logout={logout} />
           </Header>
           <NavigationBar />
           <Content>
@@ -197,10 +200,13 @@ const Trigger = ({ collapsed, setCollapsed }: Collapsed) => {
   );
 };
 
-const User = () => {
-  const { data: userInfo } = useUserInfo();
-  const { logout } = useAuth();
-
+const User = ({
+  userInfo,
+  logout,
+}: {
+  userInfo: UserInfo | undefined;
+  logout: () => void;
+}) => {
   const items: MenuProps["items"] = [
     {
       label: (
