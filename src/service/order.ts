@@ -248,7 +248,6 @@ export const useExportOrderProduct = () => {
       method: "POST",
       headers: {
         responseType: "arraybuffer",
-        fileName: "order",
       },
     });
 };

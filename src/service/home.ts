@@ -148,7 +148,6 @@ export const useExportHome = () => {
       }),
       headers: {
         responseType: "arraybuffer",
-        fileName: "home",
       },
     });
 };

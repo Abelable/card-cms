@@ -44,7 +44,10 @@ export const http = async (
         const link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", `${config.headers.fileName}.xlsx`);
+        link.setAttribute(
+          "download",
+          `${decodeURI(response.headers.get("X-File-Name") as string)}`
+        );
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
