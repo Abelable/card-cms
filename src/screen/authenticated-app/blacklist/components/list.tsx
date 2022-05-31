@@ -8,16 +8,16 @@ import {
   TableProps,
   Tooltip,
 } from "antd";
-import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownloadOutlined } from "@ant-design/icons";
-import { useBlacklistQueryKey, useBlackModal } from "../util";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { FileUpload } from "components/file-upload";
-import type { BlacklistSearchParams, BlackItem } from "types/system";
+import { useQueryClient } from "react-query";
+import { useBlacklistQueryKey, useBlackModal } from "../util";
 import { useDeleteBlack } from "service/system";
 import { useDownloadTemplate } from "service/common";
-import { UploadChangeParam } from "antd/lib/upload";
-import { UploadFile } from "antd/lib/upload/interface";
-import { useQueryClient } from "react-query";
+import type { UploadChangeParam } from "antd/lib/upload";
+import type { UploadFile } from "antd/lib/upload/interface";
+import type { BlacklistSearchParams, BlackItem } from "types/system";
 
 interface ListProps extends TableProps<BlackItem> {
   params: Partial<BlacklistSearchParams>;
