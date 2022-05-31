@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import {
   Button,
   Divider,
+  message,
   Table,
   TablePaginationConfig,
   TableProps,
@@ -35,8 +36,18 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 
   const queryClient = useQueryClient();
   const queryKey = useImportsQueryKey();
-  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) =>
-    info.file.status === "done" && queryClient.invalidateQueries(queryKey);
+  const handleOrderSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
+    if (info.file.status === "done") {
+      queryClient.invalidateQueries(queryKey);
+      message.success("订单导入成功");
+    }
+  };
+  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
+    if (info.file.status === "done") {
+      queryClient.invalidateQueries(queryKey);
+      message.success("照片上传成功");
+    }
+  };
 
   return (
     <Container>
@@ -44,7 +55,11 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         <h3>导入记录</h3>
         <Row gap>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={3} name="导入订单" onChange={handleSuccess} />
+            <FileUpload
+              scene={3}
+              name="导入订单"
+              onChange={handleOrderSuccess}
+            />
           </div>
           <Tooltip title="下载订单模版">
             <Button

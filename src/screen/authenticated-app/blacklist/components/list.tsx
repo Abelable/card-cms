@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import {
   Button,
   Divider,
+  message,
   Modal,
   Table,
   TablePaginationConfig,
@@ -31,8 +32,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const queryKey = useBlacklistQueryKey();
   const { mutate: deleteBlack } = useDeleteBlack(queryKey);
   const downloadTemplate = useDownloadTemplate();
-  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) =>
-    info.file.status === "done" && queryClient.invalidateQueries(queryKey);
+  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
+    if (info.file.status === "done") {
+      queryClient.invalidateQueries(queryKey);
+      message.success("文件上传成功");
+    }
+  };
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
