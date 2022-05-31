@@ -21,12 +21,12 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { useEditGoods } from "service/product";
 import { cleanObject } from "utils";
 import { useGoodsModal, useGoodsListQueryKey } from "../util";
-import type { ChannelOption } from "types/product";
+import type { ProductOption } from "types/product";
 
 export const GoodsModal = ({
-  channelOptions,
+  productOptions,
 }: {
-  channelOptions: ChannelOption[];
+  productOptions: ProductOption[] | undefined;
 }) => {
   const [form] = useForm();
   const [detail, setDetail] = useState("");
@@ -122,7 +122,7 @@ export const GoodsModal = ({
                 rules={[{ required: true, message: "请选择基础产品" }]}
               >
                 <Select placeholder="请选择基础产品">
-                  {channelOptions.map(({ id, name }) => (
+                  {productOptions?.map(({ id, name }) => (
                     <Select.Option key={id} value={id}>
                       {name}
                     </Select.Option>
@@ -167,11 +167,27 @@ export const GoodsModal = ({
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item name="is_required_upload_picture" label="销售页上传照片">
-            <Radio.Group>
-              <Radio value={0}>无需上传</Radio>
-              <Radio value={1}>需要上传</Radio>
-            </Radio.Group>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.product_id !== currentValues.product_id
+            }
+          >
+            {({ getFieldValue }) => (
+              <Form.Item label="销售页上传照片">
+                <Radio.Group
+                  value={
+                    productOptions?.find(
+                      (item) => item.id === getFieldValue("product_id")
+                    )?.is_required_idphoto
+                  }
+                  disabled
+                >
+                  <Radio value={0}>无需上传</Radio>
+                  <Radio value={1}>需要上传</Radio>
+                </Radio.Group>
+              </Form.Item>
+            )}
           </Form.Item>
           <Form.Item
             name="img"

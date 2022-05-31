@@ -10,11 +10,7 @@ import styled from "@emotion/styled";
 
 import { toNumber } from "utils";
 import { useGoodsListSearchParams } from "./util";
-import {
-  useChannelOptions,
-  useGoodsList,
-  useProductOptions,
-} from "service/product";
+import { useGoodsList, useProductOptions } from "service/product";
 import { useSupplierOptions } from "service/supplier";
 import { useAgentOptions } from "service/agent";
 import { useOperatorOptions, useRegionOptions } from "service/common";
@@ -25,7 +21,6 @@ export const ProductGoodsList = () => {
   const { data: regionOptions } = useRegionOptions();
   const supplierOptions = useSupplierOptions();
   const agentOptions = useAgentOptions();
-  const channelOptions = useChannelOptions();
   const { data: productOptions } = useProductOptions();
   const { data, isLoading, error } = useGoodsList(params);
 
@@ -79,7 +74,7 @@ export const ProductGoodsList = () => {
           }}
         />
       </Main>
-      <GoodsModal channelOptions={channelOptions} />
+      <GoodsModal productOptions={productOptions} />
       <AgentModal agentOptions={agentOptions} params={params} />
       <LinkModal />
       <PublishModal
