@@ -8,9 +8,9 @@ import {
   Tag,
   Modal,
 } from "antd";
-import { SearchPanelProps } from "./search-panel";
-import { Goods } from "types/product";
 import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
+import { SearchPanelProps } from "./search-panel";
+import { useNavigate } from "react-router";
 import {
   useAgentModal,
   useGoodsListQueryKey,
@@ -19,9 +19,9 @@ import {
   useNewPublishModal,
   usePublishModal,
 } from "../util";
-import { useNavigate } from "react-router";
-import { ColumnsType } from "antd/lib/table";
 import { useDeleteGoods, useDownGoods, useUpGoods } from "service/product";
+import type { ColumnsType } from "antd/lib/table";
+import type { Goods } from "types/product";
 
 interface ListProps extends TableProps<Goods>, SearchPanelProps {
   error: Error | unknown;
