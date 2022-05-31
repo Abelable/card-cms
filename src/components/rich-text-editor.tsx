@@ -3,6 +3,7 @@ import { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useHttp } from "service/http";
+import { useDebounce } from "utils";
 
 export const RichTextEditor = ({
   content,
@@ -13,6 +14,7 @@ export const RichTextEditor = ({
 }) => {
   const quillRef: any = useRef(null);
   const client = useHttp();
+  const debounedContent = useDebounce(content);
 
   const modules = useMemo(
     () => ({
@@ -59,7 +61,7 @@ export const RichTextEditor = ({
       ref={quillRef}
       theme="snow"
       modules={modules}
-      value={content}
+      value={debounedContent}
       onChange={setContent}
     />
   );
