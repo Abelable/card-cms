@@ -9,14 +9,14 @@ import {
 } from "antd";
 import { FileUpload } from "components/file-upload";
 import { ErrorBox, Row } from "components/lib";
-import dayjs from "dayjs";
 import { DownloadOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { ImportsSearchParams, Import } from "types/order";
-import { useDownloadTemplate } from "service/common";
-import { UploadChangeParam } from "antd/lib/upload";
-import { UploadFile } from "antd/lib/upload/interface";
 import { useQueryClient } from "react-query";
+import dayjs from "dayjs";
+import { useDownloadTemplate } from "service/common";
 import { useImportsQueryKey } from "../util";
+import type { UploadChangeParam } from "antd/lib/upload";
+import type { UploadFile } from "antd/lib/upload/interface";
+import type { ImportsSearchParams, Import } from "types/order";
 
 interface ListProps extends TableProps<Import> {
   params: Partial<ImportsSearchParams>;
