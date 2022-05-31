@@ -1,17 +1,26 @@
 import styled from "@emotion/styled";
 import { Table, TablePaginationConfig, TableProps } from "antd";
-import { ChannelGoods, ChannelGoodsListSearchParams } from "types/product";
+import {
+  ChannelGoods,
+  ChannelGoodsListSearchParams,
+  ChannelOption,
+} from "types/product";
 import { ErrorBox } from "components/lib";
-import { useChannelOptions } from "service/product";
 
 interface ListProps extends TableProps<ChannelGoods> {
+  productOptions: ChannelOption[] | undefined;
   params: Partial<ChannelGoodsListSearchParams>;
   setParams: (params: Partial<ChannelGoodsListSearchParams>) => void;
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const productOptions = useChannelOptions();
+export const List = ({
+  productOptions,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -24,7 +33,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <Title>
         关联商品列表-
         {
-          productOptions.find((item) => item.id === Number(params.product_id))
+          productOptions?.find((item) => item.id === Number(params.product_id))
             ?.name
         }
       </Title>
