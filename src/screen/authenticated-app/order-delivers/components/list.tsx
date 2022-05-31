@@ -16,9 +16,9 @@ import {
 } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { ErrorBox, Row } from "components/lib";
-import { Deliver } from "types/order";
-import copy from "copy-to-clipboard";
 import { FileUpload } from "components/file-upload";
+import { useQueryClient } from "react-query";
+import copy from "copy-to-clipboard";
 import {
   useDataModal,
   useDetailModal,
@@ -31,9 +31,9 @@ import {
   useStatusModal,
 } from "../util";
 import { useDownloadTemplate } from "service/common";
-import { UploadChangeParam } from "antd/lib/upload";
-import { UploadFile } from "antd/lib/upload/interface";
-import { useQueryClient } from "react-query";
+import type { UploadChangeParam } from "antd/lib/upload";
+import type { UploadFile } from "antd/lib/upload/interface";
+import type { Deliver } from "types/order";
 
 interface ListProps extends TableProps<Deliver>, SearchPanelProps {
   selectedRowKeys: React.Key[];
