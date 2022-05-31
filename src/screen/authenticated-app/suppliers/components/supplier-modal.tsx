@@ -2,10 +2,10 @@ import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddSupplier, useEditSupplier } from "service/supplier";
-import { Supplier } from "types/supplier";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { cleanObject } from "utils";
 import { useSuppliersQueryKey, useSupplierModal } from "../util";
+import type { Supplier } from "types/supplier";
 
 export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
   const [form] = useForm();

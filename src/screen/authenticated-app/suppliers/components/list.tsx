@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 import { Button, Table, TablePaginationConfig, TableProps } from "antd";
 import { ErrorBox, Row } from "components/lib";
-import { Supplier, SuppliersSearchParams } from "types/supplier";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { useSupplierModal } from "../util";
+import type { Supplier, SuppliersSearchParams } from "types/supplier";
 
 interface ListProps extends TableProps<Supplier> {
   error: Error | unknown;
