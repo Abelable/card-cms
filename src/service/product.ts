@@ -316,7 +316,7 @@ export const useGoodsOptions = () => {
 
 export const useFailReasons = () => {
   const client = useHttp();
-  return useQuery(["fail_reasons"], () =>
+  return useQuery<string[]>(["fail_reasons"], () =>
     client("/api/v1/admin/setting/product-failed-reasons")
   );
 };

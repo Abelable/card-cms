@@ -3,19 +3,19 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { Dispatch, SetStateAction } from "react";
 import { useEditDelivers } from "service/order";
-import { useFailReasons } from "service/product";
 import { useFailModal, useOrderDeliversQueryKey } from "../util";
 import styled from "@emotion/styled";
 
 export const FailModal = ({
+  failReasons,
   setBatchStatus,
   setSelectedRowKeys,
 }: {
+  failReasons: string[] | undefined;
   setBatchStatus: Dispatch<SetStateAction<number | undefined>>;
   setSelectedRowKeys: Dispatch<SetStateAction<never[]>>;
 }) => {
   const [form] = useForm();
-  const { data: failReasons } = useFailReasons();
   const { failModalOpen, failDeliverIds, close } = useFailModal();
   const { mutateAsync, isLoading, error } = useEditDelivers(
     useOrderDeliversQueryKey()
