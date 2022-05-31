@@ -140,7 +140,7 @@ export const List = ({
           {
             title: "订单信息",
             fixed: "left",
-            width: "30rem",
+            width: "32rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <Row>
@@ -170,7 +170,7 @@ export const List = ({
           },
           {
             title: "产品信息",
-            width: "20rem",
+            width: "26rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
                 <div>产品名称：{deliver.product?.name}</div>
