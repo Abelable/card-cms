@@ -128,7 +128,15 @@ export const PublishModal = ({
                     label="选择基础产品"
                     rules={[{ required: true, message: "请选择基础产品" }]}
                   >
-                    <Select placeholder="请选择基础产品">
+                    <Select
+                      showSearch
+                      filterOption={(input, option) =>
+                        (option!.children as unknown as string)
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      placeholder="请选择基础产品"
+                    >
                       {productOptions?.map(({ id, name }) => (
                         <Select.Option key={id} value={id}>
                           {name}
