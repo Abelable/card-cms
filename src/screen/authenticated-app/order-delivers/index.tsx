@@ -27,7 +27,7 @@ import { DetailModal } from "./components/detail-modal";
 import { ExportProductModal } from "./components/export-product-modal";
 import { useAgentOptions } from "service/agent";
 import { useChannelEncodingOptions, useFailReasons } from "service/product";
-import { useRegionOptions } from "service/common";
+import { useExpressOptions, useRegionOptions } from "service/common";
 
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -37,6 +37,7 @@ export const OrderDelivers = () => {
   const channelEncodingOptions = useChannelEncodingOptions();
   const { data: regionOptions } = useRegionOptions(3);
   const { data: failReasons } = useFailReasons();
+  const expressOptions = useExpressOptions();
   const { data, isLoading, error } = useDelivers(params);
   const { mutateAsync: editDelivers } = useEditDelivers(
     useOrderDeliversQueryKey()
@@ -100,7 +101,7 @@ export const OrderDelivers = () => {
         setBatchStatus={setBatchStatus}
         setSelectedRowKeys={setSelectedRowKeys}
       />
-      <DataModal />
+      <DataModal expressOptions={expressOptions} />
       <InfoModal regionOptions={regionOptions} />
       <ExportModal params={params} />
       <ExportProductModal

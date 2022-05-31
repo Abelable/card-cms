@@ -4,12 +4,10 @@ import { ErrorBox } from "components/lib";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import styled from "@emotion/styled";
 import { useEditDeliverData } from "service/order";
-import { useExpressOptions } from "service/common";
 import { useDataModal, useOrderDeliversQueryKey } from "../util";
 
-export const DataModal = () => {
+export const DataModal = ({ expressOptions }: { expressOptions: string[] }) => {
   const [form] = useForm();
-  const expressOptions = useExpressOptions();
   const {
     dataModalOpen,
     editingDeliver,
