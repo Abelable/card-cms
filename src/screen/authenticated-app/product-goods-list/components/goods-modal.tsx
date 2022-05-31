@@ -11,17 +11,17 @@ import {
   Space,
   Spin,
 } from "antd";
-import { useGoodsModal, useGoodsListQueryKey } from "../util";
-import { useForm } from "antd/lib/form/Form";
-import { ErrorBox } from "components/lib";
-import { useEditGoods } from "service/product";
-import useDeepCompareEffect from "use-deep-compare-effect";
-import { cleanObject } from "utils";
-import { useState } from "react";
-import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
+import { Uploader } from "components/uploader";
+import { ErrorBox } from "components/lib";
+import { useForm } from "antd/lib/form/Form";
 import styled from "@emotion/styled";
-import { ChannelOption } from "types/product";
+import { useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
+import { useEditGoods } from "service/product";
+import { cleanObject } from "utils";
+import { useGoodsModal, useGoodsListQueryKey } from "../util";
+import type { ChannelOption } from "types/product";
 
 export const GoodsModal = ({
   channelOptions,
