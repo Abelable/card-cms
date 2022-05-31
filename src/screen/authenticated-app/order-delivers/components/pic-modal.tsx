@@ -1,21 +1,9 @@
 import styled from "@emotion/styled";
-import { Modal, Image } from "antd";
-import { Deliver } from "types/order";
+import { Modal, Image, Spin } from "antd";
 import { usePicModal } from "../util";
-import { useEffect, useState } from "react";
 
-export const PicModal = ({ orderList }: { orderList: Deliver[] }) => {
-  const { picModalOpen, showPicDeliverId, close } = usePicModal();
-  const order = orderList.find((item) => item.id === showPicDeliverId);
-  const [frontPhoto, setFrontPhoto] = useState("");
-  const [backPhoto, setBackPhoto] = useState("");
-
-  useEffect(() => {
-    if (order) {
-      setFrontPhoto(order.idcard_front_photo);
-      setBackPhoto(order.idcard_back_photo);
-    }
-  }, [order]);
+export const PicModal = () => {
+  const { picModalOpen, editingDeliver, close, isLoading } = usePicModal();
 
   const closeModal = () => {
     close();
@@ -28,10 +16,16 @@ export const PicModal = ({ orderList }: { orderList: Deliver[] }) => {
       onCancel={closeModal}
       footer={null}
     >
-      <Row>
-        <Pic src={frontPhoto} />
-        <Pic src={backPhoto} />
-      </Row>
+      {isLoading ? (
+        <Loading>
+          <Spin size={"large"} />
+        </Loading>
+      ) : (
+        <Row>
+          <Pic src={editingDeliver?.idcard_front_photo} />
+          <Pic src={editingDeliver?.idcard_back_photo} />
+        </Row>
+      )}
     </Modal>
   );
 };
@@ -44,4 +38,12 @@ const Row = styled.div`
 const Pic = styled(Image)`
   width: 22rem;
   height: 14rem;
+`;
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

@@ -96,6 +96,9 @@ export const usePicModal = () => {
     "showPicDeliverId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
+  const { data: editingDeliver, isLoading } = useDeliver(
+    Number(showPicDeliverId)
+  );
 
   const open = useCallback(
     (ids: string) => setShowPicDeliverId({ showPicDeliverId: ids }),
@@ -110,8 +113,10 @@ export const usePicModal = () => {
   return {
     picModalOpen: !!showPicDeliverId,
     showPicDeliverId,
+    editingDeliver,
     open,
     close,
+    isLoading,
   };
 };
 
