@@ -16,29 +16,31 @@ import {
   Space,
   Steps,
 } from "antd";
-import { useGoodsListQueryKey, useNewPublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
-import { ErrorBox } from "components/lib";
-import { useAddChannel, useAddGoods, useEditChannel } from "service/product";
-import { cleanObject } from "utils";
-import "assets/style/hideLeftBorder.css";
-import { useState } from "react";
+import { Row as CustomRow, ErrorBox } from "components/lib";
 import { Uploader } from "components/uploader";
 import { RichTextEditor } from "components/rich-text-editor";
+
+import { useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import styled from "@emotion/styled";
-import { Row as CustomRow } from "components/lib";
+import "assets/style/hideLeftBorder.css";
+
+import { useAddChannel, useAddGoods, useEditChannel } from "service/product";
+import { cleanObject } from "utils";
+import { useGoodsListQueryKey, useNewPublishModal } from "../util";
 import {
   useDefaultWarningSetting,
   useOperatorOptions,
   useRegionOptions,
   useUpdateDefaultWarningSetting,
 } from "service/common";
-import { SupplierOption } from "types/supplier";
-import useDeepCompareEffect from "use-deep-compare-effect";
 import { useChannelsQueryKey } from "screen/authenticated-app/product-channels/util";
-import { RegionItem } from "types/common";
-import { ChannelForm, GoodsForm } from "types/product";
-import { AgentOption } from "types/agent";
+
+import type { RegionItem } from "types/common";
+import type { SupplierOption } from "types/supplier";
+import type { ChannelForm, GoodsForm } from "types/product";
+import type { AgentOption } from "types/agent";
 
 const limitOptions = [
   { value: 0, label: "不限制" },
