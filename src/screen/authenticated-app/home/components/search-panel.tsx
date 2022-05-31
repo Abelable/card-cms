@@ -7,16 +7,17 @@ import styled from "@emotion/styled";
 import { AgentOption } from "types/agent";
 import dayjs from "dayjs";
 import { useExportHome } from "service/home";
-import { useGoodsOptions } from "service/product";
-
+import { GoodsOption } from "types/product";
 export interface SearchPanelProps {
   agentOptions: AgentOption[];
+  goodsOptions: GoodsOption[];
   params: Partial<HomeSearchParams>;
   setParams: (params: Partial<HomeSearchParams>) => void;
 }
 
 export const SearchPanel = ({
   agentOptions,
+  goodsOptions,
   params,
   setParams,
 }: SearchPanelProps) => {
@@ -29,7 +30,6 @@ export const SearchPanel = ({
     goods_id: undefined,
   } as Partial<HomeSearchParams>;
 
-  const goodsOptions = useGoodsOptions();
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<HomeSearchParams>>(defaultParams);
 
