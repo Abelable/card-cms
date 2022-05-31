@@ -103,7 +103,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             dataIndex: "activate_effective_day",
             render: (value, agent) => (
               <Edit onClick={() => startEditingActivation(String(agent.id))}>
-                <span>{value || 0}天</span>
+                <span>{value}天</span>
                 <EditOutlined
                   style={{ marginLeft: ".4rem", color: "#1890ff" }}
                 />
@@ -116,7 +116,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             dataIndex: "recharge_effective_day",
             render: (value, agent) => (
               <Edit onClick={() => startEditingRecharge(String(agent.id))}>
-                <span>{value || 0}天</span>
+                <span>{value}天</span>
                 <EditOutlined
                   style={{ marginLeft: ".4rem", color: "#1890ff" }}
                 />
