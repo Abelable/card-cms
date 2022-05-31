@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import { Form, Modal, Radio, Select, Button, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useAgentOptions } from "service/agent";
 import { useEditGoods, useUpGoods } from "service/product";
-import { GoodsListSearchParams } from "types/product";
-import useDeepCompareEffect from "use-deep-compare-effect";
 import { useGoodsListQueryKey, useAgentModal } from "../util";
+import type { GoodsListSearchParams } from "types/product";
 
 export const AgentModal = ({
   params,
