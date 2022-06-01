@@ -39,6 +39,7 @@ export const InfoModal = ({
           province_id: address_region[0],
           city_id: address_region[1],
           area_id: address_region[2],
+          street_id: undefined,
           ...rest,
         });
         closeModal();
