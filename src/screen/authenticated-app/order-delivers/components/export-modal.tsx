@@ -22,7 +22,7 @@ export const ExportModal = ({
       navigate("/order/deliver/report_forms");
       setIsLoading(false);
     } catch (error) {
-      message.warn("两次导出的时间请间隔5分钟");
+      message.error((error as Error).message);
       setIsLoading(false);
     }
   };
