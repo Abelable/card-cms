@@ -24,7 +24,6 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   const client = useHttp();
   return useQuery<DeliversResult>(["order_delivers", params], () => {
     const { page, per_page, ...restParams } = params;
-    console.log(restParams);
     return client("/api/v1/admin/order/index", {
       data: cleanObject({
         "filter[product.name]": restParams.product_name,

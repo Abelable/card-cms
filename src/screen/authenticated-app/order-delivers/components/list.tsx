@@ -74,16 +74,10 @@ export const List = ({
 
   const queryClient = useQueryClient();
   const queryKey = useOrderDeliversQueryKey();
-  const handleProductSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
-    if (info.file.status === "done") {
-      queryClient.invalidateQueries(queryKey);
-      message.success("生产数据导入成功");
-    }
-  };
   const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
     if (info.file.status === "done") {
       queryClient.invalidateQueries(queryKey);
-      message.success("激活数据导入成功");
+      message.success(info.file.response.message);
     }
   };
 
@@ -103,7 +97,7 @@ export const List = ({
             <FileUpload
               scene={1}
               name="导入生产数据"
-              onChange={handleProductSuccess}
+              onChange={handleSuccess}
             />
           </div>
           <Tooltip title="下载生产模版">

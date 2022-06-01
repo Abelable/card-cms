@@ -35,7 +35,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
     if (info.file.status === "done") {
       queryClient.invalidateQueries(queryKey);
-      message.success("文件上传成功");
+      message.success(info.file.response.message);
     }
   };
 
