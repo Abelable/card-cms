@@ -24,6 +24,7 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   const client = useHttp();
   return useQuery<DeliversResult>(["order_delivers", params], () => {
     const { page, per_page, ...restParams } = params;
+    console.log(restParams);
     return client("/api/v1/admin/order/index", {
       data: cleanObject({
         "filter[product.name]": restParams.product_name,
@@ -39,13 +40,13 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
         "filter[order.is_activated]": restParams.is_activated,
         "filter[order.agent_id]": restParams.agent_id,
         "filter[order.start_created_at]":
-          restParams.time_type === 1 ? restParams.start_time : "",
+          Number(restParams.time_type) === 1 ? restParams.start_time : "",
         "filter[order.end_created_at]":
-          restParams.time_type === 1 ? restParams.end_time : "",
+          Number(restParams.time_type) === 1 ? restParams.end_time : "",
         "filter[order.start_activated_at]":
-          restParams.time_type === 2 ? restParams.start_time : "",
+          Number(restParams.time_type) === 2 ? restParams.start_time : "",
         "filter[order.end_activated_at]":
-          restParams.time_type === 2 ? restParams.end_time : "",
+          Number(restParams.time_type) === 2 ? restParams.end_time : "",
         page,
         per_page,
       }),
@@ -73,13 +74,13 @@ export const useExportDelivers = () => {
           "order.is_activated": restParams.is_activated,
           "order.agent_id": restParams.agent_id,
           "order.start_created_at":
-            restParams.time_type === 1 ? restParams.start_time : "",
+            Number(restParams.time_type) === 1 ? restParams.start_time : "",
           "order.end_created_at":
-            restParams.time_type === 1 ? restParams.end_time : "",
+            Number(restParams.time_type) === 1 ? restParams.end_time : "",
           "order.start_activated_at":
-            restParams.time_type === 2 ? restParams.start_time : "",
+            Number(restParams.time_type) === 2 ? restParams.start_time : "",
           "order.end_activated_at":
-            restParams.time_type === 2 ? restParams.end_time : "",
+            Number(restParams.time_type) === 2 ? restParams.end_time : "",
         }),
         page,
         per_page,

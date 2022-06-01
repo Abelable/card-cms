@@ -405,7 +405,7 @@ export const SearchPanel = ({
         <Input.Group compact>
           <Select
             style={{ width: "14rem" }}
-            value={temporaryParams.time_type}
+            value={Number(temporaryParams.time_type)}
             allowClear={true}
             onSelect={setTimeType}
             onClear={clearTimeType}
@@ -418,6 +418,7 @@ export const SearchPanel = ({
             ))}
           </Select>
           <DatePicker.RangePicker
+            showTime
             value={
               temporaryParams.start_time
                 ? [
