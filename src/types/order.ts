@@ -29,13 +29,17 @@ export interface DeliversSearchParams {
 export interface Deliver {
   id: string;
   order_no: string;
+  supplier_order_no: string;
   source: string;
   outer_order_no: string;
   created_at: string;
   updated_at: string;
+  agent_order_created_at: string;
   agent_id: number;
   product: Channel;
   goods: Goods;
+  buy_num: number;
+  buy_phone_no: string;
   idcard: string;
   idcard_front_photo: string;
   idcard_back_photo: string;

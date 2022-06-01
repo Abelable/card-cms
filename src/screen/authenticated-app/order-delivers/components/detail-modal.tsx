@@ -44,7 +44,9 @@ export const DetailModal = ({
                   <Extra>外部订单编号：{editingDeliver?.outer_order_no}</Extra>
                 </Row>
                 <Row gap style={{ margin: "1.6rem 0" }}>
-                  <Time>用户下单时间：2022-05-01 01:38:05</Time>
+                  <Time>
+                    用户下单时间：{editingDeliver?.agent_order_created_at}
+                  </Time>
                   <Time>平台创建时间：{editingDeliver?.created_at}</Time>
                   <Time>状态变更时间：{editingDeliver?.updated_at}</Time>
                 </Row>
@@ -79,7 +81,9 @@ export const DetailModal = ({
             <Descriptions.Item label="收获地址">
               {editingDeliver?.detail_address}
             </Descriptions.Item>
-            <Descriptions.Item label="上游订单号">172172129</Descriptions.Item>
+            <Descriptions.Item label="上游订单号">
+              {editingDeliver?.supplier_order_no}
+            </Descriptions.Item>
             <Descriptions.Item label="证件姓名">
               <Row>
                 <div>{editingDeliver?.buyer}</div>
@@ -115,8 +119,12 @@ export const DetailModal = ({
               {editingDeliver?.goods.encoding}
             </Descriptions.Item>
             <Descriptions.Item label="归属地">浙江杭州</Descriptions.Item>
-            <Descriptions.Item label="购买号码">60</Descriptions.Item>
-            <Descriptions.Item label="购买数量">1</Descriptions.Item>
+            <Descriptions.Item label="购买号码">
+              {editingDeliver?.buy_phone_no}
+            </Descriptions.Item>
+            <Descriptions.Item label="购买数量">
+              {editingDeliver?.buy_num}
+            </Descriptions.Item>
           </Descriptions>
 
           <Descriptions
