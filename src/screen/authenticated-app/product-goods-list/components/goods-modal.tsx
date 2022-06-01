@@ -57,10 +57,11 @@ export const GoodsModal = ({
     form.validateFields().then(async () => {
       const { tags, img, ...rest } = form.getFieldsValue();
       const sale_point = tags.join();
+
       const main_picture = img.length
         ? img[0].xhr
           ? JSON.parse(img[0].xhr.response).data.relative_url
-          : img[0].url
+          : img[0].url.replace("//jiumengkeji.oss-cn-beijing.aliyuncs.com", "")
         : "";
       await mutateAsync(
         cleanObject({
