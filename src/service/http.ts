@@ -40,8 +40,10 @@ export const http = async (
   return window.fetch(`${apiUrl}${endpoint}`, config).then(async (response) => {
     if (response.ok) {
       if (config.headers.responseType === "arraybuffer") {
-        if (!response.headers.get("X-File-Name")) {
-          message.error("文件导出失败");
+        if (response.headers.get("X-Error-Message")) {
+          message.error(
+            `${decodeURI(response.headers.get("X-Error-Message") as string)}`
+          );
           return;
         }
         const result = await response.blob();
