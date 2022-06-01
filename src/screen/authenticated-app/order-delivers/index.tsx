@@ -109,10 +109,7 @@ export const OrderDelivers = () => {
         agentOptions={agentOptions}
         channelEncodingOptions={channelEncodingOptions}
       />
-      <DetailModal
-        agentOptions={agentOptions}
-        orderStatusOptions={orderStatusOptions}
-      />
+      <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer
         visible={!!selectedRowKeys.length}
         style={{ position: "absolute" }}

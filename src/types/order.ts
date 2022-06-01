@@ -36,6 +36,7 @@ export interface Deliver {
   updated_at: string;
   agent_order_created_at: string;
   agent_id: number;
+  agent: { store: string } | null;
   product: Channel;
   goods: Goods;
   buy_num: number;

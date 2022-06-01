@@ -20,6 +20,8 @@ export interface Channel {
   operator_id: number;
   is_auto_product: number;
   created_at: string;
+  province?: { name: string };
+  city?: { name: string };
 }
 
 export interface ChannelsResult {

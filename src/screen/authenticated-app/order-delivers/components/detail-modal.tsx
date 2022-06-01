@@ -4,13 +4,10 @@ import styled from "@emotion/styled";
 import { IdcardOutlined } from "@ant-design/icons";
 import { useDetailModal, usePicModal } from "../util";
 import type { OrderStatusOption } from "types/order";
-import type { AgentOption } from "types/agent";
 
 export const DetailModal = ({
-  agentOptions,
   orderStatusOptions,
 }: {
-  agentOptions: AgentOption[];
   orderStatusOptions: OrderStatusOption[];
 }) => {
   const { detailModalOpen, detailDeliverId, editingDeliver, close, isLoading } =
@@ -62,11 +59,7 @@ export const DetailModal = ({
               {editingDeliver?.receiver}
             </Descriptions.Item>
             <Descriptions.Item label="分销商">
-              {
-                agentOptions.find(
-                  (item) => item.id === editingDeliver?.agent_id
-                )?.name
-              }
+              {editingDeliver?.agent?.store}
             </Descriptions.Item>
             <Descriptions.Item label="联系电话">
               {editingDeliver?.phone}
@@ -118,7 +111,7 @@ export const DetailModal = ({
             <Descriptions.Item label="商品编号">
               {editingDeliver?.goods.encoding}
             </Descriptions.Item>
-            <Descriptions.Item label="归属地">浙江杭州</Descriptions.Item>
+            <Descriptions.Item label="归属地">{`${editingDeliver?.product.province?.name}${editingDeliver?.product.city?.name}`}</Descriptions.Item>
             <Descriptions.Item label="购买号码">
               {editingDeliver?.buy_phone_no}
             </Descriptions.Item>
