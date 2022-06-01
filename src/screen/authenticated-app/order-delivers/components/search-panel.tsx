@@ -405,7 +405,11 @@ export const SearchPanel = ({
         <Input.Group compact>
           <Select
             style={{ width: "14rem" }}
-            value={Number(temporaryParams.time_type)}
+            value={
+              temporaryParams.time_type
+                ? Number(temporaryParams.time_type)
+                : undefined
+            }
             allowClear={true}
             onSelect={setTimeType}
             onClear={clearTimeType}
