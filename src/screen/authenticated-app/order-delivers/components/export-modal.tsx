@@ -1,4 +1,4 @@
-import { Button, Modal } from "antd";
+import { Button, message, Modal } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useExportDelivers } from "service/order";
@@ -17,9 +17,14 @@ export const ExportModal = ({
 
   const generate = async () => {
     setIsLoading(true);
-    await exportDelivers(params);
-    setIsLoading(false);
-    navigate("/order/deliver/report_forms");
+    try {
+      await exportDelivers(params);
+      navigate("/order/deliver/report_forms");
+      setIsLoading(false);
+    } catch (error) {
+      message.warn("两次导出的时间请间隔5分钟");
+      setIsLoading(false);
+    }
   };
 
   const check = () => navigate("/order/deliver/report_forms");

@@ -59,26 +59,28 @@ export const useExportDelivers = () => {
     const { page, per_page, ...restParams } = params;
     return client("/api/v1/admin/order-export/store", {
       data: cleanObject({
-        "filter[product.name]": restParams.product_name,
-        "filter[product.encoding]": restParams.product_code,
-        "filter[order.id]": restParams.order_id,
-        "filter[order.outer_order_no]": restParams.out_order_id,
-        "filter[order.status]": restParams.order_status,
-        "filter[order.idcard]": restParams.id_number,
-        "filter[order.express_no]": restParams.express_code,
-        "filter[order.product_no]": restParams.production_number,
-        "filter[order.phone]": restParams.phone,
-        "filter[order.is_recharged]": restParams.is_recharged,
-        "filter[order.is_activated]": restParams.is_activated,
-        "filter[order.agent_id]": restParams.agent_id,
-        "filter[order.start_created_at]":
-          restParams.time_type === 1 ? restParams.start_time : "",
-        "filter[order.end_created_at]":
-          restParams.time_type === 1 ? restParams.end_time : "",
-        "filter[order.start_activated_at]":
-          restParams.time_type === 2 ? restParams.start_time : "",
-        "filter[order.end_activated_at]":
-          restParams.time_type === 2 ? restParams.end_time : "",
+        filter: cleanObject({
+          "product.name": restParams.product_name,
+          "product.encoding": restParams.product_code,
+          "order.id": restParams.order_id,
+          "order.outer_order_no": restParams.out_order_id,
+          "order.status": restParams.order_status,
+          "order.idcard": restParams.id_number,
+          "order.express_no": restParams.express_code,
+          "order.product_no": restParams.production_number,
+          "order.phone": restParams.phone,
+          "order.is_recharged": restParams.is_recharged,
+          "order.is_activated": restParams.is_activated,
+          "order.agent_id": restParams.agent_id,
+          "order.start_created_at":
+            restParams.time_type === 1 ? restParams.start_time : "",
+          "order.end_created_at":
+            restParams.time_type === 1 ? restParams.end_time : "",
+          "order.start_activated_at":
+            restParams.time_type === 2 ? restParams.start_time : "",
+          "order.end_activated_at":
+            restParams.time_type === 2 ? restParams.end_time : "",
+        }),
         page,
         per_page,
       }),
@@ -241,8 +243,10 @@ export const useExportOrderProduct = () => {
   }) =>
     client("/api/v1/admin/order/export-product", {
       data: cleanObject({
-        "filter[order.agent_id]": agentId,
-        "filter[product-encoding]": encodings,
+        filter: cleanObject({
+          "order.agent_id": agentId,
+          "product-encoding": encodings,
+        }),
         password,
       }),
       method: "POST",
