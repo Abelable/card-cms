@@ -11,6 +11,7 @@ export const PicModal = () => {
 
   return (
     <Modal
+      width={760}
       title={"证件照片"}
       visible={picModalOpen}
       onCancel={closeModal}
@@ -24,6 +25,7 @@ export const PicModal = () => {
         <Row>
           <Pic src={editingDeliver?.idcard_front_photo} />
           <Pic src={editingDeliver?.idcard_back_photo} />
+          <Pic src={editingDeliver?.bareheaded_photo} />
         </Row>
       )}
     </Modal>

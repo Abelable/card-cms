@@ -39,6 +39,7 @@ export interface Deliver {
   idcard: string;
   idcard_front_photo: string;
   idcard_back_photo: string;
+  bareheaded_photo: string;
   buyer: string;
   receiver: string;
   phone: string;
