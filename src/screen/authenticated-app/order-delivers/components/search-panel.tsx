@@ -6,8 +6,10 @@ import moment from "moment";
 import { useExportModal } from "../util";
 import type { DeliversSearchParams, OrderStatusOption } from "types/order";
 import type { AgentOption } from "types/agent";
+import type { ChannelEncodingOption } from "types/product";
 
 export interface SearchPanelProps {
+  channelEncodingOptions: ChannelEncodingOption[];
   agentOptions: AgentOption[];
   orderStatusOptions: OrderStatusOption[];
   params: Partial<DeliversSearchParams>;
@@ -28,6 +30,7 @@ const timeTypeOptions = [
 ];
 
 export const SearchPanel = ({
+  channelEncodingOptions,
   agentOptions,
   orderStatusOptions,
   params,
@@ -56,20 +59,10 @@ export const SearchPanel = ({
 
   const { open: openExportModal } = useExportModal();
 
-  const setProductName = (evt: any) => {
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        product_name: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      product_name: evt.target.value,
-    });
-  };
+  const setProductName = (product_name: string) =>
+    setTemporaryParams({ ...temporaryParams, product_name });
+  const clearProductName = () =>
+    setTemporaryParams({ ...temporaryParams, product_name: undefined });
 
   const setProductCode = (evt: any) => {
     // onInputClear
@@ -238,13 +231,20 @@ export const SearchPanel = ({
     <Container>
       <Item>
         <div>产品名称：</div>
-        <Input
+        <Select
           style={{ width: "20rem" }}
           value={temporaryParams.product_name}
-          onChange={setProductName}
-          placeholder="请输入产品名称"
           allowClear={true}
-        />
+          onSelect={setProductName}
+          onClear={clearProductName}
+          placeholder="请选择产品名称"
+        >
+          {channelEncodingOptions.map(({ encoding, name }) => (
+            <Select.Option key={encoding} value={name}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
       </Item>
       <Item>
         <div>产品编码：</div>

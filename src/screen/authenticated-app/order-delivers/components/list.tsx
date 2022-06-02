@@ -37,7 +37,7 @@ import type { Deliver } from "types/order";
 
 interface ListProps
   extends TableProps<Deliver>,
-    Omit<SearchPanelProps, "agentOptions"> {
+    Omit<SearchPanelProps, "agentOptions" | "channelEncodingOptions"> {
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;

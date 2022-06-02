@@ -73,6 +73,7 @@ export const OrderDelivers = () => {
     <Container>
       <Main>
         <SearchPanel
+          channelEncodingOptions={channelEncodingOptions}
           agentOptions={agentOptions}
           orderStatusOptions={orderStatusOptions}
           params={params}
