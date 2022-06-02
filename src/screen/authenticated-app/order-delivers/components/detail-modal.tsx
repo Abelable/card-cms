@@ -59,7 +59,7 @@ export const DetailModal = ({
               {editingDeliver?.receiver}
             </Descriptions.Item>
             <Descriptions.Item label="分销商">
-              {editingDeliver?.agent?.store}
+              {editingDeliver?.agent?.store || "平台订单"}
             </Descriptions.Item>
             <Descriptions.Item label="联系电话">
               {editingDeliver?.phone}
