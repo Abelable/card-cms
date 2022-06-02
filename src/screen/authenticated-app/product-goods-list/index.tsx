@@ -100,6 +100,6 @@ const TypeMenu = styled.div`
 
 const Main = styled.div`
   padding: 2.4rem;
-  height: 100%;
+  height: calc(100% - 4.6rem);
   overflow: scroll;
 `;
