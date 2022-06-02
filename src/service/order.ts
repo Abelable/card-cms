@@ -28,7 +28,7 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
       data: cleanObject({
         "filter[product.name]": restParams.product_name,
         "filter[product.encoding]": restParams.product_code,
-        "filter[order.id]": restParams.order_id,
+        "filter[order.order_no]": restParams.order_id,
         "filter[order.outer_order_no]": restParams.out_order_id,
         "filter[order.status]": restParams.order_status,
         "filter[order.idcard]": restParams.id_number,
@@ -62,7 +62,7 @@ export const useExportDelivers = () => {
         filter: cleanObject({
           "product.name": restParams.product_name,
           "product.encoding": restParams.product_code,
-          "order.id": restParams.order_id,
+          "order.order_no": restParams.order_id,
           "order.outer_order_no": restParams.out_order_id,
           "order.status": restParams.order_status,
           "order.idcard": restParams.id_number,
