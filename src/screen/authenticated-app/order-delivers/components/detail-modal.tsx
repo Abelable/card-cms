@@ -37,7 +37,7 @@ export const DetailModal = ({
             title={
               <div style={{ borderBottom: "1px dotted #d9d9d9" }}>
                 <Row gap>
-                  <div>订单ID：{editingDeliver?.id}</div>
+                  <div>订单ID：{editingDeliver?.order_no}</div>
                   <Extra>外部订单编号：{editingDeliver?.outer_order_no}</Extra>
                 </Row>
                 <Row gap style={{ margin: "1.6rem 0" }}>
