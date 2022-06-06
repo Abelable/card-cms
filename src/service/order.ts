@@ -122,7 +122,7 @@ export const useEditDeliver = (queryKey: QueryKey) => {
   return useMutation(
     ({ id, ...rest }: Partial<Deliver>) =>
       client(`/api/v1/admin/order/update/${id}`, {
-        data: cleanObject({ ...rest }),
+        data: rest,
         method: "POST",
       }),
     useEditConfig(queryKey)
