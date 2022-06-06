@@ -236,7 +236,10 @@ export const List = ({
             width: "30rem",
             render: (value, deliver) => (
               <Space direction={"vertical"}>
-                <div>生产号码：{deliver.product_no}</div>
+                <div>
+                  生产号码：{deliver.product_no}
+                  {deliver.product_no_is_recycled ? <span>-已回收</span> : null}
+                </div>
                 <div>物流公司：{deliver.express_name}</div>
                 <div>物流单号：{deliver.express_no}</div>
               </Space>

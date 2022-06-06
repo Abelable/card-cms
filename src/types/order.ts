@@ -58,6 +58,7 @@ export interface Deliver {
   product_failed_reason: string;
   remark: string;
   product_no: string;
+  product_no_is_recycled: number;
   express_name: string;
   express_no: string;
   province_id: number;
