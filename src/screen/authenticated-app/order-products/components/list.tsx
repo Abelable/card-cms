@@ -60,7 +60,7 @@ export const List = ({
           },
           {
             title: "供应商店铺名",
-            render: (value, setting) => <>{setting.supplier.name}</>,
+            render: (value, setting) => <>{setting.supplier?.name}</>,
           },
           {
             title: "上游产品编码",
