@@ -22,7 +22,7 @@ export const useProductsSearchParams = () => {
 
 export const useProductsQueryKey = () => {
   const [params] = useProductsSearchParams();
-  return ["orderProducts", params];
+  return ["products", params];
 };
 
 export const useProductModal = () => {

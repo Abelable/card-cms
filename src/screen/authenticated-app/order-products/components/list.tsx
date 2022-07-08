@@ -103,7 +103,7 @@ const More = ({ id }: { id: number }) => {
 
   const confirmDeleteProduct = (id: string) => {
     Modal.confirm({
-      title: "确定删除该头图吗？",
+      title: "确定删除该配置吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
