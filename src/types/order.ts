@@ -49,6 +49,7 @@ export interface Deliver {
   receiver: string;
   phone: string;
   detail_address: string;
+  full_address: string;
   status: number;
   is_activated: number;
   activated_at: string;
