@@ -19,7 +19,7 @@ export interface DeliversSearchParams {
   is_recharged: number;
   is_activated: number;
   agent_id: number;
-  time_type: number;
+  time_type: number | string;
   start_time: string;
   end_time: string;
   page: number;

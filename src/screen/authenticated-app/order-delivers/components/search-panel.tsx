@@ -3,6 +3,7 @@ import { Button, DatePicker, Divider, Input, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import moment from "moment";
+import dayjs from "dayjs";
 import { useExportModal } from "../util";
 import type { DeliversSearchParams, OrderStatusOption } from "types/order";
 import type { AgentOption } from "types/agent";
@@ -36,8 +37,11 @@ export const SearchPanel = ({
   params,
   setParams,
 }: SearchPanelProps) => {
+  const date = new Date();
+  date.setDate(date.getDate() - 6);
+
   const defaultParams = {
-    product_name: "",
+    product_name: undefined,
     product_code: "",
     order_id: "",
     out_order_id: "",
@@ -49,13 +53,13 @@ export const SearchPanel = ({
     is_recharged: undefined,
     is_activated: undefined,
     agent_id: undefined,
-    time_type: undefined,
-    start_time: "",
-    end_time: "",
+    time_type: 1,
+    start_time: dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
+    end_time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   } as Partial<DeliversSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<DeliversSearchParams>>(params);
+    useState<Partial<DeliversSearchParams>>(defaultParams);
 
   const { open: openExportModal } = useExportModal();
 
@@ -221,6 +225,24 @@ export const SearchPanel = ({
       start_time: formatString[0],
       end_time: formatString[1],
     });
+
+  const query = () => {
+    const { time_type, start_time, end_time, ...rest } = temporaryParams;
+    setParams({
+      ...params,
+      time_type: time_type || 1,
+      start_time: start_time || defaultParams.start_time,
+      end_time: end_time || defaultParams.end_time,
+      ...rest,
+    });
+    if (!start_time) {
+      setTemporaryParams({
+        ...temporaryParams,
+        start_time: defaultParams.start_time,
+        end_time: defaultParams.end_time,
+      });
+    }
+  };
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -437,10 +459,7 @@ export const SearchPanel = ({
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
-        <Button
-          type={"primary"}
-          onClick={() => setParams({ ...params, ...temporaryParams })}
-        >
+        <Button type={"primary"} onClick={query}>
           查询
         </Button>
         <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
