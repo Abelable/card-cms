@@ -198,7 +198,10 @@ export const List = ({
                 <div>证件号码：{deliver.idcard}</div>
                 <div>收件人：{deliver.receiver}</div>
                 <div>联系电话：{deliver.phone}</div>
-                <div>收货地址：{deliver.full_address}</div>
+                <div>
+                  收货地址：
+                  {`${deliver.province}${deliver.city}${deliver.area}${deliver.detail_address}`}
+                </div>
               </Space>
             ),
           },

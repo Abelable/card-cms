@@ -92,6 +92,7 @@ export const OrderDelivers = () => {
             current: toNumber(data?.meta.pagination.current_page),
             pageSize: toNumber(data?.meta.pagination.per_page),
             total: toNumber(data?.meta.pagination.total),
+            showTotal: (total) => `共${total}条`,
           }}
         />
       </Main>

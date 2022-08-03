@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Cascader, Col, Form, Input, message, Modal, Row, Spin } from "antd";
+import { Cascader, Form, Input, message, Modal, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useEditDeliver } from "service/order";
@@ -106,25 +106,6 @@ export const InfoModal = ({
               options={regionOptions as any}
               placeholder="请选择收货地址"
             />
-          </Form.Item>
-          <Form.Item label="手动填写" tooltip="没找到？手动填写">
-            <Row gutter={16}>
-              <Col span={8}>
-                <Form.Item name="province" style={{ marginBottom: 0 }}>
-                  <Input placeholder="省" />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item name="city" style={{ marginBottom: 0 }}>
-                  <Input placeholder="市" />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item name="area" style={{ marginBottom: 0 }}>
-                  <Input placeholder="区" />
-                </Form.Item>
-              </Col>
-            </Row>
           </Form.Item>
           <Form.Item
             name="detail_address"
