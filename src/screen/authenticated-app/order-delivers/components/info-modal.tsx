@@ -124,7 +124,7 @@ export const InfoModal = ({
                   <Tips>未匹配到地址库，请手动选择省市区</Tips>
                 </>
               ) : (
-                <div style={{ height: "1.4rem" }}></div>
+                <div style={{ height: "1.4rem" }} />
               )
             }
           </Form.Item>
