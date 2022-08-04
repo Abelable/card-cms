@@ -97,6 +97,7 @@ export const InfoModal = ({
             <Input placeholder="请输入联系电话" />
           </Form.Item>
           <Form.Item
+            style={{ marginBottom: 10 }}
             name="address_region"
             label="收货地址"
             rules={[{ required: true, message: "请选择收货地址" }]}
@@ -106,6 +107,26 @@ export const InfoModal = ({
               options={regionOptions as any}
               placeholder="请选择收货地址"
             />
+          </Form.Item>
+          <Form.Item
+            noStyle
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.address_region !== currentValues.address_region
+            }
+          >
+            {({ getFieldValue }) =>
+              getFieldValue("address_region") &&
+              (getFieldValue("address_region") as any)[0] === 0 ? (
+                <>
+                  <div>{`${getFieldValue("province")} ${getFieldValue(
+                    "city"
+                  )} ${getFieldValue("area")}`}</div>
+                  <Tips>未匹配到地址库，请手动选择省市区</Tips>
+                </>
+              ) : (
+                <div style={{ height: "1.4rem" }}></div>
+              )
+            }
           </Form.Item>
           <Form.Item
             name="detail_address"
@@ -126,4 +147,17 @@ const Loading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const Tips = styled.div`
+  position: relative;
+  margin-bottom: 2.4rem;
+  padding-left: 0.68rem;
+  color: red;
+  font-size: 1.2rem;
+  &::after {
+    position: absolute;
+    left: 0;
+    content: "*";
+  }
 `;
