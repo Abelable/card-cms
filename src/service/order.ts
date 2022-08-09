@@ -36,7 +36,8 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
         "filter[order.product_no]": restParams.production_number,
         "filter[order.phone]": restParams.phone,
         "filter[order.is_recharged]": restParams.is_recharged,
-        "filter[order.is_activated]": restParams.is_activated,
+        "filter[order.is_activated]":
+          Number(restParams.time_type) === 2 ? 1 : restParams.is_activated,
         "filter[order.agent_id]": restParams.agent_id,
         "filter[order.start_created_at]":
           Number(restParams.time_type) === 1 ? restParams.start_time : "",

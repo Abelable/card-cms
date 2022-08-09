@@ -403,23 +403,27 @@ export const SearchPanel = ({
           ))}
         </Select>
       </Item>
-      <Item>
-        <div>是否激活：</div>
-        <Select
-          style={{ width: "20rem" }}
-          value={temporaryParams.is_activated}
-          allowClear={true}
-          onSelect={setIsActivated}
-          onClear={clearIsActivated}
-          placeholder="请选择是否充值"
-        >
-          {activateOptions.map(({ name, value }) => (
-            <Select.Option key={value} value={value}>
-              {name}
-            </Select.Option>
-          ))}
-        </Select>
-      </Item>
+      {temporaryParams.time_type === 2 ? (
+        <></>
+      ) : (
+        <Item>
+          <div>是否激活：</div>
+          <Select
+            style={{ width: "20rem" }}
+            value={temporaryParams.is_activated}
+            allowClear={true}
+            onSelect={setIsActivated}
+            onClear={clearIsActivated}
+            placeholder="请选择是否激活"
+          >
+            {activateOptions.map(({ name, value }) => (
+              <Select.Option key={value} value={value}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Item>
+      )}
       {/* <Item>
         <div>上游订单id：</div>
         <Input
