@@ -42,7 +42,7 @@ export const List = ({ params, total, error, ...restProps }: ListProps) => {
               <Toggle
                 icon={<LoadingOutlined style={{ fontSize: "1.1rem" }} />}
               />
-            ) : expanded ? (
+            ) : expanded && record.children?.length ? (
               record.children ? (
                 <Toggle
                   icon={<MinusOutlined style={{ fontSize: "1.1rem" }} />}
