@@ -1,4 +1,5 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
+import dayjs from "dayjs";
 import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
@@ -23,7 +24,14 @@ import {
 export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   const client = useHttp();
   return useQuery<DeliversResult>(["order_delivers", params], () => {
-    const { page, per_page, ...restParams } = params;
+    let { page, per_page, start_time, end_time, ...restParams } = params;
+    if (!start_time) {
+      const date = new Date();
+      date.setDate(date.getDate() - 6);
+      start_time = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+      end_time = dayjs().format("YYYY-MM-DD HH:mm:ss");
+    }
+
     return client("/api/v1/admin/order/index", {
       data: cleanObject({
         "filter[product.name]": restParams.product_name,
@@ -40,13 +48,13 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
           Number(restParams.time_type) === 2 ? 1 : restParams.is_activated,
         "filter[order.agent_id]": restParams.agent_id,
         "filter[order.start_created_at]":
-          Number(restParams.time_type) === 1 ? restParams.start_time : "",
+          Number(restParams.time_type) === 1 ? start_time : "",
         "filter[order.end_created_at]":
-          Number(restParams.time_type) === 1 ? restParams.end_time : "",
+          Number(restParams.time_type) === 1 ? end_time : "",
         "filter[order.start_activated_at]":
-          Number(restParams.time_type) === 2 ? restParams.start_time : "",
+          Number(restParams.time_type) === 2 ? start_time : "",
         "filter[order.end_activated_at]":
-          Number(restParams.time_type) === 2 ? restParams.end_time : "",
+          Number(restParams.time_type) === 2 ? end_time : "",
         page,
         per_page,
       }),

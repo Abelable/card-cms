@@ -1,7 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 import { useDeliver } from "service/order";
-import dayjs from "dayjs";
 
 export const useOrderDeliversSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -25,16 +24,11 @@ export const useOrderDeliversSearchParams = () => {
   ]);
   return [
     useMemo(() => {
-      const date = new Date();
-      date.setDate(date.getDate() - 6);
-      const { page, per_page, time_type, start_time, end_time, ...rest } =
-        params;
+      const { page, per_page, time_type, ...rest } = params;
       return {
         page: Number(page) || 1,
         per_page: Number(per_page) || 10,
         time_type: time_type || 1,
-        start_time: start_time || dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
-        end_time: end_time || dayjs().format("YYYY-MM-DD HH:mm:ss"),
         ...rest,
       };
     }, [params]),
