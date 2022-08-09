@@ -58,6 +58,14 @@ export const SearchPanel = ({
     end_time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   } as Partial<DeliversSearchParams>;
 
+  const [defaultDate, setDefaultDate] = useState<{
+    start_time: string | undefined;
+    end_time: string | undefined;
+  }>({
+    start_time: defaultParams.start_time,
+    end_time: defaultParams.end_time,
+  });
+
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<DeliversSearchParams>>(defaultParams);
 
@@ -228,18 +236,39 @@ export const SearchPanel = ({
 
   const query = () => {
     const { time_type, start_time, end_time, ...rest } = temporaryParams;
-    setParams({
-      ...params,
-      time_type: time_type || 1,
-      start_time: start_time || defaultParams.start_time,
-      end_time: end_time || defaultParams.end_time,
-      ...rest,
-    });
-    if (!start_time) {
+
+    // 时间参数没有变化的情况，表示使用的是默认时间，需要刷新默认时间
+    if (
+      start_time === defaultDate.start_time &&
+      end_time === defaultDate.end_time
+    ) {
+      console.log("没有手动更换时间");
+      const startTime = defaultParams.start_time;
+      const endTime = defaultParams.end_time;
+      setParams({
+        ...params,
+        time_type: time_type || 1,
+        start_time: startTime,
+        end_time: endTime,
+        ...rest,
+      });
       setTemporaryParams({
         ...temporaryParams,
-        start_time: defaultParams.start_time,
-        end_time: defaultParams.end_time,
+        start_time: startTime,
+        end_time: endTime,
+      });
+      setDefaultDate({
+        start_time: startTime,
+        end_time: endTime,
+      });
+    } else {
+      console.log("其他情况");
+      setParams({
+        ...params,
+        time_type: time_type || 1,
+        start_time,
+        end_time,
+        ...rest,
       });
     }
   };
@@ -247,6 +276,10 @@ export const SearchPanel = ({
   const clear = () => {
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
+    setDefaultDate({
+      start_time: defaultParams.start_time,
+      end_time: defaultParams.end_time,
+    });
   };
 
   return (
