@@ -8,16 +8,25 @@ import {
   SecondHomeSearchParams,
   ThirdHomeSearchParams,
 } from "types/home";
+import dayjs from "dayjs";
 
 export const useHome = (params: Partial<HomeSearchParams>) => {
   const client = useHttp();
   return useQuery<HomeResult>(["home_records", params], async () => {
+    let { agent_id, goods_id, start_created_at, end_created_at } = params;
+    if (!start_created_at) {
+      const date = new Date();
+      date.setDate(date.getDate() - 6);
+      start_created_at = dayjs(date).format("YYYY-MM-DD");
+      end_created_at = dayjs().format("YYYY-MM-DD");
+    }
+
     const res: Home[] = await client("/api/v1/admin/index/index", {
       data: cleanObject({
-        "filter[agent_id]": params.agent_id,
-        "filter[goods_id]": params.goods_id,
-        "filter[start_created_at]": params.start_created_at,
-        "filter[end_created_at]": params.end_created_at,
+        "filter[agent_id]": agent_id,
+        "filter[goods_id]": goods_id,
+        "filter[start_created_at]": start_created_at,
+        "filter[end_created_at]": end_created_at,
       }),
     });
     const list = res
