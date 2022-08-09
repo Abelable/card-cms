@@ -242,7 +242,6 @@ export const SearchPanel = ({
       start_time === defaultDate.start_time &&
       end_time === defaultDate.end_time
     ) {
-      console.log("没有手动更换时间");
       const startTime = defaultParams.start_time;
       const endTime = defaultParams.end_time;
       setParams({
@@ -262,7 +261,6 @@ export const SearchPanel = ({
         end_time: endTime,
       });
     } else {
-      console.log("其他情况");
       setParams({
         ...params,
         time_type: time_type || 1,
