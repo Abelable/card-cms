@@ -25,6 +25,7 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
   }, [supplier, form]);
 
   const confirm = () => {
+    console.log(form.getFieldsValue());
     form.validateFields().then(async () => {
       await mutateAsync(
         cleanObject({
@@ -50,7 +51,13 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
+      <Form
+        form={form}
+        initialValues={{
+          use_base_liantong_api: 0,
+        }}
+        layout="vertical"
+      >
         {editingSupplierId ? (
           <></>
         ) : (
