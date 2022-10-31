@@ -37,8 +37,12 @@ export const SearchPanel = ({
   params,
   setParams,
 }: SearchPanelProps) => {
-  const date = new Date();
-  date.setDate(date.getDate() - 6);
+  const endTime = new Date(
+    new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
+  );
+  const startTime = new Date(
+    new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
+  );
 
   const defaultParams = {
     product_name: undefined,
@@ -54,8 +58,8 @@ export const SearchPanel = ({
     is_activated: undefined,
     agent_id: undefined,
     time_type: 1,
-    start_time: dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
-    end_time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+    start_time: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
+    end_time: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
   } as Partial<DeliversSearchParams>;
 
   const [defaultDate, setDefaultDate] = useState<{

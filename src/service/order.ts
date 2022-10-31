@@ -26,10 +26,14 @@ export const useDelivers = (params: Partial<DeliversSearchParams>) => {
   return useQuery<DeliversResult>(["order_delivers", params], () => {
     let { page, per_page, start_time, end_time, ...restParams } = params;
     if (!start_time) {
-      const date = new Date();
-      date.setDate(date.getDate() - 6);
-      start_time = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
-      end_time = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      const endTime = new Date(
+        new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
+      );
+      const startTime = new Date(
+        new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
+      );
+      start_time = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
+      end_time = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
     }
 
     return client("/api/v1/admin/order/index", {
