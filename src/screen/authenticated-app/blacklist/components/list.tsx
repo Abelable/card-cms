@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import {
   Button,
   Divider,
-  message,
   Modal,
   Table,
   TablePaginationConfig,
@@ -16,8 +15,6 @@ import { useQueryClient } from "react-query";
 import { useBlacklistQueryKey, useBlackModal } from "../util";
 import { useDeleteBlack } from "service/system";
 import { useDownloadTemplate } from "service/common";
-import type { UploadChangeParam } from "antd/lib/upload";
-import type { UploadFile } from "antd/lib/upload/interface";
 import type { BlacklistSearchParams, BlackItem } from "types/system";
 
 interface ListProps extends TableProps<BlackItem> {
@@ -32,12 +29,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const queryKey = useBlacklistQueryKey();
   const { mutate: deleteBlack } = useDeleteBlack(queryKey);
   const downloadTemplate = useDownloadTemplate();
-  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
-    if (info.file.status === "done") {
-      queryClient.invalidateQueries(queryKey);
-      message.success(info.file.response.message);
-    }
-  };
+  const handleSuccess = () => queryClient.invalidateQueries(queryKey);
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -62,7 +54,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         <h3>黑名单列表</h3>
         <Row gap>
           <div style={{ marginRight: "1rem" }}>
-            <FileUpload scene={5} name="上传文件" onChange={handleSuccess} />
+            <FileUpload scene={5} name="上传文件" onSuccess={handleSuccess} />
           </div>
           <Tooltip title="下载模版">
             <Button

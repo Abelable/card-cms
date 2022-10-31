@@ -31,8 +31,6 @@ import {
   useStatusModal,
 } from "../util";
 import { useDownloadTemplate } from "service/common";
-import type { UploadChangeParam } from "antd/lib/upload";
-import type { UploadFile } from "antd/lib/upload/interface";
 import type { Deliver } from "types/order";
 
 interface ListProps
@@ -74,12 +72,7 @@ export const List = ({
 
   const queryClient = useQueryClient();
   const queryKey = useOrderDeliversQueryKey();
-  const handleSuccess = (info: UploadChangeParam<UploadFile<any>>) => {
-    if (info.file.status === "done") {
-      queryClient.invalidateQueries(queryKey);
-      message.success(info.file.response.message);
-    }
-  };
+  const handleSuccess = () => queryClient.invalidateQueries(queryKey);
 
   return (
     <Container>
@@ -97,7 +90,7 @@ export const List = ({
             <FileUpload
               scene={1}
               name="导入生产数据"
-              onChange={handleSuccess}
+              onSuccess={handleSuccess}
             />
           </div>
           <Tooltip title="下载生产模版">
@@ -116,7 +109,7 @@ export const List = ({
             <FileUpload
               scene={2}
               name="导入激活数据"
-              onChange={handleSuccess}
+              onSuccess={handleSuccess}
             />
           </div>
           <Tooltip title="下载激活模版">

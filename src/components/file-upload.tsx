@@ -1,14 +1,25 @@
-import { Button, Upload } from "antd";
+import { useState } from "react";
+import { Button, Upload, message } from "antd";
 import { initNonce, initTimestamp } from "service/http";
 import { useAuth } from "context/auth-context";
+
+import type { UploadChangeParam } from "antd/lib/upload";
+import type { UploadFile } from "antd/lib/upload/interface";
 
 interface FileUploadType extends React.ComponentProps<typeof Upload> {
   scene?: number;
   name: string;
+  onSuccess: () => void;
 }
 
-export const FileUpload = ({ scene, name, ...restProps }: FileUploadType) => {
+export const FileUpload = ({
+  scene,
+  name,
+  onSuccess,
+  ...restProps
+}: FileUploadType) => {
   const { token } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   let url = "";
   switch (scene) {
@@ -45,9 +56,28 @@ export const FileUpload = ({ scene, name, ...restProps }: FileUploadType) => {
       }
       maxCount={1}
       showUploadList={false}
+      onChange={(info: UploadChangeParam<UploadFile<any>>) => {
+        if (info.file.status === "uploading" && info.file.percent === 0) {
+          setLoading(true);
+        }
+        if (info.file.status === "done") {
+          setLoading(false);
+          if (info.file.response.status === "success") {
+            onSuccess();
+            message.success(info.file.response.message);
+          } else {
+            message.error(info.file.response.message);
+          }
+        } else if (info.file.status === "error") {
+          setLoading(false);
+          message.error("文件导入失败");
+        }
+      }}
       {...restProps}
     >
-      <Button type={"primary"}>{name}</Button>
+      <Button type={"primary"} loading={loading}>
+        {name}
+      </Button>
     </Upload>
   );
 };
