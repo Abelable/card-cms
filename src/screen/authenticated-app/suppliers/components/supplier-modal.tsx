@@ -25,7 +25,6 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
   }, [supplier, form]);
 
   const confirm = () => {
-    console.log(form.getFieldsValue());
     form.validateFields().then(async () => {
       await mutateAsync(
         cleanObject({
