@@ -72,6 +72,7 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
             <Form.Item
               name="use_base_liantong_api"
               label="是否需要复制联通代码"
+              tooltip="若选择需要：点击确定后，系统将开启'联通代码复制'任务，请于5分钟后再进行操作"
             >
               <Radio.Group>
                 <Radio value={0}>不需要</Radio>
