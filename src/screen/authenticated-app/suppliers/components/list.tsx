@@ -1,6 +1,14 @@
 import styled from "@emotion/styled";
-import { Button, Table, TablePaginationConfig, TableProps } from "antd";
-import { ErrorBox, Row } from "components/lib";
+import {
+  Button,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+  Dropdown,
+  Menu,
+  MenuProps,
+} from "antd";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
 import { useSupplierModal } from "../util";
@@ -13,7 +21,6 @@ interface ListProps extends TableProps<Supplier> {
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const navigate = useNavigate();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -21,9 +28,6 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
   const { open } = useSupplierModal();
-
-  const link = (id: string) =>
-    navigate(`/suppliers/goods_list?supplier_id=${id}`);
 
   return (
     <Container>
@@ -53,12 +57,10 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "操作",
-            render: (value, supplier) => (
-              <Button type="link" onClick={() => link(supplier.id)}>
-                查看产品
-              </Button>
-            ),
-            width: "20rem",
+            render(value, supplier) {
+              return <More supplier={supplier} />;
+            },
+            width: "10rem",
           },
         ]}
         onChange={setPagination}
@@ -76,3 +78,31 @@ const Container = styled.div`
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
 `;
+
+const More = ({ supplier }: { supplier: Supplier }) => {
+  const navigate = useNavigate();
+  const link = (id: string) =>
+    navigate(`/suppliers/goods_list?supplier_id=${id}`);
+  const { startEdit } = useSupplierModal();
+
+  const items: MenuProps["items"] = [
+    {
+      label: <div onClick={() => link(`${supplier.id}`)}>查看产品</div>,
+      key: "link",
+    },
+    {
+      label: (
+        <div onClick={() => startEdit(`${supplier.id}`)}>
+          修改发展人ID和触点编码
+        </div>
+      ),
+      key: "edit",
+    },
+  ];
+
+  return (
+    <Dropdown overlay={<Menu items={items} />}>
+      <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
+    </Dropdown>
+  );
+};

@@ -6,9 +6,12 @@ export interface SuppliersSearchParams {
 }
 
 export interface Supplier {
-  id: string;
+  id: number;
   name: string;
   phone: string;
+  channel: string;
+  referrer_code: string;
+  use_base_liantong_api: number;
   created_at: string;
 }
 

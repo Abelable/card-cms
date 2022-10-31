@@ -1,4 +1,4 @@
-import { Form, Input, Modal } from "antd";
+import { Form, Input, Modal, Radio } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddSupplier, useEditSupplier } from "service/supplier";
@@ -11,7 +11,8 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
   const [form] = useForm();
   const { supplierModalOpen, editingSupplierId, close } = useSupplierModal();
   const supplier =
-    suppliers?.find((item) => item.id === editingSupplierId) || undefined;
+    suppliers?.find((item) => item.id === Number(editingSupplierId)) ||
+    undefined;
   const useMutationSupplier = editingSupplierId
     ? useEditSupplier
     : useAddSupplier;
@@ -50,19 +51,40 @@ export const SupplierModal = ({ suppliers }: { suppliers: Supplier[] }) => {
     >
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
-        <Form.Item
-          name="name"
-          label="供应商公司名称"
-          rules={[{ required: true, message: "请输入公司名称" }]}
-        >
-          <Input placeholder="请输入公司名称" />
+        {editingSupplierId ? (
+          <></>
+        ) : (
+          <>
+            <Form.Item
+              name="name"
+              label="供应商公司名称"
+              rules={[{ required: true, message: "请输入公司名称" }]}
+            >
+              <Input placeholder="请输入公司名称" />
+            </Form.Item>
+            <Form.Item
+              name="phone"
+              label="联系电话"
+              rules={[{ required: true, message: "请输入联系电话" }]}
+            >
+              <Input placeholder="请输入联系电话" />
+            </Form.Item>
+            <Form.Item
+              name="use_base_liantong_api"
+              label="是否需要复制联通代码"
+            >
+              <Radio.Group>
+                <Radio value={0}>不需要</Radio>
+                <Radio value={1}>需要</Radio>
+              </Radio.Group>
+            </Form.Item>
+          </>
+        )}
+        <Form.Item name="referrer_code" label="发展人ID">
+          <Input placeholder="请输入发展人ID" />
         </Form.Item>
-        <Form.Item
-          name="phone"
-          label="联系电话"
-          rules={[{ required: true, message: "请输入联系电话" }]}
-        >
-          <Input placeholder="请输入联系电话" />
+        <Form.Item name="channel" label="触点编码">
+          <Input placeholder="请输入触点编码" />
         </Form.Item>
       </Form>
     </Modal>
