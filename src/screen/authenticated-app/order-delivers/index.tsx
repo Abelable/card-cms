@@ -4,6 +4,9 @@ import {
   useEditDelivers,
   useOrderStatusOptions,
 } from "service/order";
+import { useAgentOptions } from "service/agent";
+import { useChannelEncodingOptions, useFailReasons } from "service/product";
+import { useExpressOptions, useRegionOptions } from "service/common";
 import {
   useFailModal,
   useOrderDeliversQueryKey,
@@ -25,9 +28,7 @@ import { InfoModal } from "./components/info-modal";
 import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
 import { ExportProductModal } from "./components/export-product-modal";
-import { useAgentOptions } from "service/agent";
-import { useChannelEncodingOptions, useFailReasons } from "service/product";
-import { useExpressOptions, useRegionOptions } from "service/common";
+import { BlackModal } from "./components/black-modal";
 
 export const OrderDelivers = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -99,6 +100,7 @@ export const OrderDelivers = () => {
       <PicModal />
       <RecordModal />
       <StatusModal orderStatusOptions={orderStatusOptions} />
+      <BlackModal />
       <FailModal
         failReasons={failReasons}
         setBatchStatus={setBatchStatus}

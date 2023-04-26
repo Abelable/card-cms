@@ -29,6 +29,7 @@ import {
   usePicModal,
   useRecordModal,
   useStatusModal,
+  useBlackModal,
 } from "../util";
 import { useDownloadTemplate } from "service/common";
 import type { Deliver } from "types/order";
@@ -64,6 +65,7 @@ export const List = ({
   const { startEdit: failDeliver } = useFailModal();
   const { open: openDataModal } = useDataModal();
   const { open: openInfoModal } = useInfoModal();
+  const { open: openBlackModal } = useBlackModal();
   const { open: openDetailModal } = useDetailModal();
   const copyInfo = (info: string) => {
     copy(info);
@@ -264,7 +266,7 @@ export const List = ({
                 <Link type={"link"} onClick={() => openInfoModal(deliver.id)}>
                   修改订单信息
                 </Link>
-                <Link type={"link"} onClick={() => openInfoModal(deliver.id)}>
+                <Link type={"link"} onClick={() => openBlackModal(deliver.id)}>
                   添加黑名单
                 </Link>
               </Space>
