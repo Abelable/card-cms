@@ -280,3 +280,27 @@ export const useDetailModal = () => {
     isLoading,
   };
 };
+
+export const useBlackModal = () => {
+  const [{ blackDeliverId }, setBlackDeliverId] = useUrlQueryParams([
+    "blackDeliverId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (ids: string) => setBlackDeliverId({ blackDeliverId: ids }),
+    [setBlackDeliverId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ blackDeliverId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    blackModalOpen: !!blackDeliverId,
+    blackDeliverId,
+    open,
+    close,
+  };
+};

@@ -264,6 +264,9 @@ export const List = ({
                 <Link type={"link"} onClick={() => openInfoModal(deliver.id)}>
                   修改订单信息
                 </Link>
+                <Link type={"link"} onClick={() => openInfoModal(deliver.id)}>
+                  添加黑名单
+                </Link>
               </Space>
             ),
           },

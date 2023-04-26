@@ -10,10 +10,10 @@ import {
   useOrderDeliversSearchParams,
 } from "./util";
 
+import { Drawer, Modal, Select, Button } from "antd";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
-import { Drawer, Modal, Select } from "antd";
 import { Row } from "components/lib";
 import { useState } from "react";
 import { FailModal } from "./components/fail-modal";
@@ -126,6 +126,7 @@ export const OrderDelivers = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap>
+            <Button>批量添加黑名单</Button>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
               value={batchStatus}
