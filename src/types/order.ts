@@ -7,7 +7,7 @@ export interface OrderStatusOption {
 }
 
 export interface DeliversSearchParams {
-  product_name: string;
+  product_name: string[];
   product_code: string;
   order_id: string;
   out_order_id: string;

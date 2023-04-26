@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, DatePicker, Divider, Input, Select } from "antd";
+import { Button, DatePicker, Divider, Input, Select, Tooltip } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import moment from "moment";
@@ -8,6 +8,7 @@ import { useExportModal } from "../util";
 import type { DeliversSearchParams, OrderStatusOption } from "types/order";
 import type { AgentOption } from "types/agent";
 import type { ChannelEncodingOption } from "types/product";
+import { FormatPainterOutlined } from "@ant-design/icons";
 
 export interface SearchPanelProps {
   channelEncodingOptions: ChannelEncodingOption[];
@@ -45,7 +46,7 @@ export const SearchPanel = ({
   );
 
   const defaultParams = {
-    product_name: undefined,
+    product_name: [],
     product_code: "",
     order_id: "",
     out_order_id: "",
@@ -75,7 +76,7 @@ export const SearchPanel = ({
 
   const { open: openExportModal } = useExportModal();
 
-  const setProductName = (product_name: string) =>
+  const setProductName = (product_name: string[]) =>
     setTemporaryParams({ ...temporaryParams, product_name });
   const clearProductName = () =>
     setTemporaryParams({ ...temporaryParams, product_name: undefined });
@@ -112,6 +113,13 @@ export const SearchPanel = ({
     });
   };
 
+  const formatOrderId = () => {
+    setTemporaryParams({
+      ...temporaryParams,
+      order_id: temporaryParams.order_id?.split(" ").join(),
+    });
+  };
+
   const setOutOrderId = (evt: any) => {
     // onInputClear
     if (!evt.target.value && evt.type !== "change") {
@@ -125,6 +133,13 @@ export const SearchPanel = ({
     setTemporaryParams({
       ...temporaryParams,
       out_order_id: evt.target.value,
+    });
+  };
+
+  const formatOutOrderId = () => {
+    setTemporaryParams({
+      ...temporaryParams,
+      out_order_id: temporaryParams.out_order_id?.split(" ").join(),
     });
   };
 
@@ -289,10 +304,11 @@ export const SearchPanel = ({
       <Item>
         <div>产品名称：</div>
         <Select
-          style={{ width: "20rem" }}
-          value={temporaryParams.product_name}
+          mode="multiple"
+          maxTagCount="responsive"
+          style={{ width: "49rem" }}
           allowClear={true}
-          onSelect={setProductName}
+          onChange={setProductName}
           onClear={clearProductName}
           placeholder="请选择产品名称"
         >
@@ -315,23 +331,33 @@ export const SearchPanel = ({
       </Item>
       <Item>
         <div>订单id：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.order_id}
-          onChange={setOrderId}
-          placeholder="请输入订单id"
-          allowClear={true}
-        />
+        <Input.Group compact>
+          <Tooltip title={temporaryParams.order_id}>
+            <Input
+              style={{ width: "16.8rem" }}
+              value={temporaryParams.order_id}
+              onChange={setOrderId}
+              placeholder="请输入订单id"
+              allowClear={true}
+            />
+          </Tooltip>
+          <Button onClick={formatOrderId} icon={<FormatPainterOutlined />} />
+        </Input.Group>
       </Item>
       <Item>
         <div>外部订单id：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.out_order_id}
-          onChange={setOutOrderId}
-          placeholder="请输入外部订单id"
-          allowClear={true}
-        />
+        <Input.Group compact>
+          <Tooltip title={temporaryParams.out_order_id}>
+            <Input
+              style={{ width: "16.8rem" }}
+              value={temporaryParams.out_order_id}
+              onChange={setOutOrderId}
+              placeholder="请输入外部订单id"
+              allowClear={true}
+            />
+          </Tooltip>
+          <Button onClick={formatOutOrderId} icon={<FormatPainterOutlined />} />
+        </Input.Group>
       </Item>
       <Item>
         <div>订单状态：</div>
@@ -461,7 +487,7 @@ export const SearchPanel = ({
           ))}
         </Select>
       </Item>
-      <Item>
+      <Item style={{ marginRight: "40rem" }}>
         <div>选择时间：</div>
         <Input.Group compact>
           <Select
