@@ -31,7 +31,13 @@ export const BlackModal = () => {
       onCancel={closeModal}
     >
       <ErrorBox error={error} />
-      <Form form={form} layout="vertical">
+      <Form
+        form={form}
+        layout="vertical"
+        initialValues={{
+          selections: ["1", "2", "3"],
+        }}
+      >
         <Form.Item
           name="selections"
           label="点击确定添加订单的以下信息为黑名单"
