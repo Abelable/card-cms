@@ -33,20 +33,14 @@ export const BlackModal = () => {
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
         <Form.Item
-          name="remark"
-          label="备注原因"
-          rules={[{ required: true, message: "请输入具体原因" }]}
+          name="selections"
+          label="点击确定添加订单的以下信息为黑名单"
+          rules={[{ required: true, message: "请选择至少一个信息" }]}
         >
           <Checkbox.Group>
-            <Checkbox value="A" style={{ lineHeight: "32px" }}>
-              A
-            </Checkbox>
-            <Checkbox value="A" style={{ lineHeight: "32px" }}>
-              A
-            </Checkbox>
-            <Checkbox value="A" style={{ lineHeight: "32px" }}>
-              A
-            </Checkbox>
+            <Checkbox value="1">手机号</Checkbox>
+            <Checkbox value="2">身份证号</Checkbox>
+            <Checkbox value="3">收货地址</Checkbox>
           </Checkbox.Group>
         </Form.Item>
       </Form>
