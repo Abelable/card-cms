@@ -9,6 +9,7 @@ import { useChannelEncodingOptions, useFailReasons } from "service/product";
 import { useExpressOptions, useRegionOptions } from "service/common";
 import {
   useFailModal,
+  useBlackModal,
   useOrderDeliversQueryKey,
   useOrderDeliversSearchParams,
 } from "./util";
@@ -44,6 +45,8 @@ export const OrderDelivers = () => {
     useOrderDeliversQueryKey()
   );
   const { startEdit: failDelivers } = useFailModal();
+  const { open: openBlackModal } = useBlackModal();
+
   const [batchStatus, setBatchStatus] = useState<number | undefined>(undefined);
   const selectBatchStatus = (ids: string[]) => (status: number) => {
     setBatchStatus(status);
@@ -128,7 +131,9 @@ export const OrderDelivers = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap>
-            <Button>批量添加黑名单</Button>
+            <Button onClick={() => openBlackModal(selectedRowKeys.join())}>
+              批量添加黑名单
+            </Button>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
               value={batchStatus}
