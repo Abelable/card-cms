@@ -66,21 +66,24 @@ export const AddressModal = () => {
       {editingAddressId ? (
         <></>
       ) : (
-        <CustomRow gap>
-          <Input
-            onChange={(e) => setText(e.target.value)}
-            placeholder="复制Excel省市区，粘贴到此处"
-          />
-          <Button
-            onClick={() => formatText()}
-            type={"primary"}
-            style={{ marginRight: 0 }}
-          >
-            生成省市区
-          </Button>
-        </CustomRow>
+        <>
+          <CustomRow gap>
+            <Input
+              onChange={(e) => setText(e.target.value)}
+              placeholder="复制Excel省市区，粘贴到此处"
+            />
+            <Button
+              onClick={() => formatText()}
+              type={"primary"}
+              style={{ marginRight: 0 }}
+            >
+              生成省市区
+            </Button>
+          </CustomRow>
+          <Divider />
+        </>
       )}
-      <Divider />
+
       <Form form={form} layout="vertical">
         <Row gutter={16}>
           <Col span={12}>
