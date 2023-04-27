@@ -19,6 +19,7 @@ import { ProductGoodsAgents } from "./product-goods-agents";
 import { OrderProducts } from "./order-products";
 import { OrderImports } from "./order-imports";
 import { Blacklist } from "./blacklist";
+import { AddressList } from "./address-list";
 import { OrderDelivers } from "./order-delivers";
 import { OrderReportForms } from "./order-report-forms";
 import {
@@ -84,6 +85,7 @@ export const AuthenticatedApp = () => {
               <Route path="order/configure" element={<OrderProducts />} />
               <Route path="order/import" element={<OrderImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />
+              <Route path="system/address_list" element={<AddressList />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}
@@ -162,6 +164,11 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         {
           label: <Link to={"system/blacklist"}>黑名单配置</Link>,
           key: "blacklist",
+          icon: <UserDeleteOutlined />,
+        },
+        {
+          label: <Link to={"system/address_list"}>地址库维护</Link>,
+          key: "address_list",
           icon: <UserDeleteOutlined />,
         },
       ],

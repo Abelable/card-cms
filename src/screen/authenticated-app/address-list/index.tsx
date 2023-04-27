@@ -1,15 +1,14 @@
 import styled from "@emotion/styled";
 import { toNumber } from "utils";
-import { List } from "./components/list";
-import { SearchPanel } from "./components/search-panel";
-import { useProductsSearchParams } from "./util";
 import { useProducts } from "service/order";
-import { useSupplierOptions } from "service/supplier";
-import { useChannelOptions } from "service/product";
+import { useRegionOptions } from "service/common";
+import { useProductsSearchParams } from "./util";
+
+import { SearchPanel } from "./components/search-panel";
+import { List } from "./components/list";
 
 export const AddressList = () => {
-  const supplierOptions = useSupplierOptions();
-  const channelOptions = useChannelOptions();
+  const { data: regionOptions } = useRegionOptions(3);
   const [params, setParams] = useProductsSearchParams();
   const { data, isLoading, error } = useProducts(params);
 
@@ -17,13 +16,12 @@ export const AddressList = () => {
     <Container>
       <Main>
         <SearchPanel
-          supplierOptions={supplierOptions}
+          regionOptions={regionOptions || []}
           params={params}
           setParams={setParams}
         />
         <List
           error={error}
-          channelOptions={channelOptions}
           params={params}
           setParams={setParams}
           loading={isLoading}

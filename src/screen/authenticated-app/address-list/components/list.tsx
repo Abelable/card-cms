@@ -15,22 +15,14 @@ import { SearchPanelProps } from "./search-panel";
 import { useProductsQueryKey, useProductModal } from "../util";
 import { useDeleteProduct } from "service/order";
 import type { Product } from "types/order";
-import type { ChannelOption } from "types/product";
 
 interface ListProps
   extends TableProps<Product>,
-    Omit<SearchPanelProps, "supplierOptions"> {
-  channelOptions: ChannelOption[];
+    Omit<SearchPanelProps, "regionOptions"> {
   error: Error | unknown;
 }
 
-export const List = ({
-  channelOptions,
-  error,
-  params,
-  setParams,
-  ...restProps
-}: ListProps) => {
+export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const { open } = useProductModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -43,7 +35,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>配置列表</h3>
+        <h3>地址列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -59,32 +51,33 @@ export const List = ({
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
-            title: "供应商店铺名",
-            render: (value, setting) => <>{setting.supplier?.name}</>,
+            title: "省",
+            dataIndex: "province_name",
           },
           {
-            title: "上游产品编码",
-            dataIndex: "supplier_product_encoding",
+            title: "省code",
+            dataIndex: "province_code",
           },
           {
-            title: "本地产品名称",
-            render: (value, setting) => (
-              <>
-                {
-                  channelOptions.find((item) => item.id === setting.product_id)
-                    ?.name
-                }
-              </>
-            ),
+            title: "市",
+            dataIndex: "city_name",
           },
           {
-            title: "本地产品编码",
-            dataIndex: "product_encoding",
+            title: "市code",
+            dataIndex: "city_code",
+          },
+          {
+            title: "区",
+            dataIndex: "area_name",
+          },
+          {
+            title: "区code",
+            dataIndex: "area_code",
           },
           {
             title: "操作",
-            render(value, product) {
-              return <More id={product.id} />;
+            render(value, address) {
+              return <More id={address.id} />;
             },
             width: "8rem",
           },
