@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 import { toNumber } from "utils";
 import { useProducts } from "service/order";
 import { useRegionOptions } from "service/common";
-import { useProductsSearchParams } from "./util";
+import { useAddressListSearchParams } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
+import { AddressModal } from "./components/address-modal";
 
 export const AddressList = () => {
   const { data: regionOptions } = useRegionOptions(3);
-  const [params, setParams] = useProductsSearchParams();
+  const [params, setParams] = useAddressListSearchParams();
   const { data, isLoading, error } = useProducts(params);
 
   return (
@@ -33,6 +34,7 @@ export const AddressList = () => {
           }}
         />
       </Main>
+      <AddressModal />
     </Container>
   );
 };

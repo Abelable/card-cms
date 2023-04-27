@@ -1,9 +1,11 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useProductsSearchParams = () => {
+export const useAddressListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
-    "supplier_id",
+    "province_code",
+    "city_code",
+    "area_code",
     "page",
     "per_page",
   ]);
@@ -20,36 +22,36 @@ export const useProductsSearchParams = () => {
   ] as const;
 };
 
-export const useProductsQueryKey = () => {
-  const [params] = useProductsSearchParams();
-  return ["products", params];
+export const useAddressListQueryKey = () => {
+  const [params] = useAddressListSearchParams();
+  return ["address_list", params];
 };
 
-export const useProductModal = () => {
-  const [{ productCreate }, setProductModalOpen] = useUrlQueryParams([
-    "productCreate",
+export const useAddressModal = () => {
+  const [{ addressCreate }, setAddressModalOpen] = useUrlQueryParams([
+    "addressCreate",
   ]);
-  const [{ editingProductId }, setEditingProductId] = useUrlQueryParams([
-    "editingProductId",
+  const [{ editingAddressId }, setEditingAddressId] = useUrlQueryParams([
+    "editingAddressId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setProductModalOpen({ productCreate: true }),
-    [setProductModalOpen]
+    () => setAddressModalOpen({ addressCreate: true }),
+    [setAddressModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingProductId({ editingProductId: id }),
-    [setEditingProductId]
+    (id: string) => setEditingAddressId({ editingAddressId: id }),
+    [setEditingAddressId]
   );
   const close = useCallback(
-    () => setUrlParams({ productCreate: "", editingProductId: "" }),
+    () => setUrlParams({ addressCreate: "", editingAddressId: "" }),
     [setUrlParams]
   );
 
   return {
-    productModalOpen: productCreate === "true" || !!editingProductId,
-    editingProductId,
+    addressModalOpen: addressCreate === "true" || !!editingAddressId,
+    editingAddressId,
     open,
     startEdit,
     close,

@@ -12,7 +12,7 @@ import {
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
-import { useProductsQueryKey, useProductModal } from "../util";
+import { useAddressListQueryKey, useAddressModal } from "../util";
 import { useDeleteProduct } from "service/order";
 import type { Product } from "types/order";
 
@@ -23,7 +23,7 @@ interface ListProps
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const { open } = useProductModal();
+  const { open } = useAddressModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -90,9 +90,9 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 };
 
 const More = ({ id }: { id: number }) => {
-  const { mutate: deleteProduct } = useDeleteProduct(useProductsQueryKey());
+  const { mutate: deleteProduct } = useDeleteProduct(useAddressListQueryKey());
 
-  const { startEdit } = useProductModal();
+  const { startEdit } = useAddressModal();
 
   const confirmDeleteProduct = (id: string) => {
     Modal.confirm({
