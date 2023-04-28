@@ -157,7 +157,7 @@ export const SearchPanel = ({
         <Button
           style={{ marginRight: 0 }}
           type={"primary"}
-          onClick={() => exportHome(params)}
+          onClick={() => exportHome(temporaryParams)}
         >
           导出
         </Button>
