@@ -4,16 +4,19 @@ import { Row } from "components/lib";
 import styled from "@emotion/styled";
 
 import type { RegionOption } from "types/common";
+import type { SupplierOption } from "types/supplier";
 import type { AddressListSearchParams } from "types/address";
 
 export interface SearchPanelProps {
   regionOptions: RegionOption[];
+  supplierOptions: SupplierOption[];
   params: Partial<AddressListSearchParams>;
   setParams: (params: Partial<AddressListSearchParams>) => void;
 }
 
 export const SearchPanel = ({
   regionOptions,
+  supplierOptions,
   params,
   setParams,
 }: SearchPanelProps) => {
@@ -54,6 +57,11 @@ export const SearchPanel = ({
     setTemporaryParams({ ...temporaryParams, area_code });
   const clearAreaCode = () =>
     setTemporaryParams({ ...temporaryParams, area_code: undefined });
+
+  const setSupplier = (supplier_id: number) =>
+    setTemporaryParams({ ...temporaryParams, supplier_id });
+  const clearSupplier = () =>
+    setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
 
   const clear = () => {
     setParams({ ...params, ...defaultParams });
@@ -126,6 +134,29 @@ export const SearchPanel = ({
             placeholder="请选择区"
           >
             {areaOptions.map(({ id, name }) => (
+              <Select.Option key={id} value={id}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Row>
+        <Row>
+          <div>供应商：</div>
+          <Select
+            style={{ width: "20rem" }}
+            value={temporaryParams.supplier_id}
+            allowClear={true}
+            onSelect={setSupplier}
+            onClear={clearSupplier}
+            showSearch
+            filterOption={(input, option) =>
+              (option!.children as unknown as string)
+                .toLowerCase()
+                .includes(input.toLowerCase())
+            }
+            placeholder="请选择供应商"
+          >
+            {supplierOptions.map(({ id, name }) => (
               <Select.Option key={id} value={id}>
                 {name}
               </Select.Option>

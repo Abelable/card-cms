@@ -15,8 +15,16 @@ import {
 export const useAddressList = (params: Partial<AddressListSearchParams>) => {
   const client = useHttp();
   return useQuery<AddressListResult>(["address_list", params], () => {
+    const { page, per_page, ...restParams } = params;
     return client("/api/v1/admin/supplier-product/index", {
-      data: cleanObject(params),
+      data: cleanObject({
+        "filter[province_id]": restParams.province_code,
+        "filter[city_id]": restParams.city_code,
+        "filter[area_id]": restParams.area_code,
+        "filter[supplier_id]": restParams.supplier_id,
+        page,
+        per_page,
+      }),
     });
   });
 };

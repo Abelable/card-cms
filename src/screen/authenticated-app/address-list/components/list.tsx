@@ -14,15 +14,21 @@ import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { useAddressListQueryKey, useAddressModal } from "../util";
 import { useDeleteProduct } from "service/order";
-import type { Product } from "types/order";
+import type { Address } from "types/address";
 
 interface ListProps
-  extends TableProps<Product>,
+  extends TableProps<Address>,
     Omit<SearchPanelProps, "regionOptions"> {
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  supplierOptions,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const { open } = useAddressModal();
 
   const setPagination = (pagination: TablePaginationConfig) =>
@@ -35,7 +41,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>地址列表</h3>
+        <h3>地址映射列表</h3>
         <Button onClick={open} type={"primary"} icon={<PlusOutlined />}>
           新增
         </Button>
@@ -51,28 +57,32 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
-            title: "省",
-            dataIndex: "province_name",
+            title: "久梦地址库",
+            render(value, address) {
+              return (
+                <>{`${address.post_province_name}${address.post_province_code}${address.post_city_name}${address.post_city_code}${address.post_district_name}${address.post_district_code}`}</>
+              );
+            },
           },
           {
-            title: "省code",
-            dataIndex: "province_code",
+            title: "供应商名称",
+            render: (value, address) => (
+              <>
+                {
+                  supplierOptions.find(
+                    (item) => item.id === address.supplier_id
+                  )?.name
+                }
+              </>
+            ),
           },
           {
-            title: "市",
-            dataIndex: "city_name",
-          },
-          {
-            title: "市code",
-            dataIndex: "city_code",
-          },
-          {
-            title: "区",
-            dataIndex: "area_name",
-          },
-          {
-            title: "区code",
-            dataIndex: "area_code",
+            title: "供应商地址库",
+            render(value, address) {
+              return (
+                <>{`${address.un.post_province_name}${address.un.post_province_code}${address.un.post_city_name}${address.un.post_city_code}${address.un.post_district_name}${address.un.post_district_code}`}</>
+              );
+            },
           },
           {
             title: "操作",

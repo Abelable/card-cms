@@ -169,7 +169,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           icon: <UserDeleteOutlined />,
         },
         {
-          label: <Link to={"system/address_list"}>地址库维护</Link>,
+          label: <Link to={"system/address_list"}>地址库映射</Link>,
           key: "address_list",
           icon: <AddressIcon />,
         },
