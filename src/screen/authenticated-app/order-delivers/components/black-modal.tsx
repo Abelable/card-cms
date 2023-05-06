@@ -1,18 +1,31 @@
+import { Dispatch, SetStateAction } from "react";
 import { Form, Modal, Checkbox } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useEditDeliverSimple } from "service/order";
+import { useBlackDelivers } from "service/order";
 import { useBlackModal, useOrderDeliversQueryKey } from "../util";
 
-export const BlackModal = () => {
+export const BlackModal = ({
+  setSelectedRowKeys,
+}: {
+  setSelectedRowKeys: Dispatch<SetStateAction<never[]>>;
+}) => {
   const [form] = useForm();
-  const { blackModalOpen, close } = useBlackModal();
-  const { mutateAsync, isLoading, error } = useEditDeliverSimple(
+  const { blackModalOpen, blackDeliverId, close } = useBlackModal();
+  const { mutateAsync, isLoading, error } = useBlackDelivers(
     useOrderDeliversQueryKey()
   );
 
   const confirm = () => {
     form.validateFields().then(async () => {
+      const { selections } = form.getFieldsValue();
+      await mutateAsync({
+        ids: blackDeliverId.split(","),
+        is_phone: selections.includes("1"),
+        is_idcard: selections.includes("2"),
+        is_address: selections.includes("3"),
+      });
+      setSelectedRowKeys([]);
       closeModal();
     });
   };

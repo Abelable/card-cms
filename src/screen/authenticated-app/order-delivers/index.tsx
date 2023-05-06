@@ -103,7 +103,7 @@ export const OrderDelivers = () => {
       <PicModal />
       <RecordModal />
       <StatusModal orderStatusOptions={orderStatusOptions} />
-      <BlackModal />
+      <BlackModal setSelectedRowKeys={setSelectedRowKeys} />
       <FailModal
         failReasons={failReasons}
         setBatchStatus={setBatchStatus}

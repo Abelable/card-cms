@@ -181,6 +181,23 @@ export const useEditDelivers = (queryKey: QueryKey) => {
   );
 };
 
+export const useBlackDelivers = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: {
+      ids: string[];
+      is_phone?: boolean;
+      is_idcard?: boolean;
+      is_address?: boolean;
+    }) =>
+      client("/api/v1/admin/order/batch-black-list", {
+        data: cleanObject({ ...params }),
+        method: "POST",
+      }),
+    useEditDeliversConfig(queryKey)
+  );
+};
+
 export const useProducts = (params: Partial<ProductsSearchParams>) => {
   const client = useHttp();
   return useQuery<ProductsResult>(["products", params], () => {
