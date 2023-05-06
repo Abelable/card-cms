@@ -46,7 +46,7 @@ export const SearchPanel = ({
   );
 
   const defaultParams = {
-    product_name: [],
+    product_name: "",
     product_code: "",
     order_id: "",
     out_order_id: "",
@@ -77,7 +77,10 @@ export const SearchPanel = ({
   const { open: openExportModal } = useExportModal();
 
   const setProductName = (product_name: string[]) =>
-    setTemporaryParams({ ...temporaryParams, product_name });
+    setTemporaryParams({
+      ...temporaryParams,
+      product_name: product_name.join(),
+    });
   const clearProductName = () =>
     setTemporaryParams({ ...temporaryParams, product_name: undefined });
 
