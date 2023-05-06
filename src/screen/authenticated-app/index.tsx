@@ -40,7 +40,9 @@ import {
   UserDeleteOutlined,
 } from "@ant-design/icons";
 import logo from "assets/images/logo.png";
-import { UserInfo } from "types/auth";
+import { AddressIcon } from "assets/icon";
+
+import type { UserInfo } from "types/auth";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -169,7 +171,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         {
           label: <Link to={"system/address_list"}>地址库维护</Link>,
           key: "address_list",
-          icon: <ToolOutlined />,
+          icon: <AddressIcon />,
         },
       ],
     },
