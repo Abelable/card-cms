@@ -58,44 +58,72 @@ export const AddressModal = ({
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { supplier_id, jm_text, supplier_text } = form.getFieldsValue();
+      if (editingAddressId) {
+        const { jm_text, supplier_text } = form.getFieldsValue();
 
-      const jmAddressList = jm_text.split(/\n/g).map((item: string) => {
-        const list = item.split(/\t/g);
-        return {
-          jm_post_province_name: list[0] || "",
-          jm_post_province_code: list[1] || "",
-          jm_post_city_name: list[2] || "",
-          jm_post_city_code: list[3] || "",
-          jm_post_district_name: list[4] || "",
-          jm_post_district_code: list[5] || "",
-        };
-      });
-      const supplierAddressList = supplier_text
-        .split(/\n/g)
-        .map((item: string) => {
-          const list = item.split(/\t/g);
-          return {
+        const jmList = jm_text.split(/\s+/g);
+        const list = supplier_text.split(/\s+/g);
+        const mapping = [
+          {
+            jm_post_province_name: jmList[0] || "",
+            jm_post_province_code: jmList[1] || "",
+            jm_post_city_name: jmList[2] || "",
+            jm_post_city_code: jmList[3] || "",
+            jm_post_district_name: jmList[4] || "",
+            jm_post_district_code: jmList[5] || "",
             post_province_name: list[0] || "",
             post_province_code: list[1] || "",
             post_city_name: list[2] || "",
             post_city_code: list[3] || "",
             post_district_name: list[4] || "",
             post_district_code: list[5] || "",
+          },
+        ];
+
+        await mutateAsync({
+          id: +editingAddressId,
+          mapping,
+          supplier_id: address?.supplier_id as number,
+        });
+      } else {
+        const { supplier_id, jm_text, supplier_text } = form.getFieldsValue();
+
+        const jmAddressList = jm_text.split(/\n/g).map((item: string) => {
+          const list = item.split(/\t/g);
+          return {
+            jm_post_province_name: list[0] || "",
+            jm_post_province_code: list[1] || "",
+            jm_post_city_name: list[2] || "",
+            jm_post_city_code: list[3] || "",
+            jm_post_district_name: list[4] || "",
+            jm_post_district_code: list[5] || "",
           };
         });
-      const mapping = jmAddressList.map(
-        (item: Partial<AddressMappingItem>, index: number) => ({
-          ...item,
-          ...supplierAddressList[index],
-        })
-      );
+        const supplierAddressList = supplier_text
+          .split(/\n/g)
+          .map((item: string) => {
+            const list = item.split(/\t/g);
+            return {
+              post_province_name: list[0] || "",
+              post_province_code: list[1] || "",
+              post_city_name: list[2] || "",
+              post_city_code: list[3] || "",
+              post_district_name: list[4] || "",
+              post_district_code: list[5] || "",
+            };
+          });
+        const mapping = jmAddressList.map(
+          (item: Partial<AddressMappingItem>, index: number) => ({
+            ...item,
+            ...supplierAddressList[index],
+          })
+        );
 
-      await mutateAsync({
-        id: +editingAddressId || undefined,
-        mapping,
-        supplier_id: editingAddressId ? address?.supplier_id : supplier_id,
-      });
+        await mutateAsync({
+          mapping,
+          supplier_id,
+        });
+      }
       closeModal();
     });
   };
