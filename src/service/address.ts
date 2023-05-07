@@ -57,7 +57,7 @@ export const useDeleteAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client(`/api/v1/admin/address/mapping/destroy/${id}`, {
+      client(`/api/v1/admin/address/mapping/delete/${id}`, {
         method: "POST",
       }),
     useDeleteConfig(queryKey)
