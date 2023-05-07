@@ -13,7 +13,8 @@ import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
 import { SearchPanelProps } from "./search-panel";
 import { useAddressListQueryKey, useAddressModal } from "../util";
-import { useDeleteProduct } from "service/order";
+import { useDeleteAddress } from "service/address";
+
 import type { Address } from "types/address";
 
 interface ListProps
@@ -100,17 +101,17 @@ export const List = ({
 };
 
 const More = ({ id }: { id: number }) => {
-  const { mutate: deleteProduct } = useDeleteProduct(useAddressListQueryKey());
+  const { mutate: deleteAddress } = useDeleteAddress(useAddressListQueryKey());
 
   const { startEdit } = useAddressModal();
 
   const confirmDeleteProduct = (id: string) => {
     Modal.confirm({
-      title: "确定删除该配置吗？",
+      title: "确定删除该地址映射吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteProduct(id),
+      onOk: () => deleteAddress(id),
     });
   };
 
