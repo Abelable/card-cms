@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import { useForm } from "antd/lib/form/Form";
 import { useAddAddress, useEditAddress } from "service/address";
 import { useAddressListQueryKey, useAddressModal } from "../util";
@@ -8,20 +9,34 @@ import { ErrorBox } from "components/lib";
 import { DoubleRightOutlined } from "@ant-design/icons";
 
 import type { SupplierOption } from "types/supplier";
-import type { AddressMappingItem } from "types/address";
+import type { Address, AddressMappingItem } from "types/address";
 
 export const AddressModal = ({
   supplierOptions,
+  addressList,
 }: {
   supplierOptions: SupplierOption[];
+  addressList: Address[];
 }) => {
   const [form] = useForm();
   const { addressModalOpen, editingAddressId, close } = useAddressModal();
+  const address =
+    addressList?.find((item) => item.id === Number(editingAddressId)) ||
+    undefined;
 
   const useMutationAddress = editingAddressId ? useEditAddress : useAddAddress;
   const { mutateAsync, isLoading, error } = useMutationAddress(
     useAddressListQueryKey()
   );
+
+  useDeepCompareEffect(() => {
+    if (address) {
+      form.setFieldsValue({
+        jm_text: `${address.un.post_province_name} ${address.un.post_province_code} ${address.un.post_city_name} ${address.un.post_city_code} ${address.un.post_district_name} ${address.un.post_district_code}`,
+        supplier_text: `${address.post_province_name} ${address.post_province_code} ${address.post_city_name} ${address.post_city_code} ${address.post_district_name} ${address.post_district_code}`,
+      });
+    }
+  }, [address, form]);
 
   // const [text, setText] = useState("");
   // const formatText = () => {
@@ -79,7 +94,7 @@ export const AddressModal = ({
       await mutateAsync({
         id: +editingAddressId || undefined,
         mapping,
-        supplier_id,
+        supplier_id: editingAddressId ? address?.supplier_id : supplier_id,
       });
       closeModal();
     });
@@ -108,59 +123,91 @@ export const AddressModal = ({
     >
       <ErrorBox error={error} />
       <Form form={form} layout="vertical">
-        <Row gutter={16}>
-          <Col span={6}>
-            <Form.Item
-              name="supplier_id"
-              label="选择供应商"
-              rules={[{ required: true, message: "请选择供应商" }]}
-            >
-              <Select placeholder="请选择供应商">
-                {supplierOptions.map(({ id, name }) => (
-                  <Select.Option key={id} value={id}>
-                    {name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
+        {editingAddressId ? (
+          <></>
+        ) : (
+          <Row gutter={16}>
+            <Col span={6}>
+              <Form.Item
+                name="supplier_id"
+                label="选择供应商"
+                rules={[{ required: true, message: "请选择供应商" }]}
+              >
+                <Select placeholder="请选择供应商">
+                  {supplierOptions.map(({ id, name }) => (
+                    <Select.Option key={id} value={id}>
+                      {name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
 
-        <Row gutter={16}>
-          <Col span={11}>
-            <Form.Item
-              name="jm_text"
-              label="久梦地址库"
-              rules={[{ required: true, message: "请输入久梦地址库" }]}
-            >
-              <Input.TextArea
-                rows={12}
-                placeholder={`直接复制Excel的省市区如：
+        {editingAddressId ? (
+          <Row gutter={16}>
+            <Col span={11}>
+              <Form.Item
+                name="jm_text"
+                label="久梦地址库"
+                rules={[{ required: true, message: "请输入久梦地址库" }]}
+              >
+                <Input placeholder="请输入久梦地址库" />
+              </Form.Item>
+            </Col>
+            <Col span={2}>
+              <IconWrap>
+                <DoubleRightOutlined />
+              </IconWrap>
+            </Col>
+            <Col span={11}>
+              <Form.Item
+                name="supplier_text"
+                label="上游地址"
+                rules={[{ required: true, message: "请输入上游地址" }]}
+              >
+                <Input placeholder="请输入上游地址" />
+              </Form.Item>
+            </Col>
+          </Row>
+        ) : (
+          <Row gutter={16}>
+            <Col span={11}>
+              <Form.Item
+                name="jm_text"
+                label="久梦地址库"
+                rules={[{ required: true, message: "请输入久梦地址库" }]}
+              >
+                <Input.TextArea
+                  rows={12}
+                  placeholder={`直接复制Excel的省市区如：
 浙江 000000 杭州 001100 余杭区 001101
 浙江 000000 杭州 001100 西湖区 001102`}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={2}>
-            <IconWrap>
-              <DoubleRightOutlined />
-            </IconWrap>
-          </Col>
-          <Col span={11}>
-            <Form.Item
-              name="supplier_text"
-              label="上游地址"
-              rules={[{ required: true, message: "请输入上游地址" }]}
-            >
-              <Input.TextArea
-                rows={12}
-                placeholder={`直接复制Excel的省市区如：
+                />
+              </Form.Item>
+            </Col>
+            <Col span={2}>
+              <IconWrap>
+                <DoubleRightOutlined />
+              </IconWrap>
+            </Col>
+            <Col span={11}>
+              <Form.Item
+                name="supplier_text"
+                label="上游地址"
+                rules={[{ required: true, message: "请输入上游地址" }]}
+              >
+                <Input.TextArea
+                  rows={12}
+                  placeholder={`直接复制Excel的省市区如：
 浙江 210000 杭州 211100 余杭镇 211101
 浙江 210000 杭州 211100 西湖镇 211102`}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
       </Form>
     </Modal>
   );
