@@ -38,7 +38,7 @@ export const AddressList = () => {
           }}
         />
       </Main>
-      <AddressModal />
+      <AddressModal supplierOptions={supplierOptions || []} />
     </Container>
   );
 };

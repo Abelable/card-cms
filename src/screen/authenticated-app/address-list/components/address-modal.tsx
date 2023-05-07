@@ -1,11 +1,20 @@
-import { Form, Modal, Button, Input, Col, Row, Divider } from "antd";
-import { useForm } from "antd/lib/form/Form";
-import { ErrorBox, Row as CustomRow } from "components/lib";
 import { useState } from "react";
+import styled from "@emotion/styled";
+import { useForm } from "antd/lib/form/Form";
 import { useAddAddress, useEditAddress } from "service/address";
 import { useAddressListQueryKey, useAddressModal } from "../util";
 
-export const AddressModal = () => {
+import { Form, Modal, Button, Input, Col, Row, Select } from "antd";
+import { ErrorBox } from "components/lib";
+import { DoubleRightOutlined } from "@ant-design/icons";
+
+import type { SupplierOption } from "types/supplier";
+
+export const AddressModal = ({
+  supplierOptions,
+}: {
+  supplierOptions: SupplierOption[];
+}) => {
   const [form] = useForm();
   const { addressModalOpen, editingAddressId, close } = useAddressModal();
 
@@ -49,7 +58,8 @@ export const AddressModal = () => {
 
   return (
     <Modal
-      title={editingAddressId ? "修改地址库" : "添加地址库"}
+      title={editingAddressId ? "修改映射" : "单个/批量添加映射"}
+      width={1000}
       onCancel={closeModal}
       visible={addressModalOpen}
       confirmLoading={isLoading}
@@ -63,87 +73,57 @@ export const AddressModal = () => {
       }
     >
       <ErrorBox error={error} />
-      {editingAddressId ? (
-        <></>
-      ) : (
-        <>
-          <CustomRow gap>
-            <Input
-              onChange={(e) => setText(e.target.value)}
-              placeholder="复制Excel省市区，粘贴到此处"
-            />
-            <Button
-              onClick={() => formatText()}
-              type={"primary"}
-              style={{ marginRight: 0 }}
-            >
-              生成省市区
-            </Button>
-          </CustomRow>
-          <Divider />
-        </>
-      )}
-
       <Form form={form} layout="vertical">
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={6}>
             <Form.Item
-              name="province_name"
-              label="省"
-              rules={[{ required: true, message: "请输入省" }]}
+              name="supplier_id"
+              label="选择供应商"
+              rules={[{ required: true, message: "请选择供应商" }]}
             >
-              <Input placeholder="请输入省" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="province_code"
-              label="省code"
-              rules={[{ required: true, message: "请输入省code" }]}
-            >
-              <Input placeholder="请输入省code" />
+              <Select placeholder="请选择供应商">
+                {supplierOptions.map(({ id, name }) => (
+                  <Select.Option key={id} value={id}>
+                    {name}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
         </Row>
 
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={11}>
             <Form.Item
-              name="city_name"
-              label="市"
-              rules={[{ required: true, message: "请输入市" }]}
+              name="jm_text"
+              label="久梦地址库"
+              rules={[{ required: true, message: "请输入久梦地址库" }]}
             >
-              <Input placeholder="请输入市" />
+              <Input.TextArea
+                rows={12}
+                placeholder={`直接复制Excel的省市区如：
+浙江 000000 杭州 001100 余杭区 001101
+浙江 000000 杭州 001100 西湖区 001102`}
+              />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              name="city_code"
-              label="市code"
-              rules={[{ required: true, message: "请输入市code" }]}
-            >
-              <Input placeholder="请输入市code" />
-            </Form.Item>
+          <Col span={2}>
+            <IconWrap>
+              <DoubleRightOutlined />
+            </IconWrap>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={12}>
+          <Col span={11}>
             <Form.Item
-              name="area_name"
-              label="区"
-              rules={[{ required: true, message: "请输入区" }]}
+              name="supplier_text"
+              label="上游地址"
+              rules={[{ required: true, message: "请输入上游地址" }]}
             >
-              <Input placeholder="请输入区" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="area_code"
-              label="区code"
-              rules={[{ required: true, message: "请输入区code" }]}
-            >
-              <Input placeholder="请输入区code" />
+              <Input.TextArea
+                rows={12}
+                placeholder={`直接复制Excel的省市区如：
+浙江 210000 杭州 211100 余杭镇 211101
+浙江 210000 杭州 211100 西湖镇 211102`}
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -151,3 +131,10 @@ export const AddressModal = () => {
     </Modal>
   );
 };
+
+const IconWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
