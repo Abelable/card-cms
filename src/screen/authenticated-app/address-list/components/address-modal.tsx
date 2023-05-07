@@ -104,6 +104,21 @@ export const AddressModal = ({
         await mutateAsync({
           mapping,
           supplier_id,
+        }).then((data) => {
+          Modal.info({
+            title: "结果反馈",
+            content: (
+              <>
+                <div>{`共${data.successCount}条映射成功`}</div>
+                <div>{`共${data.errorCount}条映射失败：`}</div>
+                {data.errorMessage.map((item: string) => (
+                  <div style={{ color: "#999" }}>{item}</div>
+                ))}
+              </>
+            ),
+            okText: "好的",
+            width: 900,
+          });
         });
       }
       closeModal();
@@ -121,11 +136,14 @@ export const AddressModal = ({
       width={1000}
       onCancel={closeModal}
       visible={addressModalOpen}
-      confirmLoading={isLoading}
       footer={
         <>
           <Button onClick={closeModal}>取消</Button>
-          <Button type={"primary"} onClick={() => confirm()}>
+          <Button
+            type={"primary"}
+            loading={isLoading}
+            onClick={() => confirm()}
+          >
             确定
           </Button>
         </>
