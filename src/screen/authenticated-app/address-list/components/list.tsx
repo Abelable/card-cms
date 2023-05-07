@@ -60,7 +60,7 @@ export const List = ({
             title: "久梦地址库",
             render(value, address) {
               return (
-                <>{`${address.post_province_name}${address.post_province_code}${address.post_city_name}${address.post_city_code}${address.post_district_name}${address.post_district_code}`}</>
+                <>{`${address.un.post_province_name} ${address.un.post_province_code} ${address.un.post_city_name} ${address.un.post_city_code} ${address.un.post_district_name} ${address.un.post_district_code}`}</>
               );
             },
           },
@@ -80,7 +80,7 @@ export const List = ({
             title: "供应商地址库",
             render(value, address) {
               return (
-                <>{`${address.un.post_province_name}${address.un.post_province_code}${address.un.post_city_name}${address.un.post_city_code}${address.un.post_district_name}${address.un.post_district_code}`}</>
+                <>{`${address.post_province_name} ${address.post_province_code} ${address.post_city_name} ${address.post_city_code} ${address.post_district_name} ${address.post_district_code}`}</>
               );
             },
           },

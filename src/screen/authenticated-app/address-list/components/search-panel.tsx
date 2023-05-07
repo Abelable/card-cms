@@ -69,102 +69,100 @@ export const SearchPanel = ({
   };
 
   return (
-    <Container marginBottom={1.6} between={true}>
-      <Row gap={true}>
-        <Row>
-          <div>省：</div>
-          <Select
-            style={{ width: "20rem" }}
-            value={temporaryParams.province_code}
-            allowClear={true}
-            onSelect={setProvinceCode}
-            onClear={clearProvinceCode}
-            showSearch
-            filterOption={(input, option) =>
-              (option!.children as unknown as string)
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
-            placeholder="请选择省"
-          >
-            {regionOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
-        <Row>
-          <div>市：</div>
-          <Select
-            style={{ width: "20rem" }}
-            value={temporaryParams.city_code}
-            allowClear={true}
-            onSelect={setCityCode}
-            onClear={clearCityCode}
-            showSearch
-            filterOption={(input, option) =>
-              (option!.children as unknown as string)
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
-            placeholder="请选择市"
-          >
-            {cityOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
-        <Row>
-          <div>区：</div>
-          <Select
-            style={{ width: "20rem" }}
-            value={temporaryParams.area_code}
-            allowClear={true}
-            onSelect={setAreaCode}
-            onClear={clearAreaCode}
-            showSearch
-            filterOption={(input, option) =>
-              (option!.children as unknown as string)
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
-            placeholder="请选择区"
-          >
-            {areaOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
-        <Row>
-          <div>供应商：</div>
-          <Select
-            style={{ width: "20rem" }}
-            value={temporaryParams.supplier_id}
-            allowClear={true}
-            onSelect={setSupplier}
-            onClear={clearSupplier}
-            showSearch
-            filterOption={(input, option) =>
-              (option!.children as unknown as string)
-                .toLowerCase()
-                .includes(input.toLowerCase())
-            }
-            placeholder="请选择供应商"
-          >
-            {supplierOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Row>
-      </Row>
-      <Row gap={true}>
+    <Container>
+      <Item>
+        <div>省：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.province_code}
+          allowClear={true}
+          onSelect={setProvinceCode}
+          onClear={clearProvinceCode}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+          placeholder="请选择省"
+        >
+          {regionOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>市：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.city_code}
+          allowClear={true}
+          onSelect={setCityCode}
+          onClear={clearCityCode}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+          placeholder="请选择市"
+        >
+          {cityOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>区：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.area_code}
+          allowClear={true}
+          onSelect={setAreaCode}
+          onClear={clearAreaCode}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+          placeholder="请选择区"
+        >
+          {areaOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item style={{ marginRight: "30rem" }}>
+        <div>供应商：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.supplier_id}
+          allowClear={true}
+          onSelect={setSupplier}
+          onClear={clearSupplier}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+          placeholder="请选择供应商"
+        >
+          {supplierOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button
           style={{ marginRight: 0 }}
@@ -173,12 +171,28 @@ export const SearchPanel = ({
         >
           查询
         </Button>
-      </Row>
+      </ButtonWrap>
     </Container>
   );
 };
 
-const Container = styled(Row)`
-  padding: 2.4rem;
+const Container = styled.div`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+  padding: 2.4rem 0rem 0 2.4rem;
   background: #fff;
+`;
+
+const Item = styled(Row)`
+  margin-right: 2rem;
+  padding-bottom: 2.4rem;
+  white-space: nowrap;
+`;
+
+const ButtonWrap = styled(Row)`
+  position: absolute;
+  right: 2.4rem;
+  bottom: 2.4rem;
 `;
