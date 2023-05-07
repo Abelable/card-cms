@@ -45,7 +45,7 @@ export const useEditAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: AddressForm) =>
-      client(`/api/v1/admin/address/mapping/update/${id}`, {
+      client(`/api/v1/admin/address/mapping/${id}`, {
         data: params,
         method: "POST",
       }),
