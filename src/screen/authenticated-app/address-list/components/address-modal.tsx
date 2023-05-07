@@ -38,24 +38,6 @@ export const AddressModal = ({
     }
   }, [address, form]);
 
-  // const [text, setText] = useState("");
-  // const formatText = () => {
-  //   if (text.length) {
-  //     const codeList = text.match(/\d+/g) || [];
-  //     const descList =
-  //       text.replace(/\s*/g, "").replace(/\d+/g, ",").split(",") || [];
-
-  //     form.setFieldsValue({
-  //       province_name: descList[0] || "",
-  //       province_code: codeList[0] || "",
-  //       city_name: descList[1] || "",
-  //       city_code: codeList[1] || "",
-  //       area_name: descList[2] || "",
-  //       area_code: codeList[2] || "",
-  //     });
-  //   }
-  // };
-
   const confirm = () => {
     form.validateFields().then(async () => {
       if (editingAddressId) {
