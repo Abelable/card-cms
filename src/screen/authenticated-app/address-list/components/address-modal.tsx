@@ -10,6 +10,15 @@ import { DoubleRightOutlined } from "@ant-design/icons";
 
 import type { SupplierOption } from "types/supplier";
 
+interface jmAddressItem {
+  jm_post_province_name: string;
+  jm_post_province_code: string;
+  jm_post_city_name: string;
+  jm_post_city_code: string;
+  jm_post_district_name: string;
+  jm_post_district_code: string;
+}
+
 export const AddressModal = ({
   supplierOptions,
 }: {
@@ -43,11 +52,45 @@ export const AddressModal = ({
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      await mutateAsync({
-        id: editingAddressId || "",
-        ...form.getFieldsValue(),
+      const { supplier_id, jm_text, supplier_text } = form.getFieldsValue();
+
+      const jmAddressList = jm_text.split(/\n/g).map((item: string) => {
+        const list = item.split(/\t/g);
+        return {
+          jm_post_province_name: list[0] || "",
+          jm_post_province_code: list[1] || "",
+          jm_post_city_name: list[2] || "",
+          jm_post_city_code: list[3] || "",
+          jm_post_district_name: list[4] || "",
+          jm_post_district_code: list[5] || "",
+        };
       });
-      closeModal();
+      const supplierAddressList = supplier_text
+        .split(/\n/g)
+        .map((item: string) => {
+          const list = item.split(/\t/g);
+          return {
+            post_province_name: list[0] || "",
+            post_province_code: list[1] || "",
+            post_city_name: list[2] || "",
+            post_city_code: list[3] || "",
+            post_district_name: list[4] || "",
+            post_district_code: list[5] || "",
+          };
+        });
+      const mapping = jmAddressList.map(
+        (item: jmAddressItem, index: number) => ({
+          ...item,
+          ...supplierAddressList[index],
+        })
+      );
+      console.log("mapping", mapping);
+
+      // await mutateAsync({
+      //   id: editingAddressId || "",
+      //   ...form.getFieldsValue(),
+      // });
+      // closeModal();
     });
   };
 
