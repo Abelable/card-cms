@@ -69,3 +69,63 @@ export const useEditDeliversConfig = (queryKey: QueryKey) =>
         }
       : null
   );
+
+export const useAddAddressConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          data: [
+            {
+              id: old.data[0] ? `${Number(old.data[0].id) + 1}` : "1",
+              supplier_id: target.supplier_id,
+              post_province_name: target.mapping[0].jm_post_province_name,
+              post_province_code: target.mapping[0].jm_post_province_code,
+              post_city_name: target.mapping[0].jm_post_province_name,
+              post_city_code: target.mapping[0].jm_post_province_name,
+              post_district_name: target.mapping[0].jm_post_province_name,
+              post_district_code: target.mapping[0].jm_post_province_name,
+              un: {
+                post_province_name: target.mapping[0].post_province_name,
+                post_province_code: target.mapping[0].post_province_code,
+                post_city_name: target.mapping[0].post_province_name,
+                post_city_code: target.mapping[0].post_province_name,
+                post_district_name: target.mapping[0].post_province_name,
+                post_district_code: target.mapping[0].post_province_name,
+              },
+            },
+            ...old.data,
+          ],
+        }
+      : null
+  );
+
+export const useEditAddressConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          data: old.data.map((item: any) =>
+            item.id === target.id
+              ? {
+                  ...item,
+                  post_province_name: target.mapping[0].jm_post_province_name,
+                  post_province_code: target.mapping[0].jm_post_province_code,
+                  post_city_name: target.mapping[0].jm_post_province_name,
+                  post_city_code: target.mapping[0].jm_post_province_name,
+                  post_district_name: target.mapping[0].jm_post_province_name,
+                  post_district_code: target.mapping[0].jm_post_province_name,
+                  un: {
+                    post_province_name: target.mapping[0].post_province_name,
+                    post_province_code: target.mapping[0].post_province_code,
+                    post_city_name: target.mapping[0].post_province_name,
+                    post_city_code: target.mapping[0].post_province_name,
+                    post_district_name: target.mapping[0].post_province_name,
+                    post_district_code: target.mapping[0].post_province_name,
+                  },
+                }
+              : item
+          ),
+        }
+      : null
+  );

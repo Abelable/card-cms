@@ -9,15 +9,7 @@ import { ErrorBox } from "components/lib";
 import { DoubleRightOutlined } from "@ant-design/icons";
 
 import type { SupplierOption } from "types/supplier";
-
-interface jmAddressItem {
-  jm_post_province_name: string;
-  jm_post_province_code: string;
-  jm_post_city_name: string;
-  jm_post_city_code: string;
-  jm_post_district_name: string;
-  jm_post_district_code: string;
-}
+import type { AddressMappingItem } from "types/address";
 
 export const AddressModal = ({
   supplierOptions,
@@ -79,7 +71,7 @@ export const AddressModal = ({
           };
         });
       const mapping = jmAddressList.map(
-        (item: jmAddressItem, index: number) => ({
+        (item: Partial<AddressMappingItem>, index: number) => ({
           ...item,
           ...supplierAddressList[index],
         })

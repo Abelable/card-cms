@@ -3,6 +3,7 @@ import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
   Address,
+  AddressForm,
   AddressListResult,
   AddressListSearchParams,
 } from "types/address";
@@ -32,9 +33,9 @@ export const useAddressList = (params: Partial<AddressListSearchParams>) => {
 export const useAddAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: Partial<Address>) =>
-      client("/api/v1/admin/supplier-product/store", {
-        data: cleanObject({ ...params }),
+    (params: AddressForm) =>
+      client("/api/v1/admin/address/mapping/store", {
+        data: params,
         method: "POST",
       }),
     useAddConfig(queryKey)
