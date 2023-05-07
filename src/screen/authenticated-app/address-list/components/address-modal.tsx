@@ -164,7 +164,11 @@ export const AddressModal = ({
             <Col span={11}>
               <Form.Item
                 name="supplier_text"
-                label="上游地址"
+                label={`上游地址（${
+                  supplierOptions.find(
+                    (item) => item.id === address?.supplier_id
+                  )?.name
+                }）`}
                 rules={[{ required: true, message: "请输入上游地址" }]}
               >
                 <Input placeholder="请输入上游地址" />
