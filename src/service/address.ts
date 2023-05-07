@@ -2,15 +2,14 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
-  Address,
   AddressForm,
   AddressListResult,
   AddressListSearchParams,
 } from "types/address";
 import {
-  useAddConfig,
+  useAddAddressConfig,
   useDeleteConfig,
-  useEditConfig,
+  useEditAddressConfig,
 } from "./use-optimistic-options";
 
 export const useAddressList = (params: Partial<AddressListSearchParams>) => {
@@ -35,10 +34,10 @@ export const useAddAddress = (queryKey: QueryKey) => {
   return useMutation(
     (params: Partial<AddressForm>) =>
       client("/api/v1/admin/address/mapping/store", {
-        data: params,
+        data: cleanObject({ ...params }),
         method: "POST",
       }),
-    useAddConfig(queryKey)
+    useAddAddressConfig(queryKey)
   );
 };
 
@@ -46,11 +45,11 @@ export const useEditAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     ({ id, ...params }: AddressForm) =>
-      client(`/api/v1/admin/address/mapping/${id}`, {
+      client(`/api/v1/admin/address/mapping/update/${id}`, {
         data: params,
         method: "POST",
       }),
-    useEditConfig(queryKey)
+    useEditAddressConfig(queryKey)
   );
 };
 
@@ -58,7 +57,7 @@ export const useDeleteAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: string) =>
-      client(`/api/v1/admin/supplier-product/destroy/${id}`, {
+      client(`/api/v1/admin/address/mapping/destroy/${id}`, {
         method: "POST",
       }),
     useDeleteConfig(queryKey)

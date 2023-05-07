@@ -75,13 +75,13 @@ export const AddressModal = ({
           ...supplierAddressList[index],
         })
       );
-      console.log("mapping", mapping);
 
-      // await mutateAsync({
-      //   id: editingAddressId || "",
-      //   ...form.getFieldsValue(),
-      // });
-      // closeModal();
+      await mutateAsync({
+        id: +editingAddressId || undefined,
+        mapping,
+        supplier_id,
+      });
+      closeModal();
     });
   };
 
