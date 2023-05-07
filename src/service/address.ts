@@ -33,7 +33,7 @@ export const useAddressList = (params: Partial<AddressListSearchParams>) => {
 export const useAddAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: AddressForm) =>
+    (params: Partial<AddressForm>) =>
       client("/api/v1/admin/address/mapping/store", {
         data: params,
         method: "POST",
@@ -45,9 +45,9 @@ export const useAddAddress = (queryKey: QueryKey) => {
 export const useEditAddress = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    ({ id, ...params }: Partial<Address>) =>
-      client(`/api/v1/admin/supplier-product/update/${id}`, {
-        data: cleanObject({ ...params }),
+    ({ id, ...params }: AddressForm) =>
+      client(`/api/v1/admin/address/mapping/${id}`, {
+        data: params,
         method: "POST",
       }),
     useEditConfig(queryKey)

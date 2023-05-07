@@ -45,6 +45,7 @@ export interface AddressMappingItem {
 }
 
 export interface AddressForm {
+  id: number;
   mapping: AddressMappingItem[];
   supplier_id: number;
 }
