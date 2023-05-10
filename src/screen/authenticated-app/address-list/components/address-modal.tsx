@@ -71,7 +71,7 @@ export const AddressModal = ({
         const { supplier_id, jm_text, supplier_text } = form.getFieldsValue();
 
         const jmAddressList = jm_text.split(/\n/g).map((item: string) => {
-          const list = item.split(/\t/g);
+          const list = item.split(/\s+/g);
           return {
             jm_post_province_name: list[0] || "",
             jm_post_province_code: list[1] || "",
@@ -84,7 +84,7 @@ export const AddressModal = ({
         const supplierAddressList = supplier_text
           .split(/\n/g)
           .map((item: string) => {
-            const list = item.split(/\t/g);
+            const list = item.split(/\s+/g);
             return {
               post_province_name: list[0] || "",
               post_province_code: list[1] || "",
