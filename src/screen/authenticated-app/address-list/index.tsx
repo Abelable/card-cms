@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { toNumber } from "utils";
-import { useRegionOptions } from "service/common";
 import { useSupplierOptions } from "service/supplier";
-import { useAddressList } from "service/address";
+import { useAddressList, useProvinceOptions } from "service/address";
 import { useAddressListSearchParams } from "./util";
 
 import { SearchPanel } from "./components/search-panel";
@@ -11,7 +10,7 @@ import { AddressModal } from "./components/address-modal";
 
 export const AddressList = () => {
   const supplierOptions = useSupplierOptions();
-  const { data: regionOptions } = useRegionOptions(3);
+  const { data: provinceOptions } = useProvinceOptions();
   const [params, setParams] = useAddressListSearchParams();
   const { data, isLoading, error } = useAddressList(params);
 
@@ -19,7 +18,7 @@ export const AddressList = () => {
     <Container>
       <Main>
         <SearchPanel
-          regionOptions={regionOptions || []}
+          provinceOptions={provinceOptions || []}
           supplierOptions={supplierOptions || []}
           params={params}
           setParams={setParams}

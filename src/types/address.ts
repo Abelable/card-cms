@@ -1,5 +1,10 @@
 import { Pagination } from "./common";
 
+export interface ProvinceOpttion {
+  label: string;
+  value: number;
+}
+
 export interface AddressListSearchParams {
   province_code: number;
   city_code: number;

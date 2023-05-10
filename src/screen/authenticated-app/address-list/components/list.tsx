@@ -19,7 +19,7 @@ import type { Address } from "types/address";
 
 interface ListProps
   extends TableProps<Address>,
-    Omit<SearchPanelProps, "regionOptions"> {
+    Omit<SearchPanelProps, "provinceOptions"> {
   error: Error | unknown;
 }
 

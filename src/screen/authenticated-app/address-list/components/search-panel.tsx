@@ -5,17 +5,17 @@ import styled from "@emotion/styled";
 
 import type { RegionOption } from "types/common";
 import type { SupplierOption } from "types/supplier";
-import type { AddressListSearchParams } from "types/address";
+import type { AddressListSearchParams, ProvinceOpttion } from "types/address";
 
 export interface SearchPanelProps {
-  regionOptions: RegionOption[];
+  provinceOptions: ProvinceOpttion[];
   supplierOptions: SupplierOption[];
   params: Partial<AddressListSearchParams>;
   setParams: (params: Partial<AddressListSearchParams>) => void;
 }
 
 export const SearchPanel = ({
-  regionOptions,
+  provinceOptions,
   supplierOptions,
   params,
   setParams,
@@ -33,8 +33,8 @@ export const SearchPanel = ({
 
   const setProvinceCode = (province_code: number) => {
     setTemporaryParams({ ...temporaryParams, province_code });
-    const cityOptions =
-      regionOptions.find((item) => item.id === province_code)?.children || [];
+    // const cityOptions =
+    //   provincOptions.find((item) => item.id === province_code)?.children || [];
     setCityOptions(cityOptions);
   };
   const clearProvinceCode = () => {
@@ -86,9 +86,9 @@ export const SearchPanel = ({
           }
           placeholder="请选择省"
         >
-          {regionOptions.map(({ id, name }) => (
-            <Select.Option key={id} value={id}>
-              {name}
+          {provinceOptions.map(({ label, value }) => (
+            <Select.Option key={value} value={value}>
+              {label}
             </Select.Option>
           ))}
         </Select>

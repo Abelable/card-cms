@@ -2,15 +2,24 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
-  AddressForm,
-  AddressListResult,
-  AddressListSearchParams,
-} from "types/address";
-import {
   useAddAddressConfig,
   useDeleteConfig,
   useEditAddressConfig,
 } from "./use-optimistic-options";
+
+import type {
+  AddressForm,
+  AddressListResult,
+  AddressListSearchParams,
+  ProvinceOpttion,
+} from "types/address";
+
+export const useProvinceOptions = () => {
+  const client = useHttp();
+  return useQuery<ProvinceOpttion[]>(["province_options"], () =>
+    client("/api/v1/admin/address/province")
+  );
+};
 
 export const useAddressList = (params: Partial<AddressListSearchParams>) => {
   const client = useHttp();
