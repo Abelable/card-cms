@@ -1,6 +1,6 @@
 import { Pagination } from "./common";
 
-export interface ProvinceOpttion {
+export interface RegionOpttion {
   label: string;
   value: number;
 }

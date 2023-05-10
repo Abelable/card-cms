@@ -11,13 +11,27 @@ import type {
   AddressForm,
   AddressListResult,
   AddressListSearchParams,
-  ProvinceOpttion,
+  RegionOpttion,
 } from "types/address";
 
 export const useProvinceOptions = () => {
   const client = useHttp();
-  return useQuery<ProvinceOpttion[]>(["province_options"], () =>
+  return useQuery<RegionOpttion[]>(["province_options"], () =>
     client("/api/v1/admin/address/province")
+  );
+};
+
+export const useCityOptions = (params: { id: number }) => {
+  const client = useHttp();
+  return useQuery<RegionOpttion[]>(["city_options", params], () =>
+    client(`/api/v1/admin/address/city`, { data: params })
+  );
+};
+
+export const useAreaOptions = (params: { id: number }) => {
+  const client = useHttp();
+  return useQuery<RegionOpttion[]>(["area_options", params], () =>
+    client(`/api/v1/admin/address/area`, { data: params })
   );
 };
 

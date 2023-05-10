@@ -3,12 +3,12 @@ import { Button, Select } from "antd";
 import { Row } from "components/lib";
 import styled from "@emotion/styled";
 
-import type { RegionOption } from "types/common";
 import type { SupplierOption } from "types/supplier";
-import type { AddressListSearchParams, ProvinceOpttion } from "types/address";
+import type { AddressListSearchParams, RegionOpttion } from "types/address";
+import { useAreaOptions, useCityOptions } from "service/address";
 
 export interface SearchPanelProps {
-  provinceOptions: ProvinceOpttion[];
+  provinceOptions: RegionOpttion[];
   supplierOptions: SupplierOption[];
   params: Partial<AddressListSearchParams>;
   setParams: (params: Partial<AddressListSearchParams>) => void;
@@ -28,30 +28,23 @@ export const SearchPanel = ({
 
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<AddressListSearchParams>>(params);
-  const [cityOptions, setCityOptions] = useState<RegionOption[]>([]);
-  const [areaOptions, setAreaOptions] = useState<RegionOption[]>([]);
 
-  const setProvinceCode = (province_code: number) => {
+  const { data: cityOptions } = useCityOptions({
+    id: temporaryParams.province_code || 0,
+  });
+  const { data: areaOptions } = useAreaOptions({
+    id: temporaryParams.city_code || 0,
+  });
+
+  const setProvinceCode = (province_code: number) =>
     setTemporaryParams({ ...temporaryParams, province_code });
-    // const cityOptions =
-    //   provincOptions.find((item) => item.id === province_code)?.children || [];
-    setCityOptions(cityOptions);
-  };
-  const clearProvinceCode = () => {
+  const clearProvinceCode = () =>
     setTemporaryParams({ ...temporaryParams, province_code: undefined });
-    setCityOptions([]);
-  };
 
-  const setCityCode = (city_code: number) => {
+  const setCityCode = (city_code: number) =>
     setTemporaryParams({ ...temporaryParams, city_code });
-    const areaOptions =
-      cityOptions.find((item) => item.id === city_code)?.children || [];
-    setAreaOptions(areaOptions);
-  };
-  const clearCityCode = () => {
+  const clearCityCode = () =>
     setTemporaryParams({ ...temporaryParams, city_code: undefined });
-    setCityOptions([]);
-  };
 
   const setAreaCode = (area_code: number) =>
     setTemporaryParams({ ...temporaryParams, area_code });
@@ -109,9 +102,9 @@ export const SearchPanel = ({
           }
           placeholder="请选择市"
         >
-          {cityOptions.map(({ id, name }) => (
-            <Select.Option key={id} value={id}>
-              {name}
+          {(cityOptions || []).map(({ label, value }) => (
+            <Select.Option key={value} value={value}>
+              {label}
             </Select.Option>
           ))}
         </Select>
@@ -132,9 +125,9 @@ export const SearchPanel = ({
           }
           placeholder="请选择区"
         >
-          {areaOptions.map(({ id, name }) => (
-            <Select.Option key={id} value={id}>
-              {name}
+          {(areaOptions || []).map(({ label, value }) => (
+            <Select.Option key={value} value={value}>
+              {label}
             </Select.Option>
           ))}
         </Select>
