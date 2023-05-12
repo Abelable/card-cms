@@ -24,6 +24,7 @@ export const SearchPanel = ({
     province_code: undefined,
     city_code: undefined,
     area_code: undefined,
+    supplier_id: undefined,
   } as Partial<AddressListSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
@@ -136,7 +137,11 @@ export const SearchPanel = ({
         <div>供应商：</div>
         <Select
           style={{ width: "20rem" }}
-          value={temporaryParams.supplier_id}
+          value={
+            temporaryParams.supplier_id
+              ? Number(temporaryParams.supplier_id)
+              : temporaryParams.supplier_id
+          }
           allowClear={true}
           onSelect={setSupplier}
           onClear={clearSupplier}

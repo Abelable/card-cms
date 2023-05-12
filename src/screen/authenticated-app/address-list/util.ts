@@ -6,6 +6,7 @@ export const useAddressListSearchParams = () => {
     "province_code",
     "city_code",
     "area_code",
+    "supplier_id",
     "page",
     "per_page",
   ]);
