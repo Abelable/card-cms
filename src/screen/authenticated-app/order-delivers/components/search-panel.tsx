@@ -309,7 +309,7 @@ export const SearchPanel = ({
         <Select
           mode="multiple"
           maxTagCount="responsive"
-          style={{ width: "49rem" }}
+          style={{ width: "40rem" }}
           allowClear={true}
           onChange={setProductName}
           onClear={clearProductName}
@@ -323,6 +323,43 @@ export const SearchPanel = ({
         </Select>
       </Item>
       <Item>
+        <div>订单id：</div>
+        <Input.Group compact>
+          <Tooltip title={temporaryParams.order_id}>
+            <Input
+              style={{ width: "38.6rem" }}
+              value={temporaryParams.order_id}
+              onChange={setOrderId}
+              placeholder="可批量复制excel单号，查询前请点右侧按钮进行格式化"
+              allowClear={true}
+            />
+          </Tooltip>
+          <Tooltip title="格式刷">
+            <Button onClick={formatOrderId} icon={<FormatPainterOutlined />} />
+          </Tooltip>
+        </Input.Group>
+      </Item>
+      <Item>
+        <div>外部订单id：</div>
+        <Input.Group compact>
+          <Tooltip title={temporaryParams.out_order_id}>
+            <Input
+              style={{ width: "38.6rem" }}
+              value={temporaryParams.out_order_id}
+              onChange={setOutOrderId}
+              placeholder="可批量复制excel单号，查询前请点右侧按钮进行格式化"
+              allowClear={true}
+            />
+          </Tooltip>
+          <Tooltip title="格式刷">
+            <Button
+              onClick={formatOutOrderId}
+              icon={<FormatPainterOutlined />}
+            />
+          </Tooltip>
+        </Input.Group>
+      </Item>
+      <Item>
         <div>产品编码：</div>
         <Input
           style={{ width: "20rem" }}
@@ -331,36 +368,6 @@ export const SearchPanel = ({
           placeholder="请输入产品编码"
           allowClear={true}
         />
-      </Item>
-      <Item>
-        <div>订单id：</div>
-        <Input.Group compact>
-          <Tooltip title={temporaryParams.order_id}>
-            <Input
-              style={{ width: "16.8rem" }}
-              value={temporaryParams.order_id}
-              onChange={setOrderId}
-              placeholder="请输入订单id"
-              allowClear={true}
-            />
-          </Tooltip>
-          <Button onClick={formatOrderId} icon={<FormatPainterOutlined />} />
-        </Input.Group>
-      </Item>
-      <Item>
-        <div>外部订单id：</div>
-        <Input.Group compact>
-          <Tooltip title={temporaryParams.out_order_id}>
-            <Input
-              style={{ width: "16.8rem" }}
-              value={temporaryParams.out_order_id}
-              onChange={setOutOrderId}
-              placeholder="请输入外部订单id"
-              allowClear={true}
-            />
-          </Tooltip>
-          <Button onClick={formatOutOrderId} icon={<FormatPainterOutlined />} />
-        </Input.Group>
       </Item>
       <Item>
         <div>订单状态：</div>
