@@ -56,9 +56,9 @@ export const AuthenticatedApp = () => {
         <Layout>
           <Header>
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
+            <NavigationBar />
             <User userInfo={userInfo} logout={logout} />
           </Header>
-          <NavigationBar />
           <Content>
             <Routes>
               <Route path="home" element={<Home />} />
@@ -137,7 +137,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       ],
     },
     {
-      label: "订单管理中心",
+      label: "生产管理中心",
       key: "order",
       icon: <SnippetsOutlined />,
       children: [
@@ -178,7 +178,12 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   ];
 
   return (
-    <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout.Sider
+      style={{ overflowY: "scroll" }}
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+    >
       <Link to={"/"}>
         <Logo collapsed={collapsed}>
           <LogoImg src={logo} />
@@ -274,7 +279,6 @@ const LogoImg = styled.img<{ size?: number }>`
 const Header = styled(Layout.Header)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding-left: 0;
   padding-right: 2.4rem;
   background: #fff;

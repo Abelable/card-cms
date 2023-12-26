@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { useBlacklist } from "service/system";
 import { toNumber } from "utils";
-import { BlackModal } from "./components/black-modal";
-import { List } from "./components/list";
 import { useBlacklistSearchParams } from "./util";
+
+import { SearchPanel } from "./components/search-panel";
+import { List } from "./components/list";
+import { BlackModal } from "./components/black-modal";
 
 export const Blacklist = () => {
   const [params, setParams] = useBlacklistSearchParams();
@@ -12,6 +14,7 @@ export const Blacklist = () => {
   return (
     <Container>
       <Main>
+        <SearchPanel params={params} setParams={setParams} />
         <List
           error={error}
           params={params}

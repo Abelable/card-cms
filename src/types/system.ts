@@ -1,6 +1,8 @@
 import { Pagination } from "./common";
 
 export interface BlacklistSearchParams {
+  idcard: string;
+  phone: string;
   per_page: number;
   page: number;
 }
