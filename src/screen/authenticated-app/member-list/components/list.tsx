@@ -57,16 +57,16 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
-            title: "岗位名称",
+            title: "账号名",
+            dataIndex: "username",
+          },
+          {
+            title: "昵称",
             dataIndex: "name",
           },
           {
-            title: "描述",
-            dataIndex: "desc",
-          },
-          {
             title: "操作",
-            render: (value, roleItem) => <More id={roleItem.id} />,
+            render: (value, memberItem) => <More id={memberItem.id} />,
           },
         ]}
         onChange={setPagination}

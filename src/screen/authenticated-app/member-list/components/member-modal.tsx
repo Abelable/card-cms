@@ -24,13 +24,6 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
     }
   }, [member, form]);
 
-  const validatePwd = ({ getFieldValue }: any) => ({
-    validator: (_: any, value: any) =>
-      !value || getFieldValue("password" === value)
-        ? Promise.resolve()
-        : Promise.reject(new Error("两次密码不一致，请重新输入")),
-  });
-
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
@@ -93,7 +86,7 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
               <Input.Password placeholder="请输入登录密码" />
             </Form.Item>
             <Form.Item
-              name="confirm_password"
+              name="password_confirm"
               label="确认密码"
               validateTrigger="onBlur"
               rules={[
