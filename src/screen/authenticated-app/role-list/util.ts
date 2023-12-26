@@ -2,11 +2,10 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
 export const useRoleListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["name", "page", "per_page"]);
+  const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
   return [
     useMemo(
       () => ({
-        ...params,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
       }),

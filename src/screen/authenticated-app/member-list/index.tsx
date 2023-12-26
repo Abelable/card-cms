@@ -1,20 +1,18 @@
 import styled from "@emotion/styled";
-import { useBlacklist } from "service/system";
+import { useMemberList } from "service/member";
 import { toNumber } from "utils";
-import { useBlacklistSearchParams } from "./util";
+import { useMemberListSearchParams } from "./util";
 
-import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
-import { BlackModal } from "./components/black-modal";
+import { MemberModal } from "./components/member-modal";
 
-export const Blacklist = () => {
-  const [params, setParams] = useBlacklistSearchParams();
-  const { data, isLoading, error } = useBlacklist(params);
+export const MemberList = () => {
+  const [params, setParams] = useMemberListSearchParams();
+  const { data, isLoading, error } = useMemberList(params);
 
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
         <List
           error={error}
           params={params}
@@ -27,7 +25,7 @@ export const Blacklist = () => {
             total: toNumber(data?.meta.pagination.total),
           }}
         />
-        <BlackModal blacklist={data?.data || []} />
+        <MemberModal memberList={data?.data || []} />
       </Main>
     </Container>
   );

@@ -1,7 +1,6 @@
 import { Pagination } from "./common";
 
 export interface RoleListSearchParams {
-  name: string;
   per_page: number;
   page: number;
 }

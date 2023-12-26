@@ -1,17 +1,11 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useBlacklistSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams([
-    "idcard",
-    "phone",
-    "page",
-    "per_page",
-  ]);
+export const useMemberListSearchParams = () => {
+  const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
   return [
     useMemo(
       () => ({
-        ...params,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
       }),
@@ -21,36 +15,36 @@ export const useBlacklistSearchParams = () => {
   ] as const;
 };
 
-export const useBlacklistQueryKey = () => {
-  const [params] = useBlacklistSearchParams();
-  return ["blacklist", params];
+export const useMemberListQueryKey = () => {
+  const [params] = useMemberListSearchParams();
+  return ["member_list", params];
 };
 
-export const useBlackModal = () => {
-  const [{ blackCreate }, setBlackModalOpen] = useUrlQueryParams([
-    "blackCreate",
+export const useMemberModal = () => {
+  const [{ memberCreate }, setMemberModalOpen] = useUrlQueryParams([
+    "memberCreate",
   ]);
-  const [{ editingBlackId }, setEditingBlackId] = useUrlQueryParams([
-    "editingBlackId",
+  const [{ editingMemberId }, setEditingMemberId] = useUrlQueryParams([
+    "editingMemberId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setBlackModalOpen({ blackCreate: true }),
-    [setBlackModalOpen]
+    () => setMemberModalOpen({ memberCreate: true }),
+    [setMemberModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingBlackId({ editingBlackId: id }),
-    [setEditingBlackId]
+    (id: string) => setEditingMemberId({ editingMemberId: id }),
+    [setEditingMemberId]
   );
   const close = useCallback(
-    () => setUrlParams({ blackCreate: "", editingBlackId: "" }),
+    () => setUrlParams({ memberCreate: "", editingMemberId: "" }),
     [setUrlParams]
   );
 
   return {
-    blackModalOpen: blackCreate === "true" || !!editingBlackId,
-    editingBlackId,
+    memberModalOpen: memberCreate === "true" || !!editingMemberId,
+    editingMemberId,
     open,
     startEdit,
     close,
