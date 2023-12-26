@@ -95,7 +95,18 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
             <Form.Item
               name="confirm_password"
               label="确认密码"
-              rules={[validatePwd]}
+              validateTrigger="onBlur"
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(rule, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject("两次密码不一致，请重新输入");
+                    }
+                  },
+                }),
+              ]}
             >
               <Input.Password placeholder="请再次输入登录密码" />
             </Form.Item>
