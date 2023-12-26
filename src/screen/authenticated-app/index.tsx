@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { useUserInfo } from "service/auth";
 import { HashRouter as Router, Link } from "react-router-dom";
 import { Routes, Route, Navigate } from "react-router";
+
 import { Button, Dropdown, Layout, Menu, MenuProps } from "antd";
 import { NavigationBar } from "components/navigation-bar";
 import { Home } from "./home";
@@ -22,6 +23,8 @@ import { Blacklist } from "./blacklist";
 import { AddressList } from "./address-list";
 import { OrderDelivers } from "./order-delivers";
 import { OrderReportForms } from "./order-report-forms";
+import { RoleList } from "./role-list";
+
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -38,6 +41,9 @@ import {
   ImportOutlined,
   RobotOutlined,
   UserDeleteOutlined,
+  SafetyCertificateOutlined,
+  TeamOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import logo from "assets/images/logo.png";
 import { AddressIcon } from "assets/icon";
@@ -88,6 +94,7 @@ export const AuthenticatedApp = () => {
               <Route path="order/import" element={<OrderImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />
               <Route path="system/address_list" element={<AddressList />} />
+              <Route path="account/role" element={<RoleList />} />
               <Route
                 path={"*"}
                 element={<Navigate to={"home"} replace={true} />}
@@ -172,6 +179,23 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           label: <Link to={"system/address_list"}>地址库映射</Link>,
           key: "address_list",
           icon: <AddressIcon />,
+        },
+      ],
+    },
+    {
+      label: "账户管理",
+      key: "account",
+      icon: <SafetyCertificateOutlined />,
+      children: [
+        {
+          label: <Link to={"account/member"}>我的团队</Link>,
+          key: "account_member",
+          icon: <TeamOutlined />,
+        },
+        {
+          label: <Link to={"account/role"}>岗位管理</Link>,
+          key: "account_role",
+          icon: <UserOutlined />,
         },
       ],
     },

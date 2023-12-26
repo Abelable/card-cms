@@ -21,6 +21,9 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/system": "系统管理",
   "/system/blacklist": "黑名单配置",
   "/system/address_list": "地址库映射",
+  "/account": "账户管理",
+  "/account/member": "我的团队",
+  "/account/role": "岗位管理",
 };
 
 export const NavigationBar = () => {
