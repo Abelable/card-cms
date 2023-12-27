@@ -1,16 +1,17 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
+import { cleanObject } from "utils";
 import { useHttp } from "./http";
-import {
-  MemberItem,
-  MemberListResult,
-  MemberListSearchParams,
-} from "types/member";
 import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
-import { cleanObject } from "utils";
+
+import type {
+  MemberItem,
+  MemberListResult,
+  MemberListSearchParams,
+} from "types/member";
 
 export const useMemberList = (params: Partial<MemberListSearchParams>) => {
   const client = useHttp();
@@ -39,6 +40,18 @@ export const useEditMember = (queryKey: QueryKey) => {
     ({ id, ...params }: Partial<MemberItem>) =>
       client(`/api/v1/admin/user/update/${id}`, {
         data: cleanObject({ ...params }),
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useEditMemberStatus = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, status }: { id: number; status: number }) =>
+      client(`/api/v1/admin/user/status/${id}`, {
+        data: { status },
         method: "POST",
       }),
     useEditConfig(queryKey)

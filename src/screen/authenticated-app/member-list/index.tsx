@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useMemberList } from "service/member";
+import { useRoleOptions } from "service/role";
 import { toNumber } from "utils";
 import { useMemberListSearchParams } from "./util";
 
@@ -7,6 +8,7 @@ import { List } from "./components/list";
 import { MemberModal } from "./components/member-modal";
 
 export const MemberList = () => {
+  const roleOptions = useRoleOptions();
   const [params, setParams] = useMemberListSearchParams();
   const { data, isLoading, error } = useMemberList(params);
 
@@ -14,6 +16,7 @@ export const MemberList = () => {
     <Container>
       <Main>
         <List
+          roleOptions={roleOptions}
           error={error}
           params={params}
           setParams={setParams}

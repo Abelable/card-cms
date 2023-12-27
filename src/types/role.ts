@@ -16,3 +16,8 @@ export interface RoleListResult {
   data: RoleItem[];
   meta: { pagination: Pagination };
 }
+
+export interface RoleOption {
+  id: number;
+  name: string;
+}

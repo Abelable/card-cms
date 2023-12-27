@@ -1,12 +1,18 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
+import { cleanObject } from "utils";
 import { useHttp } from "./http";
-import { RoleItem, RoleListResult, RoleListSearchParams } from "types/role";
 import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
 } from "./use-optimistic-options";
-import { cleanObject } from "utils";
+
+import type {
+  RoleItem,
+  RoleListResult,
+  RoleListSearchParams,
+  RoleOption,
+} from "types/role";
 
 export const useRoleList = (params: Partial<RoleListSearchParams>) => {
   const client = useHttp();
@@ -15,6 +21,17 @@ export const useRoleList = (params: Partial<RoleListSearchParams>) => {
       data: cleanObject({ ...params }),
     })
   );
+};
+
+export const useRoleOptions = () => {
+  const client = useHttp();
+  const res = useQuery<RoleListResult>(["member_options"], () =>
+    client("/api/v1/admin/role/lst", { data: { per_page: 1000, page: 1 } })
+  );
+  const memberOptions: RoleOption[] = res.data?.data
+    ? res.data?.data.map(({ id, name }) => ({ id, name }))
+    : [];
+  return memberOptions;
 };
 
 export const useAddRole = (queryKey: QueryKey) => {

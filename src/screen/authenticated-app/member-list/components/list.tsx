@@ -8,20 +8,29 @@ import {
   TablePaginationConfig,
   TableProps,
   MenuProps,
+  Switch,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { useMemberListQueryKey, useMemberModal } from "../util";
-import { useDeleteMember } from "service/member";
+import { useDeleteMember, useEditMemberStatus } from "service/member";
 import type { MemberListSearchParams, MemberItem } from "types/member";
+import type { RoleOption } from "types/role";
 
 interface ListProps extends TableProps<MemberItem> {
+  roleOptions: RoleOption[];
   params: Partial<MemberListSearchParams>;
   setParams: (params: Partial<MemberListSearchParams>) => void;
   error: Error | unknown;
 }
 
-export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
+export const List = ({
+  roleOptions,
+  error,
+  params,
+  setParams,
+  ...restProps
+}: ListProps) => {
   const { open } = useMemberModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -30,10 +39,14 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
 
+  const { mutate } = useEditMemberStatus(useMemberListQueryKey());
+  const onStatusChange = (id: number, checked: boolean) =>
+    mutate({ id, status: checked ? 1 : 2 });
+
   return (
     <Container>
       <Header between={true}>
-        <h3>岗位列表</h3>
+        <h3>员工列表</h3>
         <Row gap>
           <Button
             style={{ marginRight: 0 }}
@@ -65,8 +78,25 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
             dataIndex: "name",
           },
           {
+            title: "岗位",
+            dataIndex: "role_id",
+            render: (value) =>
+              roleOptions.find((item) => item.id === value)?.name,
+          },
+          {
+            title: "使用状态",
+            dataIndex: "status",
+            render: (value, member) => (
+              <Switch
+                key={member.id}
+                checked={value === 1}
+                onChange={(checked) => onStatusChange(member.id, checked)}
+              />
+            ),
+          },
+          {
             title: "操作",
-            render: (value, memberItem) => <More id={memberItem.id} />,
+            render: (value, member) => <More id={member.id} />,
           },
         ]}
         onChange={setPagination}
@@ -97,8 +127,8 @@ const More = ({ id }: { id: number }) => {
       key: "edit",
     },
     {
-      label: <div onClick={() => confirmDeleteMember(id)}>权限配置</div>,
-      key: "auth",
+      label: <div onClick={() => confirmDeleteMember(id)}>重制密码</div>,
+      key: "pwd",
     },
     {
       label: <div onClick={() => confirmDeleteMember(id)}>删除</div>,

@@ -23,6 +23,7 @@ import { Blacklist } from "./blacklist";
 import { AddressList } from "./address-list";
 import { OrderDelivers } from "./order-delivers";
 import { OrderReportForms } from "./order-report-forms";
+import { MemberList } from "./member-list";
 import { RoleList } from "./role-list";
 
 import {
@@ -94,6 +95,7 @@ export const AuthenticatedApp = () => {
               <Route path="order/import" element={<OrderImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />
               <Route path="system/address_list" element={<AddressList />} />
+              <Route path="account/member" element={<MemberList />} />
               <Route path="account/role" element={<RoleList />} />
               <Route
                 path={"*"}
@@ -189,12 +191,12 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       children: [
         {
           label: <Link to={"account/member"}>我的团队</Link>,
-          key: "account_member",
+          key: "member",
           icon: <TeamOutlined />,
         },
         {
           label: <Link to={"account/role"}>岗位管理</Link>,
-          key: "account_role",
+          key: "role",
           icon: <UserOutlined />,
         },
       ],
