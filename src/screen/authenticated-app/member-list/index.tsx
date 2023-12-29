@@ -28,7 +28,10 @@ export const MemberList = () => {
             total: toNumber(data?.meta.pagination.total),
           }}
         />
-        <MemberModal memberList={data?.data || []} />
+        <MemberModal
+          roleOptions={roleOptions || []}
+          memberList={data?.data || []}
+        />
       </Main>
     </Container>
   );

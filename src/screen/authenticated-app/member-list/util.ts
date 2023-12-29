@@ -50,3 +50,25 @@ export const useMemberModal = () => {
     close,
   };
 };
+
+export const usePwdModal = () => {
+  const [{ resetPwdMemberId }, setEditingMemberId] = useUrlQueryParams([
+    "resetPwdMemberId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+  const open = useCallback(
+    (id: string) => setEditingMemberId({ resetPwdMemberId: id }),
+    [setEditingMemberId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ memberCreate: "", resetPwdMemberId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    pwdModalOpen: !!resetPwdMemberId,
+    resetPwdMemberId,
+    open,
+    close,
+  };
+};

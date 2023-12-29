@@ -68,3 +68,22 @@ export const useDeleteMember = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useResetMemberPwd = () => {
+  const client = useHttp();
+  return useMutation(
+    ({
+      id,
+      password,
+      password_confirm,
+    }: {
+      id: number;
+      password: string;
+      password_confirm: string;
+    }) =>
+      client(`/api/v1/admin/user/update/${id}`, {
+        data: { id, password, password_confirm },
+        method: "POST",
+      })
+  );
+};
