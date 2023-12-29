@@ -81,7 +81,7 @@ export const useResetMemberPwd = () => {
       password: string;
       password_confirm: string;
     }) =>
-      client(`/api/v1/admin/user/update/${id}`, {
+      client(`/api/v1/admin/user/reset/password/${id}`, {
         data: { id, password, password_confirm },
         method: "POST",
       })

@@ -1,42 +1,32 @@
-import { Form, Modal, Button, Input, Select } from "antd";
+import { Form, Modal, Button, Input } from "antd";
 import { ErrorBox } from "components/lib";
 
 import { useForm } from "antd/lib/form/Form";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useAddMember, useEditMember } from "service/member";
-import { useMemberListQueryKey, useMemberModal } from "../util";
+import { useResetMemberPwd } from "service/member";
+import { usePwdModal } from "../util";
 
 import type { MemberItem } from "types/member";
-import type { RoleOption } from "types/role";
 
-export const MemberModal = ({
-  roleOptions,
-  memberList,
-}: {
-  memberList: MemberItem[];
-  roleOptions: RoleOption[];
-}) => {
+export const PwdModal = ({ memberList }: { memberList: MemberItem[] }) => {
   const [form] = useForm();
-  const { memberModalOpen, editingMemberId, close } = useMemberModal();
+  const { pwdModalOpen, resetPwdMemberId, close } = usePwdModal();
   const member =
-    memberList?.find((item) => item.id === Number(editingMemberId)) ||
+    memberList?.find((item) => item.id === Number(resetPwdMemberId)) ||
     undefined;
-  const useMutationMember = editingMemberId ? useEditMember : useAddMember;
-  const { mutateAsync, isLoading, error } = useMutationMember(
-    useMemberListQueryKey()
-  );
+  const { mutateAsync, isLoading, error } = useResetMemberPwd();
 
   useDeepCompareEffect(() => {
     if (member) {
-      const { name, username, role_id } = member;
-      form.setFieldsValue({ name, username, role_id });
+      const { username } = member;
+      form.setFieldsValue({ username });
     }
   }, [member, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
       await mutateAsync({
-        id: editingMemberId || "",
+        id: resetPwdMemberId,
         ...form.getFieldsValue(),
       });
       closeModal();
@@ -50,9 +40,9 @@ export const MemberModal = ({
 
   return (
     <Modal
-      title={editingMemberId ? "编辑员工" : "添加员工"}
+      title="重制密码"
       onCancel={closeModal}
-      visible={memberModalOpen}
+      visible={pwdModalOpen}
       confirmLoading={isLoading}
       footer={
         <>
@@ -73,69 +63,43 @@ export const MemberModal = ({
           <Input placeholder="请输入账户名" autoComplete="new-password" />
         </Form.Item>
         <Form.Item
-          name="name"
-          label="昵称"
-          rules={[{ required: true, message: "请输入昵称" }]}
+          name="password"
+          label="登录密码"
+          rules={[
+            {
+              required: true,
+              pattern: /^(?![^a-zA-Z]+$)(?!\\D+$).{8,16}$/,
+              message: "8-16位字符，必须包括字母和数字",
+            },
+          ]}
         >
-          <Input placeholder="请输入昵称" autoComplete="new-password" />
+          <Input.Password
+            placeholder="请输入登录密码"
+            autoComplete="new-password"
+          />
         </Form.Item>
         <Form.Item
-          name="role_id"
-          label="岗位"
-          rules={[{ required: true, message: "请选择岗位" }]}
+          name="password_confirm"
+          label="确认密码"
+          validateTrigger="onBlur"
+          rules={[
+            ({ getFieldValue }) => ({
+              required: true,
+              validator(rule, value) {
+                if (!value || getFieldValue("password") === value) {
+                  return Promise.resolve();
+                } else {
+                  return Promise.reject("两次密码不一致，请重新输入");
+                }
+              },
+            }),
+          ]}
         >
-          <Select placeholder="请选择岗位">
-            {roleOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
+          <Input.Password
+            placeholder="请再次输入登录密码"
+            autoComplete="new-password"
+          />
         </Form.Item>
-        {!editingMemberId ? (
-          <>
-            <Form.Item
-              name="password"
-              label="登录密码"
-              rules={[
-                {
-                  required: true,
-                  pattern: /^(?![^a-zA-Z]+$)(?!\\D+$).{8,16}$/,
-                  message: "8-16位字符，必须包括字母和数字",
-                },
-              ]}
-            >
-              <Input.Password
-                placeholder="请输入登录密码"
-                autoComplete="new-password"
-              />
-            </Form.Item>
-            <Form.Item
-              name="password_confirm"
-              label="确认密码"
-              validateTrigger="onBlur"
-              rules={[
-                ({ getFieldValue }) => ({
-                  required: true,
-                  validator(rule, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    } else {
-                      return Promise.reject("两次密码不一致，请重新输入");
-                    }
-                  },
-                }),
-              ]}
-            >
-              <Input.Password
-                placeholder="请再次输入登录密码"
-                autoComplete="new-password"
-              />
-            </Form.Item>
-          </>
-        ) : (
-          <></>
-        )}
       </Form>
     </Modal>
   );
