@@ -61,14 +61,14 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
           label="账户名"
           rules={[{ required: true, message: "请输入账户名" }]}
         >
-          <Input placeholder="请输入账户名" />
+          <Input placeholder="请输入账户名" autoComplete="new-password" />
         </Form.Item>
         <Form.Item
           name="name"
           label="昵称"
           rules={[{ required: true, message: "请输入昵称" }]}
         >
-          <Input placeholder="请输入昵称" />
+          <Input placeholder="请输入昵称" autoComplete="new-password" />
         </Form.Item>
         {!editingMemberId ? (
           <>
@@ -83,7 +83,10 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
                 },
               ]}
             >
-              <Input.Password placeholder="请输入登录密码" />
+              <Input.Password
+                placeholder="请输入登录密码"
+                autoComplete="new-password"
+              />
             </Form.Item>
             <Form.Item
               name="password_confirm"
@@ -91,6 +94,7 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
               validateTrigger="onBlur"
               rules={[
                 ({ getFieldValue }) => ({
+                  required: true,
                   validator(rule, value) {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
@@ -101,7 +105,10 @@ export const MemberModal = ({ memberList }: { memberList: MemberItem[] }) => {
                 }),
               ]}
             >
-              <Input.Password placeholder="请再次输入登录密码" />
+              <Input.Password
+                placeholder="请再次输入登录密码"
+                autoComplete="new-password"
+              />
             </Form.Item>
           </>
         ) : (
