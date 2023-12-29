@@ -86,13 +86,13 @@ export const AuthenticatedApp = () => {
                 path="product/sales/agent"
                 element={<ProductGoodsAgents />}
               />
-              <Route path="order/deliver" element={<OrderDelivers />} />
+              <Route path="produce/deliver" element={<OrderDelivers />} />
               <Route
-                path="order/deliver/report_forms"
+                path="produce/deliver/report_forms"
                 element={<OrderReportForms />}
               />
-              <Route path="order/configure" element={<OrderProducts />} />
-              <Route path="order/import" element={<OrderImports />} />
+              <Route path="produce/configure" element={<OrderProducts />} />
+              <Route path="produce/import" element={<OrderImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />
               <Route path="system/address_list" element={<AddressList />} />
               <Route path="account/member" element={<MemberList />} />
@@ -111,7 +111,7 @@ export const AuthenticatedApp = () => {
 
 const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   const { defaultOpenKey, selectedKey } = useRouteType();
-  const { permission } = useAuth();
+  // const { permission } = useAuth();
 
   const items: MenuProps["items"] = [
     {
@@ -148,21 +148,21 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
     },
     {
       label: "生产管理中心",
-      key: "order",
+      key: "produce",
       icon: <SnippetsOutlined />,
       children: [
         {
-          label: <Link to={"order/deliver"}>生产发货</Link>,
+          label: <Link to={"produce/deliver"}>生产发货</Link>,
           key: "deliver",
           icon: <ToolOutlined />,
         },
         {
-          label: <Link to={"order/configure"}>自动生产配置</Link>,
+          label: <Link to={"produce/configure"}>自动生产配置</Link>,
           key: "configure",
           icon: <RobotOutlined />,
         },
         {
-          label: <Link to={"order/import"}>批量导入</Link>,
+          label: <Link to={"produce/import"}>批量导入</Link>,
           key: "import",
           icon: <ImportOutlined />,
         },
@@ -202,33 +202,33 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         },
       ],
     },
-  ]
-    .map((item) => {
-      if (item.children) {
-        if (permission.includes(item.key)) {
-          return item;
-        } else {
-          const children = item.children.filter((_item) =>
-            permission.includes(_item.key)
-          );
-          if (children.length) {
-            return {
-              ...item,
-              children,
-            };
-          } else {
-            return null;
-          }
-        }
-      } else {
-        if (permission.includes(item.key)) {
-          return item;
-        } else {
-          return null;
-        }
-      }
-    })
-    .filter((item) => !!item);
+  ];
+  // .map((item) => {
+  //   if (item.children) {
+  //     if (permission.includes(item.key)) {
+  //       return item;
+  //     } else {
+  //       const children = item.children.filter((_item) =>
+  //         permission.includes(_item.key)
+  //       );
+  //       if (children.length) {
+  //         return {
+  //           ...item,
+  //           children,
+  //         };
+  //       } else {
+  //         return null;
+  //       }
+  //     }
+  //   } else {
+  //     if (permission.includes(item.key)) {
+  //       return item;
+  //     } else {
+  //       return null;
+  //     }
+  //   }
+  // })
+  // .filter((item) => !!item);
 
   return (
     <Layout.Sider
