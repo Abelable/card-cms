@@ -1,5 +1,5 @@
 import { Form, Modal, Button, Input } from "antd";
-import { ErrorBox } from "components/lib";
+import { ErrorBox, Row } from "components/lib";
 
 import { useForm } from "antd/lib/form/Form";
 import useDeepCompareEffect from "use-deep-compare-effect";
@@ -54,17 +54,13 @@ export const PwdModal = ({ memberList }: { memberList: MemberItem[] }) => {
       }
     >
       <ErrorBox error={error} />
+      <div
+        style={{ marginBottom: "2rem" }}
+      >{`账户名: ${member?.username}`}</div>
       <Form form={form} layout="vertical">
         <Form.Item
-          name="username"
-          label="账户名"
-          rules={[{ required: true, message: "请输入账户名" }]}
-        >
-          <Input placeholder="请输入账户名" autoComplete="new-password" />
-        </Form.Item>
-        <Form.Item
           name="password"
-          label="登录密码"
+          label="新密码"
           rules={[
             {
               required: true,
@@ -74,7 +70,7 @@ export const PwdModal = ({ memberList }: { memberList: MemberItem[] }) => {
           ]}
         >
           <Input.Password
-            placeholder="请输入登录密码"
+            placeholder="请输入新密码"
             autoComplete="new-password"
           />
         </Form.Item>

@@ -6,6 +6,7 @@ import { useMemberListSearchParams } from "./util";
 
 import { List } from "./components/list";
 import { MemberModal } from "./components/member-modal";
+import { PwdModal } from "./components/pwd-modal";
 
 export const MemberList = () => {
   const roleOptions = useRoleOptions();
@@ -32,6 +33,7 @@ export const MemberList = () => {
           roleOptions={roleOptions || []}
           memberList={data?.data || []}
         />
+        <PwdModal memberList={data?.data || []} />
       </Main>
     </Container>
   );

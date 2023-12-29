@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useMemberListQueryKey, useMemberModal } from "../util";
+import { useMemberListQueryKey, useMemberModal, usePwdModal } from "../util";
 import { useDeleteMember, useEditMemberStatus } from "service/member";
 import type { MemberListSearchParams, MemberItem } from "types/member";
 import type { RoleOption } from "types/role";
@@ -110,6 +110,7 @@ const More = ({ id }: { id: number }) => {
   const { mutate: deleteMember } = useDeleteMember(useMemberListQueryKey());
 
   const { startEdit } = useMemberModal();
+  const { open } = usePwdModal();
 
   const confirmDeleteMember = (id: number) => {
     Modal.confirm({
@@ -127,7 +128,7 @@ const More = ({ id }: { id: number }) => {
       key: "edit",
     },
     {
-      label: <div onClick={() => confirmDeleteMember(id)}>重制密码</div>,
+      label: <div onClick={() => open(String(id))}>重制密码</div>,
       key: "pwd",
     },
     {
