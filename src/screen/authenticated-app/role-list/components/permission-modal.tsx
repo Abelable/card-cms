@@ -4,96 +4,105 @@ import { useUpdateRolePermission } from "service/role";
 import { usePermissionModal } from "../util";
 
 import type { DataNode, TreeProps } from "antd/es/tree";
+import { Key, useEffect, useState } from "react";
 
 export const PermissionModal = () => {
   const { permissionModalOpen, editingPermissionRoleId, permission, close } =
     usePermissionModal();
   const { mutateAsync, isLoading, error } = useUpdateRolePermission();
 
+  const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<Key[]>([]);
+  const [expandedKeys, setExpandedKeys] = useState<Key[]>([]);
+
   const treeData: DataNode[] = [
     {
       title: "我的供应商",
-      key: "0-0",
+      key: "suppliers",
     },
     {
       title: "我的代理商",
-      key: "0-1",
+      key: "agents",
     },
     {
       title: "产品管理中心",
-      key: "0-2",
+      key: "product",
       children: [
         {
           title: "产品渠道管理",
-          key: "0-2-0",
+          key: "channels",
         },
         {
           title: "在售商品管理",
-          key: "0-2-1",
+          key: "sales",
         },
       ],
     },
     {
       title: "订单中心",
-      key: "0-3",
+      key: "orders",
       children: [
         {
           title: "订单处理",
-          key: "0-3-0",
+          key: "handle",
+        },
+        {
+          title: "订单处理 > 导出信息脱敏并加密码",
+          key: "encryption",
         },
         {
           title: "转单配置",
-          key: "0-3-1",
+          key: "convert",
         },
         {
           title: "抓单管理",
-          key: "0-3-2",
+          key: "grab",
         },
       ],
     },
     {
       title: "生产管理中心",
-      key: "0-4",
+      key: "produce",
       children: [
         {
           title: "生产发货",
-          key: "0-4-0",
+          key: "deliver",
         },
         {
           title: "自动生产配置",
-          key: "0-4-1",
+          key: "configure",
         },
         {
           title: "批量导入",
-          key: "0-4-2",
+          key: "import",
         },
       ],
     },
     {
       title: "系统管理",
-      key: "0-5",
+      key: "system",
       children: [
         {
           title: "黑名单配置",
-          key: "0-5-0",
+          key: "blacklist",
         },
         {
           title: "地址库映射",
-          key: "0-5-1",
+          key: "address_list",
         },
       ],
     },
     {
       title: "账户管理",
-      key: "0-6",
+      key: "account",
       children: [
         {
           title: "我的团队",
-          key: "0-6-0",
+          key: "member",
         },
         {
           title: "岗位管理",
-          key: "0-6-1",
+          key: "role",
         },
       ],
     },
@@ -101,19 +110,33 @@ export const PermissionModal = () => {
 
   const onSelect: TreeProps["onSelect"] = (selectedKeys, info) => {
     console.log("selected", selectedKeys, info);
+    setSelectedKeys(selectedKeys as Key[]);
   };
 
   const onCheck: TreeProps["onCheck"] = (checkedKeys, info) => {
     console.log("onCheck", checkedKeys, info);
+    setCheckedKeys(checkedKeys as Key[]);
   };
 
-  const confirm = () => {
+  const onExpand: TreeProps["onExpand"] = (expandedKeys, info) => {
+    console.log("onExpand", expandedKeys, info);
+    setExpandedKeys(expandedKeys as Key[]);
+  };
+
+  const confirm = async () => {
+    await mutateAsync({ id: +editingPermissionRoleId, perms: checkedKeys });
     closeModal();
   };
 
   const closeModal = () => {
     close();
   };
+
+  useEffect(() => {
+    if (permission && permission.length) {
+      setCheckedKeys(permission);
+    }
+  }, [permission]);
 
   return (
     <Modal
@@ -133,11 +156,12 @@ export const PermissionModal = () => {
       <ErrorBox error={error} />
       <Tree
         checkable
-        defaultExpandedKeys={["0-0"]}
-        defaultSelectedKeys={["0-0"]}
-        defaultCheckedKeys={["0-0"]}
+        selectedKeys={selectedKeys}
+        checkedKeys={checkedKeys}
+        expandedKeys={expandedKeys}
         onSelect={onSelect}
         onCheck={onCheck}
+        onExpand={onExpand}
         treeData={treeData}
       />
     </Modal>

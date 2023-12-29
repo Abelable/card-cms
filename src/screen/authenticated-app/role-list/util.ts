@@ -55,11 +55,11 @@ export const usePermissionModal = () => {
     "editingPermissionRoleId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
-  const { data, isLoading, error } = useRolePermission(
-    Number(editingPermissionRoleId)
-  );
-
-  console.log("data", data);
+  const {
+    data: permission,
+    isLoading,
+    error,
+  } = useRolePermission(Number(editingPermissionRoleId));
 
   const open = useCallback(
     (id: string) => setEditingRoleId({ editingPermissionRoleId: id }),
@@ -74,7 +74,7 @@ export const usePermissionModal = () => {
     permissionModalOpen: !!editingPermissionRoleId,
     editingPermissionRoleId,
     isLoading,
-    permission: data,
+    permission,
     error,
     open,
     close,

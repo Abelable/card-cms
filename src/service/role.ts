@@ -7,6 +7,7 @@ import {
   useEditConfig,
 } from "./use-optimistic-options";
 
+import type { Key } from "react";
 import type {
   RoleItem,
   RoleListResult,
@@ -82,7 +83,7 @@ export const useRolePermission = (id: number) => {
 
 export const useUpdateRolePermission = () => {
   const client = useHttp();
-  return useMutation(({ id, perms }: { id: number; perms: string }) =>
+  return useMutation(({ id, perms }: { id: number; perms: Key[] }) =>
     client(`/api/v1/admin/role/perms/${id}`, {
       data: { id, perms },
       method: "POST",
