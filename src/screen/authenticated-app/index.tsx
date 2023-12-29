@@ -111,6 +111,7 @@ export const AuthenticatedApp = () => {
 
 const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   const { defaultOpenKey, selectedKey } = useRouteType();
+  const { permission } = useAuth();
 
   const items: MenuProps["items"] = [
     {
@@ -201,7 +202,33 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
         },
       ],
     },
-  ];
+  ]
+    .map((item) => {
+      if (item.children) {
+        if (permission.includes(item.key)) {
+          return item;
+        } else {
+          const children = item.children.filter((_item) =>
+            permission.includes(_item.key)
+          );
+          if (children.length) {
+            return {
+              ...item,
+              children,
+            };
+          } else {
+            return null;
+          }
+        }
+      } else {
+        if (permission.includes(item.key)) {
+          return item;
+        } else {
+          return null;
+        }
+      }
+    })
+    .filter((item) => !!item);
 
   return (
     <Layout.Sider
