@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useRoleListQueryKey, useRoleModal } from "../util";
+import { usePermissionModal, useRoleListQueryKey, useRoleModal } from "../util";
 import { useDeleteRole } from "service/role";
 import type { RoleListSearchParams, RoleItem } from "types/role";
 
@@ -80,6 +80,7 @@ const More = ({ id }: { id: number }) => {
   const { mutate: deleteRole } = useDeleteRole(useRoleListQueryKey());
 
   const { startEdit } = useRoleModal();
+  const { open } = usePermissionModal();
 
   const confirmDeleteRole = (id: number) => {
     Modal.confirm({
@@ -97,7 +98,7 @@ const More = ({ id }: { id: number }) => {
       key: "edit",
     },
     {
-      label: <div onClick={() => confirmDeleteRole(id)}>权限配置</div>,
+      label: <div onClick={() => open(String(id))}>权限配置</div>,
       key: "auth",
     },
     {

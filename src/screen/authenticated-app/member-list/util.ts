@@ -61,7 +61,7 @@ export const usePwdModal = () => {
     [setEditingMemberId]
   );
   const close = useCallback(
-    () => setUrlParams({ memberCreate: "", resetPwdMemberId: "" }),
+    () => setUrlParams({ resetPwdMemberId: "" }),
     [setUrlParams]
   );
 

@@ -5,6 +5,7 @@ import { useRoleListSearchParams } from "./util";
 
 import { List } from "./components/list";
 import { RoleModal } from "./components/role-modal";
+import { PermissionModal } from "./components/permission-modal";
 
 export const RoleList = () => {
   const [params, setParams] = useRoleListSearchParams();
@@ -26,6 +27,7 @@ export const RoleList = () => {
           }}
         />
         <RoleModal roleList={data?.data || []} />
+        <PermissionModal />
       </Main>
     </Container>
   );

@@ -1,5 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
+import { useRolePermission } from "service/role";
 
 export const useRoleListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
@@ -45,6 +46,37 @@ export const useRoleModal = () => {
     editingRoleId,
     open,
     startEdit,
+    close,
+  };
+};
+
+export const usePermissionModal = () => {
+  const [{ editingPermissionRoleId }, setEditingRoleId] = useUrlQueryParams([
+    "editingPermissionRoleId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+  const { data, isLoading, error } = useRolePermission(
+    Number(editingPermissionRoleId)
+  );
+
+  console.log("data", data);
+
+  const open = useCallback(
+    (id: string) => setEditingRoleId({ editingPermissionRoleId: id }),
+    [setEditingRoleId]
+  );
+  const close = useCallback(
+    () => setUrlParams({ editingPermissionRoleId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    permissionModalOpen: !!editingPermissionRoleId,
+    editingPermissionRoleId,
+    isLoading,
+    permission: data,
+    error,
+    open,
     close,
   };
 };

@@ -68,3 +68,24 @@ export const useDeleteRole = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey)
   );
 };
+
+export const useRolePermission = (id: number) => {
+  const client = useHttp();
+  return useQuery(
+    ["role_auth", { id }],
+    () => client(`/api/v1/admin/role/get-perms/${id}`),
+    {
+      enabled: !!id,
+    }
+  );
+};
+
+export const useUpdateRolePermission = () => {
+  const client = useHttp();
+  return useMutation(({ id, perms }: { id: number; perms: string }) =>
+    client(`/api/v1/admin/role/perms/${id}`, {
+      data: { id, perms },
+      method: "POST",
+    })
+  );
+};
