@@ -114,7 +114,7 @@ const More = ({ id }: { id: number }) => {
 
   const confirmDeleteMember = (id: number) => {
     Modal.confirm({
-      title: "确定删除该岗位吗？",
+      title: "确定删除该员工吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
