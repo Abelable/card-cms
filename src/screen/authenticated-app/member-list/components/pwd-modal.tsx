@@ -40,7 +40,7 @@ export const PwdModal = ({ memberList }: { memberList: MemberItem[] }) => {
 
   return (
     <Modal
-      title="重制密码"
+      title="重置密码"
       onCancel={closeModal}
       visible={pwdModalOpen}
       confirmLoading={isLoading}

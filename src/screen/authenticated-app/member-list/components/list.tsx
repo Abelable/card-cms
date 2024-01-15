@@ -128,7 +128,7 @@ const More = ({ id }: { id: number }) => {
       key: "edit",
     },
     {
-      label: <div onClick={() => open(String(id))}>重制密码</div>,
+      label: <div onClick={() => open(String(id))}>重置密码</div>,
       key: "pwd",
     },
     {
