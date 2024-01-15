@@ -14,11 +14,17 @@ import { cleanObject } from "utils";
 
 export const useBlacklist = (params: Partial<BlacklistSearchParams>) => {
   const client = useHttp();
-  return useQuery<BlacklistResult>(["blacklist", params], () =>
-    client("/api/v1/admin/blacklist/index", {
-      data: cleanObject({ ...params }),
-    })
-  );
+  return useQuery<BlacklistResult>(["blacklist", params], () => {
+    const { idcard, phone, page, per_page } = params;
+    return client("/api/v1/admin/blacklist/index", {
+      data: cleanObject({
+        "filter[idcard]": idcard,
+        "filter[phone]": phone,
+        page,
+        per_page,
+      }),
+    });
+  });
 };
 
 export const useAddBlack = (queryKey: QueryKey) => {
