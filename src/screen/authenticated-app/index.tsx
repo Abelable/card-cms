@@ -17,12 +17,12 @@ import { ProductChannels } from "./product-channels";
 import { ProductChannelGoodsList } from "./product-channel-goods-list";
 import { ProductGoodsList } from "./product-goods-list";
 import { ProductGoodsAgents } from "./product-goods-agents";
-import { OrderProducts } from "./order-products";
-import { OrderImports } from "./order-imports";
+import { ProduceProducts } from "./produce-products";
+import { ProduceImports } from "./produce-imports";
+import { ProduceDelivers } from "./produce-delivers";
+import { ProduceReportForms } from "./produce-report-forms";
 import { Blacklist } from "./blacklist";
 import { AddressList } from "./address-list";
-import { OrderDelivers } from "./order-delivers";
-import { OrderReportForms } from "./order-report-forms";
 import { MemberList } from "./member-list";
 import { RoleList } from "./role-list";
 
@@ -86,13 +86,13 @@ export const AuthenticatedApp = () => {
                 path="product/sales/agent"
                 element={<ProductGoodsAgents />}
               />
-              <Route path="produce/deliver" element={<OrderDelivers />} />
+              <Route path="produce/deliver" element={<ProduceDelivers />} />
               <Route
                 path="produce/deliver/report_forms"
-                element={<OrderReportForms />}
+                element={<ProduceReportForms />}
               />
-              <Route path="produce/configure" element={<OrderProducts />} />
-              <Route path="produce/import" element={<OrderImports />} />
+              <Route path="produce/configure" element={<ProduceProducts />} />
+              <Route path="produce/import" element={<ProduceImports />} />
               <Route path="system/blacklist" element={<Blacklist />} />
               <Route path="system/address_list" element={<AddressList />} />
               <Route path="account/member" element={<MemberList />} />
