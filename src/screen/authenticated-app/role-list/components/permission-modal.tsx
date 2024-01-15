@@ -17,6 +17,10 @@ export const PermissionModal = () => {
 
   const treeData: DataNode[] = [
     {
+      title: "首页",
+      key: "home",
+    },
+    {
       title: "我的供应商",
       key: "suppliers",
     },
