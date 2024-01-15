@@ -9,7 +9,7 @@ import {
 } from "./use-optimistic-options";
 
 import type {
-  ShopListSearchParams,
+  OrderGrabListSearchParams,
   ShopListResult,
   Deliver,
   DeliversSearchParams,
@@ -22,9 +22,11 @@ import type {
   ReportForm,
 } from "types/order";
 
-export const useShopList = (params: Partial<ShopListSearchParams>) => {
+export const useOrderGrabList = (
+  params: Partial<OrderGrabListSearchParams>
+) => {
   const client = useHttp();
-  return useQuery<ShopListResult>(["order_catch_shop_list", params], () => {
+  return useQuery<ShopListResult>(["order_grab_list", params], () => {
     const { page, per_page } = params;
     return client("/api/v1/admin/shop/lst", {
       data: cleanObject({

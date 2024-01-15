@@ -2,19 +2,19 @@ import styled from "@emotion/styled";
 import { Button, Table, TablePaginationConfig, TableProps, Modal } from "antd";
 import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
 import {
-  useShopListQueryKey,
+  useOrderGrabListQueryKey,
   useNewPublishModal,
   usePublishModal,
 } from "../util";
 import { useDeleteGoods } from "service/product";
 
 import type { ColumnsType } from "antd/lib/table";
-import type { ShopListSearchParams, OrderCatchShop } from "types/order";
+import type { OrderGrabListSearchParams, OrderGrab } from "types/order";
 
-interface ListProps extends TableProps<OrderCatchShop> {
+interface ListProps extends TableProps<OrderGrab> {
   error: Error | unknown;
-  params: Partial<ShopListSearchParams>;
-  setParams: (params: Partial<ShopListSearchParams>) => void;
+  params: Partial<OrderGrabListSearchParams>;
+  setParams: (params: Partial<OrderGrabListSearchParams>) => void;
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
@@ -27,7 +27,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
 
-  const { mutate: deleteGoods } = useDeleteGoods(useShopListQueryKey());
+  const { mutate: deleteGoods } = useDeleteGoods(useOrderGrabListQueryKey());
   const confirmDeleteGoods = (id: number) => {
     Modal.confirm({
       title: "确定删除该商品吗？",
@@ -38,7 +38,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     });
   };
 
-  const columns: ColumnsType<OrderCatchShop> = [
+  const columns: ColumnsType<OrderGrab> = [
     {
       title: "店铺名称",
       dataIndex: "shop_name",
@@ -51,7 +51,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     },
   ];
 
-  const editColumns: ColumnsType<OrderCatchShop> = [
+  const editColumns: ColumnsType<OrderGrab> = [
     {
       title: "编辑商品",
       render: (value, goods) => (

@@ -4,7 +4,7 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useEditGoods, useUpGoods } from "service/product";
-import { useShopListQueryKey, useAgentModal } from "../util";
+import { useOrderGrabListQueryKey, useAgentModal } from "../util";
 import type { GoodsListSearchParams } from "types/product";
 import { AgentOption } from "types/agent";
 
@@ -23,8 +23,10 @@ export const AgentModal = ({
     isLoading: initLoading,
     close,
   } = useAgentModal();
-  const { mutateAsync, isLoading, error } = useEditGoods(useShopListQueryKey());
-  const { mutate: upGoods } = useUpGoods(useShopListQueryKey());
+  const { mutateAsync, isLoading, error } = useEditGoods(
+    useOrderGrabListQueryKey()
+  );
+  const { mutate: upGoods } = useUpGoods(useOrderGrabListQueryKey());
 
   useDeepCompareEffect(() => {
     if (editingGoods) {

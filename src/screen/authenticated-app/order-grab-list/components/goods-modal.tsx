@@ -20,7 +20,7 @@ import { useState } from "react";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { useEditGoods } from "service/product";
 import { cleanObject } from "utils";
-import { useGoodsModal, useShopListQueryKey } from "../util";
+import { useGoodsModal, useOrderGrabListQueryKey } from "../util";
 import type { ProductOption } from "types/product";
 
 export const GoodsModal = ({
@@ -44,7 +44,9 @@ export const GoodsModal = ({
     isLoading: initLoading,
   } = useGoodsModal();
 
-  const { mutateAsync, error, isLoading } = useEditGoods(useShopListQueryKey());
+  const { mutateAsync, error, isLoading } = useEditGoods(
+    useOrderGrabListQueryKey()
+  );
 
   const closeModal = () => {
     form.resetFields();

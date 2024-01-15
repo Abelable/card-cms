@@ -1,12 +1,12 @@
 import { Pagination } from "./common";
 import { Channel, Goods } from "./product";
 
-export interface ShopListSearchParams {
+export interface OrderGrabListSearchParams {
   page: number;
   per_page: number;
 }
 
-export interface OrderCatchShop {
+export interface OrderGrab {
   id: number;
   status: number;
   shop_type: number;
@@ -20,7 +20,7 @@ export interface OrderCatchShop {
 }
 
 export interface ShopListResult {
-  data: OrderCatchShop[];
+  data: OrderGrab[];
   meta: { pagination: Pagination };
 }
 

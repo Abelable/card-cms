@@ -8,14 +8,14 @@ import { List } from "./components/list";
 import styled from "@emotion/styled";
 
 import { toNumber } from "utils";
-import { useShopListSearchParams } from "./util";
-import { useShopList } from "service/order";
+import { useOrderGrabListSearchParams } from "./util";
+import { useOrderGrabList } from "service/order";
 import { useState } from "react";
 
-export const OrderCatchShopList = () => {
+export const OrderGrabList = () => {
   const [curMenuKey, setCurMenuKey] = useState("0");
-  const [params, setParams] = useShopListSearchParams();
-  const { data, isLoading, error } = useShopList(params);
+  const [params, setParams] = useOrderGrabListSearchParams();
+  const { data, isLoading, error } = useOrderGrabList(params);
 
   const menuItems: MenuProps["items"] = ["拼多多（自研应用）", "京东抓单"].map(
     (item, index) => ({
