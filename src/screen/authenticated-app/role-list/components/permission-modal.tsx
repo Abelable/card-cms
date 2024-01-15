@@ -44,7 +44,7 @@ export const PermissionModal = () => {
     },
     {
       title: "订单中心",
-      key: "orders",
+      key: "order",
       children: [
         {
           title: "订单处理",
@@ -61,6 +61,10 @@ export const PermissionModal = () => {
         {
           title: "抓单管理",
           key: "grab",
+        },
+        {
+          title: "回调记录",
+          key: "record",
         },
       ],
     },
@@ -113,17 +117,14 @@ export const PermissionModal = () => {
   ];
 
   const onSelect: TreeProps["onSelect"] = (selectedKeys, info) => {
-    console.log("selected", selectedKeys, info);
     setSelectedKeys(selectedKeys as Key[]);
   };
 
   const onCheck: TreeProps["onCheck"] = (checkedKeys, info) => {
-    console.log("onCheck", checkedKeys, info);
     setCheckedKeys(checkedKeys as Key[]);
   };
 
   const onExpand: TreeProps["onExpand"] = (expandedKeys, info) => {
-    console.log("onExpand", expandedKeys, info);
     setExpandedKeys(expandedKeys as Key[]);
   };
 

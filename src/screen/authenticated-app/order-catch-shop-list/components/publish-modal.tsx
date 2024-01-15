@@ -12,7 +12,7 @@ import {
   Space,
   Steps,
 } from "antd";
-import { useGoodsListQueryKey, usePublishModal } from "../util";
+import { useShopListQueryKey, usePublishModal } from "../util";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useAddGoods } from "service/product";
@@ -43,7 +43,7 @@ export const PublishModal = ({
 
   const { publishModalOpen, close } = usePublishModal();
 
-  const { mutateAsync, error, isLoading } = useAddGoods(useGoodsListQueryKey());
+  const { mutateAsync, error, isLoading } = useAddGoods(useShopListQueryKey());
 
   const [tempGoodsInfo, setTempGoodsInfo] = useState<Partial<GoodsForm>>();
 

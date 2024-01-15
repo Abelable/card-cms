@@ -28,7 +28,7 @@ import "assets/style/hideLeftBorder.css";
 
 import { useAddChannel, useAddGoods, useEditChannel } from "service/product";
 import { cleanObject } from "utils";
-import { useGoodsListQueryKey, useNewPublishModal } from "../util";
+import { useShopListQueryKey, useNewPublishModal } from "../util";
 import {
   useDefaultWarningSetting,
   useOperatorOptions,
@@ -290,7 +290,7 @@ export const NewPublishModal = ({
     });
   };
 
-  const { mutateAsync, error, isLoading } = useAddGoods(useGoodsListQueryKey());
+  const { mutateAsync, error, isLoading } = useAddGoods(useShopListQueryKey());
 
   const submit = () => {
     form.validateFields().then(async () => {

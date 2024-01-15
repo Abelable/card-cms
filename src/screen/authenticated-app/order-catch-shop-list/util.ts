@@ -2,28 +2,13 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 import { useGoods, useGoodsExtension } from "service/product";
 
-export const useGoodsListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams([
-    "goods_name",
-    "supplier_id",
-    "product_code",
-    "goods_code",
-    "operator_id",
-    "ship_province_id",
-    "ship_city_id",
-    "province_id",
-    "city_id",
-    "is_removed",
-    "page",
-    "per_page",
-  ]);
+export const useShopListSearchParams = () => {
+  const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
   return [
     useMemo(
       () => ({
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
-        is_removed: params.is_removed || "0",
-        ...params,
       }),
       [params]
     ),
@@ -31,9 +16,9 @@ export const useGoodsListSearchParams = () => {
   ] as const;
 };
 
-export const useGoodsListQueryKey = () => {
-  const [params] = useGoodsListSearchParams();
-  return ["product_goods_list", params];
+export const useShopListQueryKey = () => {
+  const [params] = useShopListSearchParams();
+  return ["order_catch_shop_list", params];
 };
 
 export const useGoodsModal = () => {

@@ -45,6 +45,11 @@ import {
   SafetyCertificateOutlined,
   TeamOutlined,
   UserOutlined,
+  InboxOutlined,
+  InteractionOutlined,
+  FlagOutlined,
+  FileDoneOutlined,
+  HistoryOutlined,
 } from "@ant-design/icons";
 import logo from "assets/images/logo.png";
 import { AddressIcon } from "assets/icon";
@@ -147,9 +152,36 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
       ],
     },
     {
+      label: "订单中心",
+      key: "order",
+      icon: <SnippetsOutlined />,
+      children: [
+        {
+          label: <Link to={"order/handle"}>订单处理</Link>,
+          key: "handle",
+          icon: <FileDoneOutlined />,
+        },
+        {
+          label: <Link to={"order/convert"}>转单配置</Link>,
+          key: "convert",
+          icon: <InteractionOutlined />,
+        },
+        {
+          label: <Link to={"order/grab"}>抓单管理</Link>,
+          key: "grab",
+          icon: <FlagOutlined />,
+        },
+        {
+          label: <Link to={"order/record"}>回调记录</Link>,
+          key: "record",
+          icon: <HistoryOutlined />,
+        },
+      ],
+    },
+    {
       label: "生产管理中心",
       key: "produce",
-      icon: <SnippetsOutlined />,
+      icon: <InboxOutlined />,
       children: [
         {
           label: <Link to={"produce/deliver"}>生产发货</Link>,
