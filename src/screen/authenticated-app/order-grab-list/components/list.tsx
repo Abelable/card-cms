@@ -50,24 +50,52 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     {
       title: "店铺名称",
       dataIndex: "shop_name",
-      width: "40rem",
     },
     {
       title: "所属应用",
       dataIndex: "app_name",
-      width: "30rem",
+    },
+    {
+      title: "授权配置",
+      dataIndex: "refresh_token",
+      render: (value, grab) => (
+        <ButtonNoPadding
+          type={"link"}
+          onClick={() => confirmDeleteGoods(grab.id)}
+        >
+          {value ? "已配置，修改配置" : "点击配置"}
+        </ButtonNoPadding>
+      ),
+    },
+    {
+      title: "授权状态",
+      dataIndex: "status",
+      render: (value) => (
+        <>
+          {value === 10 ? (
+            "正常"
+          ) : (
+            <Row>
+              <div style={{ marginRight: "0.4rem" }}>失败</div>
+              <Tooltip title="授权验证失败通常是以下三种情况：<br>1、在拼多多的自研应用页面重置了应用ID<br>2、操作新店铺授权时未退出之前的店铺登录<br>3、店铺未授权给开放应用，请在应用添加授权">
+                <Question />
+              </Tooltip>
+            </Row>
+          )}
+        </>
+      ),
     },
   ];
 
   const editColumns: ColumnsType<OrderGrab> = [
     {
-      title: "编辑商品",
-      render: (value, goods) => (
+      title: "操作",
+      render: (value, grab) => (
         <>
           <div>
             <ButtonNoPadding
               type={"link"}
-              onClick={() => confirmDeleteGoods(goods.id)}
+              onClick={() => confirmDeleteGoods(grab.id)}
             >
               删除
             </ButtonNoPadding>
@@ -82,7 +110,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       <Header between={true}>
         <h3>抓单列表</h3>
         <Row gap>
-          <Tooltip title="照片包上传后识别匹配大概需要等待30分钟">
+          <Tooltip title="注意：一个自研应用最多绑定5个店铺">
             <Question />
           </Tooltip>
           <Button
