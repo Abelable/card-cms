@@ -1,12 +1,17 @@
 import styled from "@emotion/styled";
 import pdd from "assets/images/pdd.png";
+import { useFlagModal } from "../util";
 
-export const PlatformBar = () => (
-  <Platform>
-    <PlatFormBgImg src={pdd} />
-    <FlagBtn>订单标旗设置</FlagBtn>
-  </Platform>
-);
+export const PlatformBar = () => {
+  const { open } = useFlagModal();
+
+  return (
+    <Platform>
+      <PlatFormBgImg src={pdd} />
+      <FlagBtn onClick={open}>订单标旗设置</FlagBtn>
+    </Platform>
+  );
+};
 
 const Platform = styled.div`
   position: relative;
@@ -33,5 +38,6 @@ const FlagBtn = styled.div`
   color: #f72c50;
   border-radius: 2rem;
   background: #fff;
+  cursor: pointer;
   z-index: 1;
 `;

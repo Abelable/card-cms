@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Select } from "antd";
+import { Form, Modal, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useFlagModal } from "../util";
@@ -38,12 +38,11 @@ export const FlagModal = () => {
 
   return (
     <Modal
-      title="申请添加店铺"
+      title="标旗设置"
       visible={flagModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
-      okText="提交申请"
     >
       <ErrorBox error={error} />
       <Form form={form}>

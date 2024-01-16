@@ -1,9 +1,10 @@
 import { Menu, MenuProps } from "antd";
 import { List } from "./components/list";
 import { PlatformBar } from "./components/platform-bar";
+import { FlagModal } from "./components/flag-modal";
 import { ApplyModal } from "./components/apply-modal";
-import styled from "@emotion/styled";
 
+import styled from "@emotion/styled";
 import { toNumber } from "utils";
 import { useOrderGrabListSearchParams } from "./util";
 import { useOrderGrabList, usePlatformOptions } from "service/order";
@@ -44,6 +45,7 @@ export const OrderGrabList = () => {
           }}
         />
       </Main>
+      <FlagModal />
       <ApplyModal shop_type={params.shop_type} />
     </Container>
   );
