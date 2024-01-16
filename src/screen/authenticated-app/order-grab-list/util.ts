@@ -11,7 +11,7 @@ export const useOrderGrabListSearchParams = () => {
   return [
     useMemo(
       () => ({
-        ...params,
+        shop_type: params.shop_type,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
       }),

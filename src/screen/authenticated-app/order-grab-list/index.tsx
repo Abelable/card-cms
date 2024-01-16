@@ -11,23 +11,34 @@ import styled from "@emotion/styled";
 import { toNumber } from "utils";
 import { useOrderGrabListSearchParams } from "./util";
 import { useOrderGrabList, usePlatformOptions } from "service/order";
-import { useState } from "react";
+import { useEffect } from "react";
 
 export const OrderGrabList = () => {
-  const [curMenuKey, setCurMenuKey] = useState("10");
   const platformOptions = usePlatformOptions();
   console.log("platformOptions", platformOptions);
   const [params, setParams] = useOrderGrabListSearchParams();
   const { data, isLoading, error } = useOrderGrabList(params);
 
+  useEffect(() => {
+    setParams({ ...params, shop_type: platformOptions[0].value });
+  }, [params, platformOptions, setParams]);
+
   const menuItems: MenuProps["items"] = platformOptions.map((item) => ({
-    label: <div onClick={() => setCurMenuKey(item.value)}>{item.name}</div>,
+    label: (
+      <div onClick={() => setParams({ ...params, shop_type: item.value })}>
+        {item.name}
+      </div>
+    ),
     key: `${item.value}`,
   }));
 
   return (
     <Container>
-      <Menu mode="horizontal" selectedKeys={[curMenuKey]} items={menuItems} />
+      <Menu
+        mode="horizontal"
+        selectedKeys={[params.shop_type]}
+        items={menuItems}
+      />
       <Main>
         <PlatformBar />
         <List
