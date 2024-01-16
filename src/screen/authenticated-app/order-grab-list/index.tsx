@@ -1,5 +1,6 @@
 import { Menu, MenuProps } from "antd";
 import { List } from "./components/list";
+import { PlatformBar } from "./components/platform-bar";
 // import { ShopModal } from "./components/goods-modal";
 // import { AgentModal } from "./components/agent-modal";
 // import { LinkModal } from "./components/link-modal";
@@ -28,6 +29,7 @@ export const OrderGrabList = () => {
     <Container>
       <Menu mode="horizontal" selectedKeys={[curMenuKey]} items={menuItems} />
       <Main>
+        <PlatformBar />
         <List
           error={error}
           params={params}

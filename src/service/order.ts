@@ -37,6 +37,17 @@ export const useOrderGrabList = (
   });
 };
 
+export const useDeleteOrderGrab = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: number) =>
+      client(`/api/v1/admin/shop/delete/${id}`, {
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
+  );
+};
+
 export const useExportDelivers = () => {
   const client = useHttp();
   return (params: Partial<DeliversSearchParams>) => {

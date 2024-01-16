@@ -18,7 +18,7 @@ import {
   useNewPublishModal,
   usePublishModal,
 } from "../util";
-import { useDeleteGoods } from "service/product";
+import { useDeleteOrderGrab } from "service/order";
 
 import type { ColumnsType } from "antd/lib/table";
 import type { OrderGrabListSearchParams, OrderGrab } from "types/order";
@@ -39,14 +39,16 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
 
-  const { mutate: deleteGoods } = useDeleteGoods(useOrderGrabListQueryKey());
-  const confirmDeleteGoods = (id: number) => {
+  const { mutate: deleteOrderGrab } = useDeleteOrderGrab(
+    useOrderGrabListQueryKey()
+  );
+  const confirmDeleteOrderGrab = (id: number) => {
     Modal.confirm({
-      title: "确定删除该商品吗？",
+      title: "确定删除该店铺吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteGoods(id),
+      onOk: () => deleteOrderGrab(id),
     });
   };
 
@@ -65,7 +67,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       render: (value, grab) => (
         <ButtonNoPadding
           type={"link"}
-          onClick={() => confirmDeleteGoods(grab.id)}
+          onClick={() => confirmDeleteOrderGrab(grab.id)}
         >
           {value ? "已配置，修改配置" : "点击配置"}
         </ButtonNoPadding>
@@ -100,6 +102,10 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         </>
       ),
     },
+    {
+      title: "授权到期时间",
+      dataIndex: "refresh_token_expires_at",
+    },
   ];
 
   const editColumns: ColumnsType<OrderGrab> = [
@@ -110,7 +116,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           <div>
             <ButtonNoPadding
               type={"link"}
-              onClick={() => confirmDeleteGoods(grab.id)}
+              onClick={() => confirmDeleteOrderGrab(grab.id)}
             >
               删除
             </ButtonNoPadding>
@@ -123,7 +129,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>抓单列表</h3>
+        <h3>店铺列表</h3>
         <Row gap>
           <Tooltip title="注意：一个自研应用最多绑定5个店铺">
             <Question />

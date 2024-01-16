@@ -15,6 +15,8 @@ export interface OrderGrab {
   app_key: string;
   app_secret: string;
   app_code: string;
+  refresh_token: string;
+  refresh_token_expires_at: string;
   express_at: string;
   extra_data: string;
 }
