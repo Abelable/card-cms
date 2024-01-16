@@ -8,7 +8,11 @@ import {
   Tooltip,
 } from "antd";
 import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
-import { PlusOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  QuestionCircleOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
 import {
   useOrderGrabListQueryKey,
   useNewPublishModal,
@@ -72,15 +76,26 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       dataIndex: "status",
       render: (value) => (
         <>
-          {value === 10 ? (
+          {value === 20 ? (
             "正常"
           ) : (
-            <Row>
-              <div style={{ marginRight: "0.4rem" }}>失败</div>
-              <Tooltip title="授权验证失败通常是以下三种情况：<br>1、在拼多多的自研应用页面重置了应用ID<br>2、操作新店铺授权时未退出之前的店铺登录<br>3、店铺未授权给开放应用，请在应用添加授权">
-                <Question />
+            <>
+              <span>失败</span>
+              <Tooltip
+                title={
+                  <>
+                    授权验证失败通常是以下三种情况：
+                    <br />
+                    1、在拼多多的自研应用页面重置了应用ID <br />
+                    2、操作新店铺授权时未退出之前的店铺登录
+                    <br />
+                    3、店铺未授权给开放应用，请在应用添加授权
+                  </>
+                }
+              >
+                <Info />
               </Tooltip>
-            </Row>
+            </>
           )}
         </>
       ),
@@ -149,5 +164,14 @@ const Question = styled(QuestionCircleOutlined)`
   transition: color 0.3s;
   &:hover {
     color: #1890ff;
+  }
+`;
+
+const Info = styled(InfoCircleOutlined)`
+  margin-left: 0.4rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: #ff4d4f;
   }
 `;
