@@ -1,6 +1,14 @@
 import styled from "@emotion/styled";
-import { Button, Table, TablePaginationConfig, TableProps, Modal } from "antd";
+import {
+  Button,
+  Table,
+  TablePaginationConfig,
+  TableProps,
+  Modal,
+  Tooltip,
+} from "antd";
 import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
+import { PlusOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import {
   useOrderGrabListQueryKey,
   useNewPublishModal,
@@ -72,17 +80,18 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   return (
     <Container>
       <Header between={true}>
-        <h3>店铺列表</h3>
+        <h3>抓单列表</h3>
         <Row gap>
-          <Button type={"default"} onClick={openNewPublishModal}>
-            发布全新套餐
-          </Button>
+          <Tooltip title="照片包上传后识别匹配大概需要等待30分钟">
+            <Question />
+          </Tooltip>
           <Button
             style={{ marginRight: 0 }}
-            type={"primary"}
             onClick={openPublishModal}
+            type={"primary"}
+            icon={<PlusOutlined />}
           >
-            基于已有产品渠道发布商品
+            申请添加店铺
           </Button>
         </Row>
       </Header>
@@ -104,4 +113,13 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   margin-bottom: 2.4rem;
+`;
+
+const Question = styled(QuestionCircleOutlined)`
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: #1890ff;
+  }
 `;
