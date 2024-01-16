@@ -10,20 +10,20 @@ import styled from "@emotion/styled";
 
 import { toNumber } from "utils";
 import { useOrderGrabListSearchParams } from "./util";
-import { useOrderGrabList } from "service/order";
+import { useOrderGrabList, usePlatformOptions } from "service/order";
 import { useState } from "react";
 
 export const OrderGrabList = () => {
-  const [curMenuKey, setCurMenuKey] = useState("0");
+  const [curMenuKey, setCurMenuKey] = useState("10");
+  const platformOptions = usePlatformOptions();
+  console.log("platformOptions", platformOptions);
   const [params, setParams] = useOrderGrabListSearchParams();
   const { data, isLoading, error } = useOrderGrabList(params);
 
-  const menuItems: MenuProps["items"] = ["拼多多（自研应用）"].map(
-    (item, index) => ({
-      label: <div onClick={() => setCurMenuKey(`${index}`)}>{item}</div>,
-      key: `${index}`,
-    })
-  );
+  const menuItems: MenuProps["items"] = platformOptions.map((item) => ({
+    label: <div onClick={() => setCurMenuKey(item.value)}>{item.name}</div>,
+    key: `${item.value}`,
+  }));
 
   return (
     <Container>

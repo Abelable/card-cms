@@ -25,9 +25,9 @@ export const useProduceDeliversSearchParams = () => {
   return [
     useMemo(
       () => ({
+        ...params,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
-        ...params,
       }),
       [params]
     ),

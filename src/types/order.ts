@@ -2,6 +2,7 @@ import { Pagination } from "./common";
 import { Channel, Goods } from "./product";
 
 export interface OrderGrabListSearchParams {
+  shop_type: string;
   page: number;
   per_page: number;
 }

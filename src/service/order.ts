@@ -22,16 +22,24 @@ import type {
   ReportForm,
 } from "types/order";
 
+export const usePlatformOptions = (): { name: string; value: string }[] => {
+  const client = useHttp();
+  const res = useQuery(["platform_options"], () =>
+    client("/api/v1/admin/setting/show/shop_type")
+  );
+  return res.data || [];
+};
+
 export const useOrderGrabList = (
   params: Partial<OrderGrabListSearchParams>
 ) => {
   const client = useHttp();
   return useQuery<ShopListResult>(["order_grab_list", params], () => {
-    const { page, per_page } = params;
+    const { shop_type, ...rest } = params;
     return client("/api/v1/admin/shop/lst", {
       data: cleanObject({
-        page,
-        per_page,
+        "filter[shop_type]": shop_type,
+        ...rest,
       }),
     });
   });

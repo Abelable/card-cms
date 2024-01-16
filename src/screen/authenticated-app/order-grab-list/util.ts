@@ -3,10 +3,15 @@ import { useCallback, useMemo } from "react";
 import { useGoods, useGoodsExtension } from "service/product";
 
 export const useOrderGrabListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
+  const [params, setParams] = useUrlQueryParams([
+    "shop_type",
+    "page",
+    "per_page",
+  ]);
   return [
     useMemo(
       () => ({
+        ...params,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
       }),

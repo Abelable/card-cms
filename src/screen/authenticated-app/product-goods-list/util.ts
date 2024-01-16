@@ -20,10 +20,10 @@ export const useGoodsListSearchParams = () => {
   return [
     useMemo(
       () => ({
+        ...params,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
         is_removed: params.is_removed || "0",
-        ...params,
       }),
       [params]
     ),
