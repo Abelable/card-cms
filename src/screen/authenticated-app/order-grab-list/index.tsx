@@ -17,7 +17,7 @@ export const OrderGrabList = () => {
   const [params, setParams] = useOrderGrabListSearchParams();
   const { data, isLoading, error } = useOrderGrabList(params);
 
-  const menuItems: MenuProps["items"] = ["拼多多（自研应用）", "京东抓单"].map(
+  const menuItems: MenuProps["items"] = ["拼多多（自研应用）"].map(
     (item, index) => ({
       label: <div onClick={() => setCurMenuKey(`${index}`)}>{item}</div>,
       key: `${index}`,
@@ -26,9 +26,7 @@ export const OrderGrabList = () => {
 
   return (
     <Container>
-      <TypeMenu>
-        <Menu mode="horizontal" selectedKeys={[curMenuKey]} items={menuItems} />
-      </TypeMenu>
+      <Menu mode="horizontal" selectedKeys={[curMenuKey]} items={menuItems} />
       <Main>
         <List
           error={error}
@@ -61,10 +59,6 @@ export const OrderGrabList = () => {
 const Container = styled.div`
   position: relative;
   height: 100%;
-`;
-
-const TypeMenu = styled.div`
-  background: #fff;
 `;
 
 const Main = styled.div`
