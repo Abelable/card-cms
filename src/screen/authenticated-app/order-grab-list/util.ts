@@ -1,6 +1,5 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
-import { useGoods, useGoodsExtension } from "service/product";
 
 export const useOrderGrabListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -26,133 +25,21 @@ export const useOrderGrabListQueryKey = () => {
   return ["order_grab_list", params];
 };
 
-export const useGoodsModal = () => {
-  const [{ goodsCreate }, setGoodsListModalOpen] = useUrlQueryParams([
-    "goodsCreate",
-  ]);
-  const [{ editingGoodsId }, setEditingGoodsId] = useUrlQueryParams([
-    "editingGoodsId",
-  ]);
-  const setUrlParams = useSetUrlSearchParams();
-
-  const { data: editingGoods, isLoading } = useGoods(Number(editingGoodsId));
-
-  const open = useCallback(
-    () => setGoodsListModalOpen({ goodsCreate: true }),
-    [setGoodsListModalOpen]
-  );
-  const startEdit = useCallback(
-    (id: string) => setEditingGoodsId({ editingGoodsId: id }),
-    [setEditingGoodsId]
-  );
-  const close = useCallback(
-    () => setUrlParams({ goodsCreate: "", editingGoodsId: "" }),
-    [setUrlParams]
-  );
-
-  return {
-    goodsModalOpen: goodsCreate === "true" || !!editingGoodsId,
-    editingGoodsId,
-    editingGoods,
-    open,
-    startEdit,
-    close,
-    isLoading,
-  };
-};
-
-export const useAgentModal = () => {
-  const [{ goodsIdOfEditingAgent }, setEditingGoodsId] = useUrlQueryParams([
-    "goodsIdOfEditingAgent",
-  ]);
-  const setUrlParams = useSetUrlSearchParams();
-
-  const { data: editingGoods, isLoading } = useGoods(
-    Number(goodsIdOfEditingAgent)
-  );
-
-  const startEdit = useCallback(
-    (id: string) => setEditingGoodsId({ goodsIdOfEditingAgent: id }),
-    [setEditingGoodsId]
-  );
-  const close = useCallback(
-    () => setUrlParams({ goodsIdOfEditingAgent: "" }),
-    [setUrlParams]
-  );
-
-  return {
-    agentModalOpen: !!goodsIdOfEditingAgent,
-    goodsIdOfEditingAgent,
-    editingGoods,
-    startEdit,
-    close,
-    isLoading,
-  };
-};
-
-export const useLinkModal = () => {
-  const [{ goodsIdOfLink }, setGoodsIdOfLink] = useUrlQueryParams([
-    "goodsIdOfLink",
-  ]);
-  const setUrlParams = useSetUrlSearchParams();
-
-  const { data: goodsExtension, isLoading } = useGoodsExtension(
-    Number(goodsIdOfLink)
-  );
-
-  const startEdit = useCallback(
-    (id: string) => setGoodsIdOfLink({ goodsIdOfLink: id }),
-    [setGoodsIdOfLink]
-  );
-  const close = useCallback(
-    () => setUrlParams({ goodsIdOfLink: "" }),
-    [setUrlParams]
-  );
-
-  return {
-    linkModalOpen: !!goodsIdOfLink,
-    goodsIdOfLink,
-    goodsExtension,
-    startEdit,
-    close,
-    isLoading,
-  };
-};
-
-export const usePublishModal = () => {
-  const [{ publishModalVisible }, setPublishModalVisible] = useUrlQueryParams([
-    "publishModalVisible",
+export const useFlagModal = () => {
+  const [{ flagModalVisible }, setFlagModalVisible] = useUrlQueryParams([
+    "flagModalVisible",
   ]);
   const open = useCallback(
-    () => setPublishModalVisible({ publishModalVisible: true }),
-    [setPublishModalVisible]
+    () => setFlagModalVisible({ flagModalVisible: true }),
+    [setFlagModalVisible]
   );
   const setUrlParams = useSetUrlSearchParams();
   const close = useCallback(
-    () => setUrlParams({ publishModalVisible: "" }),
+    () => setUrlParams({ flagModalVisible: "" }),
     [setUrlParams]
   );
   return {
-    publishModalOpen: publishModalVisible === "true",
-    open,
-    close,
-  };
-};
-
-export const useNewPublishModal = () => {
-  const [{ newPublishModalVisible }, setNewPublishModalVisible] =
-    useUrlQueryParams(["newPublishModalVisible"]);
-  const open = useCallback(
-    () => setNewPublishModalVisible({ newPublishModalVisible: true }),
-    [setNewPublishModalVisible]
-  );
-  const setUrlParams = useSetUrlSearchParams();
-  const close = useCallback(
-    () => setUrlParams({ newPublishModalVisible: "" }),
-    [setUrlParams]
-  );
-  return {
-    newPublishModalOpen: newPublishModalVisible === "true",
+    flagModalOpen: flagModalVisible === "true",
     open,
     close,
   };

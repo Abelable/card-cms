@@ -34,10 +34,15 @@ export const ApplyModal = ({ shop_type }: { shop_type: string }) => {
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
+      okText="提交申请"
     >
       <ErrorBox error={error} />
       <Form form={form}>
-        <Form.Item name="shop_name" label="店铺名称" required>
+        <Form.Item
+          name="shop_name"
+          label="店铺名称"
+          rules={[{ required: true, message: "请输入店铺名称" }]}
+        >
           <Input placeholder="请输入店铺名称" />
         </Form.Item>
       </Form>
