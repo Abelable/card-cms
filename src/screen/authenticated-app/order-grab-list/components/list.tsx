@@ -13,11 +13,7 @@ import {
   QuestionCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
-import {
-  useOrderGrabListQueryKey,
-  useNewPublishModal,
-  usePublishModal,
-} from "../util";
+import { useOrderGrabListQueryKey, useApplyModal } from "../util";
 import { useDeleteOrderGrab } from "service/order";
 
 import type { ColumnsType } from "antd/lib/table";
@@ -30,8 +26,7 @@ interface ListProps extends TableProps<OrderGrab> {
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
-  const { open: openPublishModal } = usePublishModal();
-  const { open: openNewPublishModal } = useNewPublishModal();
+  const { open: openApplyModal } = useApplyModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -80,7 +75,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
         <>
           {value === 20 ? (
             "正常"
-          ) : (
+          ) : value === 30 ? (
             <>
               <span>失败</span>
               <Tooltip
@@ -98,6 +93,8 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
                 <Info />
               </Tooltip>
             </>
+          ) : (
+            <></>
           )}
         </>
       ),
@@ -136,7 +133,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           </Tooltip>
           <Button
             style={{ marginRight: 0 }}
-            onClick={openPublishModal}
+            onClick={openApplyModal}
             type={"primary"}
             icon={<PlusOutlined />}
           >

@@ -11,7 +11,7 @@ export const useOrderGrabListSearchParams = () => {
   return [
     useMemo(
       () => ({
-        shop_type: params.shop_type,
+        shop_type: params.shop_type || "10",
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
       }),
@@ -153,6 +153,25 @@ export const useNewPublishModal = () => {
   );
   return {
     newPublishModalOpen: newPublishModalVisible === "true",
+    open,
+    close,
+  };
+};
+
+export const useApplyModal = () => {
+  const [{ shopApplyModalVisible }, setShopApplyModalVisible] =
+    useUrlQueryParams(["shopApplyModalVisible"]);
+  const open = useCallback(
+    () => setShopApplyModalVisible({ shopApplyModalVisible: true }),
+    [setShopApplyModalVisible]
+  );
+  const setUrlParams = useSetUrlSearchParams();
+  const close = useCallback(
+    () => setUrlParams({ shopApplyModalVisible: "" }),
+    [setUrlParams]
+  );
+  return {
+    shopApplyModalOpen: shopApplyModalVisible === "true",
     open,
     close,
   };

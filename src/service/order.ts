@@ -45,6 +45,18 @@ export const useOrderGrabList = (
   });
 };
 
+export const useApplyShop = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: { shop_type: string; shop_name: string }) =>
+      client("/api/v1/admin/shop/create", {
+        data: params,
+        method: "POST",
+      }),
+    useAddConfig(queryKey)
+  );
+};
+
 export const useDeleteOrderGrab = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
