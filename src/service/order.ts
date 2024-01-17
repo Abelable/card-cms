@@ -4,17 +4,24 @@ import { cleanObject } from "utils/index";
 import { useAddConfig, useDeleteConfig } from "./use-optimistic-options";
 
 import type {
+  FlagSetting,
   Option,
   OrderGrabListSearchParams,
   ShopListResult,
 } from "types/order";
 
-export const useSettingOptions = (key: string): Option[] => {
+export const useSettingOptions = (key: string) => {
   const client = useHttp();
-  const res = useQuery([`${key}_options`], () =>
+  return useQuery<Option[]>([`${key}_options`], () =>
     client(`/api/v1/admin/setting/show/${key}`)
   );
-  return res.data || [];
+};
+
+export const useFlagSetting = () => {
+  const client = useHttp();
+  return useQuery<FlagSetting>(["flag_setting"], () =>
+    client("/api/v1/admin/shop/get-tag")
+  );
 };
 
 export const useOrderGrabList = (
@@ -55,17 +62,12 @@ export const useDeleteOrderGrab = (queryKey: QueryKey) => {
   );
 };
 
-export const useEditPDDFlag = () => {
+export const useUpdateFlagSetting = () => {
   const client = useHttp();
-  return useMutation(
-    (params: {
-      grab_flag: number;
-      produce_fail_flag: number;
-      delivery_fail_flag: number;
-    }) =>
-      client("/api/v1/admin/shop/create", {
-        data: params,
-        method: "POST",
-      })
+  return useMutation((params: FlagSetting) =>
+    client("/api/v1/admin/shop/set-tag", {
+      data: params,
+      method: "POST",
+    })
   );
 };

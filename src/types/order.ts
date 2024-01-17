@@ -5,6 +5,12 @@ export interface Option {
   value: string;
 }
 
+export interface FlagSetting {
+  sync_order: string;
+  production_error: string;
+  shipping_error: string;
+}
+
 export interface OrderGrabListSearchParams {
   shop_type: string;
   page: number;

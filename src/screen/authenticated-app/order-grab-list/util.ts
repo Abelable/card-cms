@@ -1,5 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
+import { useFlagSetting } from "service/order";
 
 export const useOrderGrabListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -34,6 +35,9 @@ export const useFlagModal = () => {
     [setFlagModalVisible]
   );
   const setUrlParams = useSetUrlSearchParams();
+
+  const { data: flagSetting, isLoading } = useFlagSetting();
+
   const close = useCallback(
     () => setUrlParams({ flagModalVisible: "" }),
     [setUrlParams]
@@ -42,6 +46,8 @@ export const useFlagModal = () => {
     flagModalOpen: flagModalVisible === "true",
     open,
     close,
+    flagSetting,
+    isLoading,
   };
 };
 
