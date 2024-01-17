@@ -10,12 +10,12 @@ import { useOrderGrabListSearchParams } from "./util";
 import { useOrderGrabList, useSettingOptions } from "service/order";
 
 export const OrderGrabList = () => {
-  const { data: platformOptions } = useSettingOptions("shop_type");
-  const { data: flagOptions } = useSettingOptions("tag");
+  const { data: platformOptions = [] } = useSettingOptions("shop_type");
+  const { data: flagOptions = [] } = useSettingOptions("tag");
   const [params, setParams] = useOrderGrabListSearchParams();
   const { data, isLoading, error } = useOrderGrabList(params);
 
-  const menuItems: MenuProps["items"] = platformOptions?.map((item) => ({
+  const menuItems: MenuProps["items"] = platformOptions.map((item) => ({
     label: (
       <div onClick={() => setParams({ ...params, shop_type: item.value })}>
         {item.name}
@@ -46,7 +46,7 @@ export const OrderGrabList = () => {
           }}
         />
       </Main>
-      <FlagModal flagOptions={flagOptions || []} />
+      <FlagModal flagOptions={flagOptions} />
       <ApplyModal shop_type={params.shop_type} />
     </Container>
   );

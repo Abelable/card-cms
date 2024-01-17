@@ -54,7 +54,7 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
           <ErrorBox error={error} />
           <Form form={form}>
             <Form.Item
-              name="grab_flag"
+              name="sync_order"
               label="抓单标旗"
               rules={[{ required: true, message: "请选择标旗" }]}
             >
@@ -67,7 +67,7 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
               </Select>
             </Form.Item>
             <Form.Item
-              name="produce_fail_flag"
+              name="production_error"
               label="生产失败"
               rules={[{ required: true, message: "请选择标旗" }]}
             >
@@ -80,7 +80,7 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
               </Select>
             </Form.Item>
             <Form.Item
-              name="delivery_fail_flag"
+              name="shipping_error"
               label="发货失败"
               rules={[{ required: true, message: "请选择标旗" }]}
             >

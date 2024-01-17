@@ -17,10 +17,14 @@ export const useSettingOptions = (key: string) => {
   );
 };
 
-export const useFlagSetting = () => {
+export const useFlagSetting = (flagModalOpen: boolean) => {
   const client = useHttp();
-  return useQuery<FlagSetting>(["flag_setting"], () =>
-    client("/api/v1/admin/shop/get-tag")
+  return useQuery<FlagSetting>(
+    ["flag_setting"],
+    () => client("/api/v1/admin/shop/get-tag", { method: "POST" }),
+    {
+      enabled: flagModalOpen,
+    }
   );
 };
 

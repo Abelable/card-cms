@@ -36,7 +36,9 @@ export const useFlagModal = () => {
   );
   const setUrlParams = useSetUrlSearchParams();
 
-  const { data: flagSetting, isLoading } = useFlagSetting();
+  const { data: flagSetting, isLoading } = useFlagSetting(
+    flagModalVisible === "true"
+  );
 
   const close = useCallback(
     () => setUrlParams({ flagModalVisible: "" }),
