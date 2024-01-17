@@ -1,7 +1,11 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
-import { useAddConfig, useDeleteConfig } from "./use-optimistic-options";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditFlagConfig,
+} from "./use-optimistic-options";
 
 import type {
   FlagSetting,
@@ -17,10 +21,14 @@ export const useSettingOptions = (key: string) => {
   );
 };
 
-export const useFlagSetting = () => {
+export const useFlagSetting = (flagModalOpen: boolean) => {
   const client = useHttp();
-  return useQuery<FlagSetting>(["flag_setting"], () =>
-    client("/api/v1/admin/shop/get-tag", { method: "POST" })
+  return useQuery<FlagSetting>(
+    ["flag_setting"],
+    () => client("/api/v1/admin/shop/get-tag", { method: "POST" }),
+    {
+      enabled: flagModalOpen,
+    }
   );
 };
 
@@ -64,10 +72,12 @@ export const useDeleteOrderGrab = (queryKey: QueryKey) => {
 
 export const useUpdateFlagSetting = () => {
   const client = useHttp();
-  return useMutation((params: FlagSetting) =>
-    client("/api/v1/admin/shop/set-tag", {
-      data: params,
-      method: "POST",
-    })
+  return useMutation(
+    (params: FlagSetting) =>
+      client("/api/v1/admin/shop/set-tag", {
+        data: params,
+        method: "POST",
+      }),
+    useEditFlagConfig(["flag_setting"])
   );
 };

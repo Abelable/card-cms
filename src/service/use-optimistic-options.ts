@@ -129,3 +129,13 @@ export const useEditAddressConfig = (queryKey: QueryKey) =>
         }
       : null
   );
+
+export const useEditFlagConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          ...target,
+        }
+      : null
+  );

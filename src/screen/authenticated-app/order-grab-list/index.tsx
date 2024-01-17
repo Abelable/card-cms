@@ -7,14 +7,9 @@ import { ApplyModal } from "./components/apply-modal";
 import styled from "@emotion/styled";
 import { toNumber } from "utils";
 import { useOrderGrabListSearchParams } from "./util";
-import {
-  useFlagSetting,
-  useOrderGrabList,
-  useSettingOptions,
-} from "service/order";
+import { useOrderGrabList, useSettingOptions } from "service/order";
 
 export const OrderGrabList = () => {
-  const { data: flagSetting } = useFlagSetting();
   const { data: platformOptions = [] } = useSettingOptions("shop_type");
   const { data: flagOptions = [] } = useSettingOptions("tag");
   const [params, setParams] = useOrderGrabListSearchParams();
@@ -51,7 +46,7 @@ export const OrderGrabList = () => {
           }}
         />
       </Main>
-      <FlagModal flagSetting={flagSetting} flagOptions={flagOptions} />
+      <FlagModal flagOptions={flagOptions} />
       <ApplyModal shop_type={params.shop_type} />
     </Container>
   );
