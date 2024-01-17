@@ -1,5 +1,10 @@
 import { Pagination } from "./common";
 
+export interface Option {
+  name: string;
+  value: string;
+}
+
 export interface OrderGrabListSearchParams {
   shop_type: string;
   page: number;

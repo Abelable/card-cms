@@ -3,12 +3,16 @@ import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import { useAddConfig, useDeleteConfig } from "./use-optimistic-options";
 
-import type { OrderGrabListSearchParams, ShopListResult } from "types/order";
+import type {
+  Option,
+  OrderGrabListSearchParams,
+  ShopListResult,
+} from "types/order";
 
-export const usePlatformOptions = (): { name: string; value: string }[] => {
+export const useSettingOptions = (key: string): Option[] => {
   const client = useHttp();
-  const res = useQuery(["platform_options"], () =>
-    client("/api/v1/admin/setting/show/shop_type")
+  const res = useQuery([`${key}_options`], () =>
+    client(`/api/v1/admin/setting/show/${key}`)
   );
   return res.data || [];
 };

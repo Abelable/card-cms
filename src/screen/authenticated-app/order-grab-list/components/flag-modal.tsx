@@ -3,17 +3,9 @@ import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { useFlagModal } from "../util";
 import { useEditPDDFlag } from "service/order";
+import { Option } from "types/order";
 
-const flagOptions = [
-  { text: "灰", value: 1 },
-  { text: "红", value: 2 },
-  { text: "黄", value: 3 },
-  { text: "绿", value: 4 },
-  { text: "蓝", value: 5 },
-  { text: "紫", value: 6 },
-];
-
-export const FlagModal = () => {
+export const FlagModal = ({ tagOptions }: { tagOptions: Option[] }) => {
   const [form] = useForm();
   const { flagModalOpen, close } = useFlagModal();
   const { mutateAsync, isLoading, error } = useEditPDDFlag();
@@ -52,9 +44,9 @@ export const FlagModal = () => {
           rules={[{ required: true, message: "请选择标旗" }]}
         >
           <Select placeholder="请选择标旗">
-            {flagOptions.map(({ text, value }) => (
+            {tagOptions.map(({ name, value }) => (
               <Select.Option key={value} value={value}>
-                {text}
+                {name}
               </Select.Option>
             ))}
           </Select>
@@ -65,9 +57,9 @@ export const FlagModal = () => {
           rules={[{ required: true, message: "请选择标旗" }]}
         >
           <Select placeholder="请选择标旗">
-            {flagOptions.map(({ text, value }) => (
+            {tagOptions.map(({ name, value }) => (
               <Select.Option key={value} value={value}>
-                {text}
+                {name}
               </Select.Option>
             ))}
           </Select>
@@ -78,9 +70,9 @@ export const FlagModal = () => {
           rules={[{ required: true, message: "请选择标旗" }]}
         >
           <Select placeholder="请选择标旗">
-            {flagOptions.map(({ text, value }) => (
+            {tagOptions.map(({ name, value }) => (
               <Select.Option key={value} value={value}>
-                {text}
+                {name}
               </Select.Option>
             ))}
           </Select>
