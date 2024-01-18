@@ -33,6 +33,7 @@ export const List = ({
       <ErrorBox error={error} />
       <Table
         rowKey={"id"}
+        scroll={{ x: 1500 }}
         columns={[
           {
             title: "编号",
@@ -44,6 +45,15 @@ export const List = ({
           {
             title: "电商订单号",
             dataIndex: "tag_sn",
+            width: "26rem",
+          },
+          {
+            title: "电商店铺",
+            dataIndex: "shop_id",
+            width: "16rem",
+            render: (value) => (
+              <>{shopOptions.find((item) => item.id === value)?.name}</>
+            ),
           },
           {
             title: "回调地址",
@@ -52,6 +62,7 @@ export const List = ({
           {
             title: "回调状态",
             dataIndex: "error_msg",
+            width: "12rem",
             render: (value) => (
               <>
                 {!value ? (
@@ -69,11 +80,16 @@ export const List = ({
           {
             title: "回调时间",
             dataIndex: "updated_at",
+            width: "22rem",
+            render: (value) => (
+              <>{dayjs(value).format("YYYY-MM-DD hh:mm:ss")}</>
+            ),
             sorter: (a, b) =>
               dayjs(a.updated_at).valueOf() - dayjs(b.updated_at).valueOf(),
           },
           {
             title: "操作",
+            fixed: "right",
             width: "8rem",
             render: (value, log) => (
               <ButtonNoPadding type={"link"}>重试</ButtonNoPadding>

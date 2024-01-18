@@ -58,9 +58,19 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   return (
     <Container>
       <Item>
+        <div>电商订单号：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.tag_sn}
+          onChange={setTagSN}
+          placeholder="请输入电商订单号"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
         <div>回调状态：</div>
         <Select
-          style={{ width: "40rem" }}
+          style={{ width: "20rem" }}
           allowClear={true}
           onChange={setStatus}
           onClear={clearStatus}
@@ -75,16 +85,6 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
             </Select.Option>
           ))}
         </Select>
-      </Item>
-      <Item>
-        <div>电商订单号：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.tag_sn}
-          onChange={setTagSN}
-          placeholder="请输入电商订单号"
-          allowClear={true}
-        />
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
