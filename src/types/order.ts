@@ -75,3 +75,27 @@ export interface RuleListResult {
   data: Rule[];
   meta: { pagination: Pagination };
 }
+
+export interface LogListSearchParams {
+  status: number;
+  tag_sn: string;
+  page: number;
+  per_page: number;
+}
+
+export interface Log {
+  id: number;
+  status: number;
+  error_msg: string;
+  shop_id: string;
+  tag_sn: string;
+  callback_url: string;
+  extra_data: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LogListResult {
+  data: Log[];
+  meta: { pagination: Pagination };
+}

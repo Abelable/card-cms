@@ -1,36 +1,45 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 
-import { Button, Input } from "antd";
+import { Button, Input, Select } from "antd";
 import { Row } from "components/lib";
 
-import type { RuleListSearchParams } from "types/order";
+import type { LogListSearchParams } from "types/order";
 
 export interface SearchPanelProps {
-  params: Partial<RuleListSearchParams>;
-  setParams: (params: Partial<RuleListSearchParams>) => void;
+  params: Partial<LogListSearchParams>;
+  setParams: (params: Partial<LogListSearchParams>) => void;
 }
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
-    name: undefined,
-  } as Partial<RuleListSearchParams>;
+    status: undefined,
+    tag_sn: "",
+  } as Partial<LogListSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<RuleListSearchParams>>(defaultParams);
+    useState<Partial<LogListSearchParams>>(defaultParams);
 
-  const setName = (evt: any) => {
+  const setStatus = (status: number) =>
+    setTemporaryParams({
+      ...temporaryParams,
+      status,
+    });
+  const clearStatus = () =>
+    setTemporaryParams({ ...temporaryParams, status: undefined });
+
+  const setTagSN = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        name: "",
+        tag_sn: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      name: evt.target.value,
+      tag_sn: evt.target.value,
     });
   };
 
@@ -42,19 +51,38 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const query = () => {
     setParams({
       ...params,
-      name: temporaryParams.name,
+      tag_sn: temporaryParams.tag_sn,
     });
   };
 
   return (
     <Container>
       <Item>
-        <div>规则名称：</div>
+        <div>回调状态：</div>
+        <Select
+          style={{ width: "40rem" }}
+          allowClear={true}
+          onChange={setStatus}
+          onClear={clearStatus}
+          placeholder="请选择产品名称"
+        >
+          {[
+            { value: 10, lable: "正常" },
+            { value: 20, lable: "回调失败" },
+          ].map(({ value, lable }) => (
+            <Select.Option key={value} value={value}>
+              {lable}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>电商订单号：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.name}
-          onChange={setName}
-          placeholder="请输入规则名称"
+          value={temporaryParams.tag_sn}
+          onChange={setTagSN}
+          placeholder="请输入电商订单号"
           allowClear={true}
         />
       </Item>

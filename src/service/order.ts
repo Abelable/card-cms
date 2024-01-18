@@ -17,6 +17,8 @@ import type {
   RuleListSearchParams,
   Rule,
   ShopOption,
+  LogListResult,
+  LogListSearchParams,
 } from "types/order";
 
 export const useSettingOptions = (key: string) => {
@@ -159,4 +161,13 @@ export const useDeleteRule = (queryKey: QueryKey) => {
       }),
     useDeleteConfig(queryKey)
   );
+};
+
+export const useLogList = (params: Partial<LogListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<LogListResult>(["rule_list", params], () => {
+    return client("/api/v1/admin/message-log/lst", {
+      data: cleanObject(params),
+    });
+  });
 };

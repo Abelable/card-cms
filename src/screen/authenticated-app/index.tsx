@@ -19,6 +19,7 @@ import { ProductGoodsList } from "./product-goods-list";
 import { ProductGoodsAgents } from "./product-goods-agents";
 import { OrderConvert } from "./order-convert";
 import { OrderGrab } from "./order-grab";
+import { OrderLog } from "./order-log";
 import { ProduceProducts } from "./produce-products";
 import { ProduceImports } from "./produce-imports";
 import { ProduceDelivers } from "./produce-delivers";
@@ -95,6 +96,7 @@ export const AuthenticatedApp = () => {
               />
               <Route path="order/convert" element={<OrderConvert />} />
               <Route path="order/grab" element={<OrderGrab />} />
+              <Route path="order/log" element={<OrderLog />} />
               <Route path="produce/deliver" element={<ProduceDelivers />} />
               <Route
                 path="produce/deliver/report_forms"
@@ -176,8 +178,8 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           icon: <FlagOutlined />,
         },
         {
-          label: <Link to={"order/record"}>回调记录</Link>,
-          key: "record",
+          label: <Link to={"order/log"}>回调记录</Link>,
+          key: "log",
           icon: <HistoryOutlined />,
         },
       ],

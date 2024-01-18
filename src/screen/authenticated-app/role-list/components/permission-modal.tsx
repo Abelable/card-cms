@@ -64,7 +64,7 @@ export const PermissionModal = () => {
         },
         {
           title: "回调记录",
-          key: "record",
+          key: "log",
         },
       ],
     },
