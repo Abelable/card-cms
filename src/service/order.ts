@@ -16,6 +16,7 @@ import type {
   RuleListResult,
   RuleListSearchParams,
   Rule,
+  ShopOption,
 } from "types/order";
 
 export const useSettingOptions = (key: string) => {
@@ -59,6 +60,19 @@ export const useShopList = (params: Partial<ShopListSearchParams>) => {
       }),
     });
   });
+};
+
+export const useShopOptions = (shop_type: string) => {
+  const client = useHttp();
+  const res = useQuery<ShopListResult>(["shop_options"], () =>
+    client("/api/v1/admin/shop/lst", {
+      data: { "filter[shop_type]": shop_type, per_page: 1000, page: 1 },
+    })
+  );
+  const shopOptions: ShopOption[] = res.data?.data
+    ? res.data?.data.map(({ id, shop_name }) => ({ id, name: shop_name }))
+    : [];
+  return shopOptions;
 };
 
 export const useApplyShop = (queryKey: QueryKey) => {

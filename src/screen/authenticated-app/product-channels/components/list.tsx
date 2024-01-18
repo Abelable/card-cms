@@ -10,7 +10,6 @@ import {
   TablePaginationConfig,
   TableProps,
 } from "antd";
-import { SearchPanelProps } from "./search-panel";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined, DownOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
@@ -21,6 +20,8 @@ import {
   useUpChannel,
 } from "service/product";
 import { useChannelModal, useChannelsQueryKey } from "../util";
+
+import type { SearchPanelProps } from "./search-panel";
 import type { OperatorOption } from "types/common";
 import type { Channel, modeOption } from "types/product";
 

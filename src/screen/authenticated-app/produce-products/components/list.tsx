@@ -11,9 +11,10 @@ import {
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import { SearchPanelProps } from "./search-panel";
 import { useProductsQueryKey, useProductModal } from "../util";
 import { useDeleteProduct } from "service/produce";
+
+import type { SearchPanelProps } from "./search-panel";
 import type { Product } from "types/produce";
 import type { ChannelOption } from "types/product";
 

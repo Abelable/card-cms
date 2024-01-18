@@ -14,7 +14,6 @@ import {
   DownloadOutlined,
   IdcardOutlined,
 } from "@ant-design/icons";
-import { SearchPanelProps } from "./search-panel";
 import { ErrorBox, Row } from "components/lib";
 import { FileUpload } from "components/file-upload";
 import { useQueryClient } from "react-query";
@@ -32,6 +31,8 @@ import {
   useBlackModal,
 } from "../util";
 import { useDownloadTemplate } from "service/common";
+
+import type { SearchPanelProps } from "./search-panel";
 import type { Deliver } from "types/produce";
 
 interface ListProps

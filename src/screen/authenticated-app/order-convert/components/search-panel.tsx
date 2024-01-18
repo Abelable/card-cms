@@ -4,49 +4,33 @@ import styled from "@emotion/styled";
 import { Button, Input } from "antd";
 import { Row } from "components/lib";
 
-import type { BlacklistSearchParams } from "types/system";
+import type { RuleListSearchParams } from "types/order";
 
 export interface SearchPanelProps {
-  params: Partial<BlacklistSearchParams>;
-  setParams: (params: Partial<BlacklistSearchParams>) => void;
+  params: Partial<RuleListSearchParams>;
+  setParams: (params: Partial<RuleListSearchParams>) => void;
 }
 
 export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const defaultParams = {
-    idcard: undefined,
-    phone: undefined,
-  } as Partial<BlacklistSearchParams>;
+    name: undefined,
+  } as Partial<RuleListSearchParams>;
 
   const [temporaryParams, setTemporaryParams] =
-    useState<Partial<BlacklistSearchParams>>(defaultParams);
+    useState<Partial<RuleListSearchParams>>(defaultParams);
 
   const setIdCard = (evt: any) => {
     if (!evt.target.value && evt.type !== "change") {
       setTemporaryParams({
         ...temporaryParams,
-        idcard: "",
+        name: "",
       });
       return;
     }
 
     setTemporaryParams({
       ...temporaryParams,
-      idcard: evt.target.value,
-    });
-  };
-
-  const setPhone = (evt: any) => {
-    if (!evt.target.value && evt.type !== "change") {
-      setTemporaryParams({
-        ...temporaryParams,
-        phone: "",
-      });
-      return;
-    }
-
-    setTemporaryParams({
-      ...temporaryParams,
-      phone: evt.target.value,
+      name: evt.target.value,
     });
   };
 
@@ -58,30 +42,19 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const query = () => {
     setParams({
       ...params,
-      idcard: temporaryParams.idcard,
-      phone: temporaryParams.phone,
+      name: temporaryParams.name,
     });
   };
 
   return (
     <Container>
       <Item>
-        <div>身份证号：</div>
+        <div>规则名称：</div>
         <Input
           style={{ width: "20rem" }}
-          value={temporaryParams.idcard}
+          value={temporaryParams.name}
           onChange={setIdCard}
-          placeholder="请输入身份证号"
-          allowClear={true}
-        />
-      </Item>
-      <Item>
-        <div>联系电话：</div>
-        <Input
-          style={{ width: "20rem" }}
-          value={temporaryParams.phone}
-          onChange={setPhone}
-          placeholder="请输入联系电话"
+          placeholder="请输入规则名称"
           allowClear={true}
         />
       </Item>

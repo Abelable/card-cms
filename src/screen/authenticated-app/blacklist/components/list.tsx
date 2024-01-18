@@ -15,11 +15,11 @@ import { useQueryClient } from "react-query";
 import { useBlacklistQueryKey, useBlackModal } from "../util";
 import { useDeleteBlack } from "service/system";
 import { useDownloadTemplate } from "service/common";
-import type { BlacklistSearchParams, BlackItem } from "types/system";
 
-interface ListProps extends TableProps<BlackItem> {
-  params: Partial<BlacklistSearchParams>;
-  setParams: (params: Partial<BlacklistSearchParams>) => void;
+import type { BlackItem } from "types/system";
+import type { SearchPanelProps } from "./search-panel";
+
+interface ListProps extends TableProps<BlackItem>, SearchPanelProps {
   error: Error | unknown;
 }
 

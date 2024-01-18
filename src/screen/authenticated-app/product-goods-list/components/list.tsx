@@ -9,7 +9,6 @@ import {
   Modal,
 } from "antd";
 import { ErrorBox, Row, ButtonNoPadding } from "components/lib";
-import { SearchPanelProps } from "./search-panel";
 import { useNavigate } from "react-router";
 import {
   useAgentModal,
@@ -20,6 +19,8 @@ import {
   usePublishModal,
 } from "../util";
 import { useDeleteGoods, useDownGoods, useUpGoods } from "service/product";
+
+import type { SearchPanelProps } from "./search-panel";
 import type { ColumnsType } from "antd/lib/table";
 import type { Goods } from "types/product";
 

@@ -11,10 +11,10 @@ import {
 } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import { PlusOutlined } from "@ant-design/icons";
-import { SearchPanelProps } from "./search-panel";
 import { useAddressListQueryKey, useAddressModal } from "../util";
 import { useDeleteAddress } from "service/address";
 
+import type { SearchPanelProps } from "./search-panel";
 import type { Address } from "types/address";
 
 interface ListProps

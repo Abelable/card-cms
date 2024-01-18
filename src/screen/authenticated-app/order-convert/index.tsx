@@ -1,26 +1,28 @@
 import styled from "@emotion/styled";
-import { useMemberList } from "service/member";
+import { useRuleList, useShopOptions } from "service/order";
 import { useGoodsOptions } from "service/product";
 import { toNumber } from "utils";
-import { useMemberListSearchParams } from "./util";
+import { useRuleListSearchParams } from "./util";
 
 import { List } from "./components/list";
-import { MemberModal } from "./components/member-modal";
+import { RuleModal } from "./components/rule-modal";
 
 export const OrderConvert = () => {
-  const roleOptions = useGoodsOptions();
-  const [params, setParams] = useMemberListSearchParams();
-  const { data, isLoading, error } = useMemberList(params);
+  const goodsOptions = useGoodsOptions();
+  const shopOptions = useShopOptions("10");
+
+  const [params, setParams] = useRuleListSearchParams();
+  const { data, isLoading, error } = useRuleList(params);
 
   return (
     <Container>
       <Main>
         <List
-          roleOptions={roleOptions}
+          shopOptions={shopOptions || []}
           error={error}
           params={params}
           setParams={setParams}
-          dataSource={data?.data}
+          dataSource={data?.data || []}
           loading={isLoading}
           pagination={{
             current: toNumber(data?.meta.pagination.current_page),
@@ -28,9 +30,10 @@ export const OrderConvert = () => {
             total: toNumber(data?.meta.pagination.total),
           }}
         />
-        <MemberModal
-          roleOptions={roleOptions || []}
-          memberList={data?.data || []}
+        <RuleModal
+          ruleList={data?.data || []}
+          goodsOptions={goodsOptions || []}
+          shopOptions={shopOptions || []}
         />
       </Main>
     </Container>

@@ -32,6 +32,11 @@ export interface Shop {
   extra_data: string;
 }
 
+export interface ShopOption {
+  id: number;
+  name: string;
+}
+
 export interface ShopListResult {
   data: Shop[];
   meta: { pagination: Pagination };

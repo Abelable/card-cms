@@ -1,11 +1,12 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 
-export const useMemberListSearchParams = () => {
-  const [params, setParams] = useUrlQueryParams(["page", "per_page"]);
+export const useRuleListSearchParams = () => {
+  const [params, setParams] = useUrlQueryParams(["name", "page", "per_page"]);
   return [
     useMemo(
       () => ({
+        ...params,
         page: Number(params.page) || 1,
         per_page: Number(params.per_page) || 10,
       }),
@@ -15,60 +16,36 @@ export const useMemberListSearchParams = () => {
   ] as const;
 };
 
-export const useMemberListQueryKey = () => {
-  const [params] = useMemberListSearchParams();
-  return ["member_list", params];
+export const useRuleListQueryKey = () => {
+  const [params] = useRuleListSearchParams();
+  return ["rule_list", params];
 };
 
-export const useMemberModal = () => {
-  const [{ memberCreate }, setMemberModalOpen] = useUrlQueryParams([
-    "memberCreate",
-  ]);
-  const [{ editingMemberId }, setEditingMemberId] = useUrlQueryParams([
-    "editingMemberId",
+export const useRuleModal = () => {
+  const [{ ruleCreate }, setRuleModalOpen] = useUrlQueryParams(["ruleCreate"]);
+  const [{ editingRuleId }, setEditingRuleId] = useUrlQueryParams([
+    "editingRuleId",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    () => setMemberModalOpen({ memberCreate: true }),
-    [setMemberModalOpen]
+    () => setRuleModalOpen({ ruleCreate: true }),
+    [setRuleModalOpen]
   );
   const startEdit = useCallback(
-    (id: string) => setEditingMemberId({ editingMemberId: id }),
-    [setEditingMemberId]
+    (id: string) => setEditingRuleId({ editingRuleId: id }),
+    [setEditingRuleId]
   );
   const close = useCallback(
-    () => setUrlParams({ memberCreate: "", editingMemberId: "" }),
+    () => setUrlParams({ ruleCreate: "", editingRuleId: "" }),
     [setUrlParams]
   );
 
   return {
-    memberModalOpen: memberCreate === "true" || !!editingMemberId,
-    editingMemberId,
+    ruleModalOpen: ruleCreate === "true" || !!editingRuleId,
+    editingRuleId,
     open,
     startEdit,
-    close,
-  };
-};
-
-export const usePwdModal = () => {
-  const [{ resetPwdMemberId }, setEditingMemberId] = useUrlQueryParams([
-    "resetPwdMemberId",
-  ]);
-  const setUrlParams = useSetUrlSearchParams();
-  const open = useCallback(
-    (id: string) => setEditingMemberId({ resetPwdMemberId: id }),
-    [setEditingMemberId]
-  );
-  const close = useCallback(
-    () => setUrlParams({ resetPwdMemberId: "" }),
-    [setUrlParams]
-  );
-
-  return {
-    pwdModalOpen: !!resetPwdMemberId,
-    resetPwdMemberId,
-    open,
     close,
   };
 };

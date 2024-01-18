@@ -12,26 +12,25 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
-import { useMemberListQueryKey, useMemberModal, usePwdModal } from "../util";
-import { useDeleteMember, useEditMemberStatus } from "service/member";
-import type { MemberListSearchParams, MemberItem } from "types/member";
-import type { RoleOption } from "types/role";
+import { useRuleListQueryKey, useRuleModal } from "../util";
+import { useDeleteRule, useEditRuleStatus } from "service/order";
 
-interface ListProps extends TableProps<MemberItem> {
-  roleOptions: RoleOption[];
-  params: Partial<MemberListSearchParams>;
-  setParams: (params: Partial<MemberListSearchParams>) => void;
+import type { Rule, ShopOption } from "types/order";
+import type { SearchPanelProps } from "./search-panel";
+
+interface ListProps extends TableProps<Rule>, SearchPanelProps {
+  shopOptions: ShopOption[];
   error: Error | unknown;
 }
 
 export const List = ({
-  roleOptions,
+  shopOptions,
   error,
   params,
   setParams,
   ...restProps
 }: ListProps) => {
-  const { open } = useMemberModal();
+  const { open } = useRuleModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -39,7 +38,7 @@ export const List = ({
       per_page: pagination.pageSize,
     });
 
-  const { mutate } = useEditMemberStatus(useMemberListQueryKey());
+  const { mutate } = useEditRuleStatus(useRuleListQueryKey());
   const onStatusChange = (id: number, checked: boolean) =>
     mutate({ id, status: checked ? 1 : 2 });
 
@@ -70,33 +69,34 @@ export const List = ({
             sorter: (a, b) => Number(a.id) - Number(b.id),
           },
           {
-            title: "账号名",
-            dataIndex: "username",
-          },
-          {
-            title: "昵称",
+            title: "计划名称",
             dataIndex: "name",
           },
           {
-            title: "岗位",
-            dataIndex: "role_id",
-            render: (value) =>
-              roleOptions.find((item) => item.id === value)?.name,
+            title: "规则",
+            dataIndex: "rule_name",
+          },
+          {
+            title: "电商店铺",
+            dataIndex: "shop_id",
+            render: (value) => (
+              <>{shopOptions.find((item) => item.id === value)?.name}</>
+            ),
           },
           {
             title: "使用状态",
             dataIndex: "status",
-            render: (value, member) => (
+            render: (value, rule) => (
               <Switch
-                key={member.id}
+                key={rule.id}
                 checked={value === 1}
-                onChange={(checked) => onStatusChange(member.id, checked)}
+                onChange={(checked) => onStatusChange(rule.id, checked)}
               />
             ),
           },
           {
             title: "操作",
-            render: (value, member) => <More id={member.id} />,
+            render: (value, rule) => <More id={rule.id} />,
           },
         ]}
         onChange={setPagination}
@@ -107,18 +107,17 @@ export const List = ({
 };
 
 const More = ({ id }: { id: number }) => {
-  const { mutate: deleteMember } = useDeleteMember(useMemberListQueryKey());
+  const { mutate: deleteRule } = useDeleteRule(useRuleListQueryKey());
 
-  const { startEdit } = useMemberModal();
-  const { open } = usePwdModal();
+  const { startEdit } = useRuleModal();
 
-  const confirmDeleteMember = (id: number) => {
+  const confirmDeleteRule = (id: number) => {
     Modal.confirm({
       title: "确定删除该员工吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteMember(id),
+      onOk: () => deleteRule(id),
     });
   };
 
@@ -128,11 +127,7 @@ const More = ({ id }: { id: number }) => {
       key: "edit",
     },
     {
-      label: <div onClick={() => open(String(id))}>重置密码</div>,
-      key: "pwd",
-    },
-    {
-      label: <div onClick={() => confirmDeleteMember(id)}>删除</div>,
+      label: <div onClick={() => confirmDeleteRule(id)}>删除</div>,
       key: "delete",
     },
   ];

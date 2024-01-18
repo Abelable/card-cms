@@ -26,13 +26,13 @@ export const useRoleList = (params: Partial<RoleListSearchParams>) => {
 
 export const useRoleOptions = () => {
   const client = useHttp();
-  const res = useQuery<RoleListResult>(["member_options"], () =>
+  const res = useQuery<RoleListResult>(["role_options"], () =>
     client("/api/v1/admin/role/lst", { data: { per_page: 1000, page: 1 } })
   );
-  const memberOptions: RoleOption[] = res.data?.data
+  const roleOptions: RoleOption[] = res.data?.data
     ? res.data?.data.map(({ id, name }) => ({ id, name }))
     : [];
-  return memberOptions;
+  return roleOptions;
 };
 
 export const useAddRole = (queryKey: QueryKey) => {

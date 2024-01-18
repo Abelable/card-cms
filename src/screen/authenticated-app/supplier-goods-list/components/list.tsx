@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { ErrorBox } from "components/lib";
 import { Table, TablePaginationConfig, TableProps } from "antd";
-import { SearchPanelProps } from "./search-panel";
 import dayjs from "dayjs";
+
+import type { SearchPanelProps } from "./search-panel";
 import type { OperatorOption } from "types/common";
 import type { Goods } from "types/supplier";
 
