@@ -1,15 +1,13 @@
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useOrderGrabListQueryKey, useApplyModal } from "../util";
+import { useShopListQueryKey, useApplyModal } from "../util";
 import { useApplyShop } from "service/order";
 
 export const ApplyModal = ({ shop_type }: { shop_type: string }) => {
   const [form] = useForm();
   const { shopApplyModalOpen, close } = useApplyModal();
-  const { mutateAsync, isLoading, error } = useApplyShop(
-    useOrderGrabListQueryKey()
-  );
+  const { mutateAsync, isLoading, error } = useApplyShop(useShopListQueryKey());
 
   const confirm = () => {
     form.validateFields().then(async () => {

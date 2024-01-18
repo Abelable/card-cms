@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useForm } from "antd/lib/form/Form";
 import { useFlagModal } from "../util";
-import { useUpdateFlagSetting } from "service/order";
+import { useEditFlagSetting } from "service/order";
 
 import type { Option } from "types/order";
 
@@ -17,7 +17,7 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
     isLoading: initLoading,
     close,
   } = useFlagModal();
-  const { mutateAsync, isLoading, error } = useUpdateFlagSetting();
+  const { mutateAsync, isLoading, error } = useEditFlagSetting();
 
   useEffect(() => {
     if (flagModalOpen && flagSetting) {

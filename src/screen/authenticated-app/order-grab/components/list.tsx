@@ -13,16 +13,16 @@ import {
   QuestionCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
-import { useOrderGrabListQueryKey, useApplyModal } from "../util";
-import { useDeleteOrderGrab } from "service/order";
+import { useShopListQueryKey, useApplyModal } from "../util";
+import { useDeleteShop } from "service/order";
 
 import type { ColumnsType } from "antd/lib/table";
-import type { OrderGrabListSearchParams, OrderGrab } from "types/order";
+import type { ShopListSearchParams, Shop } from "types/order";
 
-interface ListProps extends TableProps<OrderGrab> {
+interface ListProps extends TableProps<Shop> {
   error: Error | unknown;
-  params: Partial<OrderGrabListSearchParams>;
-  setParams: (params: Partial<OrderGrabListSearchParams>) => void;
+  params: Partial<ShopListSearchParams>;
+  setParams: (params: Partial<ShopListSearchParams>) => void;
 }
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
@@ -34,20 +34,18 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       per_page: pagination.pageSize,
     });
 
-  const { mutate: deleteOrderGrab } = useDeleteOrderGrab(
-    useOrderGrabListQueryKey()
-  );
-  const confirmDeleteOrderGrab = (id: number) => {
+  const { mutate: deleteShop } = useDeleteShop(useShopListQueryKey());
+  const confirmDeleteShop = (id: number) => {
     Modal.confirm({
       title: "确定删除该店铺吗？",
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
-      onOk: () => deleteOrderGrab(id),
+      onOk: () => deleteShop(id),
     });
   };
 
-  const columns: ColumnsType<OrderGrab> = [
+  const columns: ColumnsType<Shop> = [
     {
       title: "店铺名称",
       dataIndex: "shop_name",
@@ -59,10 +57,10 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     {
       title: "授权配置",
       dataIndex: "refresh_token",
-      render: (value, grab) => (
+      render: (value, shop) => (
         <ButtonNoPadding
           type={"link"}
-          onClick={() => confirmDeleteOrderGrab(grab.id)}
+          onClick={() => confirmDeleteShop(shop.id)}
         >
           {value ? "已配置，修改配置" : "点击配置"}
         </ButtonNoPadding>
@@ -105,15 +103,15 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
     },
   ];
 
-  const editColumns: ColumnsType<OrderGrab> = [
+  const editColumns: ColumnsType<Shop> = [
     {
       title: "操作",
-      render: (value, grab) => (
+      render: (value, shop) => (
         <>
           <div>
             <ButtonNoPadding
               type={"link"}
-              onClick={() => confirmDeleteOrderGrab(grab.id)}
+              onClick={() => confirmDeleteShop(shop.id)}
             >
               删除
             </ButtonNoPadding>

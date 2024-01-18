@@ -4,14 +4,18 @@ import { cleanObject } from "utils/index";
 import {
   useAddConfig,
   useDeleteConfig,
+  useEditConfig,
   useEditFlagConfig,
 } from "./use-optimistic-options";
 
 import type {
   FlagSetting,
   Option,
-  OrderGrabListSearchParams,
+  ShopListSearchParams,
   ShopListResult,
+  RuleListResult,
+  RuleListSearchParams,
+  Rule,
 } from "types/order";
 
 export const useSettingOptions = (key: string) => {
@@ -32,11 +36,21 @@ export const useFlagSetting = (flagModalOpen: boolean) => {
   );
 };
 
-export const useOrderGrabList = (
-  params: Partial<OrderGrabListSearchParams>
-) => {
+export const useEditFlagSetting = () => {
   const client = useHttp();
-  return useQuery<ShopListResult>(["order_grab_list", params], () => {
+  return useMutation(
+    (params: FlagSetting) =>
+      client("/api/v1/admin/shop/set-tag", {
+        data: params,
+        method: "POST",
+      }),
+    useEditFlagConfig(["flag_setting"])
+  );
+};
+
+export const useShopList = (params: Partial<ShopListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<ShopListResult>(["shop_list", params], () => {
     const { shop_type, ...rest } = params;
     return client("/api/v1/admin/shop/lst", {
       data: cleanObject({
@@ -59,7 +73,7 @@ export const useApplyShop = (queryKey: QueryKey) => {
   );
 };
 
-export const useDeleteOrderGrab = (queryKey: QueryKey) => {
+export const useDeleteShop = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
     (id: number) =>
@@ -70,14 +84,58 @@ export const useDeleteOrderGrab = (queryKey: QueryKey) => {
   );
 };
 
-export const useUpdateFlagSetting = () => {
+export const useRuleList = (params: Partial<RuleListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<RuleListResult>(["rule_list", params], () => {
+    return client("/api/v1/admin/transfer-order/lst", {
+      data: cleanObject(params),
+    });
+  });
+};
+
+export const useAddRule = (queryKey: QueryKey) => {
   const client = useHttp();
   return useMutation(
-    (params: FlagSetting) =>
-      client("/api/v1/admin/shop/set-tag", {
+    (params: Partial<Rule>) =>
+      client("/api/v1/admin/transfer-order/create", {
         data: params,
         method: "POST",
       }),
-    useEditFlagConfig(["flag_setting"])
+    useAddConfig(queryKey)
+  );
+};
+
+export const useEditRule = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, ...params }: Partial<Rule>) =>
+      client(`/api/v1/admin/transfer-order/update/${id}`, {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useEditRuleStatus = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, status }: { id: number; status: number }) =>
+      client(`/api/v1/admin/transfer-order/status/${id}`, {
+        data: { status },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteRule = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: number) =>
+      client(`/api/v1/admin/transfer-order/delete/${id}`, {
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
   );
 };

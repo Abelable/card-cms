@@ -2,7 +2,7 @@ import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
 import { useFlagSetting } from "service/order";
 
-export const useOrderGrabListSearchParams = () => {
+export const useShopListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
     "shop_type",
     "page",
@@ -21,9 +21,9 @@ export const useOrderGrabListSearchParams = () => {
   ] as const;
 };
 
-export const useOrderGrabListQueryKey = () => {
-  const [params] = useOrderGrabListSearchParams();
-  return ["order_grab_list", params];
+export const useShopListQueryKey = () => {
+  const [params] = useShopListSearchParams();
+  return ["shop_list", params];
 };
 
 export const useFlagModal = () => {

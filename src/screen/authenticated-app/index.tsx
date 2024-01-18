@@ -17,7 +17,7 @@ import { ProductChannels } from "./product-channels";
 import { ProductChannelGoodsList } from "./product-channel-goods-list";
 import { ProductGoodsList } from "./product-goods-list";
 import { ProductGoodsAgents } from "./product-goods-agents";
-import { OrderGrabList } from "./order-grab-list";
+import { OrderGrab } from "./order-grab";
 import { ProduceProducts } from "./produce-products";
 import { ProduceImports } from "./produce-imports";
 import { ProduceDelivers } from "./produce-delivers";
@@ -92,7 +92,7 @@ export const AuthenticatedApp = () => {
                 path="product/sales/agent"
                 element={<ProductGoodsAgents />}
               />
-              <Route path="order/grab" element={<OrderGrabList />} />
+              <Route path="order/grab" element={<OrderGrab />} />
               <Route path="produce/deliver" element={<ProduceDelivers />} />
               <Route
                 path="produce/deliver/report_forms"

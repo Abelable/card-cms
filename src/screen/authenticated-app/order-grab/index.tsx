@@ -6,14 +6,14 @@ import { ApplyModal } from "./components/apply-modal";
 
 import styled from "@emotion/styled";
 import { toNumber } from "utils";
-import { useOrderGrabListSearchParams } from "./util";
-import { useOrderGrabList, useSettingOptions } from "service/order";
+import { useShopListSearchParams } from "./util";
+import { useShopList, useSettingOptions } from "service/order";
 
-export const OrderGrabList = () => {
+export const OrderGrab = () => {
   const { data: platformOptions = [] } = useSettingOptions("shop_type");
   const { data: flagOptions = [] } = useSettingOptions("tag");
-  const [params, setParams] = useOrderGrabListSearchParams();
-  const { data, isLoading, error } = useOrderGrabList(params);
+  const [params, setParams] = useShopListSearchParams();
+  const { data, isLoading, error } = useShopList(params);
 
   const menuItems: MenuProps["items"] = platformOptions.map((item) => ({
     label: (
