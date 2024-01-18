@@ -20,6 +20,7 @@ export interface ShopListSearchParams {
 export interface Shop {
   id: number;
   status: number;
+  shop_id: string;
   shop_type: number;
   shop_name: string;
   app_name: string;
@@ -33,7 +34,7 @@ export interface Shop {
 }
 
 export interface ShopOption {
-  id: number;
+  id: string;
   name: string;
 }
 

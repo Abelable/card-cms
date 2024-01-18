@@ -71,6 +71,7 @@ export const List = ({
           {
             title: "计划名称",
             dataIndex: "name",
+            width: "20rem",
           },
           {
             title: "规则",
@@ -79,6 +80,7 @@ export const List = ({
           {
             title: "电商店铺",
             dataIndex: "shop_id",
+            width: "20rem",
             render: (value) => (
               <>{shopOptions.find((item) => item.id === value)?.name}</>
             ),
@@ -86,6 +88,7 @@ export const List = ({
           {
             title: "使用状态",
             dataIndex: "status",
+            width: "12rem",
             render: (value, rule) => (
               <Switch
                 key={rule.id}
@@ -96,6 +99,7 @@ export const List = ({
           },
           {
             title: "操作",
+            width: "8rem",
             render: (value, rule) => <More id={rule.id} />,
           },
         ]}

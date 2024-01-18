@@ -30,7 +30,11 @@ export const RuleModal = ({
   useDeepCompareEffect(() => {
     if (rule) {
       const { name, shop_id, rule_id } = rule;
-      form.setFieldsValue({ name, shop_id, rule_id: rule_id.split(",") });
+      form.setFieldsValue({
+        name,
+        shop_id,
+        rule_id: rule_id.split(",").map((item) => +item),
+      });
     }
   }, [rule, form]);
 
@@ -81,13 +85,17 @@ export const RuleModal = ({
           label="商品规则"
           rules={[{ required: true, message: "请依次选择商品" }]}
         >
-          <Select mode="multiple" placeholder="请依次选择商品">
-            {goodsOptions.map(({ id, name }) => (
-              <Select.Option key={id} value={id}>
-                {name}
-              </Select.Option>
-            ))}
-          </Select>
+          <Select
+            mode="multiple"
+            placeholder="请依次选择商品"
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
+            options={goodsOptions.map((item) => ({
+              value: item.id,
+              label: item.name,
+            }))}
+          />
         </Form.Item>
         <Form.Item
           name="shop_id"

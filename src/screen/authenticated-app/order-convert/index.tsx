@@ -6,6 +6,7 @@ import { useRuleListSearchParams } from "./util";
 
 import { List } from "./components/list";
 import { RuleModal } from "./components/rule-modal";
+import { SearchPanel } from "./components/search-panel";
 
 export const OrderConvert = () => {
   const goodsOptions = useGoodsOptions();
@@ -17,6 +18,8 @@ export const OrderConvert = () => {
   return (
     <Container>
       <Main>
+        <SearchPanel params={params} setParams={setParams} />
+
         <List
           shopOptions={shopOptions || []}
           error={error}

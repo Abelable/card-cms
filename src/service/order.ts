@@ -70,7 +70,10 @@ export const useShopOptions = (shop_type: string) => {
     })
   );
   const shopOptions: ShopOption[] = res.data?.data
-    ? res.data?.data.map(({ id, shop_name }) => ({ id, name: shop_name }))
+    ? res.data?.data.map(({ shop_id, shop_name }) => ({
+        id: shop_id,
+        name: shop_name,
+      }))
     : [];
   return shopOptions;
 };
@@ -101,8 +104,12 @@ export const useDeleteShop = (queryKey: QueryKey) => {
 export const useRuleList = (params: Partial<RuleListSearchParams>) => {
   const client = useHttp();
   return useQuery<RuleListResult>(["rule_list", params], () => {
+    const { name, ...rest } = params;
     return client("/api/v1/admin/transfer-order/lst", {
-      data: cleanObject(params),
+      data: cleanObject({
+        "filter[name]": name,
+        ...rest,
+      }),
     });
   });
 };
