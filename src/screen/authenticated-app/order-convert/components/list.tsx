@@ -45,7 +45,7 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>员工列表</h3>
+        <h3>规则列表</h3>
         <Row gap>
           <Button
             style={{ marginRight: 0 }}

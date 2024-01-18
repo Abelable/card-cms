@@ -47,6 +47,13 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
 
   const columns: ColumnsType<Shop> = [
     {
+      title: "编号",
+      dataIndex: "id",
+      fixed: "left",
+      width: "8rem",
+      sorter: (a, b) => Number(a.id) - Number(b.id),
+    },
+    {
       title: "店铺名称",
       dataIndex: "shop_name",
     },
