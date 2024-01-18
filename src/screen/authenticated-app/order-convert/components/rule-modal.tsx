@@ -36,9 +36,12 @@ export const RuleModal = ({
 
   const confirm = () => {
     form.validateFields().then(async () => {
+      const { rule_id, ...rest } = form.getFieldsValue();
       await mutateAsync({
         id: editingRuleId || "",
-        ...form.getFieldsValue(),
+        status: editingRuleId ? rule?.status : 2,
+        rule_id: rule_id.join(),
+        ...rest,
       });
       closeModal();
     });
