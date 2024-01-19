@@ -71,3 +71,23 @@ export const useApplyModal = () => {
     close,
   };
 };
+
+export const useSettingModal = () => {
+  const [{ settingShopId }, setEditingShopId] = useUrlQueryParams([
+    "settingShopId",
+  ]);
+  const open = useCallback(
+    (id: string) => setEditingShopId({ settingShopId: id }),
+    [setEditingShopId]
+  );
+  const setUrlParams = useSetUrlSearchParams();
+  const close = useCallback(
+    () => setUrlParams({ shopSettingModalVisible: "" }),
+    [setUrlParams]
+  );
+  return {
+    shopSettingModalOpen: !!settingShopId,
+    open,
+    close,
+  };
+};

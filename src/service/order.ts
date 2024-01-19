@@ -103,6 +103,38 @@ export const useDeleteShop = (queryKey: QueryKey) => {
   );
 };
 
+export const useShopAuthUrl = ({
+  shop_id,
+  app_name,
+  app_key,
+  app_secret,
+}: {
+  shop_id: string;
+  app_name: string;
+  app_key: string;
+  app_secret: string;
+}) => {
+  const client = useHttp();
+  return useQuery<{ url: string }>(["shop_auth_url"], () =>
+    client(`/api/v1/admin/shop/authorize-url/${shop_id}`, {
+      data: { app_name, app_key, app_secret },
+      method: "POST",
+    })
+  );
+};
+
+export const useEditShopSetting = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ shop_id, code }: { shop_id: string; code: string }) =>
+      client(`/api/v1/admin/shop/authorize-code/${shop_id}`, {
+        data: { code },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useRuleList = (params: Partial<RuleListSearchParams>) => {
   const client = useHttp();
   return useQuery<RuleListResult>(["rule_list", params], () => {
