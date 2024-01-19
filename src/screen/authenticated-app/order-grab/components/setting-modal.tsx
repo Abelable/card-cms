@@ -75,6 +75,46 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
     }
   }, [shopSettingModalOpen, shopInfo, settingShopId]);
 
+  const CodeForm = () => (
+    <>
+      <Wrap>
+        <Divider orientation="left">
+          1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
+        </Divider>
+        {authInfoLoading ? (
+          <Loading>
+            <Spin />
+          </Loading>
+        ) : (
+          <div>
+            {authInfo?.url}
+            <ButtonNoPadding
+              style={{ marginLeft: "1.2rem" }}
+              type={"link"}
+              onClick={() => copyUrl(authInfo?.url || "")}
+            >
+              复制地址
+            </ButtonNoPadding>
+          </div>
+        )}
+
+        <Divider orientation="left">2. 登录店铺账号后复制生成的授权码</Divider>
+        <Form.Item
+          name="code"
+          label="授权码"
+          rules={[{ required: true, message: "请输入授权码" }]}
+        >
+          <Input placeholder="请输入授权码" />
+        </Form.Item>
+      </Wrap>
+      <Divider>图示说明</Divider>
+      <WarningTips>
+        注意：请确保在浏览器退出拼多多店铺的登录后操作，或者在浏览器按ctrl+shift+n打开无痕模式粘贴地址前往（请使用以下浏览器：谷歌Chrome、360系列、搜狗、微软Edge浏览器）
+      </WarningTips>
+      <Illus src={codeIllus} alt="" />
+    </>
+  );
+
   return (
     <Drawer
       title={shopInfo?.refresh_token ? "重新配置" : "店铺授权操作"}
@@ -118,45 +158,46 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
         {shopInfo?.refresh_token ? (
-          <>
-            <Wrap>
-              <Divider orientation="left">
-                1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
-              </Divider>
-              {authInfoLoading ? (
-                <Loading>
-                  <Spin />
-                </Loading>
-              ) : (
-                <div>
-                  {authInfo?.url}
-                  <ButtonNoPadding
-                    style={{ marginLeft: "1.2rem" }}
-                    type={"link"}
-                    onClick={() => copyUrl(authInfo?.url || "")}
-                  >
-                    复制地址
-                  </ButtonNoPadding>
-                </div>
-              )}
+          // <>
+          //   <Wrap>
+          //     <Divider orientation="left">
+          //       1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
+          //     </Divider>
+          //     {authInfoLoading ? (
+          //       <Loading>
+          //         <Spin />
+          //       </Loading>
+          //     ) : (
+          //       <div>
+          //         {authInfo?.url}
+          //         <ButtonNoPadding
+          //           style={{ marginLeft: "1.2rem" }}
+          //           type={"link"}
+          //           onClick={() => copyUrl(authInfo?.url || "")}
+          //         >
+          //           复制地址
+          //         </ButtonNoPadding>
+          //       </div>
+          //     )}
 
-              <Divider orientation="left">
-                2. 登录店铺账号后复制生成的授权码
-              </Divider>
-              <Form.Item
-                name="code"
-                label="授权码"
-                rules={[{ required: true, message: "请输入授权码" }]}
-              >
-                <Input placeholder="请输入授权码" />
-              </Form.Item>
-            </Wrap>
-            <Divider>图示说明</Divider>
-            <WarningTips>
-              注意：请确保在浏览器退出拼多多店铺的登录后操作，或者在浏览器按ctrl+shift+n打开无痕模式粘贴地址前往（请使用以下浏览器：谷歌Chrome、360系列、搜狗、微软Edge浏览器）
-            </WarningTips>
-            <Illus src={codeIllus} alt="" />
-          </>
+          //     <Divider orientation="left">
+          //       2. 登录店铺账号后复制生成的授权码
+          //     </Divider>
+          //     <Form.Item
+          //       name="code"
+          //       label="授权码"
+          //       rules={[{ required: true, message: "请输入授权码" }]}
+          //     >
+          //       <Input placeholder="请输入授权码" />
+          //     </Form.Item>
+          //   </Wrap>
+          //   <Divider>图示说明</Divider>
+          //   <WarningTips>
+          //     注意：请确保在浏览器退出拼多多店铺的登录后操作，或者在浏览器按ctrl+shift+n打开无痕模式粘贴地址前往（请使用以下浏览器：谷歌Chrome、360系列、搜狗、微软Edge浏览器）
+          //   </WarningTips>
+          //   <Illus src={codeIllus} alt="" />
+          // </>
+          <CodeForm />
         ) : step === 0 ? (
           <>
             <Wrap>
@@ -224,45 +265,46 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
             <Illus src={infoIllus} alt="" />
           </>
         ) : (
-          <>
-            <Wrap>
-              <Divider orientation="left">
-                1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
-              </Divider>
-              {authInfoLoading ? (
-                <Loading>
-                  <Spin />
-                </Loading>
-              ) : (
-                <div>
-                  {authInfo?.url}
-                  <ButtonNoPadding
-                    style={{ marginLeft: "1.2rem" }}
-                    type={"link"}
-                    onClick={() => copyUrl(authInfo?.url || "")}
-                  >
-                    复制地址
-                  </ButtonNoPadding>
-                </div>
-              )}
+          // <>
+          //   <Wrap>
+          //     <Divider orientation="left">
+          //       1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
+          //     </Divider>
+          //     {authInfoLoading ? (
+          //       <Loading>
+          //         <Spin />
+          //       </Loading>
+          //     ) : (
+          //       <div>
+          //         {authInfo?.url}
+          //         <ButtonNoPadding
+          //           style={{ marginLeft: "1.2rem" }}
+          //           type={"link"}
+          //           onClick={() => copyUrl(authInfo?.url || "")}
+          //         >
+          //           复制地址
+          //         </ButtonNoPadding>
+          //       </div>
+          //     )}
 
-              <Divider orientation="left">
-                2. 登录店铺账号后复制生成的授权码
-              </Divider>
-              <Form.Item
-                name="code"
-                label="授权码"
-                rules={[{ required: true, message: "请输入授权码" }]}
-              >
-                <Input placeholder="请输入授权码" />
-              </Form.Item>
-            </Wrap>
-            <Divider>图示说明</Divider>
-            <WarningTips>
-              注意：请确保在浏览器退出拼多多店铺的登录后操作，或者在浏览器按ctrl+shift+n打开无痕模式粘贴地址前往（请使用以下浏览器：谷歌Chrome、360系列、搜狗、微软Edge浏览器）
-            </WarningTips>
-            <Illus src={codeIllus} alt="" />
-          </>
+          //     <Divider orientation="left">
+          //       2. 登录店铺账号后复制生成的授权码
+          //     </Divider>
+          //     <Form.Item
+          //       name="code"
+          //       label="授权码"
+          //       rules={[{ required: true, message: "请输入授权码" }]}
+          //     >
+          //       <Input placeholder="请输入授权码" />
+          //     </Form.Item>
+          //   </Wrap>
+          //   <Divider>图示说明</Divider>
+          //   <WarningTips>
+          //     注意：请确保在浏览器退出拼多多店铺的登录后操作，或者在浏览器按ctrl+shift+n打开无痕模式粘贴地址前往（请使用以下浏览器：谷歌Chrome、360系列、搜狗、微软Edge浏览器）
+          //   </WarningTips>
+          //   <Illus src={codeIllus} alt="" />
+          // </>
+          <CodeForm />
         )}
       </Form>
     </Drawer>
