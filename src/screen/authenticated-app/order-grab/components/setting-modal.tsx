@@ -13,7 +13,7 @@ import { ButtonNoPadding, ErrorBox } from "components/lib";
 import infoIllus from "assets/images/illustration_1.png";
 import codeIllus from "assets/images/illustration_2.png";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useForm } from "antd/lib/form/Form";
 import copy from "copy-to-clipboard";
@@ -66,16 +66,23 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
     close();
   };
 
+  useEffect(() => {
+    if (shopSettingModalOpen && shopInfo?.refresh_token) {
+      const { app_name, app_key, app_secret } = shopInfo;
+      setAuthParams({ shop_id: settingShopId, app_name, app_key, app_secret });
+    }
+  }, [shopSettingModalOpen, shopInfo, settingShopId]);
+
   return (
     <Drawer
-      title={shopInfo?.callback_url ? "重新配置" : "店铺授权操作"}
+      title={shopInfo?.refresh_token ? "重新配置" : "店铺授权操作"}
       size={"large"}
       forceRender={true}
       onClose={closeModal}
       visible={shopSettingModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
-        shopInfo?.callback_url ? (
+        shopInfo?.refresh_token ? (
           <Space>
             <Button onClick={closeModal}>取消</Button>
             <Button onClick={submit} loading={isLoading} type="primary">
@@ -98,8 +105,8 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
         )
       }
     >
-      {!shopInfo?.callback_url ? (
-        <Steps current={step}>
+      {!shopInfo?.refresh_token ? (
+        <Steps current={step} style={{ marginBottom: "2.4rem" }}>
           <Steps.Step title="填写回调地址" />
           <Steps.Step title="获取授权码，确认配置" />
         </Steps>
@@ -108,18 +115,18 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
       )}
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
-        {shopInfo?.callback_url ? (
+        {shopInfo?.refresh_token ? (
           <>
             <Wrap>
               <Divider orientation="left">
                 1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
               </Divider>
               <div>
-                {shopInfo?.callback_url}
+                {authInfo?.url}
                 <ButtonNoPadding
                   style={{ marginLeft: "1.2rem" }}
                   type={"link"}
-                  onClick={() => copyUrl(shopInfo?.callback_url)}
+                  onClick={() => copyUrl(authInfo?.url || "")}
                 >
                   复制地址
                 </ButtonNoPadding>
@@ -249,7 +256,6 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
 };
 
 const Wrap = styled.div`
-  margin-top: 2.4rem;
   padding: 2.4rem;
   padding-top: 0;
   border: 1px solid #ddd;
