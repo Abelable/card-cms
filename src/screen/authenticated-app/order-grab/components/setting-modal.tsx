@@ -163,11 +163,11 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
           <>
             <Wrap>
               <Divider orientation="left">
-                1. 填写基本信息<Tips>（获取方法见下方图示说明）</Tips>
+                1. 填写店铺绑定的应用信息<Tips>（获取方法见下方图示说明）</Tips>
               </Divider>
               <Form.Item
                 name="app_name"
-                label="店铺绑定的应用名称"
+                label="应用名称"
                 rules={[{ required: true, message: "请输入应用名称" }]}
               >
                 <Input placeholder="请输入应用名称" />
