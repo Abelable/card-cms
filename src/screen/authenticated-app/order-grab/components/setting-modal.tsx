@@ -1,154 +1,155 @@
 import {
   Button,
-  Col,
   Drawer,
   Form,
   Input,
-  InputNumber,
-  Row,
   Space,
+  Divider,
+  Empty,
+  Steps,
 } from "antd";
-import { useSettingModal, useShopListQueryKey } from "../util";
-import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
-import { useAddShop, useEditShop } from "service/order";
-import useDeepCompareEffect from "use-deep-compare-effect";
-import { cleanObject } from "utils";
+import infoIllus from "assets/images/illustration_1.png";
+
+import { useState } from "react";
+import styled from "@emotion/styled";
+import { useForm } from "antd/lib/form/Form";
+import { useSettingModal, useShopListQueryKey } from "../util";
+import { useEditShopSetting, useShopAuthUrl } from "service/order";
 
 export const SettingModal = () => {
   const [form] = useForm();
+  const [step, setStep] = useState(0);
+  const [authParams, setAuthParams] = useState({
+    shop_id: "",
+    app_name: "",
+    app_key: "",
+    app_secret: "",
+  });
 
+  const authUrl = useShopAuthUrl(authParams);
+  console.log("authUrl", authUrl);
   const { shopSettingModalOpen, settingShopId, close } = useSettingModal();
-
-  const useMutationShop = settingShopId ? useEditShop : useAddShop;
-  const { mutateAsync, error, isLoading } = useMutationShop(
+  const { mutateAsync, error, isLoading } = useEditShopSetting(
     useShopListQueryKey()
   );
 
+  const toSecondStep = () => {
+    form.validateFields().then(async () => {
+      const { app_name, app_key, app_secret } = form.getFieldsValue();
+      setAuthParams({ shop_id: settingShopId, app_name, app_key, app_secret });
+      setStep(1);
+    });
+  };
+
+  const submit = () => {
+    form.validateFields().then(async () => {
+      const { code } = form.getFieldsValue();
+      await mutateAsync({
+        shop_id: settingShopId,
+        code,
+      });
+      closeModal();
+    });
+  };
   const closeModal = () => {
     form.resetFields();
     close();
   };
-  const submit = () => {
-    form.validateFields().then(async () => {
-      await mutateAsync(
-        cleanObject({
-          id: settingShopId || "",
-          ...form.getFieldsValue(),
-        })
-      );
-      closeModal();
-    });
-  };
-
-  useDeepCompareEffect(() => {
-    agent && form.setFieldsValue(agent);
-  }, [form, agent]);
 
   return (
     <Drawer
-      title={settingShopId ? "编辑代理商信息" : "新增代理商"}
+      title="店铺授权操作"
       size={"large"}
       forceRender={true}
       onClose={closeModal}
       visible={shopSettingModalOpen}
       bodyStyle={{ paddingBottom: 80 }}
       extra={
-        <Space>
-          <Button onClick={closeModal}>取消</Button>
-          <Button onClick={submit} loading={isLoading} type="primary">
-            提交
+        step === 0 ? (
+          <Button onClick={toSecondStep} type="primary">
+            下一步
           </Button>
-        </Space>
+        ) : step === 1 ? (
+          <Space>
+            <Button onClick={() => setStep(0)}>上一步</Button>
+            <Button onClick={submit} loading={isLoading} type="primary">
+              确认配置
+            </Button>
+          </Space>
+        ) : (
+          <></>
+        )
       }
     >
+      <Steps current={step}>
+        <Steps.Step title="填写回调地址" />
+        <Steps.Step title="获取授权码，确认配置" />
+      </Steps>
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
-        <Row gutter={16}>
-          <Col span={12}>
+        {step === 0 ? (
+          <Wrap>
+            <Divider orientation="left">
+              1. 填写基本信息<Tips>（获取方法见下方图示说明）</Tips>
+            </Divider>
             <Form.Item
-              name="company"
-              label="代理商公司名称"
-              rules={[{ required: true, message: "请输入公司名称" }]}
+              name="app_name"
+              label="店铺绑定的应用名称"
+              rules={[{ required: true, message: "请输入应用名称" }]}
             >
-              <Input placeholder="请输入公司名称" />
+              <Input placeholder="请输入应用名称" />
             </Form.Item>
-          </Col>
-          <Col span={12}>
             <Form.Item
-              name="store"
-              label="店铺名备注"
-              rules={[{ required: true, message: "请输入店铺名备注" }]}
+              name="app_key"
+              label="client_id"
+              rules={[{ required: true, message: "请输入client_id" }]}
             >
-              <Input placeholder="请输入店铺名备注" />
+              <Input placeholder="请输入client_id" />
             </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
             <Form.Item
-              name="channel_id"
-              label="渠道id"
-              rules={[{ required: true, message: "请输入渠道id" }]}
+              name="app_secret"
+              label="client_secret"
+              rules={[{ required: true, message: "请输入client_secret" }]}
             >
-              <Input placeholder="请输入渠道id" />
+              <Input placeholder="请输入client_secret" />
             </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="contact"
-              label="联系人姓名"
-              rules={[{ required: true, message: "请输入联系人姓名" }]}
-            >
-              <Input placeholder="请输入联系人姓名" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="phone"
-              label="联系电话"
-              rules={[{ required: true, message: "请输入联系电话" }]}
-            >
-              <Input placeholder="请输入联系电话" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="email"
-              label="邮箱"
-              rules={[{ required: true, message: "请输入邮箱" }]}
-            >
-              <Input placeholder="请输入邮箱" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="activate_effective_day"
-              label="激活状态回传的有效天数（自订单创建时起）"
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                placeholder="请输入有效天数"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="recharge_effective_day"
-              label="充值金额回传的有效天数（自订单创建时起）"
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                placeholder="请输入有效天数"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
+            <Divider orientation="left">
+              2. 前往应用填写回调地址
+              <Tips>（填写client_id之后复制回调地址）</Tips>
+            </Divider>
+            <Empty description="暂无回调地址，请先输入client_id" />
+            <Divider>图示说明</Divider>
+            <Illus src={infoIllus} alt="" />
+          </Wrap>
+        ) : (
+          <Form.Item
+            name="code"
+            label="授权码"
+            rules={[{ required: true, message: "请输入授权码" }]}
+          >
+            <Input placeholder="请输入授权码" />
+          </Form.Item>
+        )}
       </Form>
     </Drawer>
   );
 };
+
+const Wrap = styled.div`
+  margin-top: 2.4rem;
+  padding: 2.4rem;
+  padding-top: 0;
+  border: 1px solid #ddd;
+  border-radius: 1.2rem;
+`;
+
+const Tips = styled.span`
+  color: #999;
+  font-size: 1.4rem;
+  font-weight: 400;
+`;
+
+const Illus = styled.img`
+  width: 100%;
+`;

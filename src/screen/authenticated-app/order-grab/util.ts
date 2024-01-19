@@ -87,6 +87,7 @@ export const useSettingModal = () => {
   );
   return {
     shopSettingModalOpen: !!settingShopId,
+    settingShopId,
     open,
     close,
   };

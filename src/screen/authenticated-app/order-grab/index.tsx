@@ -3,6 +3,7 @@ import { List } from "./components/list";
 import { PlatformBar } from "./components/platform-bar";
 import { FlagModal } from "./components/flag-modal";
 import { ApplyModal } from "./components/apply-modal";
+import { SettingModal } from "./components/setting-modal";
 
 import styled from "@emotion/styled";
 import { toNumber } from "utils";
@@ -48,6 +49,7 @@ export const OrderGrab = () => {
       </Main>
       <FlagModal flagOptions={flagOptions} />
       <ApplyModal shop_type={params.shop_type} />
+      <SettingModal />
     </Container>
   );
 };

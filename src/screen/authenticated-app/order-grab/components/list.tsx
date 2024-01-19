@@ -13,7 +13,7 @@ import {
   QuestionCircleOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
-import { useShopListQueryKey, useApplyModal } from "../util";
+import { useShopListQueryKey, useApplyModal, useSettingModal } from "../util";
 import { useDeleteShop } from "service/order";
 
 import type { ColumnsType } from "antd/lib/table";
@@ -27,6 +27,7 @@ interface ListProps extends TableProps<Shop> {
 
 export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
   const { open: openApplyModal } = useApplyModal();
+  const { open: openSettingModal } = useSettingModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -67,7 +68,7 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
       render: (value, shop) => (
         <ButtonNoPadding
           type={"link"}
-          onClick={() => confirmDeleteShop(shop.id)}
+          onClick={() => openSettingModal(shop.shop_id)}
         >
           {value ? "已配置，修改配置" : "点击配置"}
         </ButtonNoPadding>
