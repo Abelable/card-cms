@@ -115,11 +115,14 @@ export const useShopAuthUrl = ({
   app_secret: string;
 }) => {
   const client = useHttp();
-  return useQuery<{ url: string }>(["shop_auth_url"], () =>
-    client(`/api/v1/admin/shop/authorize-url/${shop_id}`, {
-      data: { app_name, app_key, app_secret },
-      method: "POST",
-    })
+  return useQuery<{ url: string }>(
+    ["shop_auth_url"],
+    () =>
+      client(`/api/v1/admin/shop/authorize-url/${shop_id}`, {
+        data: { app_name, app_key, app_secret },
+        method: "POST",
+      }),
+    { enabled: !!(shop_id && app_name && app_key && app_secret) }
   );
 };
 

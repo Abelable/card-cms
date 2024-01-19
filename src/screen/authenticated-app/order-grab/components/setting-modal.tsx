@@ -7,13 +7,16 @@ import {
   Divider,
   Empty,
   Steps,
+  message,
 } from "antd";
-import { ErrorBox } from "components/lib";
+import { ButtonNoPadding, ErrorBox } from "components/lib";
 import infoIllus from "assets/images/illustration_1.png";
+import codeIllus from "assets/images/illustration_2.png";
 
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { useForm } from "antd/lib/form/Form";
+import copy from "copy-to-clipboard";
 import { useSettingModal, useShopListQueryKey } from "../util";
 import { useEditShopSetting, useShopAuthUrl } from "service/order";
 
@@ -27,8 +30,7 @@ export const SettingModal = () => {
     app_secret: "",
   });
 
-  const authUrl = useShopAuthUrl(authParams);
-  console.log("authUrl", authUrl);
+  const { data: authInfo } = useShopAuthUrl(authParams);
   const { shopSettingModalOpen, settingShopId, close } = useSettingModal();
   const { mutateAsync, error, isLoading } = useEditShopSetting(
     useShopListQueryKey()
@@ -40,6 +42,14 @@ export const SettingModal = () => {
       setAuthParams({ shop_id: settingShopId, app_name, app_key, app_secret });
       setStep(1);
     });
+  };
+  const copyCallbackUrl = (url: string) => {
+    copy(url);
+    message.success("复制成功");
+  };
+  const copyAuthUrl = () => {
+    copy(authInfo?.url || "");
+    message.success("复制成功");
   };
 
   const submit = () => {
@@ -89,47 +99,105 @@ export const SettingModal = () => {
       <Form form={form} layout="vertical">
         <ErrorBox error={error} />
         {step === 0 ? (
-          <Wrap>
-            <Divider orientation="left">
-              1. 填写基本信息<Tips>（获取方法见下方图示说明）</Tips>
-            </Divider>
-            <Form.Item
-              name="app_name"
-              label="店铺绑定的应用名称"
-              rules={[{ required: true, message: "请输入应用名称" }]}
-            >
-              <Input placeholder="请输入应用名称" />
-            </Form.Item>
-            <Form.Item
-              name="app_key"
-              label="client_id"
-              rules={[{ required: true, message: "请输入client_id" }]}
-            >
-              <Input placeholder="请输入client_id" />
-            </Form.Item>
-            <Form.Item
-              name="app_secret"
-              label="client_secret"
-              rules={[{ required: true, message: "请输入client_secret" }]}
-            >
-              <Input placeholder="请输入client_secret" />
-            </Form.Item>
-            <Divider orientation="left">
-              2. 前往应用填写回调地址
-              <Tips>（填写client_id之后复制回调地址）</Tips>
-            </Divider>
-            <Empty description="暂无回调地址，请先输入client_id" />
+          <>
+            <Wrap>
+              <Divider orientation="left">
+                1. 填写基本信息<Tips>（获取方法见下方图示说明）</Tips>
+              </Divider>
+              <Form.Item
+                name="app_name"
+                label="店铺绑定的应用名称"
+                rules={[{ required: true, message: "请输入应用名称" }]}
+              >
+                <Input placeholder="请输入应用名称" />
+              </Form.Item>
+              <Form.Item
+                name="app_key"
+                label="client_id"
+                rules={[{ required: true, message: "请输入client_id" }]}
+              >
+                <Input placeholder="请输入client_id" />
+              </Form.Item>
+              <Form.Item
+                name="app_secret"
+                label="client_secret"
+                rules={[{ required: true, message: "请输入client_secret" }]}
+              >
+                <Input placeholder="请输入client_secret" />
+              </Form.Item>
+              <Divider orientation="left">
+                2. 前往应用填写回调地址
+                <Tips>（填写client_id之后复制回调地址）</Tips>
+              </Divider>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.app_key !== currentValues.app_key
+                }
+              >
+                {({ getFieldValue }) =>
+                  getFieldValue("app_key") ? (
+                    <div>
+                      {`https://91haoka.cn/api/store/business/${getFieldValue(
+                        "app_key"
+                      )}/notify`}
+                      <ButtonNoPadding
+                        style={{ marginLeft: "1.2rem" }}
+                        type={"link"}
+                        onClick={() =>
+                          copyCallbackUrl(
+                            `https://91haoka.cn/api/store/business/${getFieldValue(
+                              "app_key"
+                            )}/notify`
+                          )
+                        }
+                      >
+                        复制地址
+                      </ButtonNoPadding>
+                    </div>
+                  ) : (
+                    <Empty description="暂无回调地址，请先输入client_id" />
+                  )
+                }
+              </Form.Item>
+            </Wrap>
             <Divider>图示说明</Divider>
             <Illus src={infoIllus} alt="" />
-          </Wrap>
+          </>
         ) : (
-          <Form.Item
-            name="code"
-            label="授权码"
-            rules={[{ required: true, message: "请输入授权码" }]}
-          >
-            <Input placeholder="请输入授权码" />
-          </Form.Item>
+          <>
+            <Wrap>
+              <Divider orientation="left">
+                1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
+              </Divider>
+              <div>
+                {authInfo?.url}
+                <ButtonNoPadding
+                  style={{ marginLeft: "1.2rem" }}
+                  type={"link"}
+                  onClick={() => copyAuthUrl()}
+                >
+                  复制地址
+                </ButtonNoPadding>
+              </div>
+
+              <Divider orientation="left">
+                2. 登录店铺账号后复制生成的授权码
+              </Divider>
+              <Form.Item
+                name="code"
+                label="授权码"
+                rules={[{ required: true, message: "请输入授权码" }]}
+              >
+                <Input placeholder="请输入授权码" />
+              </Form.Item>
+            </Wrap>
+            <Divider>图示说明</Divider>
+            <WarningTips>
+              注意：请确保在浏览器退出拼多多店铺的登录后操作，或者在浏览器按ctrl+shift+n打开无痕模式粘贴地址前往（请使用以下浏览器：谷歌Chrome、360系列、搜狗、微软Edge浏览器）
+            </WarningTips>
+            <Illus src={codeIllus} alt="" />
+          </>
         )}
       </Form>
     </Drawer>
@@ -152,4 +220,10 @@ const Tips = styled.span`
 
 const Illus = styled.img`
   width: 100%;
+  border: 1px solid #eee;
+`;
+
+const WarningTips = styled.div`
+  margin: 1.2rem 0;
+  color: #ff4d4f;
 `;
