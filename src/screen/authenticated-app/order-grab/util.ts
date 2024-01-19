@@ -82,7 +82,7 @@ export const useSettingModal = () => {
   );
   const setUrlParams = useSetUrlSearchParams();
   const close = useCallback(
-    () => setUrlParams({ shopSettingModalVisible: "" }),
+    () => setUrlParams({ settingShopId: "" }),
     [setUrlParams]
   );
   return {

@@ -49,7 +49,7 @@ export const OrderGrab = () => {
       </Main>
       <FlagModal flagOptions={flagOptions} />
       <ApplyModal shop_type={params.shop_type} />
-      <SettingModal />
+      <SettingModal shopList={data?.data || []} />
     </Container>
   );
 };

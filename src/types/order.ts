@@ -29,6 +29,7 @@ export interface Shop {
   app_code: string;
   refresh_token: string;
   refresh_token_expires_at: string;
+  callback_url: string;
   express_at: string;
   extra_data: string;
 }
