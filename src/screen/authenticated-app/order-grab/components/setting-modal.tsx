@@ -8,6 +8,7 @@ import {
   Empty,
   Steps,
   message,
+  Spin,
 } from "antd";
 import { ButtonNoPadding, ErrorBox } from "components/lib";
 import infoIllus from "assets/images/illustration_1.png";
@@ -34,7 +35,8 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
 
   const { shopSettingModalOpen, settingShopId, close } = useSettingModal();
   const shopInfo = shopList.find((item) => item.shop_id === settingShopId);
-  const { data: authInfo } = useShopAuthUrl(authParams);
+  const { data: authInfo, isLoading: authInfoLoading } =
+    useShopAuthUrl(authParams);
   const { mutateAsync, error, isLoading } = useEditShopSetting(
     useShopListQueryKey()
   );
@@ -86,7 +88,7 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
           <Space>
             <Button onClick={closeModal}>取消</Button>
             <Button onClick={submit} loading={isLoading} type="primary">
-              提交
+              确认配置
             </Button>
           </Space>
         ) : step === 0 ? (
@@ -121,16 +123,22 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
               <Divider orientation="left">
                 1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
               </Divider>
-              <div>
-                {authInfo?.url}
-                <ButtonNoPadding
-                  style={{ marginLeft: "1.2rem" }}
-                  type={"link"}
-                  onClick={() => copyUrl(authInfo?.url || "")}
-                >
-                  复制地址
-                </ButtonNoPadding>
-              </div>
+              {authInfoLoading ? (
+                <Loading>
+                  <Spin />
+                </Loading>
+              ) : (
+                <div>
+                  {authInfo?.url}
+                  <ButtonNoPadding
+                    style={{ marginLeft: "1.2rem" }}
+                    type={"link"}
+                    onClick={() => copyUrl(authInfo?.url || "")}
+                  >
+                    复制地址
+                  </ButtonNoPadding>
+                </div>
+              )}
 
               <Divider orientation="left">
                 2. 登录店铺账号后复制生成的授权码
@@ -221,16 +229,22 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
               <Divider orientation="left">
                 1. 复制下方地址在浏览器打开<Tips>（具体见下方图示说明）</Tips>
               </Divider>
-              <div>
-                {authInfo?.url}
-                <ButtonNoPadding
-                  style={{ marginLeft: "1.2rem" }}
-                  type={"link"}
-                  onClick={() => copyUrl(authInfo?.url || "")}
-                >
-                  复制地址
-                </ButtonNoPadding>
-              </div>
+              {authInfoLoading ? (
+                <Loading>
+                  <Spin />
+                </Loading>
+              ) : (
+                <div>
+                  {authInfo?.url}
+                  <ButtonNoPadding
+                    style={{ marginLeft: "1.2rem" }}
+                    type={"link"}
+                    onClick={() => copyUrl(authInfo?.url || "")}
+                  >
+                    复制地址
+                  </ButtonNoPadding>
+                </div>
+              )}
 
               <Divider orientation="left">
                 2. 登录店铺账号后复制生成的授权码
@@ -276,4 +290,12 @@ const Illus = styled.img`
 const WarningTips = styled.div`
   margin: 1.2rem 0;
   color: #ff4d4f;
+`;
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
