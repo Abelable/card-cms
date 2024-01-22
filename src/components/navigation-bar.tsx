@@ -14,6 +14,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   "/product/sales": "在售商品管理",
   "/product/sales/agent": "查看代理商",
   "/order": "订单中心",
+  "/order/handle": "订单处理",
   "/order/convert": "转单配置",
   "/order/grab": "抓单管理",
   "/order/log": "回调记录",

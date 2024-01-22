@@ -70,6 +70,18 @@ export const useEditDeliversConfig = (queryKey: QueryKey) =>
       : null
   );
 
+export const useEditOrderListConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) =>
+    old
+      ? {
+          ...old,
+          data: old.data.map((item: any) =>
+            target.ids.includes(`${item.id}`) ? { ...item, ...target } : item
+          ),
+        }
+      : null
+  );
+
 export const useAddAddressConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) =>
     old

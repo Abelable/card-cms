@@ -44,11 +44,6 @@ export interface ShopListResult {
   meta: { pagination: Pagination };
 }
 
-export interface ProduceStatusOption {
-  id: number;
-  name: string;
-}
-
 export interface RuleListSearchParams {
   name: string;
   page: number;
@@ -99,4 +94,85 @@ export interface Log {
 export interface LogListResult {
   data: Log[];
   meta: { pagination: Pagination };
+}
+
+interface OrderGoods {
+  id: number;
+  order_id: number;
+  goods_sn: string;
+  goods_name: string;
+  created_at: string;
+  updated_at: string;
+}
+interface OrderShop {
+  shop_id: string;
+  shop_name: string;
+}
+interface OrderTransfer {
+  id: number;
+  order_id: number;
+  goods_sn: string;
+  goods_name: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface Order {
+  id: number;
+  status: number;
+  error_reason: string;
+  shop_id: string;
+  order_sn: string;
+  shop_order_sn: string;
+  product_no: string;
+  is_transfer: number;
+  flag: string;
+  province_id: number;
+  province: string;
+  city_id: number;
+  city: string;
+  area_id: number;
+  town: string;
+  idcard_name: string;
+  idcard: string;
+  concat_name: string;
+  concat_phone: string;
+  concat_address: string;
+  express_sn: string;
+  express_company: string;
+  goods: OrderGoods;
+  shop: OrderShop;
+  transfer: OrderTransfer[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OrderListResult {
+  data: Order[];
+  meta: { pagination: Pagination };
+}
+
+export interface OrderListSearchParams {
+  status: number | undefined;
+  tag: string | undefined;
+  order_sn: string;
+  shop_order_sn: string;
+  shop_name: string | undefined;
+  start_created_at: string;
+  end_created_at: string;
+  page: number;
+  per_page: number;
+}
+
+export interface StatusOption {
+  label: string;
+  value: number;
+}
+
+export interface OrderLog {
+  id: number;
+  order_id: number;
+  desc: string;
+  is_system: number;
+  created_at: string;
+  updated_at: string;
 }

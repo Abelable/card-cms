@@ -1,4 +1,5 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
+import dayjs from "dayjs";
 import { useHttp } from "./http";
 import { cleanObject } from "utils/index";
 import {
@@ -6,6 +7,7 @@ import {
   useDeleteConfig,
   useEditConfig,
   useEditFlagConfig,
+  useEditOrderListConfig,
 } from "./use-optimistic-options";
 
 import type {
@@ -19,6 +21,10 @@ import type {
   ShopOption,
   LogListResult,
   LogListSearchParams,
+  OrderListSearchParams,
+  OrderListResult,
+  Order,
+  OrderLog,
 } from "types/order";
 
 export const useSettingOptions = (key: string) => {
@@ -205,4 +211,85 @@ export const useLogList = (params: Partial<LogListSearchParams>) => {
       data: cleanObject(params),
     });
   });
+};
+
+export const useOrderList = (params: Partial<OrderListSearchParams>) => {
+  const client = useHttp();
+  return useQuery<OrderListResult>(["order_list", params], () => {
+    let { page, per_page, start_created_at, end_created_at, ...restParams } =
+      params;
+    if (!start_created_at) {
+      const endTime = new Date(
+        new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
+      );
+      const startTime = new Date(
+        new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
+      );
+      start_created_at = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
+      end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
+    // "filter[shop_order.start_created_at]": start_created_at,
+    // "filter[shop_order.end_created_at]": [end_created_at],
+
+    return client("/api/v1/admin/shop-order/lst", {
+      data: cleanObject({
+        "filter[shop_order.order_sn]": restParams.order_sn,
+        "filter[shop_order.shop_order_sn]": restParams.shop_order_sn,
+        "filter[shop.shop_name]": restParams.shop_name,
+        "filter[shop.tag]": restParams.tag,
+        page,
+        per_page,
+      }),
+    });
+  });
+};
+
+export const useOrder = (order_id: string) => {
+  const client = useHttp();
+  return useQuery<Order>(
+    ["order", { order_id }],
+    () => client("/api/v1/admin/shop-order/detail", { data: { order_id } }),
+    {
+      enabled: Boolean(order_id),
+    }
+  );
+};
+
+export const useEditOrder = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    ({ id, ...rest }: Partial<Order>) =>
+      client("/api/v1/admin/shop-order/update", {
+        data: { order_id: id, ...rest },
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
+
+export const useEditOrderList = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: { ids: string[]; status: number; remark?: string }) =>
+      client("/api/v1/admin/shop-order/batch-simple-update", {
+        data: cleanObject({ ...params }),
+        method: "POST",
+      }),
+    useEditOrderListConfig(queryKey)
+  );
+};
+
+export const useOrderLogList = (order_id: string) => {
+  const client = useHttp();
+  return useQuery<OrderLog[]>(
+    ["order_log_list", order_id],
+    () =>
+      client("/api/v1/admin/shop-order/logs", {
+        data: { order_id },
+      }),
+    {
+      enabled: Boolean(order_id),
+    }
+  );
 };
