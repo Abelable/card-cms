@@ -229,12 +229,12 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
       end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
     }
 
+    // "filter[shop_order.status]": restParams.status,
     // "filter[shop_order.start_created_at]": start_created_at,
     // "filter[shop_order.end_created_at]": [end_created_at],
 
     return client("/api/v1/admin/shop-order/lst", {
       data: cleanObject({
-        "filter[shop_order.status]": restParams.status,
         "filter[shop_order.order_sn]": restParams.order_sn,
         "filter[shop_order.shop_order_sn]": restParams.shop_order_sn,
         "filter[shop.shop_name]": restParams.shop_name,
@@ -266,6 +266,18 @@ export const useEditOrder = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useCancelOrder = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (order_id: string) =>
+      client("/api/v1/admin/shop-order/terminate", {
+        data: { order_id },
+        method: "POST",
+      }),
+    useDeleteConfig(queryKey)
   );
 };
 

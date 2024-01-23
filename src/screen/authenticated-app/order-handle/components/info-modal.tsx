@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Cascader, Form, Input, message, Modal, Spin } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useEditDeliver } from "service/produce";
+import { useEditOrder } from "service/order";
 import { useInfoModal, useOrderListQueryKey } from "../util";
 import type { RegionOption } from "types/common";
 
@@ -18,7 +18,7 @@ export const InfoModal = ({
     close,
     isLoading: initLoading,
   } = useInfoModal();
-  const { mutateAsync, isLoading } = useEditDeliver(useOrderListQueryKey());
+  const { mutateAsync, isLoading } = useEditOrder(useOrderListQueryKey());
 
   useDeepCompareEffect(() => {
     if (editingOrder) {
@@ -39,7 +39,6 @@ export const InfoModal = ({
           province_id: address_region[0],
           city_id: address_region[1],
           area_id: address_region[2],
-          street_id: undefined,
           ...rest,
         });
         closeModal();
@@ -69,14 +68,14 @@ export const InfoModal = ({
       ) : (
         <Form form={form} layout="vertical">
           <Form.Item
-            name="receiver"
+            name="concat_name"
             label="收货人姓名"
             rules={[{ required: true, message: "请输入收货人姓名" }]}
           >
             <Input placeholder="请输入收货人姓名" />
           </Form.Item>
           <Form.Item
-            name="buyer"
+            name="idcard_name"
             label="身份证姓名"
             rules={[{ required: true, message: "请输入身份证姓名" }]}
           >
@@ -90,7 +89,7 @@ export const InfoModal = ({
             <Input placeholder="请输入身份证号" />
           </Form.Item>
           <Form.Item
-            name="phone"
+            name="concat_phone"
             label="联系电话"
             rules={[{ required: true, message: "请输入联系电话" }]}
           >
@@ -129,7 +128,7 @@ export const InfoModal = ({
             }
           </Form.Item>
           <Form.Item
-            name="detail_address"
+            name="concat_address"
             label="详细地址"
             rules={[{ required: true, message: "请输入详细地址" }]}
           >

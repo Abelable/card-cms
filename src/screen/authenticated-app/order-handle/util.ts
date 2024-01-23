@@ -18,7 +18,7 @@ export const useOrderListSearchParams = () => {
     useMemo(() => {
       const { status, page, per_page, ...rest } = params;
       return {
-        status: Number(status),
+        status: Number(status) || 0,
         page: Number(page) || 1,
         per_page: Number(per_page) || 10,
         ...rest,
@@ -185,6 +185,30 @@ export const useInfoModal = () => {
     open,
     close,
     isLoading,
+  };
+};
+
+export const useReapplyModal = () => {
+  const [{ reapplyOrderId }, setReapplyOrderId] = useUrlQueryParams([
+    "reapplyOrderId",
+  ]);
+  const setUrlParams = useSetUrlSearchParams();
+
+  const open = useCallback(
+    (id: string) => setReapplyOrderId({ reapplyOrderId: id }),
+    [setReapplyOrderId]
+  );
+
+  const close = useCallback(
+    () => setUrlParams({ reapplyOrderId: "" }),
+    [setUrlParams]
+  );
+
+  return {
+    reapplyModalOpen: !!reapplyOrderId,
+    reapplyOrderId,
+    open,
+    close,
   };
 };
 

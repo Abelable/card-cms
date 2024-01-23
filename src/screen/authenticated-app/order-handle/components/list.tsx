@@ -7,16 +7,19 @@ import {
   message,
   Space,
   Tooltip,
+  Modal,
 } from "antd";
 import { CopyOutlined, IdcardOutlined } from "@ant-design/icons";
 import { ErrorBox, Row } from "components/lib";
+
 import copy from "copy-to-clipboard";
+import { useCancelOrder } from "service/order";
 import {
   useDetailModal,
   useInfoModal,
+  useOrderListQueryKey,
   usePicModal,
   useRecordModal,
-  useStatusModal,
 } from "../util";
 
 import type { SearchPanelProps } from "./search-panel";
@@ -46,9 +49,20 @@ export const List = ({
     });
   const { open: openPicModal } = usePicModal();
   const { open: openRecordModal } = useRecordModal();
-  const { startEdit: editStatus } = useStatusModal();
   const { open: openInfoModal } = useInfoModal();
   const { open: openDetailModal } = useDetailModal();
+  const { mutate: cancelOrder } = useCancelOrder(useOrderListQueryKey());
+
+  const confirmCancelOrder = (id: string) => {
+    Modal.confirm({
+      title: "确定取消该订单吗？",
+      content: "点击确定取消",
+      okText: "确定",
+      cancelText: "取消",
+      onOk: () => cancelOrder(id),
+    });
+  };
+
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
@@ -184,7 +198,10 @@ export const List = ({
                 >
                   修改商品
                 </Link>
-                <Link type={"link"} onClick={() => editStatus(`${order.id}`)}>
+                <Link
+                  type={"link"}
+                  onClick={() => confirmCancelOrder(`${order.id}`)}
+                >
                   取消订单
                 </Link>
               </Space>

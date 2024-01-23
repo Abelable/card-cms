@@ -1,32 +1,28 @@
-import { toNumber } from "utils";
+import { Drawer, Modal, Select, Button, Menu, MenuProps } from "antd";
+import { SearchPanel } from "./components/search-panel";
+import { List } from "./components/list";
+import { Row } from "components/lib";
+import { RecordModal } from "./components/record-modal";
+import { InfoModal } from "./components/info-modal";
+import { DetailModal } from "./components/detail-modal";
+
+import { useState } from "react";
+import styled from "@emotion/styled";
+import { useRegionOptions } from "service/common";
+import { useGoodsOptions } from "service/product";
 import {
   useOrderList,
   useEditOrderList,
   useSettingOptions,
   useShopOptions,
 } from "service/order";
-import { useAgentOptions } from "service/agent";
-import { useChannelEncodingOptions } from "service/product";
-import { useRegionOptions } from "service/common";
+import { toNumber } from "utils";
 import {
   useFailModal,
   useBlackModal,
   useOrderListQueryKey,
   useOrderListSearchParams,
 } from "./util";
-
-import { Drawer, Modal, Select, Button, Menu, MenuProps } from "antd";
-import { SearchPanel } from "./components/search-panel";
-import { List } from "./components/list";
-import styled from "@emotion/styled";
-import { Row } from "components/lib";
-import { useState } from "react";
-import { StatusModal } from "./components/status-modal";
-import { RecordModal } from "./components/record-modal";
-import { InfoModal } from "./components/info-modal";
-import { ExportModal } from "./components/export-modal";
-import { DetailModal } from "./components/detail-modal";
-import { ExportProductModal } from "./components/export-product-modal";
 
 const menuStatusOptions = [
   { label: "全部", value: 0 },
@@ -46,10 +42,9 @@ const orderStatusOptions = [
 export const OrderHandle = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderListSearchParams();
+  const goodsOptions = useGoodsOptions();
   const shopOptions = useShopOptions("10");
   const { data: flagOptions = [] } = useSettingOptions("tag");
-  const agentOptions = useAgentOptions();
-  const channelEncodingOptions = useChannelEncodingOptions();
   const { data: regionOptions } = useRegionOptions(3);
   const { data, isLoading, error } = useOrderList(params);
   const { mutateAsync: editOrderList } = useEditOrderList(
@@ -127,13 +122,7 @@ export const OrderHandle = () => {
         />
       </Main>
       <RecordModal />
-      <StatusModal orderStatusOptions={orderStatusOptions} />
       <InfoModal regionOptions={regionOptions} />
-      <ExportModal params={params} />
-      <ExportProductModal
-        agentOptions={agentOptions}
-        channelEncodingOptions={channelEncodingOptions}
-      />
       <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer
         visible={!!selectedRowKeys.length}
