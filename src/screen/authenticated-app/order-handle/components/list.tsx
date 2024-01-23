@@ -9,7 +9,7 @@ import {
   Tooltip,
   Modal,
 } from "antd";
-import { CopyOutlined, IdcardOutlined } from "@ant-design/icons";
+import { CopyOutlined, IdcardOutlined, FlagFilled } from "@ant-design/icons";
 import { ErrorBox, Row } from "components/lib";
 
 import copy from "copy-to-clipboard";
@@ -182,6 +182,20 @@ export const List = ({
             width: "12rem",
             render: (value, order) => (
               <Space direction={"vertical"}>
+                <Tooltip title="下载模版">
+                  <FlagFilled
+                    style={{
+                      color: [
+                        "rgb(228, 223, 215)",
+                        "rgb(238, 63, 77)",
+                        "rgb(235, 177, 13)",
+                        "rgb(34, 148, 83)",
+                        "rgb(39, 117, 182)",
+                        "rgb(128, 118, 163)",
+                      ][order.flag ? +order.flag : 0],
+                    }}
+                  />
+                </Tooltip>
                 <Link
                   type={"link"}
                   onClick={() => openDetailModal(`${order.id}`)}

@@ -306,3 +306,18 @@ export const useOrderLogList = (order_id: string) => {
     }
   );
 };
+
+export const useOrderFlagRemark = (order_id: string) => {
+  const client = useHttp();
+  return useQuery<Order>(
+    ["order_flag_remark", { order_id }],
+    () =>
+      client("/api/v1/admin/shop-order/logs-text", {
+        data: { order_id },
+        method: "POST",
+      }),
+    {
+      enabled: Boolean(order_id),
+    }
+  );
+};
