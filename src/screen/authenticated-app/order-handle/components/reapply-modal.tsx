@@ -35,12 +35,8 @@ export const ReapplyModal = ({
       onOk={confirm}
       onCancel={closeModal}
     >
-      <Form form={form} layout="vertical">
-        <Form.Item
-          name="rule_id"
-          label="通过商品名称修改"
-          rules={[{ required: true, message: "请选择商品" }]}
-        >
+      <Form form={form}>
+        <Form.Item name="rule_id" label="通过商品名称修改">
           <Select
             placeholder="请选择商品"
             filterOption={(input, option) =>
@@ -56,12 +52,21 @@ export const ReapplyModal = ({
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
-          name="goods_sn"
-          label="通过商品编码修改"
-          rules={[{ required: true, message: "请输入商品编码" }]}
-        >
+        <Form.Item name="goods_sn" label="通过商品编码修改">
           <Input placeholder="请输入商品编码" />
+        </Form.Item>
+        <Form.Item
+          label=""
+          noStyle
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.goods_sn !== currentValues.goods_sn
+          }
+        >
+          {({ getFieldValue }) => (
+            <Form.Item label="查询结果">
+              {getFieldValue("goods_sn") ? <></> : <>没有查询到商品</>}
+            </Form.Item>
+          )}
         </Form.Item>
       </Form>
     </Modal>

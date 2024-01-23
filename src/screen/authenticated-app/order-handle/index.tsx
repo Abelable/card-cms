@@ -4,6 +4,7 @@ import { List } from "./components/list";
 import { Row } from "components/lib";
 import { RecordModal } from "./components/record-modal";
 import { InfoModal } from "./components/info-modal";
+import { ReapplyModal } from "./components/reapply-modal";
 import { DetailModal } from "./components/detail-modal";
 
 import { useState } from "react";
@@ -123,6 +124,7 @@ export const OrderHandle = () => {
       </Main>
       <RecordModal />
       <InfoModal regionOptions={regionOptions} />
+      <ReapplyModal goodsOptions={goodsOptions} />
       <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer
         visible={!!selectedRowKeys.length}

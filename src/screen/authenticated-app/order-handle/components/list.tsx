@@ -19,6 +19,7 @@ import {
   useInfoModal,
   useOrderListQueryKey,
   usePicModal,
+  useReapplyModal,
   useRecordModal,
 } from "../util";
 
@@ -50,6 +51,7 @@ export const List = ({
   const { open: openPicModal } = usePicModal();
   const { open: openRecordModal } = useRecordModal();
   const { open: openInfoModal } = useInfoModal();
+  const { open: openReapplyModal } = useReapplyModal();
   const { open: openDetailModal } = useDetailModal();
   const { mutate: cancelOrder } = useCancelOrder(useOrderListQueryKey());
 
@@ -194,7 +196,7 @@ export const List = ({
                 </Link>
                 <Link
                   type={"link"}
-                  onClick={() => openInfoModal(`${order.id}`)}
+                  onClick={() => openReapplyModal(`${order.id}`)}
                 >
                   修改商品
                 </Link>
