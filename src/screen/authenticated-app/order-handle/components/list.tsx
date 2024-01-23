@@ -8,12 +8,14 @@ import {
   Space,
   Tooltip,
   Modal,
+  Spin,
 } from "antd";
 import { CopyOutlined, IdcardOutlined, FlagFilled } from "@ant-design/icons";
 import { ErrorBox, Row } from "components/lib";
 
+import { useState } from "react";
 import copy from "copy-to-clipboard";
-import { useCancelOrder } from "service/order";
+import { useCancelOrder, useOrderFlagRemark } from "service/order";
 import {
   useDetailModal,
   useInfoModal,
@@ -42,6 +44,9 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const [curOrderId, setCurOrderId] = useState("");
+  const { data: remark, isLoading: remarkLoading } =
+    useOrderFlagRemark(curOrderId);
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -182,7 +187,7 @@ export const List = ({
             width: "12rem",
             render: (value, order) => (
               <Space direction={"vertical"}>
-                <Tooltip title="下载模版">
+                <Tooltip title={remarkLoading ? <Spin /> : remark?.text}>
                   <FlagFilled
                     style={{
                       color: [
@@ -193,7 +198,9 @@ export const List = ({
                         "rgb(39, 117, 182)",
                         "rgb(128, 118, 163)",
                       ][order.flag ? +order.flag : 0],
+                      cursor: "pointer",
                     }}
+                    onMouseEnter={() => setCurOrderId(`${order.id}`)}
                   />
                 </Tooltip>
                 <Link

@@ -309,7 +309,7 @@ export const useOrderLogList = (order_id: string) => {
 
 export const useOrderFlagRemark = (order_id: string) => {
   const client = useHttp();
-  return useQuery<Order>(
+  return useQuery<{ text: string }>(
     ["order_flag_remark", { order_id }],
     () =>
       client("/api/v1/admin/shop-order/logs-text", {
