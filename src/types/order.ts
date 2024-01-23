@@ -6,6 +6,7 @@ export interface Option {
 }
 
 export interface FlagSetting {
+  shop_type: string;
   sync_order: string;
   production_error: string;
   shipping_error: string;

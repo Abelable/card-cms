@@ -47,7 +47,7 @@ export const OrderGrab = () => {
           }}
         />
       </Main>
-      <FlagModal flagOptions={flagOptions} />
+      <FlagModal shop_type={params.shop_type} flagOptions={flagOptions} />
       <ApplyModal shop_type={params.shop_type} />
       <SettingModal shopList={data?.data || []} />
     </Container>

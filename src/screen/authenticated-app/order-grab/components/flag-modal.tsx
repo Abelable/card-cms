@@ -9,7 +9,13 @@ import { useEditFlagSetting } from "service/order";
 
 import type { Option } from "types/order";
 
-export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
+export const FlagModal = ({
+  shop_type,
+  flagOptions,
+}: {
+  shop_type: string;
+  flagOptions: Option[];
+}) => {
   const [form] = useForm();
   const {
     flagModalOpen,
@@ -27,7 +33,7 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      await mutateAsync(form.getFieldsValue());
+      await mutateAsync({ shop_type, ...form.getFieldsValue() });
       closeModal();
     });
   };
