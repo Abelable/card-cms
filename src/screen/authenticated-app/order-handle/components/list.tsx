@@ -6,31 +6,18 @@ import {
   TableProps,
   message,
   Space,
-  Divider,
   Tooltip,
 } from "antd";
-import {
-  CopyOutlined,
-  DownloadOutlined,
-  IdcardOutlined,
-} from "@ant-design/icons";
+import { CopyOutlined, IdcardOutlined } from "@ant-design/icons";
 import { ErrorBox, Row } from "components/lib";
-import { FileUpload } from "components/file-upload";
-import { useQueryClient } from "react-query";
 import copy from "copy-to-clipboard";
 import {
-  useDataModal,
   useDetailModal,
-  useExportProductModal,
-  useFailModal,
   useInfoModal,
-  useOrderListQueryKey,
   usePicModal,
   useRecordModal,
   useStatusModal,
-  useBlackModal,
 } from "../util";
-import { useDownloadTemplate } from "service/common";
 
 import type { SearchPanelProps } from "./search-panel";
 import type { StatusOption, Order } from "types/order";
@@ -51,79 +38,26 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
-  const downloadTemplate = useDownloadTemplate();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
       page: pagination.current,
       per_page: pagination.pageSize,
     });
-  const { open: openExportProductModal } = useExportProductModal();
   const { open: openPicModal } = usePicModal();
   const { open: openRecordModal } = useRecordModal();
   const { startEdit: editStatus } = useStatusModal();
-  const { startEdit: failOrder } = useFailModal();
-  const { open: openDataModal } = useDataModal();
   const { open: openInfoModal } = useInfoModal();
-  const { open: openBlackModal } = useBlackModal();
   const { open: openDetailModal } = useDetailModal();
   const copyInfo = (info: string) => {
     copy(info);
     message.success("复制成功");
   };
 
-  const queryClient = useQueryClient();
-  const queryKey = useOrderListQueryKey();
-  const handleSuccess = () => queryClient.invalidateQueries(queryKey);
-
   return (
     <Container>
       <Header between={true}>
-        <h3>订单生产列表</h3>
-        <Row gap>
-          <Button type={"primary"} onClick={() => openExportProductModal()}>
-            导出生产
-          </Button>
-          <Divider
-            style={{ height: "3rem", marginLeft: 0 }}
-            type={"vertical"}
-          />
-          <div style={{ marginRight: "1rem" }}>
-            <FileUpload
-              scene={1}
-              name="导入生产数据"
-              onSuccess={handleSuccess}
-            />
-          </div>
-          <Tooltip title="下载生产模版">
-            <Button
-              onClick={() => downloadTemplate(1)}
-              size="small"
-              shape="circle"
-              icon={<DownloadOutlined />}
-            />
-          </Tooltip>
-          <Divider
-            style={{ height: "3rem", marginLeft: 0 }}
-            type={"vertical"}
-          />
-          <div style={{ marginRight: "1rem" }}>
-            <FileUpload
-              scene={2}
-              name="导入激活数据"
-              onSuccess={handleSuccess}
-            />
-          </div>
-          <Tooltip title="下载激活模版">
-            <Button
-              onClick={() => downloadTemplate(2)}
-              style={{ marginRight: 0 }}
-              size="small"
-              shape="circle"
-              icon={<DownloadOutlined />}
-            />
-          </Tooltip>
-        </Row>
+        <h3>订单列表</h3>
       </Header>
       <ErrorBox error={error} />
       <Table
@@ -238,20 +172,6 @@ export const List = ({
                 >
                   查看详情
                 </Link>
-                {order.status !== 3 ? (
-                  <Link type={"link"} onClick={() => failOrder(`${order.id}`)}>
-                    生产失败
-                  </Link>
-                ) : null}
-                <Link
-                  type={"link"}
-                  onClick={() => openDataModal(`${order.id}`)}
-                >
-                  录入生产数据
-                </Link>
-                <Link type={"link"} onClick={() => editStatus(`${order.id}`)}>
-                  修改状态
-                </Link>
                 <Link
                   type={"link"}
                   onClick={() => openInfoModal(`${order.id}`)}
@@ -260,9 +180,12 @@ export const List = ({
                 </Link>
                 <Link
                   type={"link"}
-                  onClick={() => openBlackModal(`${order.id}`)}
+                  onClick={() => openInfoModal(`${order.id}`)}
                 >
-                  添加黑名单
+                  修改商品
+                </Link>
+                <Link type={"link"} onClick={() => editStatus(`${order.id}`)}>
+                  取消订单
                 </Link>
               </Space>
             ),
