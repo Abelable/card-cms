@@ -1,4 +1,4 @@
-import { Drawer, Modal, Select, Menu, MenuProps } from "antd";
+import { Drawer, Select, Menu, MenuProps } from "antd";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import { Row } from "components/lib";
@@ -11,18 +11,9 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import { useRegionOptions } from "service/common";
 import { useGoodsOptions } from "service/product";
-import {
-  useOrderList,
-  useEditOrderList,
-  useSettingOptions,
-  useShopOptions,
-} from "service/order";
+import { useOrderList, useSettingOptions, useShopOptions } from "service/order";
 import { toNumber } from "utils";
-import {
-  useFailModal,
-  useOrderListQueryKey,
-  useOrderListSearchParams,
-} from "./util";
+import { useOrderListSearchParams } from "./util";
 import { FlagModal } from "./components/flag-modal";
 
 const menuStatusOptions = [
@@ -48,35 +39,11 @@ export const OrderHandle = () => {
   const { data: flagOptions = [] } = useSettingOptions("tag");
   const { data: regionOptions } = useRegionOptions(3);
   const { data, isLoading, error } = useOrderList(params);
-  const { mutateAsync: editOrderList } = useEditOrderList(
-    useOrderListQueryKey()
-  );
-  const { startEdit: failOrderList } = useFailModal();
 
-  const [batchStatus, setBatchStatus] = useState<number | undefined>(undefined);
-  const selectBatchStatus = (ids: string[]) => (status: number) => {
-    setBatchStatus(status);
-    switch (status) {
-      case 3:
-        failOrderList(ids.join());
-        break;
-      default:
-        Modal.confirm({
-          title: `确定将选中订单状态修改为${
-            orderStatusOptions.find((item) => item.value === status)?.label
-          }吗？`,
-          content: "点击确定修改",
-          okText: "确定",
-          cancelText: "取消",
-          onCancel: () => setBatchStatus(undefined),
-          onOk: () => {
-            editOrderList({ ids, status });
-            setBatchStatus(undefined);
-            setSelectedRowKeys([]);
-          },
-        });
-        break;
-    }
+  const [batchFlag, setBatchFlag] = useState<number | undefined>(undefined);
+  const selectBatchFlag = (ids: string[]) => (flag: number) => {
+    setBatchFlag(flag);
+    // todo 批量修改标旗
   };
 
   const menuItems: MenuProps["items"] = menuStatusOptions.map((item) => ({
@@ -142,14 +109,14 @@ export const OrderHandle = () => {
           <Row gap>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
-              value={batchStatus}
+              value={batchFlag}
               allowClear={true}
-              onSelect={selectBatchStatus(selectedRowKeys)}
-              placeholder="批量修改状态"
+              onSelect={selectBatchFlag(selectedRowKeys)}
+              placeholder="批量标旗"
             >
-              {orderStatusOptions.map(({ label, value }) => (
+              {flagOptions.map(({ name, value }) => (
                 <Select.Option key={value} value={value}>
-                  {label}
+                  {name}
                 </Select.Option>
               ))}
             </Select>
