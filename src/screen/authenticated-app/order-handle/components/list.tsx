@@ -18,6 +18,7 @@ import copy from "copy-to-clipboard";
 import { useCancelOrder, useOrderFlagRemark } from "service/order";
 import {
   useDetailModal,
+  useFlagModal,
   useInfoModal,
   useOrderListQueryKey,
   usePicModal,
@@ -57,6 +58,7 @@ export const List = ({
   const { open: openRecordModal } = useRecordModal();
   const { open: openInfoModal } = useInfoModal();
   const { open: openReapplyModal } = useReapplyModal();
+  const { open: openFlagModal } = useFlagModal();
   const { open: openDetailModal } = useDetailModal();
   const { mutate: cancelOrder } = useCancelOrder(useOrderListQueryKey());
 
@@ -201,6 +203,7 @@ export const List = ({
                       cursor: "pointer",
                     }}
                     onMouseEnter={() => setCurOrderId(`${order.id}`)}
+                    onClick={() => openFlagModal(`${order.id}`, order.flag)}
                   />
                 </Tooltip>
                 <Link

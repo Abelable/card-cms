@@ -321,3 +321,20 @@ export const useOrderFlagRemark = (order_id: string) => {
     }
   );
 };
+
+export const useEditOrderFlagRemark = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: {
+      order_id: string;
+      desc: string;
+      jiumeng_desc: string;
+      tag: string;
+    }) =>
+      client("/api/v1/admin/shop-order/remark", {
+        data: cleanObject(params),
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};

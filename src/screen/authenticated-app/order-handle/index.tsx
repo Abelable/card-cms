@@ -1,4 +1,4 @@
-import { Drawer, Modal, Select, Button, Menu, MenuProps } from "antd";
+import { Drawer, Modal, Select, Menu, MenuProps } from "antd";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import { Row } from "components/lib";
@@ -20,10 +20,10 @@ import {
 import { toNumber } from "utils";
 import {
   useFailModal,
-  useBlackModal,
   useOrderListQueryKey,
   useOrderListSearchParams,
 } from "./util";
+import { FlagModal } from "./components/flag-modal";
 
 const menuStatusOptions = [
   { label: "全部", value: 0 },
@@ -52,7 +52,6 @@ export const OrderHandle = () => {
     useOrderListQueryKey()
   );
   const { startEdit: failOrderList } = useFailModal();
-  const { open: openBlackModal } = useBlackModal();
 
   const [batchStatus, setBatchStatus] = useState<number | undefined>(undefined);
   const selectBatchStatus = (ids: string[]) => (status: number) => {
@@ -125,6 +124,7 @@ export const OrderHandle = () => {
       <RecordModal />
       <InfoModal regionOptions={regionOptions} />
       <ReapplyModal goodsOptions={goodsOptions} />
+      <FlagModal flagOptions={flagOptions} />
       <DetailModal orderStatusOptions={orderStatusOptions} />
       <Drawer
         visible={!!selectedRowKeys.length}
@@ -140,9 +140,6 @@ export const OrderHandle = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap>
-            <Button onClick={() => openBlackModal(selectedRowKeys.join())}>
-              批量添加黑名单
-            </Button>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
               value={batchStatus}

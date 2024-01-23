@@ -1,6 +1,6 @@
 import { useSetUrlSearchParams, useUrlQueryParams } from "utils/url";
 import { useCallback, useMemo } from "react";
-import { useOrder, useOrderLogList } from "service/order";
+import { useOrder, useOrderFlagRemark, useOrderLogList } from "service/order";
 
 export const useOrderListSearchParams = () => {
   const [params, setParams] = useUrlQueryParams([
@@ -212,45 +212,30 @@ export const useReapplyModal = () => {
   };
 };
 
-export const useExportModal = () => {
-  const [{ exportOrderModalVisible }, setExportModalVisible] =
-    useUrlQueryParams(["exportOrderModalVisible"]);
+export const useFlagModal = () => {
+  const [{ flagOrderId, flag }, setFlagOrderId] = useUrlQueryParams([
+    "flagOrderId",
+    "flag",
+  ]);
   const setUrlParams = useSetUrlSearchParams();
+  const { data, isLoading } = useOrderFlagRemark(flagOrderId);
 
   const open = useCallback(
-    () => setExportModalVisible({ exportOrderModalVisible: true }),
-    [setExportModalVisible]
+    (id: string, flag: string) => setFlagOrderId({ flagOrderId: id, flag }),
+    [setFlagOrderId]
   );
 
   const close = useCallback(
-    () => setUrlParams({ exportOrderModalVisible: "" }),
+    () => setUrlParams({ flagOrderId: "", flag: "" }),
     [setUrlParams]
   );
 
   return {
-    exportModalOpen: exportOrderModalVisible === "true",
-    open,
-    close,
-  };
-};
-
-export const useExportProductModal = () => {
-  const [{ exportProductModalVisible }, setExportProductModalVisible] =
-    useUrlQueryParams(["exportProductModalVisible"]);
-  const setUrlParams = useSetUrlSearchParams();
-
-  const open = useCallback(
-    () => setExportProductModalVisible({ exportProductModalVisible: true }),
-    [setExportProductModalVisible]
-  );
-
-  const close = useCallback(
-    () => setUrlParams({ exportProductModalVisible: "" }),
-    [setUrlParams]
-  );
-
-  return {
-    exportProducModalOpen: exportProductModalVisible === "true",
+    flagModalOpen: !!flagOrderId,
+    flagOrderId,
+    flag,
+    flagRemark: data?.text,
+    isLoading,
     open,
     close,
   };
@@ -284,25 +269,24 @@ export const useDetailModal = () => {
   };
 };
 
-export const useBlackModal = () => {
-  const [{ blackOrderId }, setBlackOrderId] = useUrlQueryParams([
-    "blackOrderId",
+export const useExportModal = () => {
+  const [{ exportModalVisible }, setExportModalVisible] = useUrlQueryParams([
+    "exportModalVisible",
   ]);
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    (ids: string) => setBlackOrderId({ blackOrderId: ids }),
-    [setBlackOrderId]
+    () => setExportModalVisible({ exportModalVisible: true }),
+    [setExportModalVisible]
   );
 
   const close = useCallback(
-    () => setUrlParams({ blackOrderId: "" }),
+    () => setUrlParams({ exportModalVisible: "" }),
     [setUrlParams]
   );
 
   return {
-    blackModalOpen: !!blackOrderId,
-    blackOrderId,
+    exportModalOpen: exportModalVisible === "true",
     open,
     close,
   };

@@ -4,42 +4,38 @@ import { FlagFilled } from "@ant-design/icons";
 
 import { useForm } from "antd/lib/form/Form";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import { useEditOrder } from "service/order";
-import { useInfoModal, useOrderListQueryKey } from "../util";
+import { useEditOrderFlagRemark } from "service/order";
+import { useFlagModal, useOrderListQueryKey } from "../util";
 
 import type { Option } from "types/order";
 
 export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
   const [form] = useForm();
   const {
-    infoModalOpen,
-    editingOrder,
+    flagModalOpen,
+    flag,
+    flagOrderId,
+    flagRemark,
     close,
     isLoading: initLoading,
-  } = useInfoModal();
-  const { mutateAsync, isLoading } = useEditOrder(useOrderListQueryKey());
+  } = useFlagModal();
+  const { mutateAsync, isLoading } = useEditOrderFlagRemark(
+    useOrderListQueryKey()
+  );
 
   useDeepCompareEffect(() => {
-    if (editingOrder) {
-      const { province_id, city_id, area_id, ...rest } = editingOrder;
+    if (flagOrderId) {
       form.setFieldsValue({
-        address_region: [province_id, city_id, area_id],
-        ...rest,
+        tag: flag,
+        jiumeng_desc: flagRemark,
       });
     }
-  }, [editingOrder, form]);
+  }, [flagOrderId, form]);
 
   const confirm = () => {
     form.validateFields().then(async () => {
-      const { address_region, ...rest } = form.getFieldsValue();
       try {
-        await mutateAsync({
-          ...editingOrder,
-          province_id: address_region[0],
-          city_id: address_region[1],
-          area_id: address_region[2],
-          ...rest,
-        });
+        await mutateAsync(form.getFieldsValue());
         closeModal();
       } catch (error: any) {
         message.error(error.message);
@@ -54,8 +50,8 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
 
   return (
     <Modal
-      title={"修改订单信息"}
-      visible={infoModalOpen}
+      title={"标旗设置"}
+      visible={flagModalOpen}
       confirmLoading={isLoading}
       onOk={confirm}
       onCancel={closeModal}
@@ -66,10 +62,10 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
         </Loading>
       ) : (
         <Form form={form}>
-          <Form.Item name="flag" label="标签">
+          <Form.Item name="tag" label="标旗">
             <Radio.Group>
               {[{ name: "灰", value: "0" }, ...flagOptions].map(({ value }) => (
-                <Radio value={value}>
+                <Radio key={value} value={value}>
                   <FlagFilled
                     style={{
                       color: [
