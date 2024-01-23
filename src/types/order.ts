@@ -152,7 +152,7 @@ export interface OrderListResult {
 }
 
 export interface OrderListSearchParams {
-  status: number | undefined;
+  status: number;
   tag: string | undefined;
   order_sn: string;
   shop_order_sn: string;

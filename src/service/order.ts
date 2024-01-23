@@ -234,6 +234,7 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
 
     return client("/api/v1/admin/shop-order/lst", {
       data: cleanObject({
+        "filter[shop_order.status]": restParams.status,
         "filter[shop_order.order_sn]": restParams.order_sn,
         "filter[shop_order.shop_order_sn]": restParams.shop_order_sn,
         "filter[shop.shop_name]": restParams.shop_name,

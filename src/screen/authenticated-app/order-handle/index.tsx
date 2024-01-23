@@ -15,7 +15,7 @@ import {
   useOrderListSearchParams,
 } from "./util";
 
-import { Drawer, Modal, Select, Button } from "antd";
+import { Drawer, Modal, Select, Button, Menu, MenuProps } from "antd";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import styled from "@emotion/styled";
@@ -28,11 +28,15 @@ import { ExportModal } from "./components/export-modal";
 import { DetailModal } from "./components/detail-modal";
 import { ExportProductModal } from "./components/export-product-modal";
 
-const orderStatusOptions = [
-  { label: "初始化收单成功", value: 0 },
+const menuStatusOptions = [
+  { label: "全部", value: 0 },
   { label: "待完善证件信息", value: 10 },
   { label: "开卡失败", value: 20 },
   { label: "自动发货失败", value: 30 },
+];
+const orderStatusOptions = [
+  { label: "初始化收单成功", value: 0 },
+  ...menuStatusOptions.slice(1),
   { label: "待开卡", value: 40 },
   { label: "发货成功", value: 45 },
   { label: "待开卡超时", value: 50 },
@@ -80,8 +84,22 @@ export const OrderHandle = () => {
     }
   };
 
+  const menuItems: MenuProps["items"] = menuStatusOptions.map((item) => ({
+    label: (
+      <div onClick={() => setParams({ ...params, status: item.value })}>
+        {item.label}
+      </div>
+    ),
+    key: `${item.value}`,
+  }));
+
   return (
     <Container>
+      <Menu
+        mode="horizontal"
+        selectedKeys={[`${params.status}`]}
+        items={menuItems}
+      />
       <Main>
         <SearchPanel
           shopOptions={shopOptions}

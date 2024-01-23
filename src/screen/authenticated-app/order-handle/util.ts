@@ -16,8 +16,9 @@ export const useOrderListSearchParams = () => {
   ]);
   return [
     useMemo(() => {
-      const { page, per_page, ...rest } = params;
+      const { status, page, per_page, ...rest } = params;
       return {
+        status: Number(status),
         page: Number(page) || 1,
         per_page: Number(per_page) || 10,
         ...rest,
