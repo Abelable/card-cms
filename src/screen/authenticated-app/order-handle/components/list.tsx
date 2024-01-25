@@ -9,6 +9,7 @@ import {
   Tooltip,
   Modal,
   Spin,
+  Tag,
 } from "antd";
 import { CopyOutlined, IdcardOutlined, FlagFilled } from "@ant-design/icons";
 import { ErrorBox, Row } from "components/lib";
@@ -131,16 +132,37 @@ export const List = ({
                   </span>
                   {order.is_transfer === 1 ? (
                     <Tooltip title={`原：${order.goods?.goods_name}`}>
-                      <span style={{ color: "yellow", cursor: "pointer" }}>
-                        {" "}
+                      <Tag
+                        color="warning"
+                        style={{ cursor: "pointer", marginLeft: "1rem" }}
+                      >
                         转
-                      </span>
+                      </Tag>
                     </Tooltip>
                   ) : (
                     <></>
                   )}
                 </div>
-                <div>产品编码：{order.goods?.goods_sn}</div>
+                <div>
+                  <span>
+                    产品编码：
+                    {order.is_transfer === 1
+                      ? order.transfer[0].goods_sn
+                      : order.goods?.goods_sn}
+                  </span>
+                  {order.is_transfer === 1 ? (
+                    <Tooltip title={`原：${order.goods?.goods_sn}`}>
+                      <Tag
+                        color="warning"
+                        style={{ cursor: "pointer", marginLeft: "1rem" }}
+                      >
+                        转
+                      </Tag>
+                    </Tooltip>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </Space>
             ),
           },

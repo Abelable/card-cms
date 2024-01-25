@@ -35,7 +35,7 @@ export const FlagModal = ({ flagOptions }: { flagOptions: Option[] }) => {
   const confirm = () => {
     form.validateFields().then(async () => {
       try {
-        await mutateAsync(form.getFieldsValue());
+        await mutateAsync({ order_id: flagOrderId, ...form.getFieldsValue() });
         closeModal();
       } catch (error: any) {
         message.error(error.message);
