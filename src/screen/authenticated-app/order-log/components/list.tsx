@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { Table, TablePaginationConfig, TableProps } from "antd";
 import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 import dayjs from "dayjs";
+import { useLogRetry } from "service/order";
+import { useLogListQueryKey } from "../util";
 
 import type { Log, ShopOption } from "types/order";
 import type { SearchPanelProps } from "./search-panel";
@@ -24,6 +26,8 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const { mutate: retry } = useLogRetry(useLogListQueryKey());
+
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
       ...params,
@@ -96,7 +100,9 @@ export const List = ({
             render: (value, log) => (
               <>
                 {log.status === 20 ? (
-                  <ButtonNoPadding type={"link"}>重试</ButtonNoPadding>
+                  <ButtonNoPadding type={"link"} onClick={() => retry(log.id)}>
+                    重试
+                  </ButtonNoPadding>
                 ) : (
                   <></>
                 )}

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Descriptions, Empty, Modal, Spin } from "antd";
 import { useRecordModal } from "../util";
+import { Row } from "components/lib";
 
 export const RecordModal = () => {
   const { recordModalOpen, logList, close, isLoading } = useRecordModal();
@@ -25,7 +26,12 @@ export const RecordModal = () => {
           {logList && logList.length ? (
             <Descriptions size={"small"} column={1}>
               {logList.map((item, index) => (
-                <Descriptions.Item key={index}>{item.desc}</Descriptions.Item>
+                <Descriptions.Item key={index}>
+                  <Row gap>
+                    <div>{item.created_at}</div>
+                    <div>{item.desc}</div>
+                  </Row>
+                </Descriptions.Item>
               ))}
             </Descriptions>
           ) : (

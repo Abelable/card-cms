@@ -213,6 +213,14 @@ export const useLogList = (params: Partial<LogListSearchParams>) => {
   });
 };
 
+export const useLogRetry = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (id: number) => client(`/api/v1/admin/message-log/retry/${id}`),
+    useEditConfig(queryKey)
+  );
+};
+
 export const useOrderList = (params: Partial<OrderListSearchParams>) => {
   const client = useHttp();
   return useQuery<OrderListResult>(["order_list", params], () => {

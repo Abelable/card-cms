@@ -122,7 +122,24 @@ export const List = ({
             width: "26rem",
             render: (value, order) => (
               <Space direction={"vertical"}>
-                <div>产品名称：{order.goods?.goods_name}</div>
+                <div>
+                  <span>
+                    产品名称：
+                    {order.is_transfer === 1
+                      ? order.transfer[0].goods_name
+                      : order.goods?.goods_name}
+                  </span>
+                  {order.is_transfer === 1 ? (
+                    <Tooltip title={`原：${order.goods?.goods_name}`}>
+                      <span style={{ color: "yellow", cursor: "pointer" }}>
+                        {" "}
+                        转
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <div>产品编码：{order.goods?.goods_sn}</div>
               </Space>
             ),
