@@ -11,6 +11,12 @@ interface ListProps extends TableProps<Log>, SearchPanelProps {
   error: Error | unknown;
 }
 
+const statusOptions = [
+  { name: "回调正常", value: 10 },
+  { name: "回调失败", value: 20 },
+  { name: "收单成功", value: 30 },
+];
+
 export const List = ({
   shopOptions,
   error,
@@ -61,16 +67,12 @@ export const List = ({
           },
           {
             title: "回调状态",
-            dataIndex: "error_msg",
+            dataIndex: "status",
             width: "12rem",
             render: (value) => (
-              <>
-                {!value ? (
-                  "正常"
-                ) : (
-                  <span style={{ color: "#ff4d4f" }}>回调失败</span>
-                )}
-              </>
+              <span style={{ color: value === 20 ? "#ff4d4f" : "#333" }}>
+                {statusOptions.find((item) => item.value === value)?.name}
+              </span>
             ),
           },
           {
@@ -92,7 +94,13 @@ export const List = ({
             fixed: "right",
             width: "8rem",
             render: (value, log) => (
-              <ButtonNoPadding type={"link"}>重试</ButtonNoPadding>
+              <>
+                {log.status === 20 ? (
+                  <ButtonNoPadding type={"link"}>重试</ButtonNoPadding>
+                ) : (
+                  <></>
+                )}
+              </>
             ),
           },
         ]}
