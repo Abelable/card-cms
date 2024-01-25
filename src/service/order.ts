@@ -224,8 +224,14 @@ export const useLogRetry = (queryKey: QueryKey) => {
 export const useOrderList = (params: Partial<OrderListSearchParams>) => {
   const client = useHttp();
   return useQuery<OrderListResult>(["order_list", params], () => {
-    let { page, per_page, start_created_at, end_created_at, ...restParams } =
-      params;
+    let {
+      status,
+      start_created_at,
+      end_created_at,
+      page,
+      per_page,
+      ...restParams
+    } = params;
     if (!start_created_at) {
       const endTime = new Date(
         new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
@@ -237,12 +243,12 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
       end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
     }
 
-    // "filter[shop_order.status]": restParams.status,
     // "filter[shop_order.start_created_at]": start_created_at,
     // "filter[shop_order.end_created_at]": [end_created_at],
 
     return client("/api/v1/admin/shop-order/lst", {
       data: cleanObject({
+        "filter[shop_order.status]": status === -1 ? undefined : status,
         "filter[shop_order.order_sn]": restParams.order_sn,
         "filter[shop_order.shop_order_sn]": restParams.shop_order_sn,
         "filter[shop.shop_name]": restParams.shop_name,

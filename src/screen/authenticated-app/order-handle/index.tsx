@@ -16,15 +16,18 @@ import { toNumber } from "utils";
 import { useOrderListSearchParams } from "./util";
 import { FlagModal } from "./components/flag-modal";
 
-const menuStatusOptions = [
-  { label: "全部", value: 0 },
+const commonStatusOptions = [
   { label: "待完善证件信息", value: 10 },
   { label: "开卡失败", value: 20 },
   { label: "自动发货失败", value: 30 },
 ];
+const menuStatusOptions = [
+  { label: "全部", value: -1 },
+  ...commonStatusOptions,
+];
 const orderStatusOptions = [
   { label: "初始化收单成功", value: 0 },
-  ...menuStatusOptions.slice(1),
+  ...commonStatusOptions,
   { label: "待开卡", value: 40 },
   { label: "发货成功", value: 45 },
   { label: "待开卡超时", value: 50 },
