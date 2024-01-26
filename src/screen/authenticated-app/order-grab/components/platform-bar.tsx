@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 import pdd from "assets/images/pdd.png";
 import { useFlagModal } from "../util";
 
-export const PlatformBar = () => {
+export const PlatformBar = ({ shopType }: { shopType: string }) => {
   const { open } = useFlagModal();
 
   return (
     <Platform>
       <PlatFormBgImg src={pdd} />
-      <FlagBtn onClick={open}>订单标旗设置</FlagBtn>
+      <FlagBtn onClick={() => open(shopType)}>订单标旗设置</FlagBtn>
     </Platform>
   );
 };

@@ -34,11 +34,15 @@ export const useSettingOptions = (key: string) => {
   );
 };
 
-export const useFlagSetting = (flagModalOpen: boolean) => {
+export const useFlagSetting = (shop_type: string, flagModalOpen: boolean) => {
   const client = useHttp();
   return useQuery<Partial<FlagSetting>>(
-    ["flag_setting"],
-    () => client("/api/v1/admin/shop/get-tag", { method: "POST" }),
+    ["flag_setting", { shop_type }],
+    () =>
+      client("/api/v1/admin/shop/get-tag", {
+        data: { shop_type },
+        method: "POST",
+      }),
     {
       enabled: flagModalOpen,
     }

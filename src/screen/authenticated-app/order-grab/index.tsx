@@ -33,7 +33,11 @@ export const OrderGrab = () => {
         items={menuItems}
       />
       <Main>
-        {params.shop_type === "10" ? <PlatformBar /> : <></>}
+        {params.shop_type === "10" ? (
+          <PlatformBar shopType={params.shop_type} />
+        ) : (
+          <></>
+        )}
         <List
           error={error}
           params={params}

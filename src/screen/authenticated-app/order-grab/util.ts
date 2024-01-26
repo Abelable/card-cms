@@ -27,21 +27,22 @@ export const useShopListQueryKey = () => {
 };
 
 export const useFlagModal = () => {
-  const [{ flagModalVisible }, setFlagModalVisible] = useUrlQueryParams([
-    "flagModalVisible",
-  ]);
+  const [{ shopType, flagModalVisible }, setFlagModalVisible] =
+    useUrlQueryParams(["shopType", "flagModalVisible"]);
   const open = useCallback(
-    () => setFlagModalVisible({ flagModalVisible: true }),
+    (shopType: string) =>
+      setFlagModalVisible({ shopType, flagModalVisible: true }),
     [setFlagModalVisible]
   );
   const setUrlParams = useSetUrlSearchParams();
 
   const { data: flagSetting, isLoading } = useFlagSetting(
+    shopType,
     flagModalVisible === "true"
   );
 
   const close = useCallback(
-    () => setUrlParams({ flagModalVisible: "" }),
+    () => setUrlParams({ shopType: "", flagModalVisible: "" }),
     [setUrlParams]
   );
   return {
