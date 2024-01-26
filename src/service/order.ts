@@ -243,21 +243,59 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
       end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
     }
 
-    // "filter[shop_order.start_created_at]": start_created_at,
-    // "filter[shop_order.end_created_at]": [end_created_at],
-
     return client("/api/v1/admin/shop-order/lst", {
       data: cleanObject({
         "filter[shop_order.status]": status === -1 ? undefined : status,
         "filter[shop_order.order_sn]": restParams.order_sn,
-        "filter[shop_order.shop_order_sn]": restParams.shop_order_sn,
+        "filter[shop_order.shop_order_sn]":
+          restParams.shop_order_sn?.split(","),
+        "filter[shop_order.flag]": restParams.tag,
+        "filter[shop_order.start_created_at]": start_created_at,
+        "filter[shop_order.end_created_at]": end_created_at,
         "filter[shop.shop_name]": restParams.shop_name,
-        "filter[shop.tag]": restParams.tag,
         page,
         per_page,
       }),
     });
   });
+};
+
+export const useExportOrderList = () => {
+  const client = useHttp();
+  return (params: Partial<OrderListSearchParams>) => {
+    let {
+      status,
+      start_created_at,
+      end_created_at,
+      page,
+      per_page,
+      ...restParams
+    } = params;
+    if (!start_created_at) {
+      const endTime = new Date(
+        new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
+      );
+      const startTime = new Date(
+        new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
+      );
+      start_created_at = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
+      end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
+    return client("/api/v1/admin/shop-order/lst", {
+      data: cleanObject({
+        is_export: 1,
+        "filter[shop_order.status]": status === -1 ? undefined : status,
+        "filter[shop_order.order_sn]": restParams.order_sn,
+        "filter[shop_order.shop_order_sn]":
+          restParams.shop_order_sn?.split(","),
+        "filter[shop_order.flag]": restParams.tag,
+        "filter[shop_order.start_created_at]": start_created_at,
+        "filter[shop_order.end_created_at]": end_created_at,
+        "filter[shop.shop_name]": restParams.shop_name,
+      }),
+    });
+  };
 };
 
 export const useOrder = (order_id: string) => {

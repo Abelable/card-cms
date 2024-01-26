@@ -28,9 +28,10 @@ const menuStatusOptions = [
 const orderStatusOptions = [
   { label: "初始化收单成功", value: 0 },
   ...commonStatusOptions,
+  { label: "开卡失败超时", value: 25 },
   { label: "待开卡", value: 40 },
-  { label: "发货成功", value: 45 },
-  { label: "待开卡超时", value: 50 },
+  { label: "待开卡超时", value: 45 },
+  { label: "发货成功", value: 50 },
   { label: "订单终止", value: 100 },
 ];
 

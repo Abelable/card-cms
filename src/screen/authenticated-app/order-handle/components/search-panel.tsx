@@ -6,7 +6,7 @@ import { FormatPainterOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import moment from "moment";
 import dayjs from "dayjs";
-import { useExportModal } from "../util";
+import { useExportOrderList } from "service/order";
 
 import type { Option, OrderListSearchParams, ShopOption } from "types/order";
 
@@ -52,7 +52,7 @@ export const SearchPanel = ({
   const [temporaryParams, setTemporaryParams] =
     useState<Partial<OrderListSearchParams>>(defaultParams);
 
-  const { open: openExportModal } = useExportModal();
+  const exportOrderList = useExportOrderList();
 
   const setOrderSn = (evt: any) => {
     // onInputClear
@@ -261,7 +261,7 @@ export const SearchPanel = ({
         <Divider style={{ height: "3rem", marginLeft: 0 }} type={"vertical"} />
         <Button
           style={{ marginRight: 0 }}
-          onClick={() => openExportModal()}
+          onClick={() => exportOrderList(temporaryParams)}
           type={"primary"}
         >
           导出信息
