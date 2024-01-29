@@ -97,11 +97,11 @@ export const List = ({
           {
             title: "订单信息",
             fixed: "left",
-            width: "32rem",
+            width: "36rem",
             render: (value, order) => (
               <Space direction={"vertical"}>
                 <Row>
-                  <div>订单id：{order.order_sn}</div>
+                  <div>抓单订单号：{order.order_sn}</div>
                   <Copy
                     onClick={() => copyInfo(order.order_sn)}
                     style={{ color: "#1890ff" }}
@@ -120,7 +120,7 @@ export const List = ({
           },
           {
             title: "产品信息",
-            width: "26rem",
+            width: "32rem",
             render: (value, order) => (
               <Space direction={"vertical"}>
                 <div>

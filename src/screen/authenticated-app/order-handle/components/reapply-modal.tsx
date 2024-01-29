@@ -80,10 +80,14 @@ export const ReapplyModal = ({
           placeholder="请输入商品编码"
         />
       </Row>
-      <Row style={{ marginTop: "3.2rem" }}>
-        <div>查询结果：</div>
-        <div>{goodsInfo ? goodsInfo.name : "没有查询到商品"}</div>
-      </Row>
+      {goodsCode ? (
+        <Row style={{ marginTop: "3.2rem" }}>
+          <div>查询结果：</div>
+          <div>{goodsInfo ? goodsInfo.name : "没有查询到商品"}</div>
+        </Row>
+      ) : (
+        <></>
+      )}
     </Modal>
   );
 };
