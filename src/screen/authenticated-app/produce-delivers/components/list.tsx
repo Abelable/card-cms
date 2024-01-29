@@ -37,7 +37,10 @@ import type { Deliver } from "types/produce";
 
 interface ListProps
   extends TableProps<Deliver>,
-    Omit<SearchPanelProps, "agentOptions" | "channelEncodingOptions"> {
+    Omit<
+      SearchPanelProps,
+      "agentOptions" | "supplierOptions" | "channelEncodingOptions"
+    > {
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;

@@ -1,4 +1,5 @@
 import { toNumber } from "utils";
+import { useExpressOptions, useRegionOptions } from "service/common";
 import {
   useDelivers,
   useEditDelivers,
@@ -6,7 +7,7 @@ import {
 } from "service/produce";
 import { useAgentOptions } from "service/agent";
 import { useChannelEncodingOptions, useFailReasons } from "service/product";
-import { useExpressOptions, useRegionOptions } from "service/common";
+import { useSupplierOptions } from "service/supplier";
 import {
   useFailModal,
   useBlackModal,
@@ -36,6 +37,7 @@ export const ProduceDelivers = () => {
   const [params, setParams] = useProduceDeliversSearchParams();
   const produceStatusOptions = useProduceStatusOptions();
   const agentOptions = useAgentOptions();
+  const supplierOptions = useSupplierOptions();
   const channelEncodingOptions = useChannelEncodingOptions();
   const { data: regionOptions } = useRegionOptions(3);
   const { data: failReasons } = useFailReasons();
@@ -79,6 +81,7 @@ export const ProduceDelivers = () => {
         <SearchPanel
           channelEncodingOptions={channelEncodingOptions}
           agentOptions={agentOptions}
+          supplierOptions={supplierOptions}
           produceStatusOptions={produceStatusOptions}
           params={params}
           setParams={setParams}

@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { Button, DatePicker, Divider, Input, Select, Tooltip } from "antd";
 import { Row } from "components/lib";
+import { FormatPainterOutlined } from "@ant-design/icons";
+
 import styled from "@emotion/styled";
 import moment from "moment";
 import dayjs from "dayjs";
 import { useExportModal } from "../util";
+
 import type { DeliversSearchParams, ProduceStatusOption } from "types/produce";
 import type { AgentOption } from "types/agent";
 import type { ChannelEncodingOption } from "types/product";
-import { FormatPainterOutlined } from "@ant-design/icons";
+import type { SupplierOption } from "types/supplier";
 
 export interface SearchPanelProps {
   channelEncodingOptions: ChannelEncodingOption[];
   agentOptions: AgentOption[];
+  supplierOptions: SupplierOption[];
   produceStatusOptions: ProduceStatusOption[];
   params: Partial<DeliversSearchParams>;
   setParams: (params: Partial<DeliversSearchParams>) => void;
@@ -34,6 +38,7 @@ const timeTypeOptions = [
 export const SearchPanel = ({
   channelEncodingOptions,
   agentOptions,
+  supplierOptions,
   produceStatusOptions,
   params,
   setParams,
@@ -58,6 +63,7 @@ export const SearchPanel = ({
     is_recharged: undefined,
     is_activated: undefined,
     agent_id: undefined,
+    supplier_id: undefined,
     time_type: 1,
     start_time: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
     end_time: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
@@ -243,6 +249,11 @@ export const SearchPanel = ({
     setTemporaryParams({ ...temporaryParams, agent_id });
   const clearAgent = () =>
     setTemporaryParams({ ...temporaryParams, agent_id: undefined });
+
+  const setSupplier = (supplier_id: number) =>
+    setTemporaryParams({ ...temporaryParams, supplier_id });
+  const clearSupplier = () =>
+    setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
 
   const setTimeType = (time_type: number) =>
     setTemporaryParams({ ...temporaryParams, time_type });
@@ -494,6 +505,29 @@ export const SearchPanel = ({
           placeholder="请选择代理商"
         >
           {agentOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={id}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>供应商：</div>
+        <Select
+          style={{ width: "20rem" }}
+          value={temporaryParams.supplier_id}
+          allowClear={true}
+          onSelect={setSupplier}
+          onClear={clearSupplier}
+          showSearch
+          filterOption={(input, option) =>
+            (option!.children as unknown as string)
+              .toLowerCase()
+              .includes(input.toLowerCase())
+          }
+          placeholder="请选择供应商"
+        >
+          {supplierOptions?.map(({ id, name }) => (
             <Select.Option key={id} value={id}>
               {name}
             </Select.Option>
