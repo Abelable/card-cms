@@ -7,11 +7,16 @@ import { Row } from "components/lib";
 import type { LogListSearchParams } from "types/order";
 
 export interface SearchPanelProps {
+  statusOptions: { name: string; value: number }[];
   params: Partial<LogListSearchParams>;
   setParams: (params: Partial<LogListSearchParams>) => void;
 }
 
-export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
+export const SearchPanel = ({
+  statusOptions,
+  params,
+  setParams,
+}: SearchPanelProps) => {
   const defaultParams = {
     status: undefined,
     tag_sn: "",
@@ -51,6 +56,7 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
   const query = () => {
     setParams({
       ...params,
+      status: temporaryParams.status,
       tag_sn: temporaryParams.tag_sn,
     });
   };
@@ -76,12 +82,9 @@ export const SearchPanel = ({ params, setParams }: SearchPanelProps) => {
           onClear={clearStatus}
           placeholder="请选择产品名称"
         >
-          {[
-            { value: 10, lable: "正常" },
-            { value: 20, lable: "回调失败" },
-          ].map(({ value, lable }) => (
+          {statusOptions.map(({ value, name }) => (
             <Select.Option key={value} value={value}>
-              {lable}
+              {name}
             </Select.Option>
           ))}
         </Select>

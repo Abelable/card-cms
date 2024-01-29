@@ -6,6 +6,12 @@ import { useLogListSearchParams } from "./util";
 import { List } from "./components/list";
 import { SearchPanel } from "./components/search-panel";
 
+const statusOptions = [
+  { name: "回调正常", value: 10 },
+  { name: "回调失败", value: 20 },
+  { name: "收单成功", value: 30 },
+];
+
 export const OrderLog = () => {
   const shopOptions = useShopOptions("10");
 
@@ -15,8 +21,13 @@ export const OrderLog = () => {
   return (
     <Container>
       <Main>
-        <SearchPanel params={params} setParams={setParams} />
+        <SearchPanel
+          statusOptions={statusOptions}
+          params={params}
+          setParams={setParams}
+        />
         <List
+          statusOptions={statusOptions}
           shopOptions={shopOptions || []}
           error={error}
           params={params}

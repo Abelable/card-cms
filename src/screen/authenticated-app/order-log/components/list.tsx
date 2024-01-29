@@ -13,13 +13,8 @@ interface ListProps extends TableProps<Log>, SearchPanelProps {
   error: Error | unknown;
 }
 
-const statusOptions = [
-  { name: "回调正常", value: 10 },
-  { name: "回调失败", value: 20 },
-  { name: "收单成功", value: 30 },
-];
-
 export const List = ({
+  statusOptions,
   shopOptions,
   error,
   params,

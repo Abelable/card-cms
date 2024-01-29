@@ -211,8 +211,13 @@ export const useDeleteRule = (queryKey: QueryKey) => {
 export const useLogList = (params: Partial<LogListSearchParams>) => {
   const client = useHttp();
   return useQuery<LogListResult>(["log_list", params], () => {
+    const { status, tag_sn, ...rest } = params;
     return client("/api/v1/admin/message-log/lst", {
-      data: cleanObject(params),
+      data: cleanObject({
+        "filter[status]": status,
+        "filter[tag_sn]": tag_sn,
+        ...rest,
+      }),
     });
   });
 };
