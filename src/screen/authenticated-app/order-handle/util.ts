@@ -8,7 +8,7 @@ export const useOrderListSearchParams = () => {
     "order_sn",
     "shop_order_sn",
     "shop_name",
-    "flag",
+    "tag",
     "start_created_at",
     "end_created_at",
     "page",
