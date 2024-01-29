@@ -298,6 +298,9 @@ export const useExportOrderList = () => {
         "filter[shop_order.end_created_at]": end_created_at,
         "filter[shop.shop_name]": restParams.shop_name,
       }),
+      headers: {
+        responseType: "arraybuffer",
+      },
     });
   };
 };
