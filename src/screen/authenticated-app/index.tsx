@@ -54,11 +54,13 @@ import {
   FlagOutlined,
   FileDoneOutlined,
   HistoryOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import logo from "assets/images/logo.png";
 import { AddressIcon } from "assets/icon";
 
 import type { UserInfo } from "types/auth";
+import { ButtonNoPadding } from "components/lib";
 
 export const AuthenticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -73,6 +75,19 @@ export const AuthenticatedApp = () => {
           <Header>
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
             <NavigationBar />
+            <ButtonNoPadding
+              onClick={() =>
+                window.open(
+                  "https://docs.qq.com/doc/DWnhsWEVIS3Nzc1hQ",
+                  "blank"
+                )
+              }
+              icon={<BookOutlined />}
+              style={{ marginRight: "5rem" }}
+              type="link"
+            >
+              功能更新手册
+            </ButtonNoPadding>
             <User userInfo={userInfo} logout={logout} />
           </Header>
           <Content>

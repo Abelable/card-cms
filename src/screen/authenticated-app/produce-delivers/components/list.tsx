@@ -13,6 +13,7 @@ import {
   CopyOutlined,
   DownloadOutlined,
   IdcardOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 import { ErrorBox, Row } from "components/lib";
 import { FileUpload } from "components/file-upload";
@@ -83,7 +84,12 @@ export const List = ({
   return (
     <Container>
       <Header between={true}>
-        <h3>订单生产列表</h3>
+        <Row gap={1}>
+          <h3>订单生产列表</h3>
+          <Tooltip title="注意：电商抓单订单，请先前往'订单处理'页面复制'抓单订单号'，再过来粘贴到外部订单号进行搜索">
+            <InfoCircleOutlined style={{ cursor: "pointer" }} />
+          </Tooltip>
+        </Row>
         <Row gap>
           <Button type={"primary"} onClick={() => openExportProductModal()}>
             导出生产
