@@ -322,14 +322,17 @@ export const useFailReasons = () => {
 
 export const useGoodsByCode = (code: string) => {
   const client = useHttp();
-  const res = useQuery<GoodsListResult>(["search_goods", { code }], () =>
-    client("/api/v1/admin/goods/index", {
-      data: cleanObject({
-        "filter[goods.encoding]": code,
-        page: 1,
-        per_page: 1,
+  const res = useQuery<GoodsListResult>(
+    ["search_goods", { code }],
+    () =>
+      client("/api/v1/admin/goods/index", {
+        data: cleanObject({
+          "filter[goods.encoding]": code,
+          page: 1,
+          per_page: 1,
+        }),
       }),
-    })
+    { enabled: !!code }
   );
   return res.data?.data[0];
 };

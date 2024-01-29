@@ -397,3 +397,15 @@ export const useEditOrderFlagRemark = (queryKey: QueryKey) => {
     useEditConfig(queryKey)
   );
 };
+
+export const useUpdateOrderGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: { order_id: string; goods_id: number }) =>
+      client("/api/v1/admin/shop-order/update-goods", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};
