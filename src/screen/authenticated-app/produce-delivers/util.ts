@@ -16,6 +16,7 @@ export const useProduceDeliversSearchParams = () => {
     "is_recharged",
     "is_activated",
     "agent_id",
+    "supplier_id",
     "time_type",
     "start_time",
     "end_time",
