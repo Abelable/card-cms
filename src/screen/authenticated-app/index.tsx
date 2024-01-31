@@ -148,14 +148,12 @@ export const AuthenticatedApp = () => {
               ) : (
                 <></>
               )}
-
               {permission.includes("order/handle") ||
               permission.includes("*") ? (
                 <Route path="order/handle" element={<OrderHandle />} />
               ) : (
                 <></>
               )}
-
               {permission.includes("order/convert") ||
               permission.includes("*") ? (
                 <Route path="order/convert" element={<OrderConvert />} />
@@ -220,10 +218,20 @@ export const AuthenticatedApp = () => {
               ) : (
                 <></>
               )}
-
               <Route
                 path={"*"}
-                element={<Navigate to={permission[0]} replace={true} />}
+                element={
+                  <Navigate
+                    to={
+                      permission.includes("*")
+                        ? "home"
+                        : permission.filter((item) => item.includes("/"))[0]
+                        ? permission.filter((item) => item.includes("/"))[0]
+                        : permission[0]
+                    }
+                    replace={true}
+                  />
+                }
               />
             </Routes>
           </Content>
