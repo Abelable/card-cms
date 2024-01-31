@@ -63,6 +63,7 @@ import type { UserInfo } from "types/auth";
 import { ButtonNoPadding } from "components/lib";
 
 export const AuthenticatedApp = () => {
+  const { permission } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const { data: userInfo } = useUserInfo();
   const { logout } = useAuth();
@@ -70,7 +71,7 @@ export const AuthenticatedApp = () => {
   return (
     <Router>
       <Layout style={{ height: "100vh", overflow: "hidden" }}>
-        <MenuSider collapsed={collapsed} />
+        <MenuSider permission={permission} collapsed={collapsed} />
         <Layout>
           <Header>
             <Trigger collapsed={collapsed} setCollapsed={setCollapsed} />
@@ -92,42 +93,137 @@ export const AuthenticatedApp = () => {
           </Header>
           <Content>
             <Routes>
-              <Route path="home" element={<Home />} />
-              <Route path="suppliers" element={<Suppliers />} />
-              <Route
-                path="suppliers/goods_list"
-                element={<SupplierGoodsList />}
-              />
-              <Route path="agents" element={<Agents />} />
-              <Route path="agents/goods_list" element={<AgentGoodsList />} />
-              <Route path="product/channels" element={<ProductChannels />} />
-              <Route
-                path="product/channels/goods_list"
-                element={<ProductChannelGoodsList />}
-              />
-              <Route path="product/sales" element={<ProductGoodsList />} />
-              <Route
-                path="product/sales/agent"
-                element={<ProductGoodsAgents />}
-              />
-              <Route path="order/handle" element={<OrderHandle />} />
-              <Route path="order/convert" element={<OrderConvert />} />
-              <Route path="order/grab" element={<OrderGrab />} />
-              <Route path="order/log" element={<OrderLog />} />
-              <Route path="produce/deliver" element={<ProduceDelivers />} />
-              <Route
-                path="produce/deliver/report_forms"
-                element={<ProduceReportForms />}
-              />
-              <Route path="produce/configure" element={<ProduceProducts />} />
-              <Route path="produce/import" element={<ProduceImports />} />
-              <Route path="system/blacklist" element={<Blacklist />} />
-              <Route path="system/address_list" element={<AddressList />} />
-              <Route path="account/member" element={<MemberList />} />
-              <Route path="account/role" element={<RoleList />} />
+              {permission.includes("home") || permission.includes("*") ? (
+                <Route path="home" element={<Home />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("suppliers") || permission.includes("*") ? (
+                <>
+                  <Route path="suppliers" element={<Suppliers />} />
+                  <Route
+                    path="suppliers/goods_list"
+                    element={<SupplierGoodsList />}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+              {permission.includes("agents") || permission.includes("*") ? (
+                <>
+                  <Route path="agents" element={<Agents />} />
+                  <Route
+                    path="agents/goods_list"
+                    element={<AgentGoodsList />}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+
+              {permission.includes("product/channels") ||
+              permission.includes("*") ? (
+                <>
+                  <Route
+                    path="product/channels"
+                    element={<ProductChannels />}
+                  />
+                  <Route
+                    path="product/channels/goods_list"
+                    element={<ProductChannelGoodsList />}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+              {permission.includes("product/sales") ||
+              permission.includes("*") ? (
+                <>
+                  <Route path="product/sales" element={<ProductGoodsList />} />
+                  <Route
+                    path="product/sales/agent"
+                    element={<ProductGoodsAgents />}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+
+              {permission.includes("order/handle") ||
+              permission.includes("*") ? (
+                <Route path="order/handle" element={<OrderHandle />} />
+              ) : (
+                <></>
+              )}
+
+              {permission.includes("order/convert") ||
+              permission.includes("*") ? (
+                <Route path="order/convert" element={<OrderConvert />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("order/grab") || permission.includes("*") ? (
+                <Route path="order/grab" element={<OrderGrab />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("order/log") || permission.includes("*") ? (
+                <Route path="order/log" element={<OrderLog />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("produce/deliver") ||
+              permission.includes("*") ? (
+                <>
+                  <Route path="produce/deliver" element={<ProduceDelivers />} />
+                  <Route
+                    path="produce/deliver/report_forms"
+                    element={<ProduceReportForms />}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+              {permission.includes("produce/configure") ||
+              permission.includes("*") ? (
+                <Route path="produce/configure" element={<ProduceProducts />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("produce/import") ||
+              permission.includes("*") ? (
+                <Route path="produce/import" element={<ProduceImports />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("system/blacklist") ||
+              permission.includes("*") ? (
+                <Route path="system/blacklist" element={<Blacklist />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("system/address_list") ||
+              permission.includes("*") ? (
+                <Route path="system/address_list" element={<AddressList />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("account/member") ||
+              permission.includes("*") ? (
+                <Route path="account/member" element={<MemberList />} />
+              ) : (
+                <></>
+              )}
+              {permission.includes("account/role") ||
+              permission.includes("*") ? (
+                <Route path="account/role" element={<RoleList />} />
+              ) : (
+                <></>
+              )}
+
               <Route
                 path={"*"}
-                element={<Navigate to={"home"} replace={true} />}
+                element={<Navigate to={permission[0]} replace={true} />}
               />
             </Routes>
           </Content>
@@ -137,9 +233,14 @@ export const AuthenticatedApp = () => {
   );
 };
 
-const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
+const MenuSider = ({
+  permission,
+  collapsed,
+}: {
+  permission: string[];
+  collapsed: boolean;
+}) => {
   const { defaultOpenKey, selectedKey } = useRouteType();
-  const { permission } = useAuth();
 
   const items: MenuProps["items"] = [
     {

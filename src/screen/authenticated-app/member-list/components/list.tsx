@@ -16,9 +16,9 @@ import { useMemberListQueryKey, useMemberModal, usePwdModal } from "../util";
 import { useDeleteMember, useEditMemberStatus } from "service/member";
 import type { MemberListSearchParams, MemberItem } from "types/member";
 import type { RoleOption } from "types/role";
-import { useAuth } from "context/auth-context";
 
 interface ListProps extends TableProps<MemberItem> {
+  permission: string[];
   roleOptions: RoleOption[];
   params: Partial<MemberListSearchParams>;
   setParams: (params: Partial<MemberListSearchParams>) => void;
@@ -26,13 +26,13 @@ interface ListProps extends TableProps<MemberItem> {
 }
 
 export const List = ({
+  permission,
   roleOptions,
   error,
   params,
   setParams,
   ...restProps
 }: ListProps) => {
-  const { permission } = useAuth();
   const { open } = useMemberModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({

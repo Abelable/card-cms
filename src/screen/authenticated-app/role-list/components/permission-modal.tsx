@@ -34,11 +34,11 @@ export const PermissionModal = () => {
       children: [
         {
           title: "产品渠道管理",
-          key: "channels",
+          key: "product/channels",
         },
         {
           title: "在售商品管理",
-          key: "sales",
+          key: "product/sales",
         },
       ],
     },
@@ -48,23 +48,23 @@ export const PermissionModal = () => {
       children: [
         {
           title: "订单处理",
-          key: "handle",
+          key: "order/handle",
         },
         {
           title: "订单处理 > 导出信息脱敏并加密码",
-          key: "encryption",
+          key: "order/encryption",
         },
         {
           title: "转单配置",
-          key: "convert",
+          key: "order/convert",
         },
         {
           title: "抓单管理",
-          key: "grab",
+          key: "order/grab",
         },
         {
           title: "回调记录",
-          key: "log",
+          key: "order/log",
         },
       ],
     },
@@ -74,15 +74,15 @@ export const PermissionModal = () => {
       children: [
         {
           title: "生产发货",
-          key: "deliver",
+          key: "produce/deliver",
         },
         {
           title: "自动生产配置",
-          key: "configure",
+          key: "produce/configure",
         },
         {
           title: "批量导入",
-          key: "import",
+          key: "produce/import",
         },
       ],
     },
@@ -92,11 +92,11 @@ export const PermissionModal = () => {
       children: [
         {
           title: "黑名单配置",
-          key: "blacklist",
+          key: "system/blacklist",
         },
         {
           title: "地址库映射",
-          key: "address_list",
+          key: "system/address_list",
         },
       ],
     },
@@ -106,11 +106,11 @@ export const PermissionModal = () => {
       children: [
         {
           title: "我的团队",
-          key: "member",
+          key: "account/member",
         },
         {
           title: "岗位管理",
-          key: "role",
+          key: "account/role",
         },
       ],
     },

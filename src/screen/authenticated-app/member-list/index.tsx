@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useMemberList } from "service/member";
 import { useRoleOptions } from "service/role";
+import { useAuth } from "context/auth-context";
 import { toNumber } from "utils";
 import { useMemberListSearchParams } from "./util";
 
@@ -9,7 +10,8 @@ import { MemberModal } from "./components/member-modal";
 import { PwdModal } from "./components/pwd-modal";
 
 export const MemberList = () => {
-  const roleOptions = useRoleOptions();
+  const { permission } = useAuth();
+  const roleOptions = useRoleOptions() || [];
   const [params, setParams] = useMemberListSearchParams();
   const { data, isLoading, error } = useMemberList(params);
 
@@ -17,6 +19,7 @@ export const MemberList = () => {
     <Container>
       <Main>
         <List
+          permission={permission}
           roleOptions={roleOptions}
           error={error}
           params={params}
@@ -30,7 +33,11 @@ export const MemberList = () => {
           }}
         />
         <MemberModal
-          roleOptions={roleOptions || []}
+          roleOptions={
+            permission.includes("*")
+              ? roleOptions
+              : roleOptions.filter((item) => item.name !== "超级管理员")
+          }
           memberList={data?.data || []}
         />
         <PwdModal memberList={data?.data || []} />
