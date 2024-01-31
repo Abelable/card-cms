@@ -250,10 +250,10 @@ export const SearchPanel = ({
   const clearAgent = () =>
     setTemporaryParams({ ...temporaryParams, agent_id: undefined });
 
-  const setSupplier = (supplier_id: number) =>
-    setTemporaryParams({ ...temporaryParams, supplier_id });
-  const clearSupplier = () =>
-    setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
+  // const setSupplier = (supplier_id: number) =>
+  //   setTemporaryParams({ ...temporaryParams, supplier_id });
+  // const clearSupplier = () =>
+  //   setTemporaryParams({ ...temporaryParams, supplier_id: undefined });
 
   const setTimeType = (time_type: number) =>
     setTemporaryParams({ ...temporaryParams, time_type });
@@ -511,7 +511,7 @@ export const SearchPanel = ({
           ))}
         </Select>
       </Item>
-      <Item>
+      {/* <Item>
         <div>供应商：</div>
         <Select
           style={{ width: "20rem" }}
@@ -533,7 +533,7 @@ export const SearchPanel = ({
             </Select.Option>
           ))}
         </Select>
-      </Item>
+      </Item> */}
       <Item style={{ marginRight: "40rem" }}>
         <div>选择时间：</div>
         <Input.Group compact>
