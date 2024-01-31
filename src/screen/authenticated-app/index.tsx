@@ -260,7 +260,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
   ]
     .map((item) => {
       if (item.children) {
-        if (permission.includes(item.key)) {
+        if (permission.includes(item.key) || permission.includes("*")) {
           return item;
         } else {
           const children = item.children.filter((_item) =>
@@ -276,7 +276,7 @@ const MenuSider = ({ collapsed }: { collapsed: boolean }) => {
           }
         }
       } else {
-        if (permission.includes(item.key)) {
+        if (permission.includes(item.key) || permission.includes("*")) {
           return item;
         } else {
           return null;

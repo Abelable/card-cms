@@ -16,6 +16,7 @@ import { useMemberListQueryKey, useMemberModal, usePwdModal } from "../util";
 import { useDeleteMember, useEditMemberStatus } from "service/member";
 import type { MemberListSearchParams, MemberItem } from "types/member";
 import type { RoleOption } from "types/role";
+import { useAuth } from "context/auth-context";
 
 interface ListProps extends TableProps<MemberItem> {
   roleOptions: RoleOption[];
@@ -31,6 +32,7 @@ export const List = ({
   setParams,
   ...restProps
 }: ListProps) => {
+  const { permission } = useAuth();
   const { open } = useMemberModal();
   const setPagination = (pagination: TablePaginationConfig) =>
     setParams({
@@ -88,6 +90,10 @@ export const List = ({
             dataIndex: "status",
             render: (value, member) => (
               <Switch
+                disabled={
+                  roleOptions.find((item) => item.id === member.role_id)
+                    ?.name === "超级管理员" && !permission.includes("*")
+                }
                 key={member.id}
                 checked={value === 1}
                 onChange={(checked) => onStatusChange(member.id, checked)}
@@ -96,7 +102,20 @@ export const List = ({
           },
           {
             title: "操作",
-            render: (value, member) => <More id={member.id} />,
+            render: (value, member) => {
+              if (
+                roleOptions.find((item) => item.id === member.role_id)?.name ===
+                "超级管理员"
+              ) {
+                return permission.includes("*") ? (
+                  <More id={member.id} />
+                ) : (
+                  <></>
+                );
+              } else {
+                return <More id={member.id} />;
+              }
+            },
           },
         ]}
         onChange={setPagination}

@@ -66,7 +66,12 @@ export const List = ({ error, params, setParams, ...restProps }: ListProps) => {
           },
           {
             title: "操作",
-            render: (value, roleItem) => <More id={roleItem.id} />,
+            render: (value, roleItem) =>
+              roleItem.name === "超级管理员" ? (
+                <></>
+              ) : (
+                <More id={roleItem.id} />
+              ),
           },
         ]}
         onChange={setPagination}
