@@ -119,13 +119,13 @@ export const List = ({
             ),
           },
           {
-            title: "产品信息",
+            title: "商品信息",
             width: "32rem",
             render: (value, order) => (
               <Space direction={"vertical"}>
                 <div>
                   <span>
-                    产品名称：
+                    商品名称：
                     {order.is_transfer === 1
                       ? order.transfer[0].goods_name
                       : order.goods?.goods_name}
@@ -145,7 +145,7 @@ export const List = ({
                 </div>
                 <div>
                   <span>
-                    产品编码：
+                    商品编码：
                     {order.is_transfer === 1
                       ? order.transfer[0].goods_sn
                       : order.goods?.goods_sn}
