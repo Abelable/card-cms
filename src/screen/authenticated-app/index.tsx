@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouteType } from "utils/url";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
@@ -63,10 +63,16 @@ import type { UserInfo } from "types/auth";
 import { ButtonNoPadding } from "components/lib";
 
 export const AuthenticatedApp = () => {
-  const { permission } = useAuth();
+  const { permission, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const { data: userInfo } = useUserInfo();
-  const { logout } = useAuth();
+
+  useEffect(() => {
+    if (permission && !permission.length) {
+      logout();
+      window.location.reload();
+    }
+  }, [logout, permission]);
 
   return (
     <Router>
