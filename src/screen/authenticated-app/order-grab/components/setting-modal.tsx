@@ -199,17 +199,13 @@ export const SettingModal = ({ shopList }: { shopList: Shop[] }) => {
                 {({ getFieldValue }) =>
                   getFieldValue("app_key") ? (
                     <div>
-                      {`https://91haoka.cn/api/store/business/${getFieldValue(
-                        "app_key"
-                      )}/notify`}
+                      {"https://api.jiumeng.co/api/v1/down/platform/callback"}
                       <ButtonNoPadding
                         style={{ marginLeft: "1.2rem" }}
                         type={"link"}
                         onClick={() =>
                           copyUrl(
-                            `https://91haoka.cn/api/store/business/${getFieldValue(
-                              "app_key"
-                            )}/notify`
+                            "https://api.jiumeng.co/api/v1/down/platform/callback"
                           )
                         }
                       >
