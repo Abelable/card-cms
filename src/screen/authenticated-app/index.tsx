@@ -231,6 +231,8 @@ export const AuthenticatedApp = () => {
                     to={
                       permission.includes("*")
                         ? "home"
+                        : permission[0] === "order/encryption"
+                        ? permission[1]
                         : permission.filter((item) => item.includes("/"))[0]
                         ? permission.filter((item) => item.includes("/"))[0]
                         : permission[0]
