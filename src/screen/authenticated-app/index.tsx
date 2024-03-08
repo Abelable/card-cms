@@ -381,7 +381,7 @@ const MenuSider = ({
           return item;
         } else {
           const children = item.children.filter((_item) =>
-            permission.includes(_item.key)
+            permission.includes(`${item.key}/${_item.key}`)
           );
           if (children.length) {
             return {
