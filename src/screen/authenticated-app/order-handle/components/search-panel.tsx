@@ -9,9 +9,11 @@ import dayjs from "dayjs";
 import { useExportOrderList } from "service/order";
 
 import type { Option, OrderListSearchParams, ShopOption } from "types/order";
+import type { GoodsOption } from "types/product";
 
 export interface SearchPanelProps {
   shopOptions: ShopOption[];
+  goodsOptions: GoodsOption[];
   flagOptions: Option[];
   params: Partial<OrderListSearchParams>;
   setParams: (params: Partial<OrderListSearchParams>) => void;
@@ -19,6 +21,7 @@ export interface SearchPanelProps {
 
 export const SearchPanel = ({
   shopOptions,
+  goodsOptions,
   flagOptions,
   params,
   setParams,
@@ -37,6 +40,10 @@ export const SearchPanel = ({
     shop_order_sn: "",
     shop_name: undefined,
     tag: undefined,
+    concat_phone: "",
+    idcard: "",
+    goods_name: "",
+    goods_sn: "",
     start_created_at: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
     end_created_at: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
   };
@@ -107,6 +114,61 @@ export const SearchPanel = ({
     });
   const clearShopName = () =>
     setTemporaryParams({ ...temporaryParams, shop_name: undefined });
+
+  const setGoodsName = (goods_name: string[]) =>
+    setTemporaryParams({
+      ...temporaryParams,
+      goods_name: goods_name.join(),
+    });
+  const clearGoodsName = () =>
+    setTemporaryParams({ ...temporaryParams, goods_name: undefined });
+
+  const setGoodsSn = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        goods_sn: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      goods_sn: evt.target.value,
+    });
+  };
+
+  const setIdCard = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        idcard: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      idcard: evt.target.value,
+    });
+  };
+
+  const setPhone = (evt: any) => {
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        concat_phone: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      concat_phone: evt.target.value,
+    });
+  };
 
   const selectFlag = (tag: string) =>
     setTemporaryParams({ ...temporaryParams, tag });
@@ -220,6 +282,54 @@ export const SearchPanel = ({
             </Select.Option>
           ))}
         </Select>
+      </Item>
+      <Item>
+        <div>商品名称：</div>
+        <Select
+          mode="multiple"
+          maxTagCount="responsive"
+          style={{ width: "40rem" }}
+          allowClear={true}
+          onChange={setGoodsName}
+          onClear={clearGoodsName}
+          placeholder="请选择商品名称"
+        >
+          {goodsOptions.map(({ id, name }) => (
+            <Select.Option key={id} value={name}>
+              {name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Item>
+      <Item>
+        <div>商品编码：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.goods_sn}
+          onChange={setGoodsSn}
+          placeholder="请输入商品编码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>身份证号：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.idcard}
+          onChange={setIdCard}
+          placeholder="请输入身份证号"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>手机号：</div>
+        <Input
+          style={{ width: "20rem" }}
+          value={temporaryParams.concat_phone}
+          onChange={setPhone}
+          placeholder="请输入手机号"
+          allowClear={true}
+        />
       </Item>
       <Item>
         <div>标旗：</div>

@@ -30,7 +30,9 @@ import {
 import type { SearchPanelProps } from "./search-panel";
 import type { StatusOption, Order } from "types/order";
 
-interface ListProps extends TableProps<Order>, SearchPanelProps {
+interface ListProps
+  extends TableProps<Order>,
+    Omit<SearchPanelProps, "goodsOptions"> {
   orderStatusOptions: StatusOption[];
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;

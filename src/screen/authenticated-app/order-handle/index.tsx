@@ -69,6 +69,7 @@ export const OrderHandle = () => {
       <Main>
         <SearchPanel
           shopOptions={shopOptions}
+          goodsOptions={goodsOptions}
           flagOptions={flagOptions}
           params={params}
           setParams={setParams}

@@ -259,9 +259,13 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
         "filter[shop_order.shop_order_sn]":
           restParams.shop_order_sn?.split(","),
         "filter[shop_order.flag]": restParams.tag,
+        "filter[shop_order.concat_phone]": restParams.concat_phone,
+        "filter[shop_order.idcard]": restParams.idcard,
         "filter[shop_order.start_created_at]": start_created_at,
         "filter[shop_order.end_created_at]": end_created_at,
         "filter[shop.shop_name]": restParams.shop_name,
+        "filter[goods.name]": restParams.goods_name,
+        "filter[goods.goods_sn]": restParams.goods_sn,
         page,
         per_page,
       }),
