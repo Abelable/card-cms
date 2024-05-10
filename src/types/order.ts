@@ -160,8 +160,10 @@ export interface OrderListSearchParams {
   shop_name: string | undefined;
   concat_phone: string;
   idcard: string;
-  goods_name: string;
+  goods_name: string | undefined;
   goods_sn: string;
+  product_no: string;
+  express_sn: string;
   start_created_at: string;
   end_created_at: string;
   page: number;

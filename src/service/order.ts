@@ -258,6 +258,8 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
         "filter[shop_order.order_sn]": restParams.order_sn,
         "filter[shop_order.shop_order_sn]":
           restParams.shop_order_sn?.split(","),
+        "filter[shop_order.product_no]": restParams.product_no,
+        "filter[shop_order.express_sn]": restParams.express_sn,
         "filter[shop_order.flag]": restParams.tag,
         "filter[shop_order.concat_phone]": restParams.concat_phone,
         "filter[shop_order.idcard]": restParams.idcard,

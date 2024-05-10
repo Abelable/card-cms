@@ -42,8 +42,10 @@ export const SearchPanel = ({
     tag: undefined,
     concat_phone: "",
     idcard: "",
-    goods_name: "",
+    goods_name: undefined,
     goods_sn: "",
+    product_no: "",
+    express_sn: "",
     start_created_at: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
     end_created_at: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
   };
@@ -136,6 +138,38 @@ export const SearchPanel = ({
     setTemporaryParams({
       ...temporaryParams,
       goods_sn: evt.target.value,
+    });
+  };
+
+  const setProductNo = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        product_no: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      product_no: evt.target.value,
+    });
+  };
+
+  const setExpressSn = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        express_sn: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      express_sn: evt.target.value,
     });
   };
 
@@ -304,10 +338,30 @@ export const SearchPanel = ({
       <Item>
         <div>商品编码：</div>
         <Input
-          style={{ width: "20rem" }}
+          style={{ width: "25rem" }}
           value={temporaryParams.goods_sn}
           onChange={setGoodsSn}
           placeholder="请输入商品编码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>生产号码：</div>
+        <Input
+          style={{ width: "25rem" }}
+          value={temporaryParams.product_no}
+          onChange={setProductNo}
+          placeholder="请输入生产号码"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
+        <div>物流单号：</div>
+        <Input
+          style={{ width: "25rem" }}
+          value={temporaryParams.express_sn}
+          onChange={setExpressSn}
+          placeholder="请输入物流单号"
           allowClear={true}
         />
       </Item>
