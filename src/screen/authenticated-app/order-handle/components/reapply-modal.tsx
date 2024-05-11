@@ -66,7 +66,7 @@ export const ReapplyModal = ({
           }
         >
           {goodsOptions.map(({ id, name }) => (
-            <Select.Option key={id} value={name}>
+            <Select.Option key={id} value={id}>
               {name}
             </Select.Option>
           ))}
