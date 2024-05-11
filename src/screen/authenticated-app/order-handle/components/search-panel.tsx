@@ -414,21 +414,6 @@ export const SearchPanel = ({
           ))}
         </Select>
       </Item>
-      <Item style={{ marginRight: "40rem" }}>
-        <div>选择时间：</div>
-        <DatePicker.RangePicker
-          showTime
-          value={
-            temporaryParams.start_created_at
-              ? [
-                  moment(temporaryParams.start_created_at),
-                  moment(temporaryParams.end_created_at),
-                ]
-              : undefined
-          }
-          onChange={setDates}
-        />
-      </Item>
       {menuIdx === 0 ? (
         <Item>
           <div>订单状态：</div>
@@ -450,6 +435,21 @@ export const SearchPanel = ({
       ) : (
         <></>
       )}
+      <Item style={{ marginRight: "40rem" }}>
+        <div>选择时间：</div>
+        <DatePicker.RangePicker
+          showTime
+          value={
+            temporaryParams.start_created_at
+              ? [
+                  moment(temporaryParams.start_created_at),
+                  moment(temporaryParams.end_created_at),
+                ]
+              : undefined
+          }
+          onChange={setDates}
+        />
+      </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button type={"primary"} onClick={query}>
