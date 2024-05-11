@@ -8,10 +8,17 @@ import moment from "moment";
 import dayjs from "dayjs";
 import { useExportOrderList } from "service/order";
 
-import type { Option, OrderListSearchParams, ShopOption } from "types/order";
+import type {
+  Option,
+  OrderListSearchParams,
+  ShopOption,
+  StatusOption,
+} from "types/order";
 import type { GoodsOption } from "types/product";
 
 export interface SearchPanelProps {
+  menuIdx: Number;
+  orderStatusOptions: StatusOption[];
   shopOptions: ShopOption[];
   goodsOptions: GoodsOption[];
   flagOptions: Option[];
@@ -20,6 +27,8 @@ export interface SearchPanelProps {
 }
 
 export const SearchPanel = ({
+  menuIdx,
+  orderStatusOptions,
   shopOptions,
   goodsOptions,
   flagOptions,
@@ -32,10 +41,8 @@ export const SearchPanel = ({
   const startTime = new Date(
     new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
   );
-  const defaultParams: Omit<
-    OrderListSearchParams,
-    "status" | "page" | "per_page"
-  > = {
+  const defaultParams: Omit<OrderListSearchParams, "page" | "per_page"> = {
+    status: undefined,
     order_sn: "",
     shop_order_sn: "",
     shop_name: undefined,
@@ -172,6 +179,11 @@ export const SearchPanel = ({
       express_sn: evt.target.value,
     });
   };
+
+  const setStatus = (status: number) =>
+    setTemporaryParams({ ...temporaryParams, status });
+  const clearStatus = () =>
+    setTemporaryParams({ ...temporaryParams, status: undefined });
 
   const setIdCard = (evt: any) => {
     // onInputClear
@@ -365,6 +377,7 @@ export const SearchPanel = ({
           allowClear={true}
         />
       </Item>
+
       <Item>
         <div>身份证号：</div>
         <Input
@@ -417,6 +430,27 @@ export const SearchPanel = ({
           onChange={setDates}
         />
       </Item>
+      {menuIdx === 0 ? (
+        <Item>
+          <div>订单状态：</div>
+          <Select
+            style={{ width: "20rem" }}
+            value={temporaryParams.status}
+            allowClear={true}
+            onSelect={setStatus}
+            onClear={clearStatus}
+            placeholder="请选择订单状态"
+          >
+            {orderStatusOptions.map(({ label, value }) => (
+              <Select.Option key={value} value={value}>
+                {label}
+              </Select.Option>
+            ))}
+          </Select>
+        </Item>
+      ) : (
+        <></>
+      )}
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>
         <Button type={"primary"} onClick={query}>

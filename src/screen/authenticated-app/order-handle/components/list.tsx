@@ -28,12 +28,11 @@ import {
 } from "../util";
 
 import type { SearchPanelProps } from "./search-panel";
-import type { StatusOption, Order } from "types/order";
+import type { Order } from "types/order";
 
 interface ListProps
   extends TableProps<Order>,
-    Omit<SearchPanelProps, "goodsOptions"> {
-  orderStatusOptions: StatusOption[];
+    Omit<SearchPanelProps, "menuIdx" | "goodsOptions"> {
   selectedRowKeys: React.Key[];
   setSelectedRowKeys: (selectedRowKeys: []) => void;
   error: Error | unknown;

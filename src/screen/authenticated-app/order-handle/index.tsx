@@ -22,7 +22,7 @@ const commonStatusOptions = [
   { label: "自动发货失败", value: 30 },
 ];
 const menuStatusOptions = [
-  { label: "全部", value: -1 },
+  { label: "全部", value: undefined },
   ...commonStatusOptions,
 ];
 const orderStatusOptions = [
@@ -44,30 +44,36 @@ export const OrderHandle = () => {
   const { data: regionOptions } = useRegionOptions(3);
   const { data, isLoading, error } = useOrderList(params);
 
+  const [menuIdx, setMenuIdx] = useState(0);
   const [batchFlag, setBatchFlag] = useState<number | undefined>(undefined);
   const selectBatchFlag = (ids: string[]) => (flag: number) => {
     setBatchFlag(flag);
     // todo 批量修改标旗
   };
 
-  const menuItems: MenuProps["items"] = menuStatusOptions.map((item) => ({
-    label: (
-      <div onClick={() => setParams({ ...params, status: item.value })}>
-        {item.label}
-      </div>
-    ),
-    key: `${item.value}`,
-  }));
+  const menuItems: MenuProps["items"] = menuStatusOptions.map(
+    (item, index) => ({
+      label: (
+        <div
+          onClick={() => {
+            setParams({ ...params, status: item.value });
+            setMenuIdx(index);
+          }}
+        >
+          {item.label}
+        </div>
+      ),
+      key: `${index}`,
+    })
+  );
 
   return (
     <Container>
-      <Menu
-        mode="horizontal"
-        selectedKeys={[`${params.status}`]}
-        items={menuItems}
-      />
+      <Menu mode="horizontal" selectedKeys={[`${menuIdx}`]} items={menuItems} />
       <Main>
         <SearchPanel
+          menuIdx={menuIdx}
+          orderStatusOptions={orderStatusOptions}
           shopOptions={shopOptions}
           goodsOptions={goodsOptions}
           flagOptions={flagOptions}
