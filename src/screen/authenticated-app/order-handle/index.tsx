@@ -25,6 +25,10 @@ export const OrderHandle = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderListSearchParams();
   const { data: orderStatusOptions = [] } = useOrderStatusOptions();
+  const menuStatusOptions = [
+    { text: "全部", value: undefined },
+    ...orderStatusOptions.filter((item) => [10, 20].includes(item.value)),
+  ];
   const goodsOptions = useGoodsOptions();
   const shopOptions = useShopOptions("10");
   const { data: flagOptions = [] } = useSettingOptions("tag");
@@ -38,22 +42,21 @@ export const OrderHandle = () => {
     // todo 批量修改标旗
   };
 
-  const menuItems: MenuProps["items"] = [
-    { text: "全部", value: undefined },
-    ...orderStatusOptions,
-  ].map((item, index) => ({
-    label: (
-      <div
-        onClick={() => {
-          setParams({ ...params, status: item.value });
-          setMenuIdx(index);
-        }}
-      >
-        {item.text}
-      </div>
-    ),
-    key: `${index}`,
-  }));
+  const menuItems: MenuProps["items"] = menuStatusOptions.map(
+    (item, index) => ({
+      label: (
+        <div
+          onClick={() => {
+            setParams({ ...params, status: item.value });
+            setMenuIdx(index);
+          }}
+        >
+          {item.text}
+        </div>
+      ),
+      key: `${index}`,
+    })
+  );
 
   return (
     <Container>
