@@ -16,6 +16,11 @@ import type {
 } from "types/order";
 import type { GoodsOption } from "types/product";
 
+const timeTypeOptions = [
+  { name: "平台创建时间", value: 1 },
+  { name: "订单激活时间", value: 2 },
+];
+
 export interface SearchPanelProps {
   menuIdx: Number;
   orderStatusOptions: StatusOption[];
@@ -53,16 +58,18 @@ export const SearchPanel = ({
     goods_sn: "",
     product_no: "",
     express_sn: "",
-    start_created_at: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
-    end_created_at: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
+    express_company: "",
+    time_type: 1,
+    start_time: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
+    end_time: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
   };
 
   const [defaultDate, setDefaultDate] = useState<{
-    start_created_at: string | undefined;
-    end_created_at: string | undefined;
+    start_time: string | undefined;
+    end_time: string | undefined;
   }>({
-    start_created_at: defaultParams.start_created_at,
-    end_created_at: defaultParams.end_created_at,
+    start_time: defaultParams.start_time,
+    end_time: defaultParams.end_time,
   });
 
   const [temporaryParams, setTemporaryParams] =
@@ -180,6 +187,22 @@ export const SearchPanel = ({
     });
   };
 
+  const setExpressCompany = (evt: any) => {
+    // onInputClear
+    if (!evt.target.value && evt.type !== "change") {
+      setTemporaryParams({
+        ...temporaryParams,
+        express_company: "",
+      });
+      return;
+    }
+
+    setTemporaryParams({
+      ...temporaryParams,
+      express_company: evt.target.value,
+    });
+  };
+
   const setStatus = (status: number) =>
     setTemporaryParams({ ...temporaryParams, status });
   const clearStatus = () =>
@@ -221,43 +244,48 @@ export const SearchPanel = ({
   const clearTag = () =>
     setTemporaryParams({ ...temporaryParams, tag: undefined });
 
+  const setTimeType = (time_type: number) =>
+    setTemporaryParams({ ...temporaryParams, time_type });
+  const clearTimeType = () =>
+    setTemporaryParams({ ...temporaryParams, time_type: undefined });
+
   const setDates = (dates: any, formatString: [string, string]) =>
     setTemporaryParams({
       ...temporaryParams,
-      start_created_at: formatString[0],
-      end_created_at: formatString[1],
+      start_time: formatString[0],
+      end_time: formatString[1],
     });
 
   const query = () => {
-    const { start_created_at, end_created_at, ...rest } = temporaryParams;
+    const { start_time, end_time, ...rest } = temporaryParams;
 
     // 时间参数没有变化的情况，表示使用的是默认时间，需要刷新默认时间
     if (
-      start_created_at === defaultDate.start_created_at &&
-      end_created_at === defaultDate.end_created_at
+      start_time === defaultDate.start_time &&
+      end_time === defaultDate.end_time
     ) {
-      const startTime = defaultParams.start_created_at;
-      const endTime = defaultParams.end_created_at;
+      const startTime = defaultParams.start_time;
+      const endTime = defaultParams.end_time;
       setParams({
         ...params,
-        start_created_at: startTime,
-        end_created_at: endTime,
+        start_time: startTime,
+        end_time: endTime,
         ...rest,
       });
       setTemporaryParams({
         ...temporaryParams,
-        start_created_at: startTime,
-        end_created_at: endTime,
+        start_time: startTime,
+        end_time: endTime,
       });
       setDefaultDate({
-        start_created_at: startTime,
-        end_created_at: endTime,
+        start_time: startTime,
+        end_time: endTime,
       });
     } else {
       setParams({
         ...params,
-        start_created_at,
-        end_created_at,
+        start_time,
+        end_time,
         ...rest,
       });
     }
@@ -267,8 +295,8 @@ export const SearchPanel = ({
     setParams({ ...params, ...defaultParams });
     setTemporaryParams({ ...temporaryParams, ...defaultParams });
     setDefaultDate({
-      start_created_at: defaultParams.start_created_at,
-      end_created_at: defaultParams.end_created_at,
+      start_time: defaultParams.start_time,
+      end_time: defaultParams.end_time,
     });
   };
 
@@ -378,6 +406,16 @@ export const SearchPanel = ({
         />
       </Item>
       <Item>
+        <div>物流公司：</div>
+        <Input
+          style={{ width: "25rem" }}
+          value={temporaryParams.express_company}
+          onChange={setExpressCompany}
+          placeholder="请输入物流公司"
+          allowClear={true}
+        />
+      </Item>
+      <Item>
         <div>身份证号：</div>
         <Input
           style={{ width: "20rem" }}
@@ -437,18 +475,38 @@ export const SearchPanel = ({
       )}
       <Item style={{ marginRight: "40rem" }}>
         <div>选择时间：</div>
-        <DatePicker.RangePicker
-          showTime
-          value={
-            temporaryParams.start_created_at
-              ? [
-                  moment(temporaryParams.start_created_at),
-                  moment(temporaryParams.end_created_at),
-                ]
-              : undefined
-          }
-          onChange={setDates}
-        />
+        <Input.Group compact>
+          <Select
+            style={{ width: "14rem" }}
+            value={
+              temporaryParams.time_type
+                ? Number(temporaryParams.time_type)
+                : undefined
+            }
+            allowClear={true}
+            onSelect={setTimeType}
+            onClear={clearTimeType}
+            placeholder="请选择时间类型"
+          >
+            {timeTypeOptions.map(({ name, value }) => (
+              <Select.Option key={value} value={value}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+          <DatePicker.RangePicker
+            showTime
+            value={
+              temporaryParams.start_time
+                ? [
+                    moment(temporaryParams.start_time),
+                    moment(temporaryParams.end_time),
+                  ]
+                : undefined
+            }
+            onChange={setDates}
+          />
+        </Input.Group>
       </Item>
       <ButtonWrap gap={true}>
         <Button onClick={clear}>重置</Button>

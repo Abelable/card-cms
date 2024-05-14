@@ -233,23 +233,17 @@ export const useLogRetry = (queryKey: QueryKey) => {
 export const useOrderList = (params: Partial<OrderListSearchParams>) => {
   const client = useHttp();
   return useQuery<OrderListResult>(["order_list", params], () => {
-    let {
-      status,
-      start_created_at,
-      end_created_at,
-      page,
-      per_page,
-      ...restParams
-    } = params;
-    if (!start_created_at) {
+    let { status, start_time, end_time, page, per_page, ...restParams } =
+      params;
+    if (!start_time) {
       const endTime = new Date(
         new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
       );
       const startTime = new Date(
         new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
       );
-      start_created_at = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
-      end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
+      start_time = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
+      end_time = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
     }
 
     return client("/api/v1/admin/shop-order/lst", {
@@ -260,11 +254,18 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
           restParams.shop_order_sn?.split(","),
         "filter[shop_order.product_no]": restParams.product_no,
         "filter[shop_order.express_sn]": restParams.express_sn,
+        "filter[shop_order.express_company]": restParams.express_company,
         "filter[shop_order.flag]": restParams.tag,
         "filter[shop_order.concat_phone]": restParams.concat_phone,
         "filter[shop_order.idcard]": restParams.idcard,
-        "filter[shop_order.start_created_at]": start_created_at,
-        "filter[shop_order.end_created_at]": end_created_at,
+        "filter[shop_order.start_created_at]":
+          Number(restParams.time_type) === 1 ? start_time : "",
+        "filter[shop_order.end_created_at]":
+          Number(restParams.time_type) === 1 ? end_time : "",
+        "filter[shop_order.start_activated_at]":
+          Number(restParams.time_type) === 2 ? start_time : "",
+        "filter[shop_order.end_activated_at]":
+          Number(restParams.time_type) === 2 ? end_time : "",
         "filter[shop.shop_name]": restParams.shop_name,
         "filter[goods.name]": restParams.goods_name,
         "filter[goods.goods_sn]": restParams.goods_sn,
@@ -278,23 +279,17 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
 export const useExportOrderList = () => {
   const client = useHttp();
   return (params: Partial<OrderListSearchParams>) => {
-    let {
-      status,
-      start_created_at,
-      end_created_at,
-      page,
-      per_page,
-      ...restParams
-    } = params;
-    if (!start_created_at) {
+    let { status, start_time, end_time, page, per_page, ...restParams } =
+      params;
+    if (!start_time) {
       const endTime = new Date(
         new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000
       );
       const startTime = new Date(
         new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
       );
-      start_created_at = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
-      end_created_at = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
+      start_time = dayjs(startTime).format("YYYY-MM-DD HH:mm:ss");
+      end_time = dayjs(endTime).format("YYYY-MM-DD HH:mm:ss");
     }
 
     return client("/api/v1/admin/shop-order/lst", {
@@ -305,8 +300,8 @@ export const useExportOrderList = () => {
         "filter[shop_order.shop_order_sn]":
           restParams.shop_order_sn?.split(","),
         "filter[shop_order.flag]": restParams.tag,
-        "filter[shop_order.start_created_at]": start_created_at,
-        "filter[shop_order.end_created_at]": end_created_at,
+        "filter[shop_order.start_time]": start_time,
+        "filter[shop_order.end_time]": end_time,
         "filter[shop.shop_name]": restParams.shop_name,
       }),
       headers: {

@@ -164,8 +164,10 @@ export interface OrderListSearchParams {
   goods_sn: string;
   product_no: string;
   express_sn: string;
-  start_created_at: string;
-  end_created_at: string;
+  express_company: string;
+  time_type: number | string;
+  start_time: string;
+  end_time: string;
   page: number;
   per_page: number;
 }
