@@ -197,7 +197,7 @@ export const List = ({
                   {
                     orderStatusOptions.find(
                       (item) => item.value === order.status
-                    )?.label
+                    )?.text
                   }
                 </div>
                 <Link

@@ -3,12 +3,11 @@ import { Row } from "components/lib";
 import styled from "@emotion/styled";
 import { IdcardOutlined } from "@ant-design/icons";
 import { useDetailModal, usePicModal } from "../util";
-import type { StatusOption } from "types/order";
 
 export const DetailModal = ({
   orderStatusOptions,
 }: {
-  orderStatusOptions: StatusOption[];
+  orderStatusOptions: { text: string; value: number }[];
 }) => {
   const { detailModalOpen, detailOrderId, editingOrder, close, isLoading } =
     useDetailModal();
@@ -59,7 +58,7 @@ export const DetailModal = ({
               {
                 orderStatusOptions.find(
                   (item) => item.value === editingOrder?.status
-                )?.label
+                )?.text
               }
             </Descriptions.Item>
             <Descriptions.Item label="收获地址">

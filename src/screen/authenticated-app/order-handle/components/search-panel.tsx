@@ -8,12 +8,7 @@ import moment from "moment";
 import dayjs from "dayjs";
 import { useExportOrderList } from "service/order";
 
-import type {
-  Option,
-  OrderListSearchParams,
-  ShopOption,
-  StatusOption,
-} from "types/order";
+import type { Option, OrderListSearchParams, ShopOption } from "types/order";
 import type { GoodsOption } from "types/product";
 
 const timeTypeOptions = [
@@ -23,7 +18,7 @@ const timeTypeOptions = [
 
 export interface SearchPanelProps {
   menuIdx: Number;
-  orderStatusOptions: StatusOption[];
+  orderStatusOptions: { text: string; value: number }[];
   shopOptions: ShopOption[];
   goodsOptions: GoodsOption[];
   flagOptions: Option[];
@@ -463,9 +458,9 @@ export const SearchPanel = ({
             onClear={clearStatus}
             placeholder="请选择订单状态"
           >
-            {orderStatusOptions.map(({ label, value }) => (
+            {orderStatusOptions.map(({ text, value }) => (
               <Select.Option key={value} value={value}>
-                {label}
+                {text}
               </Select.Option>
             ))}
           </Select>

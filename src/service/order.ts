@@ -230,6 +230,14 @@ export const useLogRetry = (queryKey: QueryKey) => {
   );
 };
 
+export const useOrderStatusOptions = () => {
+  const client = useHttp();
+  return useQuery<{ value: number; text: string }[]>(
+    ["order_status_options"],
+    () => client("/api/v1/admin/shop-order/status-map")
+  );
+};
+
 export const useOrderList = (params: Partial<OrderListSearchParams>) => {
   const client = useHttp();
   return useQuery<OrderListResult>(["order_list", params], () => {

@@ -11,33 +11,20 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import { useRegionOptions } from "service/common";
 import { useGoodsOptions } from "service/product";
-import { useOrderList, useSettingOptions, useShopOptions } from "service/order";
+import {
+  useOrderList,
+  useOrderStatusOptions,
+  useSettingOptions,
+  useShopOptions,
+} from "service/order";
 import { toNumber } from "utils";
 import { useOrderListSearchParams } from "./util";
 import { FlagModal } from "./components/flag-modal";
 
-const commonStatusOptions = [
-  { label: "待完善证件信息", value: 10 },
-  { label: "开卡失败", value: 20 },
-  { label: "自动发货失败", value: 30 },
-];
-const menuStatusOptions = [
-  { label: "全部", value: undefined },
-  ...commonStatusOptions,
-];
-const orderStatusOptions = [
-  { label: "初始化收单成功", value: 0 },
-  ...commonStatusOptions,
-  { label: "开卡失败超时", value: 25 },
-  { label: "待开卡", value: 40 },
-  { label: "待开卡超时", value: 45 },
-  { label: "发货成功", value: 50 },
-  { label: "订单终止", value: 100 },
-];
-
 export const OrderHandle = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [params, setParams] = useOrderListSearchParams();
+  const { data: orderStatusOptions = [] } = useOrderStatusOptions();
   const goodsOptions = useGoodsOptions();
   const shopOptions = useShopOptions("10");
   const { data: flagOptions = [] } = useSettingOptions("tag");
@@ -51,21 +38,22 @@ export const OrderHandle = () => {
     // todo 批量修改标旗
   };
 
-  const menuItems: MenuProps["items"] = menuStatusOptions.map(
-    (item, index) => ({
-      label: (
-        <div
-          onClick={() => {
-            setParams({ ...params, status: item.value });
-            setMenuIdx(index);
-          }}
-        >
-          {item.label}
-        </div>
-      ),
-      key: `${index}`,
-    })
-  );
+  const menuItems: MenuProps["items"] = [
+    { text: "全部", value: undefined },
+    ...orderStatusOptions,
+  ].map((item, index) => ({
+    label: (
+      <div
+        onClick={() => {
+          setParams({ ...params, status: item.value });
+          setMenuIdx(index);
+        }}
+      >
+        {item.text}
+      </div>
+    ),
+    key: `${index}`,
+  }));
 
   return (
     <Container>
