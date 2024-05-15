@@ -24,11 +24,12 @@ export const useOrderListSearchParams = () => {
   ]);
   return [
     useMemo(() => {
-      const { status, page, per_page, ...rest } = params;
+      const { status, time_type, page, per_page, ...rest } = params;
       return {
         status: Number(status) || -1,
         page: Number(page) || 1,
         per_page: Number(per_page) || 10,
+        time_type: time_type || 1,
         ...rest,
       };
     }, [params]),
