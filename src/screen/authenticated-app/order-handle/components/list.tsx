@@ -221,6 +221,8 @@ export const List = ({
             render: (value, order) => (
               <Space direction={"vertical"}>
                 <div>生产号码：{order.product_no}</div>
+                <div>物流公司：{order.express_company}</div>
+                <div>物流单号：{order.express_sn}</div>
               </Space>
             ),
           },
