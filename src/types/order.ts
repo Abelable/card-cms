@@ -143,6 +143,7 @@ export interface Order {
   goods: OrderGoods;
   shop: OrderShop;
   transfer: OrderTransfer[];
+  active_at: string;
   created_at: string;
   updated_at: string;
 }

@@ -42,7 +42,7 @@ export const SearchPanel = ({
     new Date().setHours(0, 0, 0, 0) - 24 * 60 * 60 * 1000 * 7
   );
   const defaultParams: Omit<OrderListSearchParams, "page" | "per_page"> = {
-    status: undefined,
+    status: menuIdx === 0 ? undefined : params.status,
     order_sn: "",
     shop_order_sn: "",
     shop_name: undefined,
@@ -252,7 +252,7 @@ export const SearchPanel = ({
     });
 
   const query = () => {
-    const { start_time, end_time, ...rest } = temporaryParams;
+    const { status, start_time, end_time, ...rest } = temporaryParams;
 
     // 时间参数没有变化的情况，表示使用的是默认时间，需要刷新默认时间
     if (
@@ -263,6 +263,7 @@ export const SearchPanel = ({
       const endTime = defaultParams.end_time;
       setParams({
         ...params,
+        status: menuIdx === 0 ? status : params.status,
         start_time: startTime,
         end_time: endTime,
         ...rest,
@@ -279,6 +280,7 @@ export const SearchPanel = ({
     } else {
       setParams({
         ...params,
+        status: menuIdx === 0 ? status : params.status,
         start_time,
         end_time,
         ...rest,

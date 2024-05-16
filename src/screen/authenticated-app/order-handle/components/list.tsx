@@ -206,6 +206,7 @@ export const List = ({
                 >
                   查看操作记录
                 </Link>
+                <div>激活状态：{order.active_at ? "已激活" : "未激活"}</div>
               </Space>
             ),
           },
