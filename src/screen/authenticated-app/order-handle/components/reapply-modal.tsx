@@ -3,7 +3,7 @@ import { ErrorBox, Row } from "components/lib";
 
 import { useState } from "react";
 import { useGoodsByCode } from "service/product";
-import { useUpdateOrderGoods } from "service/order";
+import { useBatchUpdateOrderGoods, useUpdateOrderGoods } from "service/order";
 import { useOrderListQueryKey, useReapplyModal } from "../util";
 
 import type { GoodsOption } from "types/product";
@@ -18,9 +18,16 @@ export const ReapplyModal = ({
   const [goodsCode, setGoodsCode] = useState("");
 
   const goodsInfo = useGoodsByCode(goodsCode);
-  const { mutateAsync, isLoading, error } = useUpdateOrderGoods(
-    useOrderListQueryKey()
-  );
+  const {
+    mutateAsync: update,
+    isLoading,
+    error,
+  } = useUpdateOrderGoods(useOrderListQueryKey());
+  const {
+    mutateAsync: batchUpdate,
+    isLoading: isBatchLoading,
+    error: batchError,
+  } = useBatchUpdateOrderGoods(useOrderListQueryKey());
 
   const confirm = async () => {
     if (!goodsId && !goodsCode) {
@@ -28,10 +35,17 @@ export const ReapplyModal = ({
       return;
     }
     try {
-      await mutateAsync({
-        order_id: reapplyOrderId,
-        goods_id: goodsId || goodsInfo?.id || 0,
-      });
+      if (reapplyOrderId.includes(",")) {
+        await batchUpdate({
+          order_ids: reapplyOrderId.split(","),
+          goods_id: goodsId || goodsInfo?.id || 0,
+        });
+      } else {
+        await update({
+          order_id: reapplyOrderId,
+          goods_id: goodsId || goodsInfo?.id || 0,
+        });
+      }
       closeModal();
     } catch (error: any) {
       message.error(error.message);
@@ -44,13 +58,17 @@ export const ReapplyModal = ({
 
   return (
     <Modal
-      title={"修改商品"}
+      title={
+        reapplyOrderId && reapplyOrderId.includes(",")
+          ? "批量修改商品"
+          : "修改商品"
+      }
       visible={reapplyModalOpen}
-      confirmLoading={isLoading}
+      confirmLoading={isLoading || isBatchLoading}
       onOk={confirm}
       onCancel={closeModal}
     >
-      <ErrorBox error={error} />
+      <ErrorBox error={error || batchError} />
       <Row>
         <div>通过商品名称修改：</div>
         <Select

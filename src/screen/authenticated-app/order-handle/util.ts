@@ -205,7 +205,7 @@ export const useReapplyModal = () => {
   const setUrlParams = useSetUrlSearchParams();
 
   const open = useCallback(
-    (id: string) => setReapplyOrderId({ reapplyOrderId: id }),
+    (ids: string) => setReapplyOrderId({ reapplyOrderId: ids }),
     [setReapplyOrderId]
   );
 

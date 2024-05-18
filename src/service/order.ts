@@ -424,3 +424,15 @@ export const useUpdateOrderGoods = (queryKey: QueryKey) => {
     useEditConfig(queryKey)
   );
 };
+
+export const useBatchUpdateOrderGoods = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: { order_ids: string[]; goods_id: number }) =>
+      client("/api/v1/admin/shop-order/batch-update-goods", {
+        data: params,
+        method: "POST",
+      }),
+    useEditConfig(queryKey)
+  );
+};

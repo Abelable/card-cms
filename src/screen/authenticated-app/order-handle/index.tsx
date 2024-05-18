@@ -1,4 +1,4 @@
-import { Drawer, Select, Menu, MenuProps } from "antd";
+import { Drawer, Select, Menu, MenuProps, Button } from "antd";
 import { SearchPanel } from "./components/search-panel";
 import { List } from "./components/list";
 import { Row } from "components/lib";
@@ -18,7 +18,7 @@ import {
   useShopOptions,
 } from "service/order";
 import { toNumber } from "utils";
-import { useOrderListSearchParams } from "./util";
+import { useOrderListSearchParams, useReapplyModal } from "./util";
 import { FlagModal } from "./components/flag-modal";
 
 export const OrderHandle = () => {
@@ -34,6 +34,8 @@ export const OrderHandle = () => {
   const { data: flagOptions = [] } = useSettingOptions("tag");
   const { data: regionOptions } = useRegionOptions(3);
   const { data, isLoading, error } = useOrderList(params);
+
+  const { open: openReapplyModal } = useReapplyModal();
 
   const [menuIdx, setMenuIdx] = useState(0);
   const [batchFlag, setBatchFlag] = useState<number | undefined>(undefined);
@@ -109,6 +111,9 @@ export const OrderHandle = () => {
             已选择 <SelectedCount>{selectedRowKeys.length}</SelectedCount> 项
           </div>
           <Row gap>
+            <Button onClick={() => openReapplyModal(selectedRowKeys.join())}>
+              批量修改商品
+            </Button>
             <Select
               style={{ width: "14rem", marginRight: 0 }}
               value={batchFlag}
