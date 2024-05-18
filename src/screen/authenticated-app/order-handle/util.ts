@@ -16,6 +16,7 @@ export const useOrderListSearchParams = () => {
     "idcard",
     "goods_name",
     "goods_sn",
+    "is_active",
     "time_type",
     "start_time",
     "end_time",

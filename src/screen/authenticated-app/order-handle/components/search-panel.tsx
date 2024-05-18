@@ -11,6 +11,10 @@ import { useExportOrderList } from "service/order";
 import type { Option, OrderListSearchParams, ShopOption } from "types/order";
 import type { GoodsOption } from "types/product";
 
+const activeOptions = [
+  { name: "未激活", value: 0 },
+  { name: "已激活", value: 1 },
+];
 const timeTypeOptions = [
   { name: "平台创建时间", value: 1 },
   { name: "订单激活时间", value: 2 },
@@ -54,6 +58,7 @@ export const SearchPanel = ({
     product_no: "",
     express_sn: "",
     express_company: "",
+    is_active: undefined,
     time_type: 1,
     start_time: dayjs(startTime).format("YYYY-MM-DD HH:mm:ss"),
     end_time: dayjs(endTime).format("YYYY-MM-DD HH:mm:ss"),
@@ -238,6 +243,11 @@ export const SearchPanel = ({
     setTemporaryParams({ ...temporaryParams, tag });
   const clearTag = () =>
     setTemporaryParams({ ...temporaryParams, tag: undefined });
+
+  const setIsActive = (is_active: number) =>
+    setTemporaryParams({ ...temporaryParams, is_active });
+  const clearIsActive = () =>
+    setTemporaryParams({ ...temporaryParams, is_active: undefined });
 
   const setTimeType = (time_type: number) =>
     setTemporaryParams({ ...temporaryParams, time_type });
@@ -469,6 +479,27 @@ export const SearchPanel = ({
         </Item>
       ) : (
         <></>
+      )}
+      {temporaryParams.time_type === 2 ? (
+        <></>
+      ) : (
+        <Item>
+          <div>是否激活：</div>
+          <Select
+            style={{ width: "20rem" }}
+            value={temporaryParams.is_active}
+            allowClear={true}
+            onSelect={setIsActive}
+            onClear={clearIsActive}
+            placeholder="请选择是否激活"
+          >
+            {activeOptions.map(({ name, value }) => (
+              <Select.Option key={value} value={value}>
+                {name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Item>
       )}
       <Item style={{ marginRight: "40rem" }}>
         <div>选择时间：</div>

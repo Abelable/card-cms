@@ -266,6 +266,7 @@ export const useOrderList = (params: Partial<OrderListSearchParams>) => {
         "filter[shop_order.flag]": restParams.tag,
         "filter[shop_order.concat_phone]": restParams.concat_phone,
         "filter[shop_order.idcard]": restParams.idcard,
+        "filter[shop_order.is_active]": restParams.is_active,
         "filter[shop_order.start_created_at]":
           Number(restParams.time_type) === 1 ? start_time : "",
         "filter[shop_order.end_created_at]":

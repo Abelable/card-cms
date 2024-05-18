@@ -167,6 +167,7 @@ export interface OrderListSearchParams {
   express_sn: string;
   express_company: string;
   time_type: number | string;
+  is_active: number | undefined;
   start_time: string;
   end_time: string;
   page: number;
